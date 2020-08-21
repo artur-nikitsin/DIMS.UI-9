@@ -1,0 +1,107 @@
+.membersButtonsGroup {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.progressMemberButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(42, 158, 36, 1);
+  border-radius: 3px;
+  background: rgba(42, 158, 36, 1);
+}
+
+.progressMemberButton:hover,
+.progressMemberButton:focus {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(38, 128, 33, 1);
+  border-radius: 3px;
+  background: rgba(38, 128, 33, 1);
+}
+
+.tasksMemberButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(42, 158, 36, 1);
+  border-radius: 3px;
+  background: rgba(42, 158, 36, 1);
+}
+
+.tasksMemberButton:hover,
+.tasksMemberButton:focus {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(38, 128, 33, 1);
+  border-radius: 3px;
+  background: rgba(38, 128, 33, 1);
+}
+
+.editMemberButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(42, 158, 36, 1);
+  border-radius: 3px;
+  background: rgba(42, 158, 36, 1);
+}
+
+.editMemberButton:hover,
+.editMemberButton:focus {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(38, 128, 33, 1);
+  border-radius: 3px;
+  background: rgba(38, 128, 33, 1);
+}
+
+.deleteMemberButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(255, 0, 0, 1);
+  border-radius: 3px;
+  background: rgba(255, 0, 0, 1);
+}
+
+.deleteMemberButton:hover,
+.deleteMemberButton:focus {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(212, 34, 34, 1);
+  border-radius: 3px;
+  background: rgba(212, 34, 34, 1);
+}

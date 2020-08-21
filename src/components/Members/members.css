@@ -1,0 +1,35 @@
+.membersTableContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.membersTable {
+  width: 80%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.memberButtons {
+  width: 80px;
+}
+
+.membersTable td {
+  min-width: 30px;
+  height: 80px;
+  text-align: center;
+  border: 1px solid black;
+}
+
+.membersTable th {
+  width: 50px;
+  height: 40px;
+  text-align: center;
+  border: 1px solid black;
+  background: rgba(35, 186, 68, 1);
+}
+
+.darkLine {
+  background: rgba(207, 207, 207, 0.5);
+}
