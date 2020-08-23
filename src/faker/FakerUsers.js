@@ -1,7 +1,7 @@
 import faker from 'faker';
 import db from '../firebase/db';
 
-const FakerUsers = {
+const FakerDB = {
   create(number) {
     db.collection('members')
       .get()
@@ -11,15 +11,13 @@ const FakerUsers = {
         }
       });
 
-    let date = new Date(faker.fake('{{date.past}}'));
-    console.log(new Date(faker.fake('{{date.past}}')).toLocaleDateString());
-
     const createUsers = () => {
       for (let i = 0; i <= number; i++) {
-        const dbId = faker.fake('{{date.past}}');
+        const dbId = faker.fake('{{random.number}}');
+        const members = db.collection('members');
+        const member = db.collection('members').doc(dbId);
 
-        let members = db.collection('members');
-        let member = db.collection('members').doc(dbId);
+        const tasks = db.collection('tasks');
 
         member
           .get()
@@ -52,4 +50,4 @@ const FakerUsers = {
     };
   },
 };
-export default FakerUsers;
+export default FakerDB;

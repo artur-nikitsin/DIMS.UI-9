@@ -2,7 +2,8 @@ import React, { useLayoutEffect } from 'react';
 import Buttons from './Buttons/Buttons';
 import api from '../../firebase/api';
 import './members.css';
-import FakerUsers from '../../faker/FakerUsers';
+import FakerDB from '../../faker/FakerUsers';
+import Spinner from '../common/Spinner/Spinner';
 
 class MembersPage extends React.Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class MembersPage extends React.Component {
     api.getMembers().then((result) => {
       let members = result.map((member, i) => {
         return (
-          <tr key={member.userId} className={i % 2 ? 'darkLine' : 'wkiteLine'}>
+          <tr key={member.userId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
             <td key={member.userId + 'a'}>{i + 1}</td>
             <td key={member.userId + 'b'}>
               <a href=''>{member.firstName + ' ' + member.lastName}</a>
@@ -56,10 +57,11 @@ class MembersPage extends React.Component {
     console.log(this.state.members);
 
     //create fake users when init (prod. delete)
-    FakerUsers.create(5);
+    FakerDB.create(5);
 
     return (
       <div className={'membersTableContainer'}>
+        <Spinner />
         <table className={'membersTable'}>
           {membersTableHeaders()}
           <tbody>{this.state.members}</tbody>
