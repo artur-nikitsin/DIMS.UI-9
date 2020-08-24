@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react';
+import React from 'react';
 import Buttons from './Buttons/Buttons';
 import api from '../../firebase/api';
 import './members.css';
@@ -9,11 +9,19 @@ class MembersPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      members: [],
+      loading: false,
+      members: null,
     };
   }
 
   componentDidMount() {
+    this.setState({
+      loading: true,
+    });
+    this.getMembers();
+  }
+
+  getMembers = () => {
     api.getMembers().then((result) => {
       let members = result.map((member, i) => {
         return (
@@ -33,40 +41,40 @@ class MembersPage extends React.Component {
         );
       });
       this.setState({
+        loading: false,
         members: members,
       });
     });
-  }
+  };
 
-  render() {
-    const membersTableHeaders = () => {
-      return (
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Full Name</th>
-            <th>Direction</th>
-            <th>Education</th>
-            <th>Start</th>
-            <th>Age</th>
-            <th></th>
-          </tr>
-        </thead>
-      );
-    };
-    console.log(this.state.members);
-
-    //create fake users when init (prod. delete)
-    FakerDB.create(5);
+  createMembersTable = () => {
+    const tableHeaders = (
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Full Name</th>
+          <th>Direction</th>
+          <th>Education</th>
+          <th>Start</th>
+          <th>Age</th>
+          <th />
+        </tr>
+      </thead>
+    );
 
     return (
-      <div className={'membersTableContainer'}>
-        <Spinner />
-        <table className={'membersTable'}>
-          {membersTableHeaders()}
-          <tbody>{this.state.members}</tbody>
-        </table>
-      </div>
+      <table className={'membersTable'}>
+        {tableHeaders}
+        <tbody>{this.state.members}</tbody>
+      </table>
+    );
+  };
+
+  render() {
+    /*FakerDB.create(5);*/
+
+    return (
+      <div className={'membersTableContainer'}>{this.state.loading ? <Spinner /> : this.createMembersTable()}</div>
     );
   }
 }
