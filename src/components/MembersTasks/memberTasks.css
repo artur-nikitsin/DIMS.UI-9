@@ -1,31 +1,25 @@
-.membersTableContainer {
-  padding-top: 100px;
-  min-height: 500px;
+.memberTasksTableContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.membersTable {
+.memberTasksTable {
   width: 80%;
   border-collapse: collapse;
   border: 1px solid black;
 }
 
-.memberButtons {
-  width: 80px;
-}
-
-.membersTable td {
-  min-width: 30px;
+.memberTasksTable td {
+  width: 200px;
   height: 80px;
   text-align: center;
   border: 1px solid black;
 }
 
-.membersTable th {
-  width: 50px;
+.memberTasksTable th {
+  width: 100px;
   height: 40px;
   text-align: center;
   border: 1px solid black;
@@ -34,4 +28,8 @@
 
 .darkLine {
   background: rgba(207, 207, 207, 0.5);
+}
+
+.returnToFullListButton {
+  margin: 10px;
 }

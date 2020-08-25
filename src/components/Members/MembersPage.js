@@ -1,25 +1,75 @@
 import React from 'react';
+import MemberProgress from '../MemberProgress/MemberProgress';
+import MemberTasks from '../MembersTasks/MemberTasks';
 import Buttons from './Buttons/Buttons';
 import api from '../../firebase/api';
 import './members.css';
-import FakerDB from '../../faker/FakerUsers';
+import FakerDB from '../../faker/FakerDB';
 import Spinner from '../common/Spinner/Spinner';
 
 class MembersPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: false,
+      loading: true,
       members: null,
+      activePage: 'membersTable',
+      activeUser: null,
+      memberProgressShow: null,
     };
   }
 
-  componentDidMount() {
+  handleProgress = (userId) => {
     this.setState({
-      loading: true,
+      activePage: 'membersProgress',
+      activeUser: userId,
     });
-    this.getMembers();
-  }
+    console.log(userId + ' progress');
+  };
+
+  handleTasks = (userId) => {
+    this.setState({
+      activePage: 'membersTasks',
+      activeUser: userId,
+    });
+    /* console.log(userId + ' tasks');*/
+  };
+
+  handleEdit = (userId) => {
+    console.log(userId + ' edit');
+  };
+
+  handleDelete = (userId) => {
+    console.log(userId + ' delete');
+  };
+
+  handleReturnToFullList = (userId) => {
+    this.setState({
+      activePage: 'membersTable',
+    });
+  };
+
+  showActivePage = (page) => {
+    switch (page) {
+      case 'membersTable':
+        return this.createMembersTable();
+
+      case 'membersProgress':
+        return (
+          <div>
+            <button onClick={() => this.handleReturnToFullList()}>Return to full list</button>
+            <MemberProgress user={this.state.activeUser} />
+          </div>
+        );
+
+      case 'membersTasks':
+        return (
+          <div>
+            <MemberTasks user={this.state.activeUser} handleReturnToFullList={() => this.handleReturnToFullList()} />
+          </div>
+        );
+    }
+  };
 
   getMembers = () => {
     api.getMembers().then((result) => {
@@ -35,7 +85,13 @@ class MembersPage extends React.Component {
             <td key={member.userId + 'i'}>{new Date(member.startDate).toLocaleDateString()}</td>
             <td key={member.userId + 'j'}>{new Date(member.birthDate).toLocaleDateString()}</td>
             <td key={member.userId + 'h'} className={'memberButtons'}>
-              <Buttons />
+              <Buttons
+                userId={member.userId}
+                handleProgress={() => this.handleProgress(member.userId)}
+                handleTasks={() => this.handleTasks(member.userId)}
+                handleEdit={() => this.handleEdit(member.userId)}
+                handleDelete={() => this.handleDelete(member.userId)}
+              />
             </td>
           </tr>
         );
@@ -71,10 +127,15 @@ class MembersPage extends React.Component {
   };
 
   render() {
-    /*FakerDB.create(5);*/
+    FakerDB.create(5);
+    this.getMembers();
 
     return (
-      <div className={'membersTableContainer'}>{this.state.loading ? <Spinner /> : this.createMembersTable()}</div>
+      <div>
+        <div className={'membersTableContainer'}>
+          {this.state.loading ? <Spinner /> : this.showActivePage(this.state.activePage)}
+        </div>
+      </div>
     );
   }
 }

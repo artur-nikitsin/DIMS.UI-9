@@ -7,11 +7,7 @@ class Header extends React.Component {
   }
 
   render() {
-    return (
-      <div className={'header'}>
-        <p>DIMS</p>
-      </div>
-    );
+    return <div className={'header'}></div>;
   }
 }
 

@@ -13,22 +13,22 @@
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(42, 158, 36, 1);
+  border: 1px solid rgba(0, 140, 255, 1);
   border-radius: 3px;
-  background: rgba(42, 158, 36, 1);
+  /*background: rgba(0, 140, 255, 1);*/
 }
 
-.progressMemberButton:hover,
-.progressMemberButton:focus {
+.progressMemberButton:hover {
   min-width: 80px;
   min-height: 30px;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(38, 128, 33, 1);
+  border: 1px solid rgba(9, 116, 237, 1);
   border-radius: 3px;
-  background: rgba(38, 128, 33, 1);
+  background: rgba(9, 116, 237, 1);
+  transition: background 0.5s ease, color 0.2s linear;
 }
 
 .tasksMemberButton {
@@ -38,22 +38,22 @@
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(42, 158, 36, 1);
+  border: 1px solid rgba(0, 140, 255, 1);
   border-radius: 3px;
-  background: rgba(42, 158, 36, 1);
+  /*background: rgba(0, 140, 255, 1);*/
 }
 
-.tasksMemberButton:hover,
-.tasksMemberButton:focus {
+.tasksMemberButton:hover {
   min-width: 80px;
   min-height: 30px;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(38, 128, 33, 1);
+  border: 1px solid rgba(9, 116, 237, 1);
   border-radius: 3px;
-  background: rgba(38, 128, 33, 1);
+  background: rgba(9, 116, 237, 1);
+  transition: background 0.5s ease, color 0.2s linear;
 }
 
 .editMemberButton {
@@ -63,22 +63,22 @@
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(42, 158, 36, 1);
+  border: 1px solid rgba(0, 140, 255, 1);
   border-radius: 3px;
-  background: rgba(42, 158, 36, 1);
+  /* background: rgba(0, 140, 255, 1);*/
 }
 
-.editMemberButton:hover,
-.editMemberButton:focus {
+.editMemberButton:hover {
   min-width: 80px;
   min-height: 30px;
   margin-top: 5px;
   margin-bottom: 5px;
   cursor: pointer;
   outline: none;
-  border: 2px solid rgba(38, 128, 33, 1);
+  border: 2px solid rgba(9, 116, 237, 1);
   border-radius: 3px;
-  background: rgba(38, 128, 33, 1);
+  background: rgba(9, 116, 237, 1);
+  transition: background 0.5s ease, color 0.2s linear;
 }
 
 .deleteMemberButton {
@@ -90,11 +90,10 @@
   outline: none;
   border: 2px solid rgba(255, 0, 0, 1);
   border-radius: 3px;
-  background: rgba(255, 0, 0, 1);
+  /* background: rgba(255, 0, 0, 1);*/
 }
 
-.deleteMemberButton:hover,
-.deleteMemberButton:focus {
+.deleteMemberButton:hover {
   min-width: 80px;
   min-height: 30px;
   margin-top: 5px;
@@ -104,4 +103,5 @@
   border: 2px solid rgba(212, 34, 34, 1);
   border-radius: 3px;
   background: rgba(212, 34, 34, 1);
+  transition: background 0.5s ease, color 0.2s linear;
 }

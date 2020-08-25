@@ -12,10 +12,18 @@ class Buttons extends React.Component {
   render() {
     return (
       <div className={'membersButtonsGroup'}>
-        <button className={'progressMemberButton'}>Progress</button>
-        <button className={'tasksMemberButton'}>Tasks</button>
-        <button className={'editMemberButton'}>Edit</button>
-        <button className={'deleteMemberButton'}>Delete</button>
+        <button className={'progressMemberButton'} id={this.props.userId} onClick={this.props.handleProgress}>
+          Progress
+        </button>
+        <button className={'tasksMemberButton'} id={this.props.userId} onClick={this.props.handleTasks}>
+          Tasks
+        </button>
+        <button className={'editMemberButton'} id={this.props.userId} onClick={this.props.handleEdit}>
+          Edit
+        </button>
+        <button className={'deleteMemberButton'} id={this.props.userId} onClick={this.props.handleDelete}>
+          Delete
+        </button>
       </div>
     );
   }
