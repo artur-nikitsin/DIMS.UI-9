@@ -1,7 +1,6 @@
 import React from 'react';
 import './memberTasks.css';
 import api from '../../firebase/api';
-import Buttons from '../Members/Buttons/Buttons';
 import Spinner from '../common/Spinner/Spinner';
 
 class MemberTasks extends React.Component {
@@ -14,28 +13,32 @@ class MemberTasks extends React.Component {
   }
 
   getUserTaskList = (user) => {
-    api.getUserTaskList(user).then((result) => {
-      let tasks = result.map((task, i) => {
-        return (
-          <tr key={task.taskId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
-            <td>{i + 1}</td>
-            <td>
-              <a href=''>{task.name}</a>
-            </td>
-            <td>{new Date(task.startDate).toLocaleDateString()}</td>
-            <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-            <td className={'tasksButtons'}>Status</td>
-            <td className={'tasksButtons'}>Button</td>
-            <td className={'tasksButtons'}>Button</td>
-          </tr>
-        );
-      });
+    if (user) {
+      api.getUserTaskList(user).then((result) => {
+        let tasks = result.map((task, i) => {
+          return (
+            <tr key={task.taskId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
+              <td>{i + 1}</td>
+              <td>
+                <a href=''>{task.name}</a>
+              </td>
+              <td>{new Date(task.startDate).toLocaleDateString()}</td>
+              <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
+              <td className={'tasksButtons'}>Status</td>
+              <td className={'tasksButtons'}>Button</td>
+              <td className={'tasksButtons'}>Button</td>
+            </tr>
+          );
+        });
 
-      this.setState({
-        loading: false,
-        userTaskList: tasks,
+        if (this.state.userTaskList === null) {
+          this.setState({
+            loading: false,
+            userTaskList: tasks,
+          });
+        }
       });
-    });
+    }
   };
 
   createMemberTaskTable = () => {
@@ -68,7 +71,6 @@ class MemberTasks extends React.Component {
 
   render() {
     this.getUserTaskList(this.props.user);
-    /* console.log(this.state.userTaskList);*/
 
     return <div>{this.state.loading ? <Spinner /> : this.createMemberTaskTable()}</div>;
   }

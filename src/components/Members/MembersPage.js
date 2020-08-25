@@ -32,7 +32,6 @@ class MembersPage extends React.Component {
       activePage: 'membersTasks',
       activeUser: userId,
     });
-    /* console.log(userId + ' tasks');*/
   };
 
   handleEdit = (userId) => {
@@ -43,9 +42,10 @@ class MembersPage extends React.Component {
     console.log(userId + ' delete');
   };
 
-  handleReturnToFullList = (userId) => {
+  handleReturnToFullList = () => {
     this.setState({
       activePage: 'membersTable',
+      activeUser: null,
     });
   };
 
@@ -57,8 +57,7 @@ class MembersPage extends React.Component {
       case 'membersProgress':
         return (
           <div>
-            <button onClick={() => this.handleReturnToFullList()}>Return to full list</button>
-            <MemberProgress user={this.state.activeUser} />
+            <MemberProgress user={this.state.activeUser} handleReturnToFullList={() => this.handleReturnToFullList()} />
           </div>
         );
 
@@ -75,7 +74,7 @@ class MembersPage extends React.Component {
     api.getMembers().then((result) => {
       let members = result.map((member, i) => {
         return (
-          <tr key={member.userId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
+          <tr key={member.userId + 'n'} className={i % 2 ? 'darkLine' : 'whiteLine'}>
             <td key={member.userId + 'a'}>{i + 1}</td>
             <td key={member.userId + 'b'}>
               <a href=''>{member.firstName + ' ' + member.lastName}</a>
@@ -96,10 +95,13 @@ class MembersPage extends React.Component {
           </tr>
         );
       });
-      this.setState({
-        loading: false,
-        members: members,
-      });
+
+      if (this.state.members === null) {
+        this.setState({
+          loading: false,
+          members: members,
+        });
+      }
     });
   };
 

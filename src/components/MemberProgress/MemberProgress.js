@@ -15,10 +15,15 @@ class MemberProgress extends React.Component {
     );
 
     return (
-      <table className={'membersTable'}>
-        {tableHeaders}
-        <tbody></tbody>
-      </table>
+      <div>
+        <button className={'returnToFullListButton'} onClick={this.props.handleReturnToFullList}>
+          Return to full list
+        </button>
+        <table className={'membersTable'}>
+          {tableHeaders}
+          <tbody></tbody>
+        </table>
+      </div>
     );
   };
 
