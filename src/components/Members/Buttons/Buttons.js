@@ -4,9 +4,7 @@ import './buttons.css';
 class Buttons extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      members: [],
-    };
+    this.state = {};
   }
 
   render() {

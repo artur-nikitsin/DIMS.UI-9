@@ -2,6 +2,8 @@ import React from 'react';
 import './memberTasks.css';
 import api from '../../firebase/api';
 import Spinner from '../common/Spinner/Spinner';
+import TrackButton from './Buttons/TrackButton';
+import StatusButtons from './Buttons/StatusButtons';
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -25,8 +27,12 @@ class MemberTasks extends React.Component {
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
               <td className={'tasksButtons'}>Status</td>
-              <td className={'tasksButtons'}>Button</td>
-              <td className={'tasksButtons'}>Button</td>
+              <td className={'tasksButtons'}>
+                <TrackButton />{' '}
+              </td>
+              <td className={'tasksButtons'}>
+                <StatusButtons />
+              </td>
             </tr>
           );
         });
@@ -57,9 +63,12 @@ class MemberTasks extends React.Component {
     );
 
     return (
-      <div className={'memberTasksTableContainer'}>
+      <div>
+        <div>
+          <p className={'userGreeting'}>{'Hi, dear ' + this.props.userName + '! This is your current tasks:'}</p>
+        </div>
         <button className={'returnToFullListButton'} onClick={this.props.handleReturnToFullList}>
-          Return to full list
+          Return back to full list
         </button>
         <table className={'memberTasksTable'}>
           {tableHeaders}
@@ -70,9 +79,13 @@ class MemberTasks extends React.Component {
   };
 
   render() {
-    this.getUserTaskList(this.props.user);
+    this.getUserTaskList(this.props.userId);
 
-    return <div>{this.state.loading ? <Spinner /> : this.createMemberTaskTable()}</div>;
+    return (
+      <div className={'memberTasksTableContainer'}>
+        {this.state.loading ? <Spinner /> : this.createMemberTaskTable()}
+      </div>
+    );
   }
 }
 

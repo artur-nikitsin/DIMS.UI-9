@@ -46,8 +46,8 @@ const FakerDB = {
             console.log('Error getting document:', error);
           });
 
-        //create Tasks
         for (let i = 0; i <= 5; i++) {
+          //create Tasks
           const taskId = faker.fake('{{random.number}}');
           const tasks = db.collection('Tasks');
           const task = db.collection('Tasks').doc(taskId);
@@ -82,10 +82,33 @@ const FakerDB = {
                 console.log('Document data:', doc.data());
               } else {
                 userTasks.doc(userTaskId).set({
-                  userTaskId: faker.fake('{{random.number}}'),
+                  userTaskId: userTaskId,
                   taskId: taskId,
                   userId: userId,
                   stateId: '2',
+                });
+              }
+            })
+            .catch(function(error) {
+              console.log('Error getting document:', error);
+            });
+
+          //create TaskTrack
+          const taskTrackId = faker.fake('{{random.number}}');
+          const taskTracks = db.collection('TaskTracks');
+          const taskTrack = db.collection('TaskTracks').doc(taskTrackId);
+
+          taskTrack
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                console.log('Document data:', doc.data());
+              } else {
+                taskTracks.doc(taskTrackId).set({
+                  taskTrackId: taskTrackId,
+                  userTaskId: userTaskId,
+                  trackDate: faker.fake('{{date.past}}'),
+                  trackNote: faker.fake('{{lorem.paragraph}}'),
                 });
               }
             })

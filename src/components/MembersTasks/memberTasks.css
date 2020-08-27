@@ -3,10 +3,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 100px;
 }
 
 .memberTasksTable {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
   border: 1px solid black;
 }
@@ -30,6 +31,32 @@
   background: rgba(207, 207, 207, 0.5);
 }
 
+.userGreeting {
+  font-size: 25px;
+}
+
 .returnToFullListButton {
-  margin: 10px;
+  min-width: 120px;
+  min-height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+  align-self: flex-start;
+  margin-bottom: 10px;
+}
+
+.returnToFullListButton:hover {
+  min-width: 120px;
+  min-height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  background: rgba(9, 116, 237, 1);
+  transition: background 0.5s ease, color 0.2s linear;
 }
