@@ -22,7 +22,9 @@ class MemberProgress extends React.Component {
               <td>
                 <a href=''>{track.name}</a>
               </td>
-              <td>{track.trackNote}</td>
+              <td>
+                <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
+              </td>
               <td>{new Date(track.trackDate).toLocaleDateString()}</td>
             </tr>
           );

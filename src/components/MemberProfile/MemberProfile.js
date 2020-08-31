@@ -22,7 +22,7 @@ class MemberProfile extends React.Component {
       case 'tasks':
         return <MemberTasks userId={this.props.userId} userName={this.props.userName} />;
       case 'taskTrack':
-        return <MemberTracks />;
+        return <MemberTracks userId={this.props.userId} userName={this.props.userName} />;
     }
   };
 
