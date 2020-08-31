@@ -37,6 +37,7 @@ const api = {
       })
       .then((userTaskList) => {
         const tasks = userTaskList.map((task) => {
+          console.log(task.taskId);
           return this.getTasks(task.taskId);
         });
         const taskData = Promise.all(tasks);
@@ -49,19 +50,38 @@ const api = {
 
   getTasks(taskId) {
     const taskData = {};
-    return db
-      .collection('Tasks')
-      .doc(taskId)
-      .get()
-      .then((task) => {
-        const { name, description, startDate, deadlineDate } = task.data();
-        taskData.taskId = taskId;
-        taskData.name = name;
-        taskData.description = description;
-        taskData.startDate = startDate;
-        taskData.deadlineDate = deadlineDate;
-        return taskData;
-      });
+    if (taskId) {
+      return db
+        .collection('Tasks')
+        .doc(taskId)
+        .get()
+        .then((task) => {
+          const { name, description, startDate, deadlineDate } = task.data();
+          taskData.taskId = taskId;
+          taskData.name = name;
+          taskData.description = description;
+          taskData.startDate = startDate;
+          taskData.deadlineDate = deadlineDate;
+          return taskData;
+        });
+    } else {
+      return db
+        .collection('Tasks')
+        .get()
+        .then((tasks) => {
+          const taskData = tasks.docs.map((task) => {
+            const { taskId, name, description, startDate, deadlineDate } = task.data();
+            return {
+              taskId,
+              name,
+              description,
+              startDate,
+              deadlineDate,
+            };
+          });
+          return taskData;
+        });
+    }
   },
 
   getUserTrackList(userId) {

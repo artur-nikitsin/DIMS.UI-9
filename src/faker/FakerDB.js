@@ -59,6 +59,7 @@ const FakerDB = {
                 console.log('Document data:', doc.data());
               } else {
                 tasks.doc(taskId).set({
+                  taskId: taskId,
                   name: faker.fake('{{name.title}}'),
                   description: faker.fake('{{lorem.paragraph}}'),
                   startDate: faker.fake('{{date.future}}'),

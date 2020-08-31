@@ -1,10 +1,14 @@
 import React from 'react';
-import MembersPage from './components/Members/MembersPage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import PagesContainer from './components/PagesContainer/PagesContainer';
 
 const App = () => {
   return (
     <div className='App'>
-      <MembersPage />
+      <Header />
+      <PagesContainer />
+      <Footer />
     </div>
   );
 };
