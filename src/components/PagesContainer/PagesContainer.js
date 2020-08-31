@@ -20,7 +20,6 @@ class PagesContainer extends React.Component {
   };
 
   handleShowActivePage = (page) => {
-    console.log(page);
     this.setState({
       activePage: page,
     });

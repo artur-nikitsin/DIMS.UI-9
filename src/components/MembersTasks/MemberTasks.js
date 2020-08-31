@@ -67,9 +67,6 @@ class MemberTasks extends React.Component {
         <div>
           <p className={'userGreeting'}>{'Hi, dear ' + this.props.userName + '! This is your current tasks:'}</p>
         </div>
-        <button className={'returnToFullListButton'} onClick={this.props.handleReturnToFullList}>
-          Return back to full list
-        </button>
         <table className={'memberTasksTable'}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>

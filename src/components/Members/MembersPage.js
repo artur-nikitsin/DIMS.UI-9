@@ -6,6 +6,7 @@ import api from '../../firebase/api';
 import './members.css';
 import FakerDB from '../../faker/FakerDB';
 import Spinner from '../common/Spinner/Spinner';
+import MemberProfile from '../MemberProfile/MemberProfile';
 
 class MembersPage extends React.Component {
   constructor(props) {
@@ -65,11 +66,10 @@ class MembersPage extends React.Component {
       case 'membersTasks':
         return (
           <div>
-            <MemberTasks
-              userId={this.state.activeUserId}
-              userName={this.state.activeUserName}
-              handleReturnToFullList={() => this.handleReturnToFullList()}
-            />
+            <button className={'returnToFullListButton'} onClick={this.handleReturnToFullList}>
+              Return back to full list
+            </button>
+            <MemberProfile userId={this.state.activeUserId} userName={this.state.activeUserName} />
           </div>
         );
     }
