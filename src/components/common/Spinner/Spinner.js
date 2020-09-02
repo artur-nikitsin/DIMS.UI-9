@@ -14,7 +14,6 @@ class Spinner extends React.Component {
   componentDidMount() {
     this.spinnerInterval = setInterval(() => {
       const firstCircleFlow = this.state.firstCircleFlow;
-
       switch (firstCircleFlow) {
         case 'down':
           this.setState({
@@ -48,7 +47,7 @@ class Spinner extends React.Component {
               height: diameter1,
               width: diameter1,
               borderRadius: '30px',
-              border: ` 2px solid rgba(0, 140, 255, 1)`,
+              border: `2px solid rgba(0, 140, 255, 1)`,
               boxShadow: '0 0 10px rgba(0, 140, 255, 0.7)',
             }}
           />

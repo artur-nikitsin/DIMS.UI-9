@@ -64,7 +64,6 @@ class Tasks extends React.Component {
 
     return (
       <div>
-        {/* <button className={'memberRegisterButton'}>Register</button>*/}
         <table className={'tasksTable'}>
           {tableHeaders}
           <tbody>{this.state.tasks}</tbody>

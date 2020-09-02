@@ -20,6 +20,11 @@ class MembersPage extends React.Component {
     };
   }
 
+  componentDidMount() {
+    FakerDB.create(5);
+    this.getMembers();
+  }
+
   handleProgress = (userId, name) => {
     this.setState({
       activePage: 'membersProgress',
@@ -29,6 +34,8 @@ class MembersPage extends React.Component {
   };
 
   handleTasks = (userId, name) => {
+    console.log(userId, name);
+    console.log('this: ', this);
     this.setState({
       activePage: 'membersTasks',
       activeUserId: userId,
@@ -55,10 +62,7 @@ class MembersPage extends React.Component {
       case 'membersProgress':
         return (
           <div>
-            <MemberProgress
-              userId={this.state.activeUserId}
-              handleReturnToFullList={() => this.handleReturnToFullList()}
-            />
+            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
           </div>
         );
 
@@ -68,7 +72,7 @@ class MembersPage extends React.Component {
             <MemberTasks
               userId={this.state.activeUserId}
               userName={this.state.activeUserName}
-              handleReturnToFullList={() => this.handleReturnToFullList()}
+              handleReturnToFullList={this.handleReturnToFullList}
             />
           </div>
         );
@@ -91,7 +95,7 @@ class MembersPage extends React.Component {
             <td key={member.userId + 'h'} className={'memberButtons'}>
               <Buttons
                 userId={member.userId}
-                handleProgress={() => this.handleProgress(member.userId, member.firstName)}
+                handleProgress={this.handleProgress.bind(this, member.userId, member.firstName)}
                 handleTasks={() => this.handleTasks(member.userId, member.firstName)}
                 handleEdit={() => this.handleEdit(member.userId)}
                 handleDelete={() => this.handleDelete(member.userId)}
@@ -101,7 +105,7 @@ class MembersPage extends React.Component {
         );
       });
 
-      if (this.state.members === null) {
+      if (!this.state.members) {
         this.setState({
           loading: false,
           members: members,
@@ -137,9 +141,6 @@ class MembersPage extends React.Component {
   };
 
   render() {
-    FakerDB.create(5);
-    this.getMembers();
-
     return (
       <div className={'membersTableContainer'}>
         {this.state.loading ? <Spinner /> : this.showActivePage(this.state.activePage)}
