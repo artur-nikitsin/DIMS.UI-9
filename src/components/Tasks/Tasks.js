@@ -1,6 +1,6 @@
 import React from 'react';
-import './tasks.css';
-import api from '../../firebase/api';
+import './tasks.scss';
+import { getTasks } from '../../firebase/api';
 import Spinner from '../common/Spinner/Spinner';
 
 class Tasks extends React.Component {
@@ -17,7 +17,7 @@ class Tasks extends React.Component {
   }
 
   getTasks = () => {
-    api.getTasks().then((result) => {
+    getTasks().then((result) => {
       let tasks = result.map((task, i) => {
         return (
           <tr key={task.taskId + 'z'} className={i % 2 ? 'darkLine' : 'whiteLine'}>
@@ -27,15 +27,7 @@ class Tasks extends React.Component {
             </td>
             <td key={task.taskId + 'i'}>{new Date(task.startDate).toLocaleDateString()}</td>
             <td key={task.taskId + 'j'}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-            <td key={task.taskId + 'h'} className={'memberButtons'}>
-              {/*<Buttons
-                userId={member.userId}
-                handleProgress={() => this.handleProgress(member.userId, member.firstName)}
-                handleTasks={() => this.handleTasks(member.userId, member.firstName)}
-                handleEdit={() => this.handleEdit(member.userId)}
-                handleDelete={() => this.handleDelete(member.userId)}
-              />*/}
-            </td>
+            <td key={task.taskId + 'h'} className='memberButtons'></td>
           </tr>
         );
       });

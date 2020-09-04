@@ -1,0 +1,9 @@
+@mixin table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.darkLine {
+  background: rgba(207, 207, 207, 0.5);
+}

@@ -1,0 +1,58 @@
+.membersTableContainer {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .memberRegisterButton {
+    min-width: 120px;
+    min-height: 50px;
+    margin-top: 5px;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid rgba(0, 140, 255, 1);
+    border-radius: 3px;
+    margin-bottom: 20px;
+    align-self: flex-start;
+
+    &:hover {
+      min-width: 120px;
+      min-height: 50px;
+      margin-top: 5px;
+      cursor: pointer;
+      outline: none;
+      border: 1px solid rgba(0, 140, 255, 1);
+      border-radius: 3px;
+      margin-bottom: 20px;
+      align-self: flex-start;
+      background: rgba(9, 116, 237, 1);
+      transition: background 0.5s ease, color 0.2s linear;
+    }
+  }
+
+  .membersTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+
+    & td {
+      min-width: 30px;
+      height: 80px;
+      text-align: center;
+      border: 1px solid black;
+    }
+
+    & th {
+      width: 50px;
+      height: 40px;
+      text-align: center;
+      border: 1px solid black;
+      background: rgba(9, 116, 237, 0.7);
+    }
+    .memberButtons {
+      width: 80px;
+    }
+  }
+}

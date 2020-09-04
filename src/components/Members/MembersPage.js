@@ -2,9 +2,8 @@ import React from 'react';
 import MemberProgress from '../MemberProgress/MemberProgress';
 import MemberTasks from '../MembersTasks/MemberTasks';
 import Buttons from './Buttons/Buttons';
-import api from '../../firebase/api';
-import './members.css';
-import FakerDB from '../../faker/FakerDB';
+import { getMembers } from '../../firebase/api';
+import './members.scss';
 import Spinner from '../common/Spinner/Spinner';
 
 class MembersPage extends React.Component {
@@ -21,7 +20,6 @@ class MembersPage extends React.Component {
   }
 
   componentDidMount() {
-    FakerDB.create(5);
     this.getMembers();
   }
 
@@ -34,8 +32,6 @@ class MembersPage extends React.Component {
   };
 
   handleTasks = (userId, name) => {
-    console.log(userId, name);
-    console.log('this: ', this);
     this.setState({
       activePage: 'membersTasks',
       activeUserId: userId,
@@ -80,7 +76,7 @@ class MembersPage extends React.Component {
   };
 
   getMembers = () => {
-    api.getMembers().then((result) => {
+    getMembers().then((result) => {
       let members = result.map((member, i) => {
         return (
           <tr key={member.userId + 'n'} className={i % 2 ? 'darkLine' : 'whiteLine'}>
@@ -92,7 +88,7 @@ class MembersPage extends React.Component {
             <td key={member.userId + 'd'}>{member.education}</td>
             <td key={member.userId + 'i'}>{new Date(member.startDate).toLocaleDateString()}</td>
             <td key={member.userId + 'j'}>{new Date(member.birthDate).toLocaleDateString()}</td>
-            <td key={member.userId + 'h'} className={'memberButtons'}>
+            <td key={member.userId + 'h'} className='memberButtons'>
               <Buttons
                 userId={member.userId}
                 handleProgress={this.handleProgress.bind(this, member.userId, member.firstName)}
@@ -131,8 +127,8 @@ class MembersPage extends React.Component {
 
     return (
       <div>
-        <button className={'memberRegisterButton'}>Register</button>
-        <table className={'membersTable'}>
+        <button className='memberRegisterButton'>Register</button>
+        <table className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.members}</tbody>
         </table>
@@ -142,7 +138,7 @@ class MembersPage extends React.Component {
 
   render() {
     return (
-      <div className={'membersTableContainer'}>
+      <div className='membersTableContainer'>
         {this.state.loading ? <Spinner /> : this.showActivePage(this.state.activePage)}
       </div>
     );
