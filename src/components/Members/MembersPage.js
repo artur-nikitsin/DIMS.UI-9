@@ -23,7 +23,7 @@ class MembersPage extends React.Component {
     this.getMembers();
   }
 
-  handleProgress = (userId, name) => {
+  handleProgress = (userId, name) => () => {
     this.setState({
       activePage: 'membersProgress',
       activeUserId: userId,
@@ -31,7 +31,7 @@ class MembersPage extends React.Component {
     });
   };
 
-  handleTasks = (userId, name) => {
+  handleTasks = (userId, name) => () => {
     this.setState({
       activePage: 'membersTasks',
       activeUserId: userId,
@@ -91,7 +91,7 @@ class MembersPage extends React.Component {
             <td key={member.userId + 'h'} className='memberButtons'>
               <Buttons
                 userId={member.userId}
-                handleProgress={this.handleProgress.bind(this, member.userId, member.firstName)}
+                handleProgress={this.handleProgress(member.userId, member.firstName)}
                 handleTasks={() => this.handleTasks(member.userId, member.firstName)}
                 handleEdit={() => this.handleEdit(member.userId)}
                 handleDelete={() => this.handleDelete(member.userId)}

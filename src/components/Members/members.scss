@@ -6,7 +6,7 @@
   flex-direction: column;
   justify-content: center;
 
-  .memberRegisterButton {
+  @mixin memberRegisterButton {
     min-width: 120px;
     min-height: 50px;
     margin-top: 5px;
@@ -16,17 +16,13 @@
     border-radius: 3px;
     margin-bottom: 20px;
     align-self: flex-start;
+  }
+
+  .memberRegisterButton {
+    @include memberRegisterButton;
 
     &:hover {
-      min-width: 120px;
-      min-height: 50px;
-      margin-top: 5px;
-      cursor: pointer;
-      outline: none;
-      border: 1px solid rgba(0, 140, 255, 1);
-      border-radius: 3px;
-      margin-bottom: 20px;
-      align-self: flex-start;
+      @include memberRegisterButton;
       background: rgba(9, 116, 237, 1);
       transition: background 0.5s ease, color 0.2s linear;
     }
@@ -51,6 +47,7 @@
       border: 1px solid black;
       background: rgba(9, 116, 237, 0.7);
     }
+
     .memberButtons {
       width: 80px;
     }

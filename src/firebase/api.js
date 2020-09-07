@@ -46,6 +46,7 @@ export function getUserTaskList(userId) {
       console.error(`Error receiving data: ${error}`);
     });
 }
+
 export function getTasks(taskId) {
   const taskData = {};
   if (taskId) {
@@ -61,6 +62,9 @@ export function getTasks(taskId) {
         taskData.startDate = startDate;
         taskData.deadlineDate = deadlineDate;
         return taskData;
+      })
+      .catch((error) => {
+        console.error(`Error receiving data: ${error}`);
       });
   } else {
     return db
@@ -78,9 +82,13 @@ export function getTasks(taskId) {
           };
         });
         return taskData;
+      })
+      .catch((error) => {
+        console.error(`Error receiving data: ${error}`);
       });
   }
 }
+
 export function getUserTrackList(userId) {
   return db
     .collection('UserTasks')
@@ -105,6 +113,7 @@ export function getUserTrackList(userId) {
       console.error(`Error receiving data: ${error}`);
     });
 }
+
 function getTaskName(userTaskId, taskId) {
   return db
     .collection('Tasks')
@@ -115,8 +124,11 @@ function getTaskName(userTaskId, taskId) {
       const track = getTaskTrackData(userTaskId, name);
       return track;
     })
-    .then();
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
 }
+
 export function getTaskTrackData(userTaskId, name) {
   const tracks = {};
   return db

@@ -112,7 +112,7 @@ function FakerDB(number) {
               });
             }
           })
-          .catch(function(error) {
+          .catch((error) => {
             console.log('Error getting document:', error);
           });
       }

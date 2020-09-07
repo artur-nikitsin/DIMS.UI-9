@@ -7,8 +7,7 @@
   width: 100px;
   margin: auto;
 
-  .one,
-  .three {
+  @mixin circle {
     height: 1.5rem;
     width: 1.5rem;
     border-radius: 20px;
@@ -21,18 +20,16 @@
     transform-origin: bottom;
   }
 
+  .one,
+  .three {
+    @include circle;
+    animation-name: one;
+  }
+
   .two {
-    height: 1.5rem;
-    width: 1.5rem;
-    border-radius: 20px;
-    background: rgba(0, 140, 255, 1);
-    border: 2px solid rgba(0, 140, 255, 1);
-    box-shadow: 0 0 10px rgba(0, 140, 255, 0.7);
-    animation-duration: 1s;
-    animation-iteration-count: infinite;
+    @include circle;
     animation-name: two;
-    animation-timing-function: ease;
-    transform-origin: bottom;
+    background: rgba(0, 140, 255, 1);
   }
 
   @keyframes two {
