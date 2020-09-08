@@ -9,11 +9,11 @@ class StatusButtons extends React.Component {
 
   render() {
     return (
-      <div className={'statusButtonsGroup'}>
-        <button className={'successStatusButton'} id={this.props.userId}>
+      <div className='statusButtonsGroup'>
+        <button className='successStatusButton' id={this.props.userId}>
           Success
         </button>
-        <button className={'failStatusButton'} id={this.props.userId}>
+        <button className='failStatusButton' id={this.props.userId}>
           Fail
         </button>
       </div>
