@@ -1,6 +1,6 @@
 import React from 'react';
-import './memberProgress.css';
-import api from '../../firebase/api';
+import './memberProgress.scss';
+import { getUserTrackList } from '../../firebase/api';
 import Spinner from '../common/Spinner/Spinner';
 
 class MemberProgress extends React.Component {
@@ -12,9 +12,13 @@ class MemberProgress extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getUserTrackList(this.props.userId);
+  }
+
   getUserTrackList = (user) => {
     if (user) {
-      api.getUserTrackList(user).then((result) => {
+      getUserTrackList(user).then((result) => {
         let tracks = result.map((track, i) => {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
@@ -30,7 +34,7 @@ class MemberProgress extends React.Component {
           );
         });
 
-        if (this.state.userTrackList === null) {
+        if (!this.state.userTrackList) {
           this.setState({
             loading: false,
             userTrackList: tracks,
@@ -54,10 +58,10 @@ class MemberProgress extends React.Component {
 
     return (
       <div>
-        <button className={'returnToFullListButton'} onClick={this.props.handleReturnToFullList}>
+        <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
           Return to full list
         </button>
-        <table className={'membersTable'}>
+        <table className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>
         </table>
@@ -66,7 +70,6 @@ class MemberProgress extends React.Component {
   };
 
   render() {
-    this.getUserTrackList(this.props.userId);
     return <div>{this.state.loading ? <Spinner /> : this.createMemberProgressTable()}</div>;
   }
 }

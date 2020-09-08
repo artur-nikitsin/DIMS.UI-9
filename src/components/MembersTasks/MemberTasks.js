@@ -1,6 +1,6 @@
 import React from 'react';
-import './memberTasks.css';
-import api from '../../firebase/api';
+import './memberTasks.scss';
+import { getUserTaskList } from '../../firebase/api';
 import Spinner from '../common/Spinner/Spinner';
 import TrackButton from './Buttons/TrackButton';
 import StatusButtons from './Buttons/StatusButtons';
@@ -16,7 +16,7 @@ class MemberTasks extends React.Component {
 
   getUserTaskList = (user) => {
     if (user) {
-      api.getUserTaskList(user).then((result) => {
+      getUserTaskList(user).then((result) => {
         let tasks = result.map((task, i) => {
           return (
             <tr key={task.taskId} className={i % 2 ? 'darkLine' : 'whiteLine'}>

@@ -1,6 +1,8 @@
 import React from 'react';
 import MembersPage from '../Members/MembersPage';
 import Tasks from '../Tasks/Tasks';
+import '../common/Styles/commonTableStyles.scss';
+import './pagesContainer.scss';
 
 class PagesContainer extends React.Component {
   constructor(props) {
@@ -30,7 +32,7 @@ class PagesContainer extends React.Component {
       <div>
         <button onClick={() => this.handleShowActivePage('members')}>Members</button>
         <button onClick={() => this.handleShowActivePage('tasks')}>Tasks</button>
-        {this.showActivePage(this.state.activePage)}
+        <div className='pagesContainer'>{this.showActivePage(this.state.activePage)}</div>
       </div>
     );
   }

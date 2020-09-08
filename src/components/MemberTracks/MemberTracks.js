@@ -1,6 +1,6 @@
 import React from 'react';
 import './memberProgress.css';
-import api from '../../firebase/api';
+import { getUserTrackList } from '../../firebase/api';
 import Spinner from '../common/Spinner/Spinner';
 
 class MemberTracks extends React.Component {
@@ -14,7 +14,7 @@ class MemberTracks extends React.Component {
 
   getUserTrackList = (user) => {
     if (user) {
-      api.getUserTrackList(user).then((result) => {
+      getUserTrackList(user).then((result) => {
         let tracks = result.map((track, i) => {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
@@ -59,7 +59,7 @@ class MemberTracks extends React.Component {
 
     return (
       <div>
-        <table className={'membersTable'}>
+        <table className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>
         </table>

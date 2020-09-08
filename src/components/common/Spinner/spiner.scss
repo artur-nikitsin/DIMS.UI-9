@@ -1,0 +1,64 @@
+.preloader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  height: 100px;
+  width: 100px;
+  margin: auto;
+
+  @mixin circle {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 140, 255, 1);
+    box-shadow: 0 0 10px rgba(0, 140, 255, 0.7);
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: one;
+    animation-timing-function: ease;
+    transform-origin: bottom;
+  }
+
+  .one,
+  .three {
+    @include circle;
+    animation-name: one;
+  }
+
+  .two {
+    @include circle;
+    animation-name: two;
+    background: rgba(0, 140, 255, 1);
+  }
+
+  @keyframes two {
+    0% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+    50% {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+    }
+    100% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+  }
+
+  @keyframes one {
+    0% {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+    }
+    50% {
+      -webkit-transform: scale(1, 1);
+      transform: scale(1, 1);
+    }
+    100% {
+      -webkit-transform: scale(0.5, 0.5);
+      transform: scale(0.5, 0.5);
+    }
+  }
+}
