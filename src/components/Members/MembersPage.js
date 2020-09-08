@@ -92,9 +92,9 @@ class MembersPage extends React.Component {
               <Buttons
                 userId={member.userId}
                 handleProgress={this.handleProgress(member.userId, member.firstName)}
-                handleTasks={() => this.handleTasks(member.userId, member.firstName)}
-                handleEdit={() => this.handleEdit(member.userId)}
-                handleDelete={() => this.handleDelete(member.userId)}
+                handleTasks={this.handleTasks(member.userId, member.firstName)}
+                handleEdit={this.handleEdit(member.userId)}
+                handleDelete={this.handleDelete(member.userId)}
               />
             </td>
           </tr>
