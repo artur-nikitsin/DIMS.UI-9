@@ -1,6 +1,6 @@
 import React from 'react';
 import './tasks.scss';
-import { getTasks } from '../../firebase/api';
+import { getTasks } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
 
 class Tasks extends React.Component {

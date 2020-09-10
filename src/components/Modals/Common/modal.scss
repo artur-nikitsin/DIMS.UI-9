@@ -1,0 +1,43 @@
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+
+  .modalBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 25vw;
+    height: 40vh;
+    background: rgba(255, 255, 255, 1);
+
+    @mixin closeModalButton {
+      align-self: flex-end;
+      height: 1.5rem;
+      width: auto;
+      outline: none;
+      cursor: pointer;
+      border: 1px solid rgba(9, 116, 237, 1);
+    }
+
+    .closeModalButton {
+      @include closeModalButton;
+
+      &:hover {
+        @include closeModalButton;
+        background: rgba(9, 116, 237, 1);
+      }
+    }
+  }
+}

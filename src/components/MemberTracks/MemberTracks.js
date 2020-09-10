@@ -1,6 +1,6 @@
 import React from 'react';
 import './memberProgress.css';
-import { getUserTrackList } from '../../firebase/api';
+import { getUserTrackList } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
 
 class MemberTracks extends React.Component {

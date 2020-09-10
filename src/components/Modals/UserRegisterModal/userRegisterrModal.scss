@@ -1,0 +1,21 @@
+@import '../../common/Styles/registerUserButton';
+
+.userRegisterInputList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+  list-style-type: none;
+
+  li {
+    input {
+      height: 1.5rem;
+      margin-top: 1rem;
+      margin-left: 1rem;
+    }
+  }
+}
+
+.userRegisterButton {
+  @include memberRegisterButton;
+}

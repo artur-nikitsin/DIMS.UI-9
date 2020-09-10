@@ -1,6 +1,6 @@
 import React from 'react';
 import './memberTasks.scss';
-import { getUserTaskList } from '../../firebase/api';
+import { getUserTaskList } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
 import TrackButton from './Buttons/TrackButton';
 import StatusButtons from './Buttons/StatusButtons';

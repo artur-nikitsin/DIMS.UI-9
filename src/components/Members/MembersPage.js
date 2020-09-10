@@ -1,11 +1,11 @@
 import React from 'react';
 import MemberProgress from '../MemberProgress/MemberProgress';
-import MemberTasks from '../MembersTasks/MemberTasks';
 import Buttons from './Buttons/Buttons';
-import { getMembers } from '../../firebase/api';
+import { getMembers } from '../../firebase/apiGet';
 import './members.scss';
 import Spinner from '../common/Spinner/Spinner';
 import MemberProfile from '../MemberProfile/MemberProfile';
+import UserRegisterModal from '../Modals/UserRegisterModal/UserRegisterModal';
 
 class MembersPage extends React.Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class MembersPage extends React.Component {
       activeUserId: null,
       activeUserName: null,
       memberProgressShow: null,
+      showRegisterModal: false,
     };
   }
 
@@ -48,6 +49,18 @@ class MembersPage extends React.Component {
     this.setState({
       activePage: 'membersTable',
       activeUserId: null,
+    });
+  };
+
+  handleShowRegisterUserModal = () => {
+    this.setState({
+      showRegisterModal: true,
+    });
+  };
+
+  handleCloseRegisterModal = () => {
+    this.setState({
+      showRegisterModal: false,
     });
   };
 
@@ -110,6 +123,12 @@ class MembersPage extends React.Component {
     });
   };
 
+  userRegisterModal = (modalState) => {
+    if (modalState) {
+      return <UserRegisterModal closeModal={this.handleCloseRegisterModal} />;
+    } else return null;
+  };
+
   createMembersTable = () => {
     const tableHeaders = (
       <thead>
@@ -127,7 +146,10 @@ class MembersPage extends React.Component {
 
     return (
       <div>
-        <button className='memberRegisterButton'>Register</button>
+        {this.userRegisterModal(this.state.showRegisterModal)}
+        <button className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
+          Register
+        </button>
         <table className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.members}</tbody>
