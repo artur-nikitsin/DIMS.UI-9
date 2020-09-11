@@ -23,6 +23,28 @@ export function getMembers() {
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
+export function getMember(userId) {
+  const member = {};
+  return db
+    .collection('Users')
+    .doc(userId)
+    .get()
+    .then((user) => {
+      const { firstName, lastName, birthDate, directionId, education, startDate, userId } = user.data();
+
+      member.firstName = firstName;
+      member.lastName = lastName;
+      member.birthDate = birthDate;
+      member.directionId = directionId;
+      member.education = education;
+      member.startDate = startDate;
+      member.userId = userId;
+
+      return member;
+    })
+    .catch(({ message }) => ({ message, messageType: 'warning' }));
+}
+
 export function getUserTaskList(userId) {
   return db
     .collection('UserTasks')

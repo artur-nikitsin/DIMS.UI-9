@@ -1,11 +1,14 @@
+@import '../../common/Styles/registerUserButton';
+
 .modal {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,8 +21,12 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    width: 25vw;
-    height: 40vh;
+    min-width: 25vw;
+    min-height: 40vh;
+    width: auto;
+    height: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
     background: rgba(255, 255, 255, 1);
 
     @mixin closeModalButton {
@@ -38,6 +45,10 @@
         @include closeModalButton;
         background: rgba(9, 116, 237, 1);
       }
+    }
+
+    .submitButton {
+      @include memberRegisterButton;
     }
   }
 }

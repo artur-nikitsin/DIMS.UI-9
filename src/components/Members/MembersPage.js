@@ -6,6 +6,7 @@ import './members.scss';
 import Spinner from '../common/Spinner/Spinner';
 import MemberProfile from '../MemberProfile/MemberProfile';
 import UserRegisterModal from '../Modals/UserRegisterModal/UserRegisterModal';
+import UserEditModal from '../Modals/UserEditModal/UserEditModal';
 
 class MembersPage extends React.Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class MembersPage extends React.Component {
       activeUserName: null,
       memberProgressShow: null,
       showRegisterModal: false,
+      showEditModal: false,
     };
   }
 
@@ -41,7 +43,12 @@ class MembersPage extends React.Component {
     });
   };
 
-  handleEdit = (userId) => {};
+  handleEdit = (userId) => () => {
+    this.setState({
+      showEditModal: true,
+      activeUserId: userId,
+    });
+  };
 
   handleDelete = (userId) => {};
 
@@ -58,9 +65,10 @@ class MembersPage extends React.Component {
     });
   };
 
-  handleCloseRegisterModal = () => {
+  handleCloseModal = () => {
     this.setState({
       showRegisterModal: false,
+      showEditModal: false,
     });
   };
 
@@ -125,7 +133,13 @@ class MembersPage extends React.Component {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return <UserRegisterModal closeModal={this.handleCloseRegisterModal} />;
+      return <UserRegisterModal closeModal={this.handleCloseModal} />;
+    } else return null;
+  };
+
+  userEditModal = (modalState) => {
+    if (modalState) {
+      return <UserEditModal closeModal={this.handleCloseModal} userId={this.state.activeUserId} />;
     } else return null;
   };
 
@@ -147,6 +161,7 @@ class MembersPage extends React.Component {
     return (
       <div>
         {this.userRegisterModal(this.state.showRegisterModal)}
+        {this.userEditModal(this.state.showEditModal)}
         <button className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
           Register
         </button>
