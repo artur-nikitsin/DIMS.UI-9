@@ -28,6 +28,7 @@ class MemberProfile extends React.Component {
             handleReturnToFullList={this.props.handleReturnToFullList}
           />
         );
+
       case 'taskTrack':
         return (
           <MemberTracks

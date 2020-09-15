@@ -1,5 +1,5 @@
 import React from 'react';
-import './buttons.css';
+import './buttons.scss';
 
 class TrackButton extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class TrackButton extends React.Component {
 
   render() {
     return (
-      <button className={'taskTrackButton'} id={this.props.userId}>
+      <button className='taskTrackButton' id={this.props.userId}>
         Track
       </button>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import './buttons.css';
+import './buttons.scss';
 
 class StatusButtons extends React.Component {
   constructor(props) {

@@ -1,4 +1,5 @@
 @import '../common/Styles/Buttons/registerUserButton';
+@import '../common/Styles/commonTableStyles';
 
 .membersTableContainer {
   margin-left: 100px;
@@ -14,27 +15,6 @@
   }
 
   .membersTable {
-    width: 100%;
-    border-collapse: collapse;
-    border: 1px solid black;
-
-    & td {
-      min-width: 30px;
-      height: 80px;
-      text-align: center;
-      border: 1px solid black;
-    }
-
-    & th {
-      width: 50px;
-      height: 40px;
-      text-align: center;
-      border: 1px solid black;
-      background: rgba(9, 116, 237, 0.7);
-    }
-
-    .memberButtons {
-      width: 80px;
-    }
+    @include commonTableStyles;
   }
 }
