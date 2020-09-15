@@ -1,6 +1,21 @@
+@import 'src/components/common/Styles/simpleButton';
+
 .pagesContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 80vh;
+}
+
+.membersButton,
+.tasksTabButton {
+  @include simpleButton;
+  margin-left: 1rem;
+}
+
+.activeMembersButton,
+.activeTasksTabButton {
+  @include simpleButton;
+  color: green;
+  margin-left: 1rem;
 }

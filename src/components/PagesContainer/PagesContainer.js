@@ -30,8 +30,18 @@ class PagesContainer extends React.Component {
   render() {
     return (
       <div>
-        <button onClick={() => this.handleShowActivePage('members')}>Members</button>
-        <button onClick={() => this.handleShowActivePage('tasks')}>Tasks</button>
+        <button
+          onClick={() => this.handleShowActivePage('members')}
+          className={this.state.activePage === 'members' ? 'activeMembersButton' : 'membersButton'}
+        >
+          Members
+        </button>
+        <button
+          onClick={() => this.handleShowActivePage('tasks')}
+          className={this.state.activePage === 'tasks' ? 'activeTasksTabButton' : 'tasksTabButton'}
+        >
+          Tasks
+        </button>
         <div className='pagesContainer'>{this.showActivePage(this.state.activePage)}</div>
       </div>
     );

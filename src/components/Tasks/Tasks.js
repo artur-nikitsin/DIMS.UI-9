@@ -16,6 +16,14 @@ class Tasks extends React.Component {
     this.getTasks();
   }
 
+  tackButtons = () => {
+    return (
+      <div className='tackButtons'>
+        <button className='tackEditButton'>Edit</button>
+        <button className='tackDeleteButton'>Delete</button>
+      </div>
+    );
+  };
   getTasks = () => {
     getTasks().then((result) => {
       let tasks = result.map((task, i) => {
@@ -27,7 +35,7 @@ class Tasks extends React.Component {
             </td>
             <td key={task.taskId + 'i'}>{new Date(task.startDate).toLocaleDateString()}</td>
             <td key={task.taskId + 'j'}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-            <td key={task.taskId + 'h'} className='memberButtons'></td>
+            <td key={task.taskId + 'h'}> {this.tackButtons()}</td>
           </tr>
         );
       });

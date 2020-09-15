@@ -16,6 +16,15 @@ class MemberTracks extends React.Component {
     this.getUserTrackList(this.props.userId);
   }
 
+  trackButtons = () => {
+    return (
+      <div className='trackButtons'>
+        <button className='trackEditButton'>Edit</button>
+        <button className='trackDeleteButton'>Delete</button>
+      </div>
+    );
+  };
+
   getUserTrackList = (user) => {
     if (user) {
       getUserTrackList(user).then((result) => {
@@ -31,9 +40,7 @@ class MemberTracks extends React.Component {
                 <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
               </td>
               <td>{new Date(track.trackDate).toLocaleDateString()}</td>
-              <td>
-                <button>Button</button>
-              </td>
+              <td className='buttonsCell'>{this.trackButtons()}</td>
             </tr>
           );
         });
