@@ -1,0 +1,18 @@
+@import 'src/components/common/Styles/Buttons/simpleButton';
+@import 'src/components/common/Styles/Buttons/redButton';
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.editButton {
+  @include simpleButton;
+}
+
+.deleteButton {
+  @include redButton;
+}

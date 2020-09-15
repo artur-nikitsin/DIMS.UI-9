@@ -2,6 +2,7 @@ import React from 'react';
 import './tasks.scss';
 import { getTasks } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
+import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -16,14 +17,6 @@ class Tasks extends React.Component {
     this.getTasks();
   }
 
-  tackButtons = () => {
-    return (
-      <div className='tackButtons'>
-        <button className='tackEditButton'>Edit</button>
-        <button className='tackDeleteButton'>Delete</button>
-      </div>
-    );
-  };
   getTasks = () => {
     getTasks().then((result) => {
       let tasks = result.map((task, i) => {
@@ -35,7 +28,9 @@ class Tasks extends React.Component {
             </td>
             <td key={task.taskId + 'i'}>{new Date(task.startDate).toLocaleDateString()}</td>
             <td key={task.taskId + 'j'}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-            <td key={task.taskId + 'h'}> {this.tackButtons()}</td>
+            <td key={task.taskId + 'h'}>
+              <EditDeleteButtons />
+            </td>
           </tr>
         );
       });

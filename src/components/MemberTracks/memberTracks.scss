@@ -1,7 +1,7 @@
 @import 'src/components/common/Styles/commonTableStyles';
-@import 'src/components/common/Styles/returnToFullListButton';
-@import 'src/components/common/Styles/simpleButton';
-@import 'src/components/common/Styles/redButton';
+@import '../common/Styles/Buttons/returnToFullListButton';
+@import '../common/Styles/Buttons/simpleButton';
+@import '../common/Styles/Buttons/redButton';
 
 .memberTracksTableContainer {
   display: flex;
@@ -19,21 +19,5 @@
 
   .userGreeting {
     font-size: 25px;
-  }
-
-  .trackButtons {
-    display: flex;
-    flex-direction: column;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  .trackEditButton {
-    @include simpleButton;
-  }
-
-  .trackDeleteButton {
-    @include redButton;
   }
 }

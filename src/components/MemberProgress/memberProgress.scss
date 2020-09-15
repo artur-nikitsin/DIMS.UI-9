@@ -1,5 +1,5 @@
 @import 'src/components/common/Styles/commonTableStyles';
-@import 'src/components/common/Styles/returnToFullListButton';
+@import '../common/Styles/Buttons/returnToFullListButton';
 
 .progressTable {
   @include commonTableStyles;

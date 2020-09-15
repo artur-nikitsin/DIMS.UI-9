@@ -2,6 +2,7 @@ import React from 'react';
 import './memberTracks.scss';
 import { getUserTrackList } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
+import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
 
 class MemberTracks extends React.Component {
   constructor(props) {
@@ -15,15 +16,6 @@ class MemberTracks extends React.Component {
   componentDidMount() {
     this.getUserTrackList(this.props.userId);
   }
-
-  trackButtons = () => {
-    return (
-      <div className='trackButtons'>
-        <button className='trackEditButton'>Edit</button>
-        <button className='trackDeleteButton'>Delete</button>
-      </div>
-    );
-  };
 
   getUserTrackList = (user) => {
     if (user) {
@@ -40,7 +32,9 @@ class MemberTracks extends React.Component {
                 <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
               </td>
               <td>{new Date(track.trackDate).toLocaleDateString()}</td>
-              <td className='buttonsCell'>{this.trackButtons()}</td>
+              <td>
+                <EditDeleteButtons />
+              </td>
             </tr>
           );
         });

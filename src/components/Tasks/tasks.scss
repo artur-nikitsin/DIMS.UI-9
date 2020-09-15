@@ -1,7 +1,7 @@
 @import 'src/components/common/Styles/commonTableStyles';
-@import 'src/components/common/Styles/returnToFullListButton';
-@import 'src/components/common/Styles/simpleButton';
-@import 'src/components/common/Styles/redButton';
+@import '../common/Styles/Buttons/returnToFullListButton';
+@import '../common/Styles/Buttons/simpleButton';
+@import '../common/Styles/Buttons/redButton';
 
 .tasksTableContainer {
   min-height: 500px;
@@ -13,21 +13,5 @@
 
   .tasksTable {
     @include commonTableStyles;
-  }
-
-  .tackButtons {
-    display: flex;
-    flex-direction: column;
-    flex-flow: row wrap;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  .tackEditButton {
-    @include simpleButton;
-  }
-
-  .tackDeleteButton {
-    @include redButton;
   }
 }
