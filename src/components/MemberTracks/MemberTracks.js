@@ -28,7 +28,6 @@ class MemberTracks extends React.Component {
                 <a href=''>{track.name}</a>
               </td>
               <td>
-                {' '}
                 <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
               </td>
               <td>{new Date(track.trackDate).toLocaleDateString()}</td>

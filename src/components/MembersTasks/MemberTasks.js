@@ -32,7 +32,7 @@ class MemberTasks extends React.Component {
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
               <td className={'tasksButtons'}>Status</td>
               <td className={'tasksButtons'}>
-                <TrackButton />{' '}
+                <TrackButton />
               </td>
               <td className={'tasksButtons'}>
                 <StatusButtons />

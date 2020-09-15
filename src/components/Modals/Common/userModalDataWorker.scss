@@ -1,15 +1,37 @@
-.userRegisterInputList {
+@import '../../common/Styles/Buttons/registerUserButton';
+
+.modalData {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-end;
-  list-style-type: none;
+  justify-content: center;
+  align-items: center;
 
-  li {
-    input {
-      height: 1.5rem;
-      margin-top: 1rem;
-      margin-left: 1rem;
+  .userForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 3rem;
+
+    .userRegisterInputList {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: flex-end;
+      list-style-type: none;
+
+      li {
+        input {
+          height: 1.5rem;
+          margin-top: 1rem;
+          margin-left: 1rem;
+        }
+      }
     }
+  }
+  .modalButtons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 50%;
   }
 }

@@ -1,6 +1,6 @@
 @import '../../common/Styles/Buttons/registerUserButton';
 
-.modal {
+@mixin modal {
   position: fixed;
   top: 0;
   right: 0;
@@ -9,33 +9,44 @@
   min-width: 100vw;
   min-height: 100vh;
   height: auto;
+}
+
+.modal {
+  @include modal;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+  border-radius: 5px;
+  z-index: 110;
+
+  .closeModalArea {
+    @include modal;
+    z-index: 100;
+  }
 
   .modalBody {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    min-width: 25vw;
-    min-height: 40vh;
     width: auto;
     height: auto;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     background: rgba(255, 255, 255, 1);
+    z-index: 1000;
 
     @mixin closeModalButton {
       align-self: flex-end;
       height: 1.5rem;
+      font-size: 1.5rem;
       width: auto;
       outline: none;
       cursor: pointer;
-      border: 1px solid rgba(9, 116, 237, 1);
+      border: none;
+      background: #fff;
     }
 
     .closeModalButton {
@@ -43,7 +54,6 @@
 
       &:hover {
         @include closeModalButton;
-        background: rgba(9, 116, 237, 1);
       }
     }
 

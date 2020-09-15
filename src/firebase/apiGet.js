@@ -30,7 +30,22 @@ export function getMember(userId) {
     .doc(userId)
     .get()
     .then((user) => {
-      const { firstName, lastName, birthDate, directionId, education, startDate, userId } = user.data();
+      const {
+        firstName,
+        lastName,
+        birthDate,
+        directionId,
+        education,
+        startDate,
+        userId,
+        email,
+        sex,
+        university,
+        mathScore,
+        adress,
+        mobilePhone,
+        skype,
+      } = user.data();
 
       member.firstName = firstName;
       member.lastName = lastName;
@@ -39,6 +54,13 @@ export function getMember(userId) {
       member.education = education;
       member.startDate = startDate;
       member.userId = userId;
+      member.email = email;
+      member.sex = sex;
+      member.university = university;
+      member.mathScore = mathScore;
+      member.adress = adress;
+      member.mobilePhone = mobilePhone;
+      member.skype = skype;
 
       return member;
     })
