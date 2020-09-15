@@ -14,6 +14,13 @@ export function editMemberData(data) {
       education: data.education,
       startDate: data.startDate,
       userId: data.userId,
+      email: data.email,
+      sex: data.sex,
+      university: data.university,
+      mathScore: data.mathScore,
+      adress: data.adress,
+      mobilePhone: data.mobilePhone,
+      skype: data.skype,
     })
     .then(() => {
       console.log('Document successfully written!');
@@ -44,6 +51,13 @@ export function setNewMemberData(data) {
           education: data.education,
           startDate: data.startDate,
           userId: userId,
+          email: data.email,
+          sex: data.sex,
+          university: data.university,
+          mathScore: data.mathScore,
+          adress: data.adress,
+          mobilePhone: data.mobilePhone,
+          skype: data.skype,
         });
       }
     })
