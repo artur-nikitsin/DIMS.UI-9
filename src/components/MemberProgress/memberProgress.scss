@@ -1,0 +1,10 @@
+@import 'src/components/common/Styles/commonTableStyles';
+@import 'src/components/common/Styles/returnToFullListButton';
+
+.progressTable {
+  @include commonTableStyles;
+}
+
+.returnToFullListButton {
+  @include returnToFullListButton;
+}
