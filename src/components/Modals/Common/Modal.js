@@ -21,7 +21,6 @@ class Modal extends React.Component {
               Close
             </button>
             {this.props.modalContent}
-            <button className='submitButton'>{this.props.modalType}</button>
           </div>
         )}
       </div>

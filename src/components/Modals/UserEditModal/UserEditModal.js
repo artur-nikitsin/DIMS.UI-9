@@ -1,7 +1,7 @@
 import React from 'react';
 import Modal from '../Common/Modal';
 import { getMember } from '../../../firebase/apiGet';
-import UsersModalContent from '../Common/UsersModalContent';
+import UsersModalDataWorker from '../Common/UsersModalDataWorker';
 
 class UserEditModal extends React.Component {
   constructor(props) {
@@ -24,9 +24,15 @@ class UserEditModal extends React.Component {
   render() {
     return (
       <Modal
-        modalContent={<UsersModalContent userData={this.state.userData} />}
+        modalContent={
+          <UsersModalDataWorker
+            userData={this.state.userData}
+            modalType='Edit'
+            closeModal={this.props.closeModal}
+            closeModalAndReload={this.props.closeModalAndReload}
+          />
+        }
         loading={this.state.loading}
-        modalType='Edit'
         closeModal={this.props.closeModal}
         userId={this.props.userId}
       />

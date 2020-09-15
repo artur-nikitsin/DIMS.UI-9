@@ -1,5 +1,5 @@
 import React from 'react';
-import './memberProgress.css';
+import './memberTracks.scss';
 import { getUserTrackList } from '../../firebase/apiGet';
 import Spinner from '../common/Spinner/Spinner';
 
@@ -10,6 +10,10 @@ class MemberTracks extends React.Component {
       loading: true,
       userTrackList: null,
     };
+  }
+
+  componentDidMount() {
+    this.getUserTrackList(this.props.userId);
   }
 
   getUserTrackList = (user) => {
@@ -58,8 +62,15 @@ class MemberTracks extends React.Component {
     );
 
     return (
-      <div>
-        <table className='membersTable'>
+      <div className='memberTracksTableContainer'>
+        <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
+          Return to full list
+        </button>
+        {this.props.navigationButtons()}
+        <div>
+          <p className={'userGreeting'}>{'Hi, dear ' + this.props.userName + '! This is your task tracks:'}</p>
+        </div>
+        <table className='tracksTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>
         </table>
@@ -68,7 +79,6 @@ class MemberTracks extends React.Component {
   };
 
   render() {
-    this.getUserTrackList(this.props.userId);
     return <div>{this.state.loading ? <Spinner /> : this.createMemberProgressTable()}</div>;
   }
 }

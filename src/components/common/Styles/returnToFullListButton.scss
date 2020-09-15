@@ -1,0 +1,16 @@
+@mixin returnToFullListButton {
+  min-width: 120px;
+  min-height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+  align-self: flex-start;
+  margin-bottom: 10px;
+
+  &:hover {
+    background: rgba(9, 116, 237, 1);
+    transition: background 0.5s ease, color 0.2s linear;
+  }
+}

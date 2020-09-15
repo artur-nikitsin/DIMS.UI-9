@@ -1,3 +1,6 @@
+@import 'src/components/common/Styles/simpleButton';
+@import 'src/components/common/Styles/redButton';
+
 .membersButtonsGroup {
   display: flex;
   flex-direction: row;
@@ -6,34 +9,12 @@
   align-items: center;
 }
 
-@mixin button {
-  min-width: 80px;
-  min-height: 30px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  outline: none;
-  border-radius: 3px;
-}
-
 .progressMemberButton,
 .tasksMemberButton,
 .editMemberButton {
-  @include button;
-  border: 1px solid rgba(0, 140, 255, 1);
-  &:hover {
-    @include button;
-    background: rgba(9, 116, 237, 1);
-    transition: background 0.5s ease, color 0.2s linear;
-  }
+  @include simpleButton;
 }
 
 .deleteMemberButton {
-  @include button;
-  border: 2px solid rgba(255, 0, 0, 1);
-  &:hover {
-    @include button;
-    background: rgba(212, 34, 34, 1);
-    transition: background 0.5s ease, color 0.2s linear;
-  }
+  @include redButton;
 }

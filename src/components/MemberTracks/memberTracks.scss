@@ -1,13 +1,13 @@
 @import 'src/components/common/Styles/commonTableStyles';
 @import 'src/components/common/Styles/returnToFullListButton';
 
-.memberTasksTableContainer {
+.memberTracksTableContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  .memberTasksTable {
+  .tracksTable {
     @include commonTableStyles;
   }
 

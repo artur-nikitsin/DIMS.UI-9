@@ -61,7 +61,7 @@ class MemberProgress extends React.Component {
         <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
           Return to full list
         </button>
-        <table className='membersTable'>
+        <table className='progressTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>
         </table>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './userRegisterModal.scss';
 import Modal from '../Common/Modal';
-import UsersModalContent from '../Common/UsersModalContent';
+import UsersModalDataWorker from '../Common/UsersModalDataWorker';
 
 class UserRegisterModal extends React.Component {
   constructor(props) {
@@ -9,7 +9,18 @@ class UserRegisterModal extends React.Component {
   }
 
   render() {
-    return <Modal modalContent={<UsersModalContent />} modalType='Register' closeModal={this.props.closeModal} />;
+    return (
+      <Modal
+        modalContent={
+          <UsersModalDataWorker
+            modalType='Register'
+            closeModal={this.props.closeModal}
+            closeModalAndReload={this.props.closeModalAndReload}
+          />
+        }
+        closeModal={this.props.closeModal}
+      />
+    );
   }
 }
 

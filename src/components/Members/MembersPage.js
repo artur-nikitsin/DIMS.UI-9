@@ -2,6 +2,7 @@ import React from 'react';
 import MemberProgress from '../MemberProgress/MemberProgress';
 import Buttons from './Buttons/Buttons';
 import { getMembers } from '../../firebase/apiGet';
+import { deleteUser } from '../../firebase/apiDelete';
 import './members.scss';
 import Spinner from '../common/Spinner/Spinner';
 import MemberProfile from '../MemberProfile/MemberProfile';
@@ -20,6 +21,7 @@ class MembersPage extends React.Component {
       memberProgressShow: null,
       showRegisterModal: false,
       showEditModal: false,
+      reload: true,
     };
   }
 
@@ -50,7 +52,13 @@ class MembersPage extends React.Component {
     });
   };
 
-  handleDelete = (userId) => {};
+  handleDelete = (userId) => () => {
+    deleteUser(userId).then((status) => {
+      if (status === 'OK') {
+        this.reloadMembersPage();
+      }
+    });
+  };
 
   handleReturnToFullList = () => {
     this.setState({
@@ -72,9 +80,28 @@ class MembersPage extends React.Component {
     });
   };
 
+  closeModalAndReload = () => {
+    this.setState({
+      showRegisterModal: false,
+      showEditModal: false,
+    });
+    this.reloadMembersPage();
+  };
+
+  reloadMembersPage = () => {
+    this.setState({
+      members: null,
+      loading: true,
+    });
+    this.getMembers();
+  };
+
   showActivePage = (page) => {
     switch (page) {
       case 'membersTable':
+        return this.createMembersTable();
+
+      case 'newMembersTable':
         return this.createMembersTable();
 
       case 'membersProgress':
@@ -87,10 +114,11 @@ class MembersPage extends React.Component {
       case 'membersTasks':
         return (
           <div>
-            <button className={'returnToFullListButton'} onClick={this.handleReturnToFullList}>
-              Return back to full list
-            </button>
-            <MemberProfile userId={this.state.activeUserId} userName={this.state.activeUserName} />
+            <MemberProfile
+              userId={this.state.activeUserId}
+              userName={this.state.activeUserName}
+              handleReturnToFullList={this.handleReturnToFullList}
+            />
           </div>
         );
     }
@@ -133,13 +161,19 @@ class MembersPage extends React.Component {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return <UserRegisterModal closeModal={this.handleCloseModal} />;
+      return <UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload} />;
     } else return null;
   };
 
   userEditModal = (modalState) => {
     if (modalState) {
-      return <UserEditModal closeModal={this.handleCloseModal} userId={this.state.activeUserId} />;
+      return (
+        <UserEditModal
+          closeModal={this.handleCloseModal}
+          userId={this.state.activeUserId}
+          closeModalAndReload={this.closeModalAndReload}
+        />
+      );
     } else return null;
   };
 
@@ -176,6 +210,8 @@ class MembersPage extends React.Component {
   render() {
     return (
       <div className='membersTableContainer'>
+        {this.userRegisterModal(this.state.showRegisterModal)}
+        {this.userEditModal(this.state.showEditModal)}
         {this.state.loading ? <Spinner /> : this.showActivePage(this.state.activePage)}
       </div>
     );

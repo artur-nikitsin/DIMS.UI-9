@@ -14,6 +14,10 @@ class MemberTasks extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.getUserTaskList(this.props.userId);
+  }
+
   getUserTaskList = (user) => {
     if (user) {
       getUserTaskList(user).then((result) => {
@@ -63,7 +67,11 @@ class MemberTasks extends React.Component {
     );
 
     return (
-      <div>
+      <div className={'memberTasksTableContainer'}>
+        <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
+          Return to full list
+        </button>
+        {this.props.navigationButtons()}
         <div>
           <p className={'userGreeting'}>{'Hi, dear ' + this.props.userName + '! This is your current tasks:'}</p>
         </div>
@@ -76,13 +84,7 @@ class MemberTasks extends React.Component {
   };
 
   render() {
-    this.getUserTaskList(this.props.userId);
-
-    return (
-      <div className={'memberTasksTableContainer'}>
-        {this.state.loading ? <Spinner /> : this.createMemberTaskTable()}
-      </div>
-    );
+    return <div>{this.state.loading ? <Spinner /> : this.createMemberTaskTable()}</div>;
   }
 }
 

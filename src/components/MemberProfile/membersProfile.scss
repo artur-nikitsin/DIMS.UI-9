@@ -1,0 +1,14 @@
+@import 'src/components/common/Styles/simpleButton';
+
+.tasksButton,
+.tracksButton {
+  @include simpleButton;
+  margin-left: 1rem;
+}
+
+.activeTasksButton,
+.activeTracksButton {
+  @include simpleButton;
+  color: green;
+  margin-left: 1rem;
+}

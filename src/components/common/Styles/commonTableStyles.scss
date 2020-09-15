@@ -1,7 +1,22 @@
-@mixin table {
+@mixin commonTableStyles {
   width: 100%;
   border-collapse: collapse;
   border: 1px solid black;
+
+  & td {
+    width: 200px;
+    height: 80px;
+    text-align: center;
+    border: 1px solid black;
+  }
+
+  & th {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid black;
+    background: rgba(9, 116, 237, 0.7);
+  }
 }
 
 .darkLine {
