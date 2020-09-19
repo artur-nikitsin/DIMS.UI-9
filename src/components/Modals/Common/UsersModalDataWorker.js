@@ -53,6 +53,12 @@ class UsersModalDataWorker extends React.Component {
     });
   }
 
+  handleRadioInput(event, value) {
+    this.setState({
+      sex: value,
+    });
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -134,14 +140,32 @@ class UsersModalDataWorker extends React.Component {
           </ul>
 
           <ul className='userRegisterInputList'>
-            <li>
-              <label htmlFor='userSex'>Sex</label>
-              <input
-                type='text'
-                id='userSex'
-                value={this.state.sex ? this.state.sex : ''}
-                onChange={(event) => this.handleChange(event, 'sex')}
-              />
+            <li className='sexInputs'>
+              <div className='radioInputs'>
+                <span>Sex:</span>
+
+                <div className='radioButton'>
+                  <input
+                    type='radio'
+                    id='userMale'
+                    checked={this.state.sex === 'male'}
+                    value={this.state.sex ? this.state.sex : ''}
+                    onChange={(event) => this.handleRadioInput(event, 'male')}
+                  />
+                  <label htmlFor='userMale'>Male</label>
+                </div>
+
+                <div className='radioButton'>
+                  <input
+                    type='radio'
+                    id='userFemale'
+                    checked={this.state.sex === 'female'}
+                    value={this.state.sex ? this.state.sex : ''}
+                    onChange={(event) => this.handleRadioInput(event, 'female')}
+                  />
+                  <label htmlFor='userFemale'>Female</label>
+                </div>
+              </div>
             </li>
 
             <li>
