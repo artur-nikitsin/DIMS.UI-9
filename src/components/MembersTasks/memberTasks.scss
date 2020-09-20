@@ -1,5 +1,5 @@
-@import 'src/components/common/Styles/commonTableStyles';
-@import '../common/Styles/Buttons/returnToFullListButton';
+@import '../common/Styles/Mixins/Tables/commonTableStyles';
+@import '../common/Styles/Mixins/Buttons/Buttons';
 
 .memberTasksTableContainer {
   display: flex;

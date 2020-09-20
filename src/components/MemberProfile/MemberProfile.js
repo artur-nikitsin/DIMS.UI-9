@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import MemberTasks from '../MembersTasks/MemberTasks';
 import MemberTracks from '../MemberTracks/MemberTracks';
 import './membersProfile.scss';
 
-class MemberProfile extends React.Component {
+class MemberProfile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 'tasks',
+      activePage: 'tasks'
     };
   }
 
@@ -18,27 +18,25 @@ class MemberProfile extends React.Component {
   };
 
   showActivePage = (page) => {
-    switch (page) {
-      case 'tasks':
-        return (
-          <MemberTasks
-            userId={this.props.userId}
-            userName={this.props.userName}
-            navigationButtons={this.navigationButtons}
-            handleReturnToFullList={this.props.handleReturnToFullList}
-          />
-        );
 
-      case 'taskTrack':
-        return (
-          <MemberTracks
-            userId={this.props.userId}
-            userName={this.props.userName}
-            navigationButtons={this.navigationButtons}
-            handleReturnToFullList={this.props.handleReturnToFullList}
-          />
-        );
-    }
+    return (
+      page === 'tasks' ? <MemberTasks
+          userId={this.props.userId}
+          userName={this.props.userName}
+          navigationButtons={this.navigationButtons}
+          handleReturnToFullList={this.props.handleReturnToFullList}
+        />
+
+        :
+
+        <MemberTracks
+          userId={this.props.userId}
+          userName={this.props.userName}
+          navigationButtons={this.navigationButtons}
+          handleReturnToFullList={this.props.handleReturnToFullList}
+        />
+    );
+
   };
 
   navigationButtons = () => {
@@ -46,14 +44,12 @@ class MemberProfile extends React.Component {
       <div>
         <button
           onClick={this.handleShowActivePage('tasks')}
-          className={this.state.activePage === 'tasks' ? 'activeTasksButton' : 'tasksButton'}
-        >
+          className={this.state.activePage === 'tasks' ? 'activeTasksButton' : 'tasksButton'}>
           Tasks
         </button>
         <button
           onClick={this.handleShowActivePage('taskTrack')}
-          className={this.state.activePage === 'taskTrack' ? 'activeTracksButton' : 'tracksButton'}
-        >
+          className={this.state.activePage === 'taskTrack' ? 'activeTracksButton' : 'tracksButton'}>
           Task tracks
         </button>
       </div>

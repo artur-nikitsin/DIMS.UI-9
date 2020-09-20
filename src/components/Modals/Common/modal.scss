@@ -1,4 +1,4 @@
-@import '../../common/Styles/Buttons/registerUserButton';
+@import '../../common/Styles/Mixins/Buttons/Buttons';
 
 @mixin modal {
   position: fixed;
@@ -11,12 +11,16 @@
   height: auto;
 }
 
-.modal {
-  @include modal;
+@mixin centerFlex {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.modal {
+  @include modal;
+  @include centerFlex;
   background: rgba(0, 0, 0, 0.5);
   border-radius: 5px;
   z-index: 110;
@@ -27,10 +31,7 @@
   }
 
   .modalBody {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include centerFlex;
     width: auto;
     height: auto;
     padding-left: 1rem;

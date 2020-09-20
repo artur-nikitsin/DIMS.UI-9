@@ -1,7 +1,7 @@
 import React from 'react';
 import MembersPage from '../Members/MembersPage';
 import Tasks from '../Tasks/Tasks';
-import '../common/Styles/commonTableStyles.scss';
+import '../common/Styles/Mixins/Tables/commonTableStyles.scss';
 import './pagesContainer.scss';
 
 class PagesContainer extends React.Component {

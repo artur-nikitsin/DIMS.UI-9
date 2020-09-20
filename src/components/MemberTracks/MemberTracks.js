@@ -1,20 +1,23 @@
-import React from 'react';
-import './memberTracks.scss';
-import { getUserTrackList } from '../../firebase/apiGet';
-import Spinner from '../common/Spinner/Spinner';
-import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
+import React from "react";
+import "./memberTracks.scss";
+import { getUserTrackList } from "../../firebase/apiGet";
+import Spinner from "../common/Spinner/Spinner";
+import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
+import getSubString from "../helpers/getSubString/getSubString";
+import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
 
 class MemberTracks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      userTrackList: null,
+      userTrackList: null
     };
   }
 
   componentDidMount() {
     this.getUserTrackList(this.props.userId);
+
   }
 
   getUserTrackList = (user) => {
@@ -22,15 +25,15 @@ class MemberTracks extends React.Component {
       getUserTrackList(user).then((result) => {
         let tracks = result.map((track, i) => {
           return (
-            <tr key={track.taskTrackId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
+            <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>
               <td>
                 <a href=''>{track.name}</a>
               </td>
               <td>
-                <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
+                <a href=''>{getSubString(track.trackNote, 50)}</a>
               </td>
-              <td>{new Date(track.trackDate).toLocaleDateString()}</td>
+              <td>{getLocalDate(track.trackDate)}</td>
               <td>
                 <EditDeleteButtons />
               </td>
@@ -38,10 +41,10 @@ class MemberTracks extends React.Component {
           );
         });
 
-        if (this.state.userTrackList === null) {
+        if (!this.state.userTrackList) {
           this.setState({
             loading: false,
-            userTrackList: tracks,
+            userTrackList: tracks
           });
         }
       });
@@ -51,13 +54,13 @@ class MemberTracks extends React.Component {
   createMemberProgressTable = () => {
     const tableHeaders = (
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Task</th>
-          <th>Note</th>
-          <th>Date</th>
-          <th />
-        </tr>
+      <tr>
+        <th>#</th>
+        <th>Task</th>
+        <th>Note</th>
+        <th>Date</th>
+        <th />
+      </tr>
       </thead>
     );
 
@@ -68,7 +71,7 @@ class MemberTracks extends React.Component {
         </button>
         {this.props.navigationButtons()}
         <div>
-          <p className={'userGreeting'}>{'Hi, dear ' + this.props.userName + '! This is your task tracks:'}</p>
+          <p className={"userGreeting"}>{`Hi, dear '${this.props.userName}! This is your task tracks:`}</p>
         </div>
         <table className='tracksTable'>
           {tableHeaders}

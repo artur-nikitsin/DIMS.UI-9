@@ -1,0 +1,66 @@
+@mixin redButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid rgba(255, 0, 0, 1);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(212, 34, 34, 1);
+    transition: background 0.5s ease, color 0.2s linear;
+  }
+}
+
+@mixin memberRegisterButton {
+  min-width: 120px;
+  min-height: 50px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+  margin-bottom: 20px;
+
+  &:hover {
+    background: rgba(9, 116, 237, 1);
+    transition: background 0.5s ease, color 0.2s linear;
+  }
+}
+
+
+@mixin returnToFullListButton {
+  min-width: 120px;
+  min-height: 30px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+  align-self: flex-start;
+  margin-bottom: 10px;
+
+  &:hover {
+    background: rgba(9, 116, 237, 1);
+    transition: background 0.5s ease, color 0.2s linear;
+  }
+}
+
+
+@mixin simpleButton {
+  min-width: 80px;
+  min-height: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgba(0, 140, 255, 1);
+  border-radius: 3px;
+
+  &:hover {
+    background: rgba(9, 116, 237, 1);
+    transition: background 0.5s ease, color 0.2s linear;
+  }
+}

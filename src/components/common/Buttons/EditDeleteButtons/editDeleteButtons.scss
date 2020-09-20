@@ -1,5 +1,4 @@
-@import 'src/components/common/Styles/Buttons/simpleButton';
-@import 'src/components/common/Styles/Buttons/redButton';
+@import '../../Styles/Mixins/Buttons/Buttons';
 
 .buttonsContainer {
   display: flex;

@@ -6,22 +6,7 @@ export function editMemberData(data) {
   return db
     .collection('Users')
     .doc(data.userId)
-    .set({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      birthDate: data.birthDate,
-      directionId: data.directionId,
-      education: data.education,
-      startDate: data.startDate,
-      userId: data.userId,
-      email: data.email,
-      sex: data.sex,
-      university: data.university,
-      mathScore: data.mathScore,
-      adress: data.adress,
-      mobilePhone: data.mobilePhone,
-      skype: data.skype,
-    })
+    .set(saveDataTemplate(data.userId, data))
     .then(() => {
       console.log('Document successfully written!');
       return 'OK';
@@ -43,22 +28,7 @@ export function setNewMemberData(data) {
       if (doc.exists) {
         console.log('Document data:', doc.data());
       } else {
-        members.doc(userId).set({
-          firstName: data.firstName,
-          lastName: data.lastName,
-          birthDate: data.birthDate,
-          directionId: data.directionId,
-          education: data.education,
-          startDate: data.startDate,
-          userId: userId,
-          email: data.email,
-          sex: data.sex,
-          university: data.university,
-          mathScore: data.mathScore,
-          adress: data.adress,
-          mobilePhone: data.mobilePhone,
-          skype: data.skype,
-        });
+        members.doc(userId).set(saveDataTemplate(userId, data));
       }
     })
     .then(() => {
@@ -68,4 +38,24 @@ export function setNewMemberData(data) {
     .catch(function(error) {
       console.log('Error getting document:', error);
     });
+
 }
+
+const saveDataTemplate = (userId, data) => {
+  return {
+    firstName: data.firstName,
+    lastName: data.lastName,
+    birthDate: data.birthDate,
+    directionId: data.directionId,
+    education: data.education,
+    startDate: data.startDate,
+    userId: userId,
+    email: data.email,
+    sex: data.sex,
+    university: data.university,
+    mathScore: data.mathScore,
+    adress: data.adress,
+    mobilePhone: data.mobilePhone,
+    skype: data.skype,
+  };
+};

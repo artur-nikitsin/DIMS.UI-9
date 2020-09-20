@@ -1,9 +1,10 @@
-@import '../common/Styles/Buttons/simpleButton';
+@import '../common/Styles/Mixins/Buttons/Buttons';
 
 .tasksButton,
 .tracksButton {
   @include simpleButton;
   margin-left: 1rem;
+
 }
 
 .activeTasksButton,

@@ -1,7 +1,6 @@
-@import 'src/components/common/Styles/commonTableStyles';
-@import '../common/Styles/Buttons/returnToFullListButton';
-@import '../common/Styles/Buttons/simpleButton';
-@import '../common/Styles/Buttons/redButton';
+@import '../common/Styles/Mixins/Tables/commonTableStyles';
+@import '../common/Styles/Mixins/Buttons/Buttons';
+
 
 .memberTracksTableContainer {
   display: flex;

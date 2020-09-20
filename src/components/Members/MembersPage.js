@@ -85,6 +85,7 @@ class MembersPage extends React.Component {
       showRegisterModal: false,
       showEditModal: false,
     });
+    this.handleCloseModal();
     this.reloadMembersPage();
   };
 
@@ -98,16 +99,14 @@ class MembersPage extends React.Component {
 
   showActivePage = (page) => {
     switch (page) {
-      case 'membersTable':
-        return this.createMembersTable();
 
-      case 'newMembersTable':
+      case 'membersTable':
         return this.createMembersTable();
 
       case 'membersProgress':
         return (
           <div>
-            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
+            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList}/>
           </div>
         );
 
@@ -161,7 +160,7 @@ class MembersPage extends React.Component {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return <UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload} />;
+      return (<UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload}/>);
     } else return null;
   };
 
@@ -180,15 +179,15 @@ class MembersPage extends React.Component {
   createMembersTable = () => {
     const tableHeaders = (
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Full Name</th>
-          <th>Direction</th>
-          <th>Education</th>
-          <th>Start</th>
-          <th>Age</th>
-          <th />
-        </tr>
+      <tr>
+        <th>#</th>
+        <th>Full Name</th>
+        <th>Direction</th>
+        <th>Education</th>
+        <th>Start</th>
+        <th>Age</th>
+        <th/>
+      </tr>
       </thead>
     );
 
@@ -212,7 +211,7 @@ class MembersPage extends React.Component {
       <div className='membersTableContainer'>
         {this.userRegisterModal(this.state.showRegisterModal)}
         {this.userEditModal(this.state.showEditModal)}
-        {this.state.loading ? <Spinner /> : this.showActivePage(this.state.activePage)}
+        {this.state.loading ? <Spinner/> : this.showActivePage(this.state.activePage)}
       </div>
     );
   }

@@ -1,4 +1,4 @@
-@import 'src/components/common/Styles/Buttons/simpleButton';
+@import '../../common/Styles/Mixins/Buttons/Buttons';
 
 .statusButtonsGroup {
   display: flex;
@@ -13,10 +13,10 @@
 }
 
 @mixin successStatusButton {
-  min-width: 80px;
-  min-height: 30px;
+  min-width: 5rem;
+  min-height: 2rem;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   outline: none;
   border: 2px solid rgba(27, 196, 39, 1);
@@ -34,10 +34,10 @@
 }
 
 @mixin failStatusButton {
-  min-width: 80px;
-  min-height: 30px;
+  min-width: 5rem;
+  min-height: 2rem;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
   cursor: pointer;
   outline: none;
   border: 2px solid rgba(255, 0, 0, 1);

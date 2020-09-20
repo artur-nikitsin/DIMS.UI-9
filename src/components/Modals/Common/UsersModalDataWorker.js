@@ -1,6 +1,9 @@
 import React from 'react';
 import './userModalDataWorker.scss';
 import { editMemberData, setNewMemberData } from '../../../firebase/apiSet';
+import TextInput from './TextInput';
+import RadioInput from './RadioInput';
+
 
 class UsersModalDataWorker extends React.Component {
   constructor(props) {
@@ -23,6 +26,7 @@ class UsersModalDataWorker extends React.Component {
       skype: null,
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -47,15 +51,15 @@ class UsersModalDataWorker extends React.Component {
     }
   }
 
-  handleChange(event, input) {
+  handleChange(event) {
     this.setState({
-      [input]: event.target.value,
+      [event.target.name]: event.target.value,
     });
   }
 
-  handleRadioInput(event, value) {
+  handleRadioInput(event) {
     this.setState({
-      sex: value,
+      sex: event.target.name,
     });
   }
 
@@ -78,145 +82,28 @@ class UsersModalDataWorker extends React.Component {
       <div className='modalData'>
         <form onSubmit={this.handleSubmit} className='userForm'>
           <ul className='userRegisterInputList'>
-            <li>
-              <label htmlFor='userName'>Name</label>
-              <input
-                type='text'
-                id='userName'
-                value={this.state.firstName ? this.state.firstName : ''}
-                onChange={(event) => this.handleChange(event, 'firstName')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userLastName'>Last Name</label>
-              <input
-                type='text'
-                id='userLastName'
-                value={this.state.lastName ? this.state.lastName : ''}
-                onChange={(event) => this.handleChange(event, 'lastName')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userDirection'>Direction</label>
-              <input
-                type='text'
-                id='userDirection'
-                value={this.state.directionId ? this.state.directionId : ''}
-                onChange={(event) => this.handleChange(event, 'directionId')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userEducation'>Education</label>
-              <input
-                type='text'
-                id='userEducation'
-                value={this.state.education ? this.state.education : ''}
-                onChange={(event) => this.handleChange(event, 'education')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userStartDate'>Start date</label>
-              <input
-                type='text'
-                id='userStartDate'
-                value={this.state.startDate ? new Date(this.state.startDate).toLocaleDateString() : ''}
-                onChange={(event) => this.handleChange(event, 'startDate')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userEmail'>Email</label>
-              <input
-                type='text'
-                id='userEmail'
-                value={this.state.email ? this.state.email : ''}
-                onChange={(event) => this.handleChange(event, 'email')}
-              />
-            </li>
+            <TextInput inputName='firstName' handleChange={this.handleChange} value={this.state.firstName}/>
+            <TextInput inputName='lastName' handleChange={this.handleChange} value={this.state.lastName}/>
+            <TextInput inputName='directionId' handleChange={this.handleChange} value={this.state.directionId}/>
+            <TextInput inputName='education' handleChange={this.handleChange} value={this.state.education}/>
+            <TextInput inputName='startDate' handleChange={this.handleChange} value={this.state.startDate}/>
+            <TextInput inputName='email' handleChange={this.handleChange} value={this.state.email}/>
           </ul>
 
           <ul className='userRegisterInputList'>
             <li className='sexInputs'>
               <div className='radioInputs'>
                 <span>Sex:</span>
-
-                <div className='radioButton'>
-                  <input
-                    type='radio'
-                    id='userMale'
-                    checked={this.state.sex === 'male'}
-                    value={this.state.sex ? this.state.sex : ''}
-                    onChange={(event) => this.handleRadioInput(event, 'male')}
-                  />
-                  <label htmlFor='userMale'>Male</label>
-                </div>
-
-                <div className='radioButton'>
-                  <input
-                    type='radio'
-                    id='userFemale'
-                    checked={this.state.sex === 'female'}
-                    value={this.state.sex ? this.state.sex : ''}
-                    onChange={(event) => this.handleRadioInput(event, 'female')}
-                  />
-                  <label htmlFor='userFemale'>Female</label>
-                </div>
+                <RadioInput inputName='male' value={this.state.sex} handleRadioInput={this.handleRadioInput}/>
+                <RadioInput inputName='female' value={this.state.sex} handleRadioInput={this.handleRadioInput}/>
               </div>
             </li>
 
-            <li>
-              <label htmlFor='userUniversity'>University</label>
-              <input
-                type='text'
-                id='userUniversity'
-                value={this.state.university ? this.state.university : ''}
-                onChange={(event) => this.handleChange(event, 'university')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userMathScore'>Math Score</label>
-              <input
-                type='text'
-                id='userMathScore'
-                value={this.state.mathScore ? this.state.mathScore : ''}
-                onChange={(event) => this.handleChange(event, 'mathScore')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userAdress'>Adress</label>
-              <input
-                type='text'
-                id='userAdress'
-                value={this.state.adress ? this.state.adress : ''}
-                onChange={(event) => this.handleChange(event, 'adress')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userMobilePhone'>Mobile Phone</label>
-              <input
-                type='text'
-                id='userMobilePhone'
-                value={this.state.mobilePhone ? this.state.mobilePhone : ''}
-                onChange={(event) => this.handleChange(event, 'mobilePhone')}
-              />
-            </li>
-
-            <li>
-              <label htmlFor='userSkype'>Skype</label>
-              <input
-                type='text'
-                id='userSkype'
-                value={this.state.skype ? this.state.skype : ''}
-                onChange={(event) => this.handleChange(event, 'skype')}
-              />
-            </li>
+            <TextInput inputName='university' handleChange={this.handleChange} value={this.state.university}/>
+            <TextInput inputName='mathScore' handleChange={this.handleChange} value={this.state.mathScore}/>
+            <TextInput inputName='adress' handleChange={this.handleChange} value={this.state.adress}/>
+            <TextInput inputName='mobilePhone' handleChange={this.handleChange} value={this.state.mobilePhone}/>
+            <TextInput inputName='skype' handleChange={this.handleChange} value={this.state.skype}/>
           </ul>
         </form>
 
