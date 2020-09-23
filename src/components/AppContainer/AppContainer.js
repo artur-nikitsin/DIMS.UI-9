@@ -5,9 +5,11 @@ import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
+import { RoleContext } from "../../RoleContext";
 
 class AppContainer extends React.Component {
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -49,13 +51,19 @@ class AppContainer extends React.Component {
 
 
   render() {
+
     return (
+
       <div className='appContainer'>
         <SideBar navigationButtons={this.navigationButtons} />
         <div className='pagesContainer'>{this.showActivePage(this.state.activePage)}</div>
       </div>
+
     );
   }
 }
 
+AppContainer.contextType = RoleContext;
+
 export default AppContainer;
+

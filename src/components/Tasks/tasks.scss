@@ -12,4 +12,10 @@
   .tasksTable {
     @include commonTableStyles;
   }
+
+  .taskCreateButton {
+    @include memberRegisterButton;
+    align-self: flex-start;
+  }
+
 }

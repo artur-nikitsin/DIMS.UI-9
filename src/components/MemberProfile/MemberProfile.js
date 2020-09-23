@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import MemberTasks from "../MembersTasks/MemberTasks";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import "./membersProfile.scss";
+import { RoleContext } from "../../RoleContext";
 
 class MemberProfile extends React.PureComponent {
   constructor(props) {
@@ -41,8 +42,16 @@ class MemberProfile extends React.PureComponent {
   };
 
   navigationButtons = () => {
+
+    let { role } = this.context;
+
     return (
       <div>
+        {
+          role === "admin" ? <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
+            Return to full list
+          </button> : null
+        }
         <button
           onClick={this.handleShowActivePage("tasks")}
           className={`tasksButton ${this.state.activePage === "tasks" ? "active" : null}`}>
@@ -62,4 +71,5 @@ class MemberProfile extends React.PureComponent {
   }
 }
 
+MemberProfile.contextType = RoleContext;
 export default MemberProfile;

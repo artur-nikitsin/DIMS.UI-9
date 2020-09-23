@@ -1,9 +1,9 @@
 import React from 'react';
 import './userRegisterModal.scss';
 import Modal from '../../Common/Modal';
-import UsersModalDataWorker from '../UsersModalDataWorker';
+import TaskModalDataWorker from "../TaskModalDataWorker";
 
-class UserRegisterModal extends React.Component {
+class TaskCreateModal extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -12,7 +12,7 @@ class UserRegisterModal extends React.Component {
     return (
       <Modal
         modalContent={
-          <UsersModalDataWorker
+          <TaskModalDataWorker
             modalType='Register'
             closeModal={this.props.closeModal}
             closeModalAndReload={this.props.closeModalAndReload}
@@ -24,4 +24,4 @@ class UserRegisterModal extends React.Component {
   }
 }
 
-export default UserRegisterModal;
+export default TaskCreateModal;

@@ -1,11 +1,11 @@
-import React from 'react';
-import './editDeleteButtons.scss';
+import React from "react";
+import "./editDeleteButtons.scss";
 
-function EditDeleteButtons() {
+function EditDeleteButtons(props) {
   return (
     <div className='buttonsContainer'>
-      <button className='editButton'>Edit</button>
-      <button className='deleteButton'>Delete</button>
+      <button className='editButton' onClick={props.handleEdit}>Edit</button>
+      <button className='deleteButton' onClick={props.handleDelete}>Delete</button>
     </div>
   );
 }

@@ -66,9 +66,6 @@ class MemberTracks extends React.Component {
 
     return (
       <div className='memberTracksTableContainer'>
-        <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
-          Return to full list
-        </button>
         {this.props.navigationButtons()}
         <div>
           <p className={"userGreeting"}>{`Hi, dear '${this.props.userName}! This is your task tracks:`}</p>

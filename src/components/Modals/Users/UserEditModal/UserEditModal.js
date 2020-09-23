@@ -1,7 +1,7 @@
 import React from 'react';
-import Modal from '../Common/Modal';
-import { getMember } from '../../../firebase/apiGet';
-import UsersModalDataWorker from '../Common/UsersModalDataWorker';
+import Modal from '../../Common/Modal';
+import { getMember } from '../../../../firebase/apiGet';
+import UsersModalDataWorker from '../UsersModalDataWorker';
 
 class UserEditModal extends React.Component {
   constructor(props) {

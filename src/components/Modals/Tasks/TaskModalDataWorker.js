@@ -1,11 +1,11 @@
 import React from "react";
-import "./userModalDataWorker.scss";
+import "./taskModalDataWorker.scss";
 import { editMemberData, setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../Common/ModalElements/TextInput";
-import RadioInput from "../Common/ModalElements/RadioInput";
 
 
-class UsersModalDataWorker extends React.Component {
+class TaskModalDataWorker extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,7 +28,6 @@ class UsersModalDataWorker extends React.Component {
       skype: null
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -135,6 +134,7 @@ class UsersModalDataWorker extends React.Component {
       <div className='modalData'>
         <form onSubmit={this.handleSubmit} className='userForm'>
           <ul className='userRegisterInputList'>
+
             <TextInput inputName='firstName' handleChange={this.handleChange} value={this.state.firstName}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
@@ -144,43 +144,8 @@ class UsersModalDataWorker extends React.Component {
             <TextInput inputName='directionId' handleChange={this.handleChange} value={this.state.directionId}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
-            <TextInput inputName='education' handleChange={this.handleChange} value={this.state.education}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='startDate' handleChange={this.handleChange} value={this.state.startDate}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='email' handleChange={this.handleChange} value={this.state.email}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
           </ul>
 
-          <ul className='userRegisterInputList'>
-            <li className='sexInputs'>
-              <div className='radioInputs'>
-                <span>Sex:</span>
-                <RadioInput inputName='male' value={this.state.sex} handleRadioInput={this.handleRadioInput}
-                            status={this.state.sex? null: 'invalid'}/>
-                <RadioInput inputName='female' value={this.state.sex} handleRadioInput={this.handleRadioInput} />
-              </div>
-            </li>
-
-            <TextInput inputName='university' handleChange={this.handleChange} value={this.state.university}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='mathScore' handleChange={this.handleChange} value={this.state.mathScore}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='adress' handleChange={this.handleChange} value={this.state.adress}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='mobilePhone' handleChange={this.handleChange} value={this.state.mobilePhone}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-            <TextInput inputName='skype' handleChange={this.handleChange} value={this.state.skype}
-                       handleValidInput={this.handleValidInput}
-                       isSubmit={this.state.isSubmit} />
-          </ul>
         </form>
 
         <div className='modalButtons'>
@@ -196,4 +161,4 @@ class UsersModalDataWorker extends React.Component {
   }
 }
 
-export default UsersModalDataWorker;
+export default TaskModalDataWorker;

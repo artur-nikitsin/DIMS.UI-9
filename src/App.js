@@ -5,13 +5,18 @@ import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Preloader from "./components/common/Preloader/Preloader";
+import { RoleContext } from "./RoleContext";
+
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      isLogin: false
+      isLogin: false,
+      role: "admin",
+      signedUser: "2718",
+      signedUserName: "Archie"
     };
   }
 
@@ -28,16 +33,37 @@ class App extends React.Component {
     });
   };
 
+
+  changeContextUser = () => {
+    this.setState({
+      role: "user"
+    });
+  };
+
+  changeContextAdmin = () => {
+    this.setState({
+      role: "admin"
+    });
+  };
+
+
   render() {
     return (
-      <div className='App'>
-        <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
-        {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
-        <Footer />
-      </div>
+      <RoleContext.Provider value={{
+        role: this.state.role,
+        userId: this.state.signedUser,
+        signedUserName: this.state.signedUserName
+      }}>
+        <button onClick={this.changeContextUser}>User</button>
+        <button onClick={this.changeContextAdmin}>Admin</button>
+        <div className='App'>
+          <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
+          {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
+          <Footer />
+        </div>
+      </RoleContext.Provider>
     );
   };
 }
-
 
 export default App;
