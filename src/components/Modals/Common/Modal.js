@@ -1,20 +1,20 @@
-import React from 'react';
-import './modal.scss';
-import Spinner from '../../common/Spinner/Spinner';
+import React from "react";
+import "./modal.scss";
+import Preloader from "../../common/Preloader/Preloader";
 
-function Modal(props) {
+function Modal({ closeModal, loading, modalContent }) {
 
   return (
     <div className='modal'>
-      <div className='closeModalArea' onClick={props.closeModal}/>
-      {props.loading ? (
-        <Spinner/>
+      <div className='closeModalArea' onClick={closeModal} />
+      {loading ? (
+        <Preloader />
       ) : (
         <div className='modalBody'>
-          <button className='closeModalButton' onClick={props.closeModal}>
+          <button className='closeModalButton' onClick={closeModal}>
             x
           </button>
-          {props.modalContent}
+          {modalContent}
         </div>
       )}
     </div>

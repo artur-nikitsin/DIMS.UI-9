@@ -1,0 +1,40 @@
+@import "src/components/common/Styles/Mixins/Buttons/Buttons";
+
+.loginForm {
+  width: auto;
+  height: auto;
+  background: rgb(241,248,255);
+  border: 2px solid rgb(200,225,255);
+
+  .loginFormBody {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+
+
+    .loginFormInputList {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      list-style-type: none;
+      padding: 0;
+
+    }
+
+    li {
+      input {
+        height: 1.5rem;
+        margin-top: 1rem;
+        margin-left: 1rem;
+      }
+    }
+
+    .loginButton {
+      @include simpleButton;
+      margin-top: 2rem;
+    }
+  }
+}

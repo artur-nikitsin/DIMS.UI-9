@@ -7,15 +7,15 @@
     width: 200px;
     height: 80px;
     text-align: center;
-    border: 1px solid black;
+    border: 1px solid rgba(157, 157, 158, 1);
   }
 
   & th {
     width: 100px;
     height: 40px;
     text-align: center;
-    border: 1px solid black;
-    background: rgba(9, 116, 237, 0.7);
+    border: 1px solid rgba(157, 157, 158, 1);;
+    background: rgba(16, 120, 224, 0.9);
   }
 }
 

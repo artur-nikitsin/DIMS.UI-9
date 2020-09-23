@@ -1,0 +1,16 @@
+.radioInput {
+  display: flex;
+  flex-direction: column;
+
+  .radioButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+
+    input,
+    label {
+      vertical-align: middle;
+    }
+  }
+}

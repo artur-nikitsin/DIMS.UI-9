@@ -4,11 +4,10 @@
 .tracksButton {
   @include simpleButton;
   margin-left: 1rem;
-
 }
 
-.activeTasksButton,
-.activeTracksButton {
+.tracksButton.active,
+.tasksButton.active {
   @include simpleButton;
   color: green;
   margin-left: 1rem;

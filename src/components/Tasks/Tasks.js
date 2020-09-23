@@ -1,7 +1,7 @@
 import React from 'react';
 import './tasks.scss';
 import { getTasks } from '../../firebase/apiGet';
-import Spinner from '../common/Spinner/Spinner';
+import Preloader from '../common/Preloader/Preloader';
 import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
 
 class Tasks extends React.Component {
@@ -68,7 +68,7 @@ class Tasks extends React.Component {
   };
 
   render() {
-    return <div className={'tasksTableContainer'}>{this.state.loading ? <Spinner /> : this.createTasksTable()}</div>;
+    return <div className={'tasksTableContainer'}>{this.state.loading ? <Preloader /> : this.createTasksTable()}</div>;
   }
 }
 

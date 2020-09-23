@@ -1,7 +1,7 @@
 import React from 'react';
-import './spiner.scss';
+import './preloader.scss';
 
-function Spinner() {
+function Preloader() {
   return (
     <div className='preloader'>
       <div className='one' />
@@ -11,4 +11,4 @@ function Spinner() {
   );
 }
 
-export default Spinner;
+export default Preloader;

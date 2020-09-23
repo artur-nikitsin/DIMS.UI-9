@@ -1,10 +1,17 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
+.appContainer {
+  display: flex;
+  flex-direction: row;
+}
 .pagesContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
   min-height: 80vh;
+  min-width: 90vw;
+  width: auto;
+  margin-top: 2rem;
 }
 
 .membersButton,

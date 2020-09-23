@@ -1,7 +1,7 @@
 import React from 'react';
 import './memberProgress.scss';
 import { getUserTrackList } from '../../firebase/apiGet';
-import Spinner from '../common/Spinner/Spinner';
+import Preloader from '../common/Preloader/Preloader';
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -70,7 +70,7 @@ class MemberProgress extends React.Component {
   };
 
   render() {
-    return <div>{this.state.loading ? <Spinner /> : this.createMemberProgressTable()}</div>;
+    return <div>{this.state.loading ? <Preloader /> : this.createMemberProgressTable()}</div>;
   }
 }
 

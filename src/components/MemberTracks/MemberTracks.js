@@ -1,7 +1,7 @@
 import React from "react";
 import "./memberTracks.scss";
 import { getUserTrackList } from "../../firebase/apiGet";
-import Spinner from "../common/Spinner/Spinner";
+import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
@@ -82,7 +82,7 @@ class MemberTracks extends React.Component {
   };
 
   render() {
-    return <div>{this.state.loading ? <Spinner /> : this.createMemberProgressTable()}</div>;
+    return <div>{this.state.loading ? <Preloader /> : this.createMemberProgressTable()}</div>;
   }
 }
 

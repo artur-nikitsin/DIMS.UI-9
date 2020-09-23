@@ -1,7 +1,7 @@
 import React from 'react';
 import './memberTasks.scss';
 import { getUserTaskList } from '../../firebase/apiGet';
-import Spinner from '../common/Spinner/Spinner';
+import Preloader from '../common/Preloader/Preloader';
 import TrackButton from './Buttons/TrackButton';
 import StatusButtons from './Buttons/StatusButtons';
 
@@ -84,7 +84,7 @@ class MemberTasks extends React.Component {
   };
 
   render() {
-    return <div>{this.state.loading ? <Spinner /> : this.createMemberTaskTable()}</div>;
+    return <div>{this.state.loading ? <Preloader /> : this.createMemberTaskTable()}</div>;
   }
 }
 

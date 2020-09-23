@@ -4,7 +4,7 @@ import Buttons from './Buttons/Buttons';
 import { getMembers } from '../../firebase/apiGet';
 import { deleteUser } from '../../firebase/apiDelete';
 import './members.scss';
-import Spinner from '../common/Spinner/Spinner';
+import Preloader from '../common/Preloader/Preloader';
 import MemberProfile from '../MemberProfile/MemberProfile';
 import UserRegisterModal from '../Modals/UserRegisterModal/UserRegisterModal';
 import UserEditModal from '../Modals/UserEditModal/UserEditModal';
@@ -211,7 +211,7 @@ class MembersPage extends React.Component {
       <div className='membersTableContainer'>
         {this.userRegisterModal(this.state.showRegisterModal)}
         {this.userEditModal(this.state.showEditModal)}
-        {this.state.loading ? <Spinner/> : this.showActivePage(this.state.activePage)}
+        {this.state.loading ? <Preloader/> : this.showActivePage(this.state.activePage)}
       </div>
     );
   }

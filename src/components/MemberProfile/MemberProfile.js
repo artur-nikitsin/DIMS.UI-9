@@ -1,26 +1,27 @@
-import React, { PureComponent } from 'react';
-import MemberTasks from '../MembersTasks/MemberTasks';
-import MemberTracks from '../MemberTracks/MemberTracks';
-import './membersProfile.scss';
+import React, { PureComponent } from "react";
+import MemberTasks from "../MembersTasks/MemberTasks";
+import MemberTracks from "../MemberTracks/MemberTracks";
+import "./membersProfile.scss";
 
 class MemberProfile extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 'tasks'
+      activePage: "tasks"
     };
   }
 
   handleShowActivePage = (page) => () => {
     this.setState({
-      activePage: page,
+      activePage: page
     });
   };
 
-  showActivePage = (page) => {
 
+  showActivePage = (page) => {
     return (
-      page === 'tasks' ? <MemberTasks
+      page === "tasks" ?
+        <MemberTasks
           userId={this.props.userId}
           userName={this.props.userName}
           navigationButtons={this.navigationButtons}
@@ -43,13 +44,13 @@ class MemberProfile extends React.PureComponent {
     return (
       <div>
         <button
-          onClick={this.handleShowActivePage('tasks')}
-          className={this.state.activePage === 'tasks' ? 'activeTasksButton' : 'tasksButton'}>
+          onClick={this.handleShowActivePage("tasks")}
+          className={`tasksButton ${this.state.activePage === "tasks" ? "active" : null}`}>
           Tasks
         </button>
         <button
-          onClick={this.handleShowActivePage('taskTrack')}
-          className={this.state.activePage === 'taskTrack' ? 'activeTracksButton' : 'tracksButton'}>
+          onClick={this.handleShowActivePage("taskTrack")}
+          className={`tasksButton ${this.state.activePage === "taskTrack" ? "active" : null}`}>
           Task tracks
         </button>
       </div>
