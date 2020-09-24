@@ -27,7 +27,6 @@ class TaskModalDataWorker extends React.Component {
 
 
   componentDidMount() {
-    console.log(this.props);
     if (this.props.taskData) {
       this.setState({
         name: this.props.taskData.name,
@@ -103,13 +102,13 @@ class TaskModalDataWorker extends React.Component {
         <form onSubmit={this.handleSubmit} className='userForm'>
           <ul className='userRegisterInputList'>
 
-            <TextInput inputName='firstName' handleChange={this.handleChange} value={this.state.name}
+            <TextInput inputName='name' handleChange={this.handleChange} value={this.state.name}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
-            <TextInput inputName='lastName' handleChange={this.handleChange} value={this.state.startDate}
+            <TextInput inputName='startDate' handleChange={this.handleChange} value={this.state.startDate}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
-            <TextInput inputName='directionId' handleChange={this.handleChange} value={this.state.deadlineDate}
+            <TextInput inputName='deadLineDate' handleChange={this.handleChange} value={this.state.deadlineDate}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
           </ul>

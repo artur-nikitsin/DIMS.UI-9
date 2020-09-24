@@ -18,12 +18,14 @@ class TextInput extends React.Component {
     directionId: "Direction",
     education: "Education",
     startDate: "Start date:",
+    deadLineDate: 'Deadline date',
     email: "Email",
     university: "University",
     mathScore: "Math Score",
     adress: "Adress",
     mobilePhone: "mobilePhone",
-    skype: "Skype"
+    skype: "Skype",
+    name: "Name"
   };
 
 
