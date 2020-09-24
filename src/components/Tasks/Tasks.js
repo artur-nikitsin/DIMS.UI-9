@@ -5,7 +5,8 @@ import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import TaskCreateModal from "../Modals/Tasks/TaskCreateModal/TaskCreateModal";
 import { deleteTask } from "../../firebase/apiDelete";
-import Buttons from "../Members/Buttons/Buttons";
+import Buttons from "../MembersPage/Buttons/Buttons";
+import TaskEditModal from "../Modals/Tasks/TaskEditModal/TaskEditModal";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -13,7 +14,9 @@ class Tasks extends React.Component {
     this.state = {
       loading: true,
       tasks: null,
-      showCreateModal: false
+      showCreateModal: false,
+      showEditModal: false,
+      activeTaskId: null
     };
   }
 
@@ -29,12 +32,11 @@ class Tasks extends React.Component {
   };
 
 
-  handleEdit = (userId) => () => {
-    console.log("edit");
-    /*this.setState({
+  handleEdit = (taskId) => () => {
+    this.setState({
       showEditModal: true,
-      activeUserId: userId
-    });*/
+      activeTaskId: taskId
+    });
   };
 
   handleDelete = (taskId) => () => {
@@ -56,10 +58,22 @@ class Tasks extends React.Component {
     } else return null;
   };
 
+  taskEditModal = (modalState) => {
+    if (modalState) {
+      return (
+        <TaskEditModal
+          closeModal={this.handleCloseModal}
+          taskId={this.state.activeTaskId}
+          closeModalAndReload={this.closeModalAndReload}
+        />
+      );
+    } else return null;
+  };
 
   handleCloseModal = () => {
     this.setState({
-      showCreateModal: false
+      showCreateModal: false,
+      showEditModal: false
     });
   };
 
@@ -127,6 +141,7 @@ class Tasks extends React.Component {
           Create
         </button>
         {this.taskCreateModal(this.state.showCreateModal)}
+        {this.taskEditModal(this.state.showEditModal)}
         <table className={"tasksTable"}>
           {tableHeaders}
           <tbody>{this.state.tasks}</tbody>

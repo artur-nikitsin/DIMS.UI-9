@@ -3,7 +3,7 @@ import MemberProgress from "../MemberProgress/MemberProgress";
 import Buttons from "./Buttons/Buttons";
 import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
-import "./members.scss";
+import "./membersPage.scss";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
 import UserRegisterModal from "../Modals/Users/UserRegisterModal/UserRegisterModal";

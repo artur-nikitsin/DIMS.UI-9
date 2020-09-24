@@ -5,7 +5,7 @@ import Preloader from "../common/Preloader/Preloader";
 import TrackButton from "./Buttons/TrackButton";
 import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
-import MembersPage from "../Members/MembersPage";
+import MembersPage from "../MembersPage/MembersPage";
 
 class MemberTasks extends React.Component {
   constructor(props) {

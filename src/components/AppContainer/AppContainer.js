@@ -1,5 +1,5 @@
 import React from "react";
-import MembersPage from "../Members/MembersPage";
+import MembersPage from "../MembersPage/MembersPage";
 import Tasks from "../Tasks/Tasks";
 import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";

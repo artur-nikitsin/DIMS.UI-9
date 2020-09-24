@@ -11,61 +11,28 @@ class TaskModalDataWorker extends React.Component {
     this.state = {
       isFormValid: false,
       isSubmit: false,
-      userData: null,
-      firstName: null,
-      lastName: null,
-      birthDate: null,
-      directionId: null,
-      education: null,
+      name: null,
       startDate: null,
-      userId: null,
-      email: null,
-      sex: null,
-      university: null,
-      mathScore: null,
-      adress: null,
-      mobilePhone: null,
-      skype: null
+      deadlineDate: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   isValid = {
-    firstName: false,
-    lastName: false,
-    birthDate: false,
-    directionId: false,
-    education: false,
-    startDate: false,
-    email: false,
-    sex: false,
-    university: false,
-    mathScore: false,
-    adress: false,
-    mobilePhone: false,
-    skype: false
+    name: null,
+    startDate: null,
+    deadlineDate: null,
   };
 
 
   componentDidMount() {
-    if (this.props.userData) {
+    console.log(this.props);
+    if (this.props.taskData) {
       this.setState({
-        firstName: this.props.userData.firstName,
-        lastName: this.props.userData.lastName,
-        birthDate: this.props.userData.birthDate,
-        directionId: this.props.userData.directionId,
-        education: this.props.userData.education,
-        startDate: this.props.userData.startDate,
-        userId: this.props.userData.userId,
-        email: this.props.userData.email,
-        sex: this.props.userData.sex,
-        university: this.props.userData.university,
-        mathScore: this.props.userData.mathScore,
-        adress: this.props.userData.adress,
-        mobilePhone: this.props.userData.mobilePhone,
-        skype: this.props.userData.skype
+        name: this.props.taskData.name,
+        startDate: this.props.taskData.startDate,
+        deadlineDate: this.props.taskData.deadlineDate,
       });
     }
   }
@@ -102,6 +69,7 @@ class TaskModalDataWorker extends React.Component {
   };
 
   handleSubmit(event) {
+
     event.preventDefault();
 
     if (this.state.isFormValid) {
@@ -135,13 +103,13 @@ class TaskModalDataWorker extends React.Component {
         <form onSubmit={this.handleSubmit} className='userForm'>
           <ul className='userRegisterInputList'>
 
-            <TextInput inputName='firstName' handleChange={this.handleChange} value={this.state.firstName}
+            <TextInput inputName='firstName' handleChange={this.handleChange} value={this.state.name}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
-            <TextInput inputName='lastName' handleChange={this.handleChange} value={this.state.lastName}
+            <TextInput inputName='lastName' handleChange={this.handleChange} value={this.state.startDate}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
-            <TextInput inputName='directionId' handleChange={this.handleChange} value={this.state.directionId}
+            <TextInput inputName='directionId' handleChange={this.handleChange} value={this.state.deadlineDate}
                        handleValidInput={this.handleValidInput}
                        isSubmit={this.state.isSubmit} />
           </ul>
