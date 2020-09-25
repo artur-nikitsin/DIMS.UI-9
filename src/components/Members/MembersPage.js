@@ -1,27 +1,27 @@
-import React from 'react';
-import MemberProgress from '../MemberProgress/MemberProgress';
-import Buttons from './Buttons/Buttons';
-import { getMembers } from '../../firebase/apiGet';
-import { deleteUser } from '../../firebase/apiDelete';
-import './members.scss';
-import Preloader from '../common/Preloader/Preloader';
-import MemberProfile from '../MemberProfile/MemberProfile';
-import UserRegisterModal from '../Modals/UserRegisterModal/UserRegisterModal';
-import UserEditModal from '../Modals/UserEditModal/UserEditModal';
+import React from "react";
+import MemberProgress from "../MemberProgress/MemberProgress";
+import Buttons from "./Buttons/Buttons";
+import { getMembers } from "../../firebase/apiGet";
+import { deleteUser } from "../../firebase/apiDelete";
+import "./members.scss";
+import Preloader from "../common/Preloader/Preloader";
+import MemberProfile from "../MemberProfile/MemberProfile";
+import UserRegisterModal from "../Modals/UserRegisterModal/UserRegisterModal";
+import UserEditModal from "../Modals/UserEditModal/UserEditModal";
 
-class MembersPage extends React.Component {
+class MembersPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
       members: null,
-      activePage: 'membersTable',
+      activePage: "membersTable",
       activeUserId: null,
       activeUserName: null,
       memberProgressShow: null,
       showRegisterModal: false,
       showEditModal: false,
-      reload: true,
+      reload: true
     };
   }
 
@@ -31,59 +31,57 @@ class MembersPage extends React.Component {
 
   handleProgress = (userId, name) => () => {
     this.setState({
-      activePage: 'membersProgress',
+      activePage: "membersProgress",
       activeUserId: userId,
-      activeUserName: name,
+      activeUserName: name
     });
   };
 
   handleTasks = (userId, name) => () => {
     this.setState({
-      activePage: 'membersTasks',
+      activePage: "membersTasks",
       activeUserId: userId,
-      activeUserName: name,
+      activeUserName: name
     });
   };
 
   handleEdit = (userId) => () => {
     this.setState({
       showEditModal: true,
-      activeUserId: userId,
+      activeUserId: userId
     });
   };
 
   handleDelete = (userId) => () => {
-    deleteUser(userId).then((status) => {
-      if (status === 'OK') {
-        this.reloadMembersPage();
-      }
+    deleteUser(userId).then(() => {
+      this.reloadMembersPage();
     });
   };
 
   handleReturnToFullList = () => {
     this.setState({
-      activePage: 'membersTable',
-      activeUserId: null,
+      activePage: "membersTable",
+      activeUserId: null
     });
   };
 
   handleShowRegisterUserModal = () => {
     this.setState({
-      showRegisterModal: true,
+      showRegisterModal: true
     });
   };
 
   handleCloseModal = () => {
     this.setState({
       showRegisterModal: false,
-      showEditModal: false,
+      showEditModal: false
     });
   };
 
   closeModalAndReload = () => {
     this.setState({
       showRegisterModal: false,
-      showEditModal: false,
+      showEditModal: false
     });
     this.handleCloseModal();
     this.reloadMembersPage();
@@ -92,7 +90,7 @@ class MembersPage extends React.Component {
   reloadMembersPage = () => {
     this.setState({
       members: null,
-      loading: true,
+      loading: true
     });
     this.getMembers();
   };
@@ -100,17 +98,17 @@ class MembersPage extends React.Component {
   showActivePage = (page) => {
     switch (page) {
 
-      case 'membersTable':
+      case "membersTable":
         return this.createMembersTable();
 
-      case 'membersProgress':
+      case "membersProgress":
         return (
           <div>
-            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList}/>
+            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
           </div>
         );
 
-      case 'membersTasks':
+      case "membersTasks":
         return (
           <div>
             <MemberProfile
@@ -127,16 +125,16 @@ class MembersPage extends React.Component {
     getMembers().then((result) => {
       let members = result.map((member, i) => {
         return (
-          <tr key={member.userId + 'n'} className={i % 2 ? 'darkLine' : 'whiteLine'}>
-            <td key={member.userId + 'a'}>{i + 1}</td>
-            <td key={member.userId + 'b'}>
-              <a href=''>{member.firstName + ' ' + member.lastName}</a>
+          <tr key={member.userId + "n"} className={i % 2 ? "darkLine" : "whiteLine"}>
+            <td key={member.userId + "a"}>{i + 1}</td>
+            <td key={member.userId + "b"}>
+              <a href=''>{member.firstName + " " + member.lastName}</a>
             </td>
-            <td key={member.userId + 'c'}>{member.directionId}</td>
-            <td key={member.userId + 'd'}>{member.education}</td>
-            <td key={member.userId + 'i'}>{new Date(member.startDate).toLocaleDateString()}</td>
-            <td key={member.userId + 'j'}>{new Date(member.birthDate).toLocaleDateString()}</td>
-            <td key={member.userId + 'h'} className='memberButtons'>
+            <td key={member.userId + "c"}>{member.directionId}</td>
+            <td key={member.userId + "d"}>{member.education}</td>
+            <td key={member.userId + "i"}>{new Date(member.startDate).toLocaleDateString()}</td>
+            <td key={member.userId + "j"}>{new Date(member.birthDate).toLocaleDateString()}</td>
+            <td key={member.userId + "h"} className='memberButtons'>
               <Buttons
                 userId={member.userId}
                 handleProgress={this.handleProgress(member.userId, member.firstName)}
@@ -152,7 +150,7 @@ class MembersPage extends React.Component {
       if (!this.state.members) {
         this.setState({
           loading: false,
-          members: members,
+          members: members
         });
       }
     });
@@ -160,7 +158,7 @@ class MembersPage extends React.Component {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return (<UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload}/>);
+      return (<UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload} />);
     } else return null;
   };
 
@@ -186,7 +184,7 @@ class MembersPage extends React.Component {
         <th>Education</th>
         <th>Start</th>
         <th>Age</th>
-        <th/>
+        <th />
       </tr>
       </thead>
     );
@@ -211,7 +209,7 @@ class MembersPage extends React.Component {
       <div className='membersTableContainer'>
         {this.userRegisterModal(this.state.showRegisterModal)}
         {this.userEditModal(this.state.showEditModal)}
-        {this.state.loading ? <Preloader/> : this.showActivePage(this.state.activePage)}
+        {this.state.loading ? <Preloader /> : this.showActivePage(this.state.activePage)}
       </div>
     );
   }

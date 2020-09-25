@@ -1,9 +1,6 @@
-import React from "react";
+function lengthValidator(data) {
 
-
-function lengthValidator(props) {
-
-  if (props.length > 2) {
+  if (data.length > 2) {
     return (
       {
         isValid: true,

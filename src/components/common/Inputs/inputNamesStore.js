@@ -4,11 +4,12 @@ const inputNamesStore = {
   directionId: "Direction",
   education: "Education",
   startDate: "Start date:",
+  birthDate: "Birth date:",
   email: "Email",
   university: "University",
   mathScore: "Math Score",
   adress: "Adress",
-  mobilePhone: "mobilePhone",
+  mobilePhone: "Mobile Phone",
   skype: "Skype",
   password: "Password"
 };

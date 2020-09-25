@@ -31,8 +31,8 @@ class TextInput extends React.Component {
         });
       } else {
         this.setState({
-          message: "",
-          status: "valid"
+          status: "invalid",
+          message: "Please enter data!"
         });
       }
     }
@@ -40,13 +40,14 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { isSubmit, inputName, value, handleChange } = this.props;
+    const { className, isSubmit, inputName, value, handleChange } = this.props;
     const { status, message } = this.state;
     return (
-      <li className={`textInput ${isSubmit ? status : null}`}>
+      <div className={`textInput ${isSubmit ? status : null}`}>
         <label htmlFor={inputName}>
           {inputNamesStore[inputName]}
           <input
+            className={className}
             type='text'
             name={inputName}
             value={value || ""}
@@ -56,7 +57,7 @@ class TextInput extends React.Component {
         <div className={`validationMessage ${status}`}>
           <p>{isSubmit ? message : null}</p>
         </div>
-      </li>
+      </div>
     );
   }
 }

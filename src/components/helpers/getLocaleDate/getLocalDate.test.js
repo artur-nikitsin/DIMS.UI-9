@@ -1,4 +1,3 @@
-import React from "react";
 import getLocalDate from "./getLocalDate";
 
 describe("func returns local date format", () => {
@@ -11,7 +10,6 @@ describe("func returns local date format", () => {
 
     const expected = '25.05.2020';
 
-    //Assert - checking
     expect(actual).toBe(expected);
   });
 });

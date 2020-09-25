@@ -31,9 +31,7 @@ class MemberTracks extends React.PureComponent {
               <td>{track.name}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
-              <td>
-                <EditDeleteButtons />
-              </td>
+              <td><EditDeleteButtons /></td>
             </tr>
           );
         });

@@ -1,11 +1,11 @@
 import React from "react";
 import "./sideBar.scss";
 
-function SideBar(props) {
+function SideBar({navigationButtons}) {
 
   return (
     <div className='sideBar'>
-      {props.navigationButtons()}
+      {navigationButtons()}
     </div>
   );
 

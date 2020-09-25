@@ -1,0 +1,5 @@
+@import "src/components/common/Styles/Mixins/Buttons/Buttons";
+
+.submitButton{
+  @include memberRegisterButton
+}
