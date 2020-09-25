@@ -8,22 +8,45 @@ class TextInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      name: null,
+      value: null,
       status: "invalid",
       message: "Please enter data!"
+
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
 
+  componentDidMount() {
+    const { value } = this.props;
+    this.setState({
+      value: value,
+    });
+  }
+
+  handleChange(event) {
+    const { value } = event.target;
+    const { handleUnSubmit } = this.props;
+
+    this.setState({
+      value: value,
+      isSubmit: false
+    });
+    handleUnSubmit();
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    const prevValue = prevProps.value;
-    const { value, inputName, handleValidInput } = this.props;
+    const prevSubmit = prevProps.isSubmit;
+    const { isSubmit, inputName, handleValidInput } = this.props;
+    const { value } = this.state;
 
-    if (value !== prevValue) {
+    if (isSubmit !== prevSubmit) {
       if (value) {
         const { isValid, message, status } = validatorsManager(inputName, value);
         //return current input name & its status to parent:
-        handleValidInput(inputName, isValid);
+        handleValidInput(inputName, isValid, this.state.value);
 
         this.setState({
           message: message,
@@ -50,8 +73,8 @@ class TextInput extends React.Component {
             className={className}
             type='text'
             name={inputName}
-            value={value || ""}
-            onChange={handleChange}
+            value={this.state.value || ""}
+            onChange={this.handleChange}
           />
         </label>
         <div className={`validationMessage ${status}`}>

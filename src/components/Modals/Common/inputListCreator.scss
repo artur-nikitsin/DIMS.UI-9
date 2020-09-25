@@ -1,0 +1,31 @@
+.userRegisterInputList {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  height: auto;
+  max-width: 45rem;
+  max-height: 40rem;
+  align-items: center;
+  list-style-type: none;
+
+  .inputItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    height: 5rem;
+    width: 20rem;
+
+    .inputField {
+      width: 12rem;
+    }
+  }
+
+  .sexInputs {
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 20rem;
+  }
+}

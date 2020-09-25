@@ -2,6 +2,7 @@ import React from 'react';
 import './userRegisterModal.scss';
 import Modal from '../Common/Modal';
 import UsersModalDataWorker from '../Common/UsersModalDataWorker';
+import { userModalTemplate } from "../Common/ModalInputsTemplate";
 
 class UserRegisterModal extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class UserRegisterModal extends React.Component {
       <Modal
         modalContent={
           <UsersModalDataWorker
+            modalTemplate={userModalTemplate}
             modalType='Register'
             closeModal={this.props.closeModal}
             closeModalAndReload={this.props.closeModalAndReload}

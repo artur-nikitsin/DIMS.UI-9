@@ -1,10 +1,7 @@
 import React from "react";
 import "./userModalDataWorker.scss";
-import { editMemberData, setNewMemberData } from "../../../firebase/apiSet";
-import TextInput from "../../common/Inputs/TextInput";
-import RadioInput from "./ModalElements/RadioInput";
 import SubmitButton from "../../common/Buttons/SubmitButton/SubmitButton";
-
+import InputListCreator from "./InputListCreator";
 
 class UsersModalDataWorker extends React.Component {
 
@@ -14,20 +11,7 @@ class UsersModalDataWorker extends React.Component {
       isFormValid: false,
       isSubmit: false,
       inputsList: [],
-      firstName: null,
-      lastName: null,
-      birthDate: null,
-      directionId: null,
-      education: null,
-      startDate: null,
-      userId: null,
-      email: null,
-      sex: null,
-      university: null,
-      mathScore: null,
-      adress: null,
-      mobilePhone: null,
-      skype: null
+      modalData: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleRadioInput = this.handleRadioInput.bind(this);
@@ -53,44 +37,11 @@ class UsersModalDataWorker extends React.Component {
 
 
   componentDidMount() {
-    this.userPropsToState(this.props.userData, this.state);
+    const { modalData } = this.props;
+    this.setState({
+      modalData: modalData
+    });
   }
-
-
-  userPropsToState = (userData, stateData) => {
-    if (userData) {
-      for (let key in stateData) {
-        if (stateData.hasOwnProperty(key)) {
-          this.setState({
-              [key]: userData[key]
-            }
-          );
-        }
-      }
-    }
-  };
-
-
-  createInputList = (data) => {
-
-    let inputList = [];
-
-    for (let input in data) {
-      if (input !== "isFormValid" && input !== "isSubmit" && input !== "inputsList" && input !== "userId" && input !== "sex") {
-        inputList.push(
-          <li key={input} className="inputItem">
-            <TextInput
-              className={"inputField"}
-              inputName={input} handleChange={this.handleChange}
-              value={this.state[input]}
-              handleValidInput={this.handleValidInput}
-              isSubmit={this.state.isSubmit} />
-          </li>
-        );
-      }
-    }
-    return inputList;
-  };
 
 
   handleChange(event) {
@@ -108,8 +59,9 @@ class UsersModalDataWorker extends React.Component {
   }
 
 
-  handleValidInput = (input, status) => {
+  handleValidInput = (input, status, data) => {
 
+    console.log(input, status, data);
     this.isValid[input] = status;
 
     let statusArr = [];
@@ -125,29 +77,39 @@ class UsersModalDataWorker extends React.Component {
 
   };
 
+  handleUnSubmit = () => {
+    this.setState({
+      isSubmit: false
+    });
+  };
+
   handleSubmit(event) {
     event.preventDefault();
 
-    if (this.state.isFormValid) {
+    this.setState({
+      isSubmit: true
+    });
 
-      this.setState({
-        isSubmit: true
-      });
+    /* if (this.state.isFormValid) {
 
-      if (this.props.modalType === "Edit") {
-        editMemberData(this.state).then((status) => {
-          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
-        });
-      } else {
-        setNewMemberData(this.state).then((status) => {
-          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
-        });
-      }
-    } else {
-      this.setState({
-        isSubmit: true
-      });
-    }
+       this.setState({
+         isSubmit: true
+       });
+
+       if (this.props.modalType === "Edit") {
+         editMemberData(this.state).then((status) => {
+           status === "OK" ? this.props.closeModalAndReload() : console.log(status);
+         });
+       } else {
+         setNewMemberData(this.state).then((status) => {
+           status === "OK" ? this.props.closeModalAndReload() : console.log(status);
+         });
+       }
+     } else {
+       this.setState({
+         isSubmit: true
+       });
+     }*/
 
   }
 
@@ -157,19 +119,13 @@ class UsersModalDataWorker extends React.Component {
     return (
       <div className='modalData'>
         <form onSubmit={this.handleSubmit} className='userForm'>
-          <ul className='userRegisterInputList'>
-
-            {this.createInputList(this.state)}
-
-            <li className='sexInputs'>
-              <div className='radioInputs'>
-                <span>Sex:</span>
-                <RadioInput inputName='male' value={this.state.sex} handleRadioInput={this.handleRadioInput}
-                            status={this.state.sex ? null : "invalid"} />
-                <RadioInput inputName='female' value={this.state.sex} handleRadioInput={this.handleRadioInput} />
-              </div>
-            </li>
-          </ul>
+          <InputListCreator
+            modalTemplate={this.props.modalTemplate}
+            modalData={this.props.modalData}
+            handleSubmit={this.handleSubmit}
+            handleUnSubmit={this.handleUnSubmit}
+            handleValidInput={this.handleValidInput}
+            isSubmit={this.state.isSubmit} />
         </form>
 
         <div className='modalButtons'>
