@@ -7,7 +7,7 @@ import "./appContainer.scss";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
-class AppContainer extends React.Component {
+class AppContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,12 +16,7 @@ class AppContainer extends React.Component {
   }
 
   showActivePage = (page) => {
-    switch (page) {
-      case "members":
-        return <MembersPage />;
-      case "tasks":
-        return <Tasks />;
-    }
+    return (page === "members" ? <MembersPage /> : <Tasks />);
   };
 
   handleShowActivePage = (page) => {

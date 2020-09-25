@@ -16,6 +16,11 @@
     @include returnToFullListButton;
   }
 
+  .trackCreateButton {
+    @include memberRegisterButton;
+    align-self: flex-start;
+  }
+
   .userGreeting {
     font-size: 25px;
   }

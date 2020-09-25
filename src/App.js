@@ -5,8 +5,9 @@ import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Preloader from "./components/common/Preloader/Preloader";
+import { DOCUMENT_TITLE } from "./components/constants/titles";
 
-class App extends React.Component {
+class App extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -15,6 +16,9 @@ class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = DOCUMENT_TITLE;
+  }
 
   handleLogin = () => {
     this.setState({

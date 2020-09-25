@@ -6,7 +6,8 @@ import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteBut
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
 
-class MemberTracks extends React.Component {
+
+class MemberTracks extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,8 +18,8 @@ class MemberTracks extends React.Component {
 
   componentDidMount() {
     this.getUserTrackList(this.props.userId);
-
   }
+
 
   getUserTrackList = (user) => {
     if (user) {
@@ -27,12 +28,8 @@ class MemberTracks extends React.Component {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>
-              <td>
-                <a href=''>{track.name}</a>
-              </td>
-              <td>
-                <a href=''>{getSubString(track.trackNote, 50)}</a>
-              </td>
+              <td>{track.name}</td>
+              <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
               <td>
                 <EditDeleteButtons />
@@ -69,10 +66,12 @@ class MemberTracks extends React.Component {
         <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
           Return to full list
         </button>
-        {this.props.navigationButtons()}
         <div>
-          <p className={"userGreeting"}>{`Hi, dear '${this.props.userName}! This is your task tracks:`}</p>
+          <p className="userGreeting">{`Hi, dear '${this.props.userName}! This is your task tracks:`}</p>
         </div>
+        <button className='trackCreateButton'>
+          Create
+        </button>
         <table className='tracksTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>

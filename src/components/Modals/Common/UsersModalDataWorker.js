@@ -1,7 +1,7 @@
 import React from "react";
 import "./userModalDataWorker.scss";
 import { editMemberData, setNewMemberData } from "../../../firebase/apiSet";
-import TextInput from "./ModalElements/TextInput";
+import TextInput from "../../common/Inputs/TextInput";
 import RadioInput from "./ModalElements/RadioInput";
 
 

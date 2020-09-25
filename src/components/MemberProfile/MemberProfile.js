@@ -25,19 +25,14 @@ class MemberProfile extends React.PureComponent {
           userId={this.props.userId}
           userName={this.props.userName}
           navigationButtons={this.navigationButtons}
-          handleReturnToFullList={this.props.handleReturnToFullList}
-        />
-
+          handleReturnToFullList={this.props.handleReturnToFullList} />
         :
-
         <MemberTracks
           userId={this.props.userId}
           userName={this.props.userName}
           navigationButtons={this.navigationButtons}
-          handleReturnToFullList={this.props.handleReturnToFullList}
-        />
+          handleReturnToFullList={this.props.handleReturnToFullList} />
     );
-
   };
 
   navigationButtons = () => {
