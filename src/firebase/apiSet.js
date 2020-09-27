@@ -36,7 +36,7 @@ export function setNewMemberData(data) {
       return "OK";
     })
     .catch(function(error) {
-      console.log("Error getting document:", error);
+      console.log("Error writting document:", error);
     });
 
 }

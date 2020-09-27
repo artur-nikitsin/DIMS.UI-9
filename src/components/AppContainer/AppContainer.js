@@ -4,8 +4,6 @@ import Tasks from "../Tasks/Tasks";
 import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
 
 class AppContainer extends React.PureComponent {
   constructor(props) {
@@ -19,7 +17,7 @@ class AppContainer extends React.PureComponent {
     return (page === "members" ? <MembersPage /> : <Tasks />);
   };
 
-  handleShowActivePage = (page) => {
+  handleShowActivePage = (page) => () => {
     this.setState({
       activePage: page
     });
@@ -29,13 +27,13 @@ class AppContainer extends React.PureComponent {
     return (
       <div>
         <button
-          onClick={() => this.handleShowActivePage("members")}
-          className={this.state.activePage === "members" ? "activeMembersButton" : "membersButton"}>
+          onClick={this.handleShowActivePage("members")}
+          className={`membersButton ${this.state.activePage === "members" ? "active" : null}`}>
           Members
         </button>
         <button
-          onClick={() => this.handleShowActivePage("tasks")}
-          className={this.state.activePage === "tasks" ? "activeTasksTabButton" : "tasksTabButton"}>
+          onClick={this.handleShowActivePage("tasks")}
+          className={`tasksTabButton ${this.state.activePage === "tasks" ? "active" : null}`}>
           Tasks
         </button>
       </div>

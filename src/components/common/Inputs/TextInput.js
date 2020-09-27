@@ -46,7 +46,7 @@ class TextInput extends React.Component {
       if (value) {
         const { isValid, message, status } = validatorsManager(inputName, value);
         //return current input name & its status to parent:
-        handleValidInput( inputName, isValid, value );
+        handleValidInput(inputName, isValid, value);
 
         this.setState({
           message: message,
@@ -63,8 +63,8 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { className, isSubmit, inputName, value, handleChange } = this.props;
-    const { status, message } = this.state;
+    const { className, isSubmit, inputName } = this.props;
+    const { status, message, value } = this.state;
     return (
       <div className={`textInput ${isSubmit ? status : null}`}>
         <label htmlFor={inputName}>
@@ -73,7 +73,7 @@ class TextInput extends React.Component {
             className={className}
             type='text'
             name={inputName}
-            value={this.state.value || ""}
+            value={value || ""}
             onChange={this.handleChange}
           />
         </label>

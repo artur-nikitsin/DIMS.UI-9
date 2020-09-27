@@ -56,7 +56,7 @@ class UsersModalDataWorker extends React.Component {
       isValid: status,
       data: data
     };
-
+    
     this.setState({
       isFormValid: formValidator(dataStore),
       dataToSend: dataExtractor(dataStore)
@@ -80,9 +80,9 @@ class UsersModalDataWorker extends React.Component {
 
     if (this.state.isFormValid) {
 
-       this.setState({
-         isSubmit: true
-       });
+      this.setState({
+        isSubmit: true
+      });
 
       const {
         documentId,
@@ -90,20 +90,22 @@ class UsersModalDataWorker extends React.Component {
       } = this.state;
 
       if (this.props.modalType === "Edit") {
-        editMemberData(documentId,
-          dataToSend).then((status) => {
-          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
-        });
+        editMemberData(documentId, dataToSend)
+          .then(this.props.closeModalAndReload())
+          .catch(function(error) {
+            console.log("Error writing document:", error);
+          });
       } else {
         setNewMemberData(
-          dataToSend).then((status) => {
-          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
-        });
+          dataToSend).then(this.props.closeModalAndReload())
+          .catch(function(error) {
+            console.log("Error writing document:", error);
+          });
       }
     } else {
-         this.setState({
-           isSubmit: true
-         });
+      this.setState({
+        isSubmit: true
+      });
     }
 
 
