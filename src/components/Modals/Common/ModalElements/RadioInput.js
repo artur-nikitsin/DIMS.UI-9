@@ -15,7 +15,7 @@ class RadioInput extends React.Component {
 
 
   render() {
-    const { inputName, value,handleRadioInput } = this.props;
+    const { inputName, value, handleRadioInput } = this.props;
     return (
       <div className='radioButton'>
         <input

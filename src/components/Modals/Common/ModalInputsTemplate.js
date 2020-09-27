@@ -11,5 +11,5 @@ export  const userModalTemplate = {
   mathScore: null,
   adress: null,
   mobilePhone: null,
-  skype: null
+  skype: null,
 };

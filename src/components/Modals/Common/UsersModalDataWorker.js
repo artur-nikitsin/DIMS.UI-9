@@ -2,6 +2,10 @@ import React from "react";
 import "./userModalDataWorker.scss";
 import SubmitButton from "../../common/Buttons/SubmitButton/SubmitButton";
 import InputListCreator from "./InputListCreator";
+import formValidator from "../../helpers/FormValidator/formValidator";
+import dataExtractor from "../../helpers/DataExtractor/dataExtractor";
+import { editMemberData } from "../../../firebase/apiSet";
+import { setNewMemberData } from "../../../firebase/apiSet";
 
 class UsersModalDataWorker extends React.Component {
 
@@ -11,35 +15,20 @@ class UsersModalDataWorker extends React.Component {
       isFormValid: false,
       isSubmit: false,
       inputsList: [],
-      modalData: null
+      modalData: null,
+      dataToSend: null,
+      documentId: null
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
-  isValid = {
-    firstName: false,
-    lastName: false,
-    birthDate: false,
-    directionId: false,
-    education: false,
-    startDate: false,
-    email: false,
-    sex: false,
-    university: false,
-    mathScore: false,
-    adress: false,
-    mobilePhone: false,
-    skype: false
-  };
-
-
   componentDidMount() {
-    const { modalData } = this.props;
+    const { modalData, documentId } = this.props;
     this.setState({
-      modalData: modalData
+      modalData: modalData,
+      documentId: documentId
     });
   }
 
@@ -61,19 +50,17 @@ class UsersModalDataWorker extends React.Component {
 
   handleValidInput = (input, status, data) => {
 
-    console.log(input, status, data);
-    this.isValid[input] = status;
+    let dataStore = this.props.modalTemplate;
 
-    let statusArr = [];
-    for (let input in this.isValid) {
-      statusArr.push(this.isValid[input]);
-    }
+    dataStore[input] = {
+      isValid: status,
+      data: data
+    };
 
-    if (!statusArr.includes(false)) {
-      this.setState({
-        isFormValid: true
-      });
-    }
+    this.setState({
+      isFormValid: formValidator(dataStore),
+      dataToSend: dataExtractor(dataStore)
+    });
 
   };
 
@@ -84,32 +71,41 @@ class UsersModalDataWorker extends React.Component {
   };
 
   handleSubmit(event) {
+
     event.preventDefault();
 
     this.setState({
       isSubmit: true
     });
 
-    /* if (this.state.isFormValid) {
+    if (this.state.isFormValid) {
 
        this.setState({
          isSubmit: true
        });
 
-       if (this.props.modalType === "Edit") {
-         editMemberData(this.state).then((status) => {
-           status === "OK" ? this.props.closeModalAndReload() : console.log(status);
+      const {
+        documentId,
+        dataToSend
+      } = this.state;
+
+      if (this.props.modalType === "Edit") {
+        editMemberData(documentId,
+          dataToSend).then((status) => {
+          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
+        });
+      } else {
+        setNewMemberData(
+          dataToSend).then((status) => {
+          status === "OK" ? this.props.closeModalAndReload() : console.log(status);
+        });
+      }
+    } else {
+         this.setState({
+           isSubmit: true
          });
-       } else {
-         setNewMemberData(this.state).then((status) => {
-           status === "OK" ? this.props.closeModalAndReload() : console.log(status);
-         });
-       }
-     } else {
-       this.setState({
-         isSubmit: true
-       });
-     }*/
+    }
+
 
   }
 

@@ -21,7 +21,7 @@ class TextInput extends React.Component {
   componentDidMount() {
     const { value } = this.props;
     this.setState({
-      value: value,
+      value: value
     });
   }
 
@@ -46,7 +46,7 @@ class TextInput extends React.Component {
       if (value) {
         const { isValid, message, status } = validatorsManager(inputName, value);
         //return current input name & its status to parent:
-        handleValidInput(inputName, isValid, this.state.value);
+        handleValidInput( inputName, isValid, value );
 
         this.setState({
           message: message,
