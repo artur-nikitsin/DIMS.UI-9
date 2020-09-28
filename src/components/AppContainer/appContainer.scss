@@ -20,8 +20,8 @@
   margin-left: 1rem;
 }
 
-.activeMembersButton,
-.activeTasksTabButton {
+.membersButton.active,
+.tasksTabButton.active {
   @include simpleButton;
   color: green;
   margin-left: 1rem;

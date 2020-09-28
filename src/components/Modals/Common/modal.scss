@@ -32,6 +32,7 @@
 
   .modalBody {
     @include centerFlex;
+    flex-wrap: wrap;
     width: auto;
     height: auto;
     padding-left: 1rem;

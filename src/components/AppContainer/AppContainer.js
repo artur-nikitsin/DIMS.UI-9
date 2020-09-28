@@ -7,8 +7,8 @@ import "./appContainer.scss";
 import Header from "../Header/Header";
 import { RoleContext } from "../../RoleContext";
 
-class AppContainer extends React.Component {
 
+class AppContainer extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -18,15 +18,10 @@ class AppContainer extends React.Component {
   }
 
   showActivePage = (page) => {
-    switch (page) {
-      case "members":
-        return <MembersPage />;
-      case "tasks":
-        return <Tasks />;
-    }
+    return (page === "members" ? <MembersPage /> : <Tasks />);
   };
 
-  handleShowActivePage = (page) => {
+  handleShowActivePage = (page) => () => {
     this.setState({
       activePage: page
     });
@@ -36,13 +31,13 @@ class AppContainer extends React.Component {
     return (
       <div>
         <button
-          onClick={() => this.handleShowActivePage("members")}
-          className={this.state.activePage === "members" ? "activeMembersButton" : "membersButton"}>
+          onClick={this.handleShowActivePage("members")}
+          className={`membersButton ${this.state.activePage === "members" ? "active" : null}`}>
           Members
         </button>
         <button
-          onClick={() => this.handleShowActivePage("tasks")}
-          className={this.state.activePage === "tasks" ? "activeTasksTabButton" : "tasksTabButton"}>
+          onClick={this.handleShowActivePage("tasks")}
+          className={`tasksTabButton ${this.state.activePage === "tasks" ? "active" : null}`}>
           Tasks
         </button>
       </div>

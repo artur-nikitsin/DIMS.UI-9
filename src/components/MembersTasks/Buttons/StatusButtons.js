@@ -1,5 +1,5 @@
-import React from 'react';
-import './buttons.scss';
+import React from "react";
+import "./buttons.scss";
 
 class StatusButtons extends React.Component {
   constructor(props) {
@@ -8,12 +8,14 @@ class StatusButtons extends React.Component {
   }
 
   render() {
+
+    const { userId } = this.props;
     return (
       <div className='statusButtonsGroup'>
-        <button className='successStatusButton' id={this.props.userId}>
+        <button className='successStatusButton' id={userId}>
           Success
         </button>
-        <button className='failStatusButton' id={this.props.userId}>
+        <button className='failStatusButton' id={userId}>
           Fail
         </button>
       </div>

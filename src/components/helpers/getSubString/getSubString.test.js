@@ -1,4 +1,3 @@
-import React from "react";
 import getSubString from "./getSubString";
 
 describe("func returns substring of string with entered numbers of characters ", () => {

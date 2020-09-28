@@ -1,8 +1,7 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import { editMemberData, setNewMemberData } from "../../../firebase/apiSet";
-import TextInput from "../Common/ModalElements/TextInput";
-
+import TextInput from "../../common/Inputs/TextInput";
 
 class TaskModalDataWorker extends React.Component {
 

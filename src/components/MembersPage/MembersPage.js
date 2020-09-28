@@ -3,6 +3,7 @@ import MemberProgress from "../MemberProgress/MemberProgress";
 import Buttons from "./Buttons/Buttons";
 import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
+import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import "./membersPage.scss";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
@@ -10,8 +11,8 @@ import UserRegisterModal from "../Modals/Users/UserRegisterModal/UserRegisterMod
 import UserEditModal from "../Modals/Users/UserEditModal/UserEditModal";
 import { RoleContext } from "../../RoleContext";
 
-class MembersPage extends React.Component {
 
+class MembersPage extends React.PureComponent {
 
   constructor(props) {
     super(props);
@@ -61,10 +62,10 @@ class MembersPage extends React.Component {
   };
 
   handleDelete = (userId) => () => {
-    deleteUser(userId).then((status) => {
-      if (status === "OK") {
-        this.reloadMembersPage();
-      }
+
+    deleteUser(userId).then(() => {
+      this.reloadMembersPage();
+
     });
   };
 
@@ -114,8 +115,7 @@ class MembersPage extends React.Component {
       case "membersProgress":
         return (
           <div>
-            <MemberProgress userId={this.state.activeUserId}
-                            handleReturnToFullList={this.handleReturnToFullList} />
+            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
           </div>
         );
 
@@ -143,8 +143,8 @@ class MembersPage extends React.Component {
             </td>
             <td key={member.userId + "c"}>{member.directionId}</td>
             <td key={member.userId + "d"}>{member.education}</td>
-            <td key={member.userId + "i"}>{new Date(member.startDate).toLocaleDateString()}</td>
-            <td key={member.userId + "j"}>{new Date(member.birthDate).toLocaleDateString()}</td>
+            <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
+            <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
             <td key={member.userId + "h"} className='memberButtons'>
               <Buttons
                 userId={member.userId}
@@ -169,9 +169,10 @@ class MembersPage extends React.Component {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return (
-        <UserRegisterModal closeModal={this.handleCloseModal}
-                           closeModalAndReload={this.closeModalAndReload} />);
+      return (<UserRegisterModal
+        closeModal={this.handleCloseModal}
+        closeModalAndReload={this.closeModalAndReload}
+      />);
     } else return null;
   };
 
@@ -221,13 +222,13 @@ class MembersPage extends React.Component {
   render() {
 
     const { role, userId, signedUserName } = this.context;
-
+    const { showRegisterModal, showEditModal, loading, activePage } = this.state;
     let admin = () => {
       return (
         <div>
-          {this.userRegisterModal(this.state.showRegisterModal)}
-          {this.userEditModal(this.state.showEditModal)}
-          {this.state.loading ? <Preloader /> : this.showActivePage(this.state.activePage)}
+          {this.userRegisterModal(showRegisterModal)}
+          {this.userEditModal(showEditModal)}
+          {loading ? <Preloader /> : this.showActivePage(activePage)}
         </div>
       );
     };

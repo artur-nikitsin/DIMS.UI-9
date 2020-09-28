@@ -3,38 +3,26 @@
 .loginForm {
   width: auto;
   height: auto;
-  background: rgb(241,248,255);
-  border: 2px solid rgb(200,225,255);
+  background: rgb(241, 248, 255);
+  border: 2px solid rgb(200, 225, 255);
 
-  .loginFormBody {
+  @mixin flex {
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .loginFormBody {
+    @include flex;
     align-items: center;
     padding: 2rem;
 
-
     .loginFormInputList {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      @include flex;
       align-items: flex-end;
       list-style-type: none;
       padding: 0;
-
     }
 
-    li {
-      input {
-        height: 1.5rem;
-        margin-top: 1rem;
-        margin-left: 1rem;
-      }
-    }
-
-    .loginButton {
-      @include simpleButton;
-      margin-top: 2rem;
-    }
   }
 }

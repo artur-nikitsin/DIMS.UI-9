@@ -1,12 +1,11 @@
-import React from "react";
 import regExpTester from "./regExpTester";
 import { emailRegexp } from "./regExp";
 
 
-function emailValidator(props) {
+function emailValidator(email) {
 
-  if (props) {
-    if (regExpTester(emailRegexp, props)) {
+  if (email) {
+    if (regExpTester(emailRegexp, email)) {
       return (
         {
           isValid: true,

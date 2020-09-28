@@ -1,10 +1,10 @@
 import React from "react";
 import "./header.scss";
 
-function Header(props) {
+function Header({ isLogin, handleLogout }) {
   return (
     <div className='header'>
-      {props.isLogin ? <button className='logoutButton' onClick={props.handleLogout}>Logout</button> : null}
+      {isLogin && <button className='logoutButton' onClick={handleLogout}>Logout</button>}
     </div>
   );
 }

@@ -1,19 +1,20 @@
-import React from 'react';
-import './memberProgress.scss';
-import { getUserTrackList } from '../../firebase/apiGet';
-import Preloader from '../common/Preloader/Preloader';
+import React from "react";
+import "./memberProgress.scss";
+import { getUserTrackList } from "../../firebase/apiGet";
+import Preloader from "../common/Preloader/Preloader";
 
 class MemberProgress extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      userTrackList: null,
+      userTrackList: null
     };
   }
 
   componentDidMount() {
-    this.getUserTrackList(this.props.userId);
+    const { userId } = this.props.userId;
+    this.getUserTrackList(userId);
   }
 
   getUserTrackList = (user) => {
@@ -21,13 +22,13 @@ class MemberProgress extends React.Component {
       getUserTrackList(user).then((result) => {
         let tracks = result.map((track, i) => {
           return (
-            <tr key={track.taskTrackId} className={i % 2 ? 'darkLine' : 'whiteLine'}>
+            <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>
               <td>
                 <a href=''>{track.name}</a>
               </td>
               <td>
-                <a href=''>{track.trackNote.substr(0, 50) + '...'}</a>
+                <a href=''>{track.trackNote.substr(0, 50) + "..."}</a>
               </td>
               <td>{new Date(track.trackDate).toLocaleDateString()}</td>
             </tr>
@@ -37,7 +38,7 @@ class MemberProgress extends React.Component {
         if (!this.state.userTrackList) {
           this.setState({
             loading: false,
-            userTrackList: tracks,
+            userTrackList: tracks
           });
         }
       });
@@ -47,12 +48,12 @@ class MemberProgress extends React.Component {
   createMemberProgressTable = () => {
     const tableHeaders = (
       <thead>
-        <tr>
-          <th>#</th>
-          <th>Task</th>
-          <th>Note</th>
-          <th>Date</th>
-        </tr>
+      <tr>
+        <th>#</th>
+        <th>Task</th>
+        <th>Note</th>
+        <th>Date</th>
+      </tr>
       </thead>
     );
 

@@ -3,29 +3,29 @@ import "./radioInput.scss";
 
 class RadioInput extends React.Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
+      value: null,
       status: "invalid",
       message: "Please enter sex!"
     };
+
   }
 
 
   render() {
-
+    const { inputName, value, handleRadioInput } = this.props;
     return (
       <div className='radioButton'>
         <input
           type='radio'
-        /*  className={`radioInput ${this.props.status}`}*/
-          name={this.props.inputName}
-          checked={this.props.value === this.props.inputName}
-          value={this.props.value || ""}
-          onChange={this.props.handleRadioInput}
+          name={inputName}
+          checked={value === inputName}
+          value={value || ""}
+          onChange={handleRadioInput}
         />
-        <label htmlFor='userMale'>{this.props.inputName}</label>
+        <label htmlFor='userMale'>{inputName}</label>
       </div>
     );
   }

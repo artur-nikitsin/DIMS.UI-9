@@ -1,4 +1,3 @@
-import React from "react";
 import db from "./db";
 
 export function deleteUser(userId) {
@@ -27,7 +26,7 @@ export function deleteUser(userId) {
     })
     .then(() => {
       console.log("User successfully deleted");
-      return "OK";
+
     })
     .catch((error) => {
       console.error(`Error receiving data: ${error}`);

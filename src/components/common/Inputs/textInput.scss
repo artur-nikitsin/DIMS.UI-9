@@ -1,0 +1,54 @@
+@mixin input {
+  height: 1.5rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+@mixin validationMessage {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-size: 0.8rem;
+}
+
+.textInput {
+  .input {
+    @include input;
+    border: 1px solid black;
+  }
+
+  .validationMessage.valid {
+    @include validationMessage;
+    color: green;
+  }
+}
+
+
+.textInput.valid {
+  .input {
+    @include input;
+    border: 1px solid green;
+  }
+
+  .validationMessage.valid {
+    @include validationMessage;
+    color: green;
+  }
+}
+
+
+.textInput.invalid {
+  .input {
+    @include input;
+    border: 1px solid red;
+  }
+
+  .validationMessage.invalid {
+    @include validationMessage;
+    color: red;
+  }
+}
+
+.submitMessage {
+  margin-top: 0;
+}

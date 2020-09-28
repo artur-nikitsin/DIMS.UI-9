@@ -1,12 +1,11 @@
-import React from "react";
 import regExpTester from "./regExpTester";
 import { nameRegexp } from "./regExp";
 
 
-function lastNameValidator(props) {
+function lastNameValidator(lastName) {
 
-  if (props) {
-    if (regExpTester(nameRegexp, props)) {
+  if (lastName) {
+    if (regExpTester(nameRegexp, lastName)) {
       return (
         {
           isValid: true,

@@ -3,10 +3,12 @@ import "./tasks.scss";
 import { getTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
+
 import TaskCreateModal from "../Modals/Tasks/TaskCreateModal/TaskCreateModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import Buttons from "../MembersPage/Buttons/Buttons";
 import TaskEditModal from "../Modals/Tasks/TaskEditModal/TaskEditModal";
+
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -106,8 +108,10 @@ class Tasks extends React.Component {
             <td key={task.taskId + "i"}>{new Date(task.startDate).toLocaleDateString()}</td>
             <td key={task.taskId + "j"}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
             <td key={task.taskId + "h"}>
+
               <EditDeleteButtons handleEdit={this.handleEdit(task.taskId)}
                                  handleDelete={this.handleDelete(task.taskId)} />
+
             </td>
           </tr>
         );
@@ -137,12 +141,13 @@ class Tasks extends React.Component {
 
     return (
       <div>
+
         <button className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
           Create
         </button>
         {this.taskCreateModal(this.state.showCreateModal)}
         {this.taskEditModal(this.state.showEditModal)}
-        <table className={"tasksTable"}>
+        <table className="tasksTable">
           {tableHeaders}
           <tbody>{this.state.tasks}</tbody>
         </table>
@@ -151,11 +156,10 @@ class Tasks extends React.Component {
   };
 
   render() {
-    return (
-      <div className={"tasksTableContainer"}>
-        {this.state.loading ? <Preloader /> : this.createTasksTable()}
-      </div>
-    );
+
+    const { loading } = this.state;
+    return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
+
   }
 }
 
