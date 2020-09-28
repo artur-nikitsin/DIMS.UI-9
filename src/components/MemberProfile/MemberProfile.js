@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import MemberTasks from "../MembersTasks/MemberTasks";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import "./membersProfile.scss";

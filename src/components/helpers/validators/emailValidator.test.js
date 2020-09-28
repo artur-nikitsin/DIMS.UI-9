@@ -1,7 +1,7 @@
 import emailValidator from "./emailValidator";
 
 describe("func checking e-mail valid", () => {
-  test("true", () => {
+  test("true should be returned", () => {
 
     const input = "abcde@gmail.com";
 
@@ -12,7 +12,7 @@ describe("func checking e-mail valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("func checking e-mail valid", () => {
+  test("false should be returned", () => {
 
     const input = "abcde.gmail.com";
 

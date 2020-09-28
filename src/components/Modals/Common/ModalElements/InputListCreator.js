@@ -1,8 +1,9 @@
+
 import React from "react";
-import TextInput from "../../common/Inputs/TextInput";
-import RadioInput from "./ModalElements/RadioInput";
+import TextInput from "../../../common/Inputs/TextInput";
+import RadioInput from "../../../common/Inputs/RadioInput";
 import "./inputListCreator.scss";
-import validatorsManager from "../../helpers/validators/validatorsManager";
+import validatorsManager from "../../../helpers/validators/validatorsManager";
 
 class InputListCreator extends React.Component {
 

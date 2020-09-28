@@ -13,7 +13,7 @@ describe("func checking last name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("func checking  last name string valid", () => {
+  test("false should be returned", () => {
 
     const input = "Nikitsin1";
 

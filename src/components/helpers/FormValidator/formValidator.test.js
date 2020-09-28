@@ -2,7 +2,7 @@ import formValidator from "./formValidator";
 
 describe("func returns local date format", () => {
 
-  test("false", () => {
+  test("false should be returned", () => {
 
     const input = {
       adress: { isValid: true, data: "asdASD" },

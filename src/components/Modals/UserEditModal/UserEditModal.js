@@ -14,8 +14,6 @@ class UserEditModal extends React.Component {
   }
 
   componentDidMount() {
-
-
     if (this.props.userId) {
       getMember(this.props.userId).then((result) => {
         this.setState({
@@ -34,21 +32,24 @@ class UserEditModal extends React.Component {
 
 
   render() {
+
+    const { userData, loading } = this.state;
+    const { userId, closeModal, closeModalAndReload } = this.props;
+
     return (
       <Modal
         modalContent={
           <UsersModalDataWorker
-            documentId={this.props.userId}
+            documentId={userId}
             modalTemplate={userModalTemplate}
-            modalData={this.state.userData}
+            modalData={userData}
             modalType='Edit'
-            closeModal={this.props.closeModal}
-            closeModalAndReload={this.props.closeModalAndReload}
+            closeModal={closeModal}
+            closeModalAndReload={closeModalAndReload}
           />
         }
-        loading={this.state.loading}
-        closeModal={this.props.closeModal}
-        userId={this.props.userId}
+        loading={loading}
+        closeModal={closeModal}
       />
     );
   }

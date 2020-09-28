@@ -1,7 +1,7 @@
 import React from "react";
 import "./userModalDataWorker.scss";
 import SubmitButton from "../../common/Buttons/SubmitButton/SubmitButton";
-import InputListCreator from "./InputListCreator";
+import InputListCreator from "./ModalElements/InputListCreator";
 import formValidator from "../../helpers/FormValidator/formValidator";
 import dataExtractor from "../../helpers/DataExtractor/dataExtractor";
 import { editMemberData } from "../../../firebase/apiSet";
@@ -56,19 +56,20 @@ class UsersModalDataWorker extends React.Component {
       isValid: status,
       data: data
     };
-    
+
     this.setState({
       isFormValid: formValidator(dataStore),
       dataToSend: dataExtractor(dataStore)
     });
-
   };
+
 
   handleUnSubmit = () => {
     this.setState({
       isSubmit: false
     });
   };
+
 
   handleSubmit(event) {
 
@@ -84,20 +85,19 @@ class UsersModalDataWorker extends React.Component {
         isSubmit: true
       });
 
-      const {
-        documentId,
-        dataToSend
-      } = this.state;
+      const { documentId, dataToSend } = this.state;
+      const { closeModalAndReload } = this.props;
 
       if (this.props.modalType === "Edit") {
+
         editMemberData(documentId, dataToSend)
-          .then(this.props.closeModalAndReload())
+          .then(closeModalAndReload())
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
       } else {
         setNewMemberData(
-          dataToSend).then(this.props.closeModalAndReload())
+          dataToSend).then(closeModalAndReload())
           .catch(function(error) {
             console.log("Error writing document:", error);
           });

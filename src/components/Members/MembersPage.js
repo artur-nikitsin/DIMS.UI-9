@@ -8,6 +8,7 @@ import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
 import UserRegisterModal from "../Modals/UserRegisterModal/UserRegisterModal";
 import UserEditModal from "../Modals/UserEditModal/UserEditModal";
+import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -132,8 +133,8 @@ class MembersPage extends React.PureComponent {
             </td>
             <td key={member.userId + "c"}>{member.directionId}</td>
             <td key={member.userId + "d"}>{member.education}</td>
-            <td key={member.userId + "i"}>{new Date(member.startDate).toLocaleDateString()}</td>
-            <td key={member.userId + "j"}>{new Date(member.birthDate).toLocaleDateString()}</td>
+            <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
+            <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
             <td key={member.userId + "h"} className='memberButtons'>
               <Buttons
                 userId={member.userId}
@@ -158,7 +159,10 @@ class MembersPage extends React.PureComponent {
 
   userRegisterModal = (modalState) => {
     if (modalState) {
-      return (<UserRegisterModal closeModal={this.handleCloseModal} closeModalAndReload={this.closeModalAndReload} />);
+      return (<UserRegisterModal
+        closeModal={this.handleCloseModal}
+        closeModalAndReload={this.closeModalAndReload}
+      />);
     } else return null;
   };
 
@@ -205,11 +209,13 @@ class MembersPage extends React.PureComponent {
   };
 
   render() {
+
+    const { showRegisterModal, showEditModal, loading, activePage } = this.state;
     return (
       <div className='membersTableContainer'>
-        {this.userRegisterModal(this.state.showRegisterModal)}
-        {this.userEditModal(this.state.showEditModal)}
-        {this.state.loading ? <Preloader /> : this.showActivePage(this.state.activePage)}
+        {this.userRegisterModal(showRegisterModal)}
+        {this.userEditModal(showEditModal)}
+        {loading ? <Preloader /> : this.showActivePage(activePage)}
       </div>
     );
   }

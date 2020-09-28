@@ -2,7 +2,7 @@ import validatorsManager from "./validatorsManager";
 
 describe("func checking name string valid", () => {
 
-  test("func checking name string valid", () => {
+  test("true should be returned", () => {
 
     const type = "firstName"
 
@@ -15,7 +15,7 @@ describe("func checking name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("true", () => {
+  test("true should be returned", () => {
 
     const type = "email"
 

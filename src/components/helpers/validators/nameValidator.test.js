@@ -2,7 +2,7 @@ import nameValidator from "./nameValidator";
 
 describe("func checking name string valid", () => {
 
-  test("func checking name string valid", () => {
+  test("true should be returned", () => {
 
     const input = "Artur";
 
@@ -13,7 +13,7 @@ describe("func checking name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("func checking name string valid", () => {
+  test("false should be returned", () => {
 
     const input = "Artur1";
 

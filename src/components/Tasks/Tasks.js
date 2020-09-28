@@ -68,7 +68,8 @@ class Tasks extends React.Component {
   };
 
   render() {
-    return <div className='tasksTableContainer'>{this.state.loading ? <Preloader /> : this.createTasksTable()}</div>;
+    const { loading } = this.state;
+    return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
   }
 }
 

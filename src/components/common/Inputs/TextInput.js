@@ -70,7 +70,7 @@ class TextInput extends React.Component {
         <label htmlFor={inputName}>
           {inputNamesStore[inputName]}
           <input
-            className={className}
+            className="input"
             type='text'
             name={inputName}
             value={value || ""}
@@ -78,7 +78,7 @@ class TextInput extends React.Component {
           />
         </label>
         <div className={`validationMessage ${status}`}>
-          <p>{isSubmit ? message : null}</p>
+          <p className="submitMessage">{isSubmit ? message : null}</p>
         </div>
       </div>
     );

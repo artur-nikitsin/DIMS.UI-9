@@ -1,4 +1,3 @@
-import React from "react";
 import regExpTester from "./regExpTester";
 import { phoneNumberRegexp } from "./regExp";
 
