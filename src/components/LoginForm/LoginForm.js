@@ -9,7 +9,8 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       email: null,
-      password: null
+      password: null,
+      isSubmit: false
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -17,7 +18,8 @@ class LoginForm extends React.Component {
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({
-      [name]: value,
+      name: value,
+      password: null,
       isSubmit: false
     });
   }

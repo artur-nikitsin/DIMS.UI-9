@@ -5,7 +5,7 @@ import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
-
+import TableTrackHeaders from "./TableHeaders";
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -47,17 +47,7 @@ class MemberTracks extends React.PureComponent {
   };
 
   createMemberProgressTable = () => {
-    const tableHeaders = (
-      <thead>
-      <tr>
-        <th>#</th>
-        <th>Task</th>
-        <th>Note</th>
-        <th>Date</th>
-        <th />
-      </tr>
-      </thead>
-    );
+
 
     return (
       <div className='memberTracksTableContainer'>
@@ -71,7 +61,7 @@ class MemberTracks extends React.PureComponent {
           Create
         </button>
         <table className='tracksTable'>
-          {tableHeaders}
+          <TableTrackHeaders />
           <tbody>{this.state.userTrackList}</tbody>
         </table>
       </div>

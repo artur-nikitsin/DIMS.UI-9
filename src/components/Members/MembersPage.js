@@ -163,7 +163,7 @@ class MembersPage extends React.PureComponent {
         closeModal={this.handleCloseModal}
         closeModalAndReload={this.closeModalAndReload}
       />);
-    } else return null;
+    }
   };
 
   userEditModal = (modalState) => {
@@ -175,7 +175,7 @@ class MembersPage extends React.PureComponent {
           closeModalAndReload={this.closeModalAndReload}
         />
       );
-    } else return null;
+    }
   };
 
   createMembersTable = () => {

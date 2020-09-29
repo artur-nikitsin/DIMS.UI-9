@@ -5,9 +5,6 @@ import UsersModalDataWorker from "../Common/UsersModalDataWorker";
 import { userModalTemplate } from "../Common/ModalInputsTemplate";
 
 class UserRegisterModal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
 

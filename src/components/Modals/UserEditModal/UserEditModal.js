@@ -4,7 +4,7 @@ import { getMember } from "../../../firebase/apiGet";
 import UsersModalDataWorker from "../Common/UsersModalDataWorker";
 import { userModalTemplate } from "../Common/ModalInputsTemplate";
 
-class UserEditModal extends React.Component {
+class UserEditModal extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

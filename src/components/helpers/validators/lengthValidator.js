@@ -8,15 +8,15 @@ function lengthValidator(data) {
         message: ""
       }
     );
-  } else {
-    return (
-      {
-        isValid: false,
-        status: "invalid",
-        message: "Its must contains more symbols!"
-      }
-    );
   }
+  return (
+    {
+      isValid: false,
+      status: "invalid",
+      message: "Its must contains more symbols!"
+    }
+  );
+
 }
 
 

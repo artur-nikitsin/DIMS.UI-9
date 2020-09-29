@@ -1,4 +1,3 @@
-
 import React from "react";
 import TextInput from "../../../common/Inputs/TextInput";
 import RadioInput from "../../../common/Inputs/RadioInput";
@@ -20,11 +19,11 @@ class InputListCreator extends React.Component {
 
   componentDidMount() {
 
-    const data = this.props.modalData;
-    if (data) {
-      const sexValue = data.sex;
+    const { modalData } = this.props;
+    if (modalData) {
+      const { sex } = modalData;
       this.setState({
-        radioInputValue: sexValue
+        radioInputValue: sex
       });
     }
   }

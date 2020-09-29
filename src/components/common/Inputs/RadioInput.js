@@ -1,7 +1,7 @@
 import React from "react";
 import "./radioInput.scss";
 
-class RadioInput extends React.Component {
+class RadioInput extends React.PureComponent {
 
   constructor(props) {
     super(props);
