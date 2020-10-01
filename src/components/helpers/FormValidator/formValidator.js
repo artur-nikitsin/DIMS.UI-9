@@ -1,13 +1,8 @@
-function formValidator(inputsValidStatus) {
-  let statusArr = [];
+function formValidator(inputsStatus) {
 
+  const statusArr = Object.values(inputsStatus);
 
-  for (let input in inputsValidStatus) {
-    if (inputsValidStatus[input]) {
-      statusArr.push(inputsValidStatus[input].isValid);
-    }
-  }
-  return !statusArr.includes(false);
+  return !statusArr.includes(false || null);
 }
 
 export default formValidator;

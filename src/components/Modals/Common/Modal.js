@@ -2,7 +2,7 @@ import React from "react";
 import "./modal.scss";
 import Preloader from "../../common/Preloader/Preloader";
 
-function Modal({ closeModal, loading, modalContent }) {
+function Modal({ closeModal, loading, dataWorker }) {
 
   return (
     <div className='modal'>
@@ -14,7 +14,7 @@ function Modal({ closeModal, loading, modalContent }) {
           <button className='closeModalButton' onClick={closeModal}>
             x
           </button>
-          {modalContent}
+          {dataWorker}
         </div>
       )}
     </div>

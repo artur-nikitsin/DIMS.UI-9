@@ -6,9 +6,11 @@ import { deleteUser } from "../../firebase/apiDelete";
 import "./members.scss";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
-import UserRegisterModal from "../Modals/UserRegisterModal/UserRegisterModal";
-import UserEditModal from "../Modals/UserEditModal/UserEditModal";
+import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModal";
+import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
+import UsersModalDataWorker from "../Modals/User/UsersModalDataWorker";
+import Modal from "../Modals/Common/Modal";
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -157,21 +159,21 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  userRegisterModal = (modalState) => {
-    if (modalState) {
-      return (<UserRegisterModal
-        closeModal={this.handleCloseModal}
-        closeModalAndReload={this.closeModalAndReload}
-      />);
-    }
-  };
+   userRegisterModal = (modalState) => {
+     if (modalState) {
+       return (<UserRegisterModal
+         closeModal={this.handleCloseModal}
+         closeModalAndReload={this.closeModalAndReload}
+       />);
+     }
+   };
 
   userEditModal = (modalState) => {
     if (modalState) {
       return (
         <UserEditModal
-          closeModal={this.handleCloseModal}
           userId={this.state.activeUserId}
+          closeModal={this.handleCloseModal}
           closeModalAndReload={this.closeModalAndReload}
         />
       );
