@@ -56,9 +56,9 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   setUserDataToState = (data) => {
-    const _thisState = this.state;
+    const {...thisState} = this.state;
     for (let value in data) {
-      if (_thisState.hasOwnProperty(value)) {
+      if (thisState.hasOwnProperty(value)) {
         this.setState({
           [value]: data[value]
         });
@@ -68,25 +68,25 @@ class UsersModalDataWorker extends React.PureComponent {
 
   createInputList = () => {
     const { modalTemplate } = this.props;
-    const _thisState = this.state;
+    const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
     const inputList = dataKeys.map((input) => {
       if (input === "sex") {
         return (
-          <RadioInputList key={input} name={input} value={_thisState[input]}
+          <RadioInputList key={input} name={input} value={thisState[input]}
                           handleRadioInput={this.handleRadioInput}
                           handleValidInput={this.handleValidInput}
-                          isSubmit={this.state.isSubmit} />
+                          isSubmit={isSubmit} />
         );
       }
       return (
         <li key={input} className="inputItem">
           <TextInput inputName={input}
-                     value={_thisState[input]}
+                     value={thisState[input]}
                      handleChange={this.handleChange}
                      handleValidInput={this.handleValidInput}
-                     isSubmit={this.state.isSubmit} />
+                     isSubmit={isSubmit} />
         </li>
       );
     });
@@ -120,6 +120,7 @@ class UsersModalDataWorker extends React.PureComponent {
     inputsStatus[input] = status;
     dataToSend[input] = data;
 
+    console.log(inputsStatus, formValidator(inputsStatus));
     this.setState({
       isFormValid: formValidator(inputsStatus),
       dataToSend: dataToSend

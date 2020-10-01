@@ -22,6 +22,7 @@ class MemberTracks extends React.PureComponent {
 
 
   getUserTrackList = (user) => {
+
     if (user) {
       getUserTrackList(user).then((result) => {
         let tracks = result.map((track, i) => {
@@ -47,8 +48,6 @@ class MemberTracks extends React.PureComponent {
   };
 
   createMemberProgressTable = () => {
-
-
     return (
       <div className='memberTracksTableContainer'>
         <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>

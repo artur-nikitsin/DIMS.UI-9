@@ -1,8 +1,9 @@
 function formValidator(inputsStatus) {
 
   const statusArr = Object.values(inputsStatus);
+  const inValid = (element) => element === null || element === false;
 
-  return !statusArr.includes(false || null);
+  return !statusArr.some(inValid);
 }
 
 export default formValidator;

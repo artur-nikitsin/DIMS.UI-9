@@ -2,29 +2,23 @@ import React from "react";
 import "./loginForm.scss";
 import TextInput from "../common/Inputs/TextInput";
 import SubmitButton from "../common/Buttons/SubmitButton/SubmitButton";
-import { loginTemplate } from "../helpers/FormValidator/FormTemplate";
+import { loginTemplate } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
 
 class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
+    const inputsStatus = {};
+    Object.assign(inputsStatus, loginTemplate);
     this.state = {
-      inputsStatus: null,
+      inputsStatus: inputsStatus,
       email: null,
       password: null,
       isSubmit: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    const inputsStatus = {};
-    Object.assign(inputsStatus, loginTemplate);
-    this.setState({
-      inputsStatus: inputsStatus
-    });
   }
 
 

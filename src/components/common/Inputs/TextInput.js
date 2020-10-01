@@ -27,8 +27,7 @@ class TextInput extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
 
     const prevValue = prevProps.value;
-    const { inputName, handleValidInput } = this.props;
-    const { value } = this.props;
+    const { value, inputName, handleValidInput } = this.props;
 
     if (value !== prevValue) {
 
