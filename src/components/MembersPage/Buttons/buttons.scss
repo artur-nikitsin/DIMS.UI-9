@@ -12,8 +12,10 @@
 .tasksMemberButton,
 .editMemberButton {
   @include simpleButton;
+  margin: 0.2rem;
 }
 
 .deleteMemberButton {
   @include redButton;
+  margin: 0.2rem;
 }

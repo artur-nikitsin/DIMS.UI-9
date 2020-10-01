@@ -1,11 +1,11 @@
 import db from "./db";
 import faker from "faker";
 
-export function editMemberData(documentId, data) {
+export function editMemberData(userId, data) {
   return db
     .collection("Users")
-    .doc(documentId)
-    .set(saveDataTemplate(documentId, data))
+    .doc(userId)
+    .set(saveDataTemplate(userId, data))
     .then(() => {
       console.log("Document successfully written!");
       return "OK";

@@ -17,4 +17,7 @@
   .membersTable {
     @include commonTableStyles;
   }
+  .memberButtons {
+    padding: 0.5rem;
+  }
 }

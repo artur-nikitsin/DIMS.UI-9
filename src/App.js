@@ -7,6 +7,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import Preloader from "./components/common/Preloader/Preloader";
 import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
+import FakerDB from "./components/helpers/faker/FakerDB";
 
 
 class App extends React.PureComponent {
@@ -52,6 +53,7 @@ class App extends React.PureComponent {
 
 
   render() {
+
     return (
       <RoleContext.Provider value={{
         role: this.state.role,

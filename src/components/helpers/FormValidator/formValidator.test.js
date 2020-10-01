@@ -1,29 +1,15 @@
 import formValidator from "./formValidator";
 
-describe("func returns local date format", () => {
+describe("func returns false if array contains at least one false or null", () => {
 
-  test("false should be returned", () => {
+  test("false should be returned after array checking", () => {
 
-    const input = {
-      adress: { isValid: true, data: "asdASD" },
-      birthDate: { isValid: false, data: "" },
-      directionId: { isValid: true, data: "asdASD" },
-      education: { isValid: true, data: "AdsADSasf" },
-      email: { isValid: true, data: "nikitsin.artur@gmail.com" },
-      firstName: { isValid: true, data: "DasdASD" },
-      lastName: { isValid: true, data: "asdAS" },
-      mathScore: { isValid: true, data: "ASDAS" },
-      mobilePhone: { isValid: true, data: "23423423" },
-      sex: { isValid: true, data: "male" },
-      skype: { isValid: true, data: "asdADS" },
-      startDate: { isValid: true, data: "01.02.2020" },
-      university: { isValid: true, data: "ADSASD" }
-    };
+    const input = [null, null, null, null, null, null, true, null, null, null, null, null, true];
 
     const actual = formValidator(input);
 
     const expected = false;
 
-    expect(actual).toStrictEqual(expected);
+    expect(actual).toEqual(expected);
   });
 });

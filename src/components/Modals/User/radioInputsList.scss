@@ -1,0 +1,18 @@
+.sexInputs {
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 20rem;
+  height: 6rem;
+
+  .validationMessage{
+    height: 1rem;
+     width: 7rem;
+  }
+
+  .submitMessage {
+    font-size: 0.8rem;
+    color: red;
+  }
+}

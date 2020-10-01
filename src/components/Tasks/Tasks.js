@@ -3,11 +3,9 @@ import "./tasks.scss";
 import { getTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
-
-import TaskCreateModal from "../Modals/Tasks/TaskCreateModal/TaskCreateModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import Buttons from "../MembersPage/Buttons/Buttons";
-import TaskEditModal from "../Modals/Tasks/TaskEditModal/TaskEditModal";
+
 
 
 class Tasks extends React.Component {
@@ -51,26 +49,7 @@ class Tasks extends React.Component {
       });
   };
 
-  taskCreateModal = (modalState) => {
-    if (modalState) {
-      return (
-        <TaskCreateModal closeModal={this.handleCloseModal}
-                         closeModalAndReload={this.closeModalAndReload} />
-      );
-    } else return null;
-  };
 
-  taskEditModal = (modalState) => {
-    if (modalState) {
-      return (
-        <TaskEditModal
-          closeModal={this.handleCloseModal}
-          taskId={this.state.activeTaskId}
-          closeModalAndReload={this.closeModalAndReload}
-        />
-      );
-    } else return null;
-  };
 
   handleCloseModal = () => {
     this.setState({
@@ -145,8 +124,6 @@ class Tasks extends React.Component {
         <button className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
           Create
         </button>
-        {this.taskCreateModal(this.state.showCreateModal)}
-        {this.taskEditModal(this.state.showEditModal)}
         <table className="tasksTable">
           {tableHeaders}
           <tbody>{this.state.tasks}</tbody>

@@ -12,9 +12,7 @@ class TextInput extends React.Component {
       value: null,
       status: "invalid",
       message: "Please enter data!"
-
     };
-    this.handleChange = this.handleChange.bind(this);
   }
 
 
@@ -25,29 +23,18 @@ class TextInput extends React.Component {
     });
   }
 
-  handleChange(event) {
-    const { value } = event.target;
-    const { handleUnSubmit } = this.props;
-
-    this.setState({
-      value: value,
-      isSubmit: false
-    });
-    handleUnSubmit();
-  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    const prevSubmit = prevProps.isSubmit;
-    const { isSubmit, inputName, handleValidInput } = this.props;
-    const { value } = this.state;
+    const { value: prevValue } = prevProps;
+    const { value, inputName, handleValidInput } = this.props;
 
-    if (isSubmit !== prevSubmit) {
+    if (value !== prevValue) {
+
       if (value) {
         const { isValid, message, status } = validatorsManager(inputName, value);
         //return current input name & its status to parent:
         handleValidInput(inputName, isValid, value);
-
         this.setState({
           message: message,
           status: status
@@ -63,8 +50,8 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { className, isSubmit, inputName } = this.props;
-    const { status, message, value } = this.state;
+    const { isSubmit, inputName, handleChange, value } = this.props;
+    const { status, message } = this.state;
     return (
       <div className={`textInput ${isSubmit ? status : null}`}>
         <label htmlFor={inputName}>
@@ -74,7 +61,7 @@ class TextInput extends React.Component {
             type='text'
             name={inputName}
             value={value || ""}
-            onChange={this.handleChange}
+            onChange={handleChange}
           />
         </label>
         <div className={`validationMessage ${status}`}>

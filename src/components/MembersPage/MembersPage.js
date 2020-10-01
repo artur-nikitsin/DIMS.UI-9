@@ -3,17 +3,15 @@ import MemberProgress from "../MemberProgress/MemberProgress";
 import Buttons from "./Buttons/Buttons";
 import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
-import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import "./membersPage.scss";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
-import UserRegisterModal from "../Modals/Users/UserRegisterModal/UserRegisterModal";
-import UserEditModal from "../Modals/Users/UserEditModal/UserEditModal";
-import { RoleContext } from "../../RoleContext";
-
+import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModal";
+import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
+import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
+import {RoleContext} from "../../RoleContext";
 
 class MembersPage extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +34,6 @@ class MembersPage extends React.PureComponent {
     }
   }
 
-
   handleProgress = (userId, name) => () => {
     this.setState({
       activePage: "membersProgress",
@@ -51,7 +48,6 @@ class MembersPage extends React.PureComponent {
       activeUserId: userId,
       activeUserName: name
     });
-
   };
 
   handleEdit = (userId) => () => {
@@ -62,10 +58,8 @@ class MembersPage extends React.PureComponent {
   };
 
   handleDelete = (userId) => () => {
-
     deleteUser(userId).then(() => {
       this.reloadMembersPage();
-
     });
   };
 
@@ -167,25 +161,25 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  userRegisterModal = (modalState) => {
-    if (modalState) {
-      return (<UserRegisterModal
-        closeModal={this.handleCloseModal}
-        closeModalAndReload={this.closeModalAndReload}
-      />);
-    } else return null;
-  };
+   userRegisterModal = (modalState) => {
+     if (modalState) {
+       return (<UserRegisterModal
+         closeModal={this.handleCloseModal}
+         closeModalAndReload={this.closeModalAndReload}
+       />);
+     }
+   };
 
   userEditModal = (modalState) => {
     if (modalState) {
       return (
         <UserEditModal
-          closeModal={this.handleCloseModal}
           userId={this.state.activeUserId}
+          closeModal={this.handleCloseModal}
           closeModalAndReload={this.closeModalAndReload}
         />
       );
-    } else return null;
+    }
   };
 
   createMembersTable = () => {
