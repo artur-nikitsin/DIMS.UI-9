@@ -6,6 +6,7 @@ import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
 import Preloader from "./components/common/Preloader/Preloader";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
+import FakerDB from "./components/helpers/faker/FakerDB";
 
 class App extends React.PureComponent {
 
@@ -33,6 +34,7 @@ class App extends React.PureComponent {
   };
 
   render() {
+
     return (
       <div className='App'>
         <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />

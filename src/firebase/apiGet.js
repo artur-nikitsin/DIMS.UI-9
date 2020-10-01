@@ -1,4 +1,5 @@
 import db from './db';
+import getLocaleDate from "../components/helpers/getLocaleDate/getLocalDate";
 
 export function getMembers() {
   return db
@@ -38,28 +39,28 @@ export function getMember(userId) {
         startDate,
         userId,
         email,
-        sex,
         university,
         mathScore,
         adress,
         mobilePhone,
         skype,
+        sex,
       } = user.data();
 
       member.firstName = firstName;
       member.lastName = lastName;
-      member.birthDate = birthDate;
+      member.birthDate = getLocaleDate(birthDate);
       member.directionId = directionId;
       member.education = education;
-      member.startDate = startDate;
+      member.startDate = getLocaleDate(startDate);
       member.userId = userId;
       member.email = email;
-      member.sex = sex;
       member.university = university;
       member.mathScore = mathScore;
       member.adress = adress;
       member.mobilePhone = mobilePhone;
       member.skype = skype;
+      member.sex = sex;
 
       return member;
     })

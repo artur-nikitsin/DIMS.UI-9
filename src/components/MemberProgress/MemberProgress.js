@@ -13,7 +13,8 @@ class MemberProgress extends React.Component {
   }
 
   componentDidMount() {
-    const { userId } = this.props.userId;
+    const { userId } = this.props;
+    console.log(userId);
     this.getUserTrackList(userId);
   }
 
