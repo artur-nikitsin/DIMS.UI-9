@@ -2,17 +2,15 @@ import React from "react";
 import "./loginForm.scss";
 import TextInput from "../common/Inputs/TextInput";
 import SubmitButton from "../common/Buttons/SubmitButton/SubmitButton";
-import { loginTemplate } from "./FormTemplate";
+import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
 
 class LoginForm extends React.Component {
 
   constructor(props) {
     super(props);
-    const inputsStatus = {};
-    Object.assign(inputsStatus, loginTemplate);
     this.state = {
-      inputsStatus: inputsStatus,
+      inputsStatus,
       email: null,
       password: null,
       isSubmit: false
