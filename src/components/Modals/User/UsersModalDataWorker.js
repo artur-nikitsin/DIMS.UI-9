@@ -120,7 +120,6 @@ class UsersModalDataWorker extends React.PureComponent {
     inputsStatus[input] = status;
     dataToSend[input] = data;
 
-    console.log(inputsStatus, formValidator(inputsStatus));
     this.setState({
       isFormValid: formValidator(inputsStatus),
       dataToSend: dataToSend
