@@ -245,10 +245,14 @@ class MembersPage extends React.PureComponent {
 
 
     return (
-      <div className='membersTableContainer'>
-        {role === "admin" ? admin() : null}
-        {role === "user" ? user() : null}
-      </div>
+      <RoleContext.Consumer>{({}) => {
+        return (
+          <div className='membersTableContainer'>
+            {role === "admin" ? admin() : null}
+            {role === "user" ? user() : null}
+          </div>);
+      }}
+      </RoleContext.Consumer>
     );
   }
 }

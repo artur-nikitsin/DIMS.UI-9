@@ -57,10 +57,11 @@ class InputListCreator extends React.Component {
   }
 
   render() {
-    let inputList = [];
-    const data = this.props.modalData;
 
-    for (let input in this.props.modalTemplate) {
+    let inputList = [];
+    const { modalData, modalTemplate } = this.props;
+
+    for (let input in modalTemplate) {
       if (input === "sex") {
         inputList.push(
           <li key={input} className='sexInputs'>
@@ -80,7 +81,7 @@ class InputListCreator extends React.Component {
             <TextInput
               className={"inputField"}
               inputName={input}
-              value={data ? data[input] : ""}
+              value={modalData ? modalData[input] : ""}
               handleValidInput={this.props.handleValidInput}
               isSubmit={this.props.isSubmit}
               handleUnSubmit={this.props.handleUnSubmit}
