@@ -11,11 +11,11 @@
 .progressMemberButton,
 .tasksMemberButton,
 .editMemberButton {
-  @include simpleButton;
+  width: 6rem;
   margin: 0.2rem;
 }
 
 .deleteMemberButton {
-  @include redButton;
+  width: 6rem;
   margin: 0.2rem;
 }
