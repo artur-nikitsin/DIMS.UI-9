@@ -2,6 +2,8 @@ import React from "react";
 import validatorsManager from "../../helpers/validators/validatorsManager";
 import inputNamesStore from "./inputNamesStore";
 import "./textInput.scss";
+import { AvForm, AvField, AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
+import { Button, Label, FormGroup, CustomInput } from "reactstrap";
 
 class TextInput extends React.Component {
 
@@ -11,8 +13,10 @@ class TextInput extends React.Component {
       name: null,
       value: null,
       status: "invalid",
+      valid: false,
       message: "Please enter data!"
     };
+    this.validation = this.validation.bind(this);
   }
 
 
@@ -21,6 +25,17 @@ class TextInput extends React.Component {
     this.setState({
       value: value
     });
+  }
+
+
+  validation(value, ctx) {
+    const { isSubmit } = this.props;
+    if (value) {
+      const { inputName } = this.props;
+      const { isValid } = validatorsManager(inputName, value);
+      return isValid;
+    }
+    return false;
   }
 
 
@@ -37,7 +52,8 @@ class TextInput extends React.Component {
         handleValidInput(inputName, isValid, value);
         this.setState({
           message: message,
-          status: status
+          status: status,
+          valid: isValid
         });
       } else {
         this.setState({
@@ -50,24 +66,23 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { isSubmit, inputName, handleChange, value } = this.props;
-    const { status, message } = this.state;
+    const { inputName, handleChange, value, isSubmit } = this.props;
+    const { message } = this.state;
     return (
-      <div className={`textInput ${isSubmit ? status : null}`}>
-        <label htmlFor={inputName}>
-          {inputNamesStore[inputName]}
-          <input
-            className="input"
-            type='text'
-            name={inputName}
-            value={value || ""}
-            onChange={handleChange}
-          />
-        </label>
-        <div className={`validationMessage ${status}`}>
-          <p className="submitMessage">{isSubmit ? message : null}</p>
-        </div>
-      </div>
+
+      <AvGroup>
+        <Label for={inputName}>{inputNamesStore[inputName]}</Label>
+        <AvInput
+          required
+          type='text'
+          name={inputName}
+          value={value || ""}
+          onChange={handleChange}
+          validate={{ myValidation: this.validation.bind(this) }}
+        />
+        <AvFeedback>{message}</AvFeedback>
+      </AvGroup>
+
     );
   }
 }

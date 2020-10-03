@@ -8,10 +8,9 @@
 
   .userForm {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    margin-bottom: 3rem;
-
+    align-items: center;
   }
 
   .userRegisterInputList {
@@ -28,8 +27,8 @@
     .inputItem {
       display: flex;
       flex-direction: row;
-      justify-content: flex-end;
-      height: 5rem;
+      justify-content: center;
+      height: 6rem;
       width: 20rem;
     }
 
@@ -39,6 +38,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    height: 6rem;
     width: 50%;
   }
 }

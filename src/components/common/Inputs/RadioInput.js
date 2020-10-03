@@ -1,5 +1,17 @@
 import React from "react";
 import "./radioInput.scss";
+import {
+  AvForm,
+  AvField,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvRadioGroup,
+  AvRadio,
+  AvCheckboxGroup,
+  AvCheckbox
+} from "availity-reactstrap-validation";
+import { Button, Label, FormGroup, CustomInput, Input } from "reactstrap";
 
 class RadioInput extends React.PureComponent {
 
@@ -26,8 +38,8 @@ class RadioInput extends React.PureComponent {
     const { inputName, value, handleRadioInput } = this.props;
     return (
       <div className='radioButton'>
-        <input
-          type='radio'
+
+        <Input type="radio"
           name={inputName}
           checked={value === inputName}
           value={value || ""}

@@ -1,9 +1,20 @@
+/*
 @mixin input {
   height: 1.5rem;
-  width: 12rem;
+  width: 20rem;
   margin-top: 1rem;
   margin-left: 1rem;
+
 }
+
+!*.form-group {
+  height: 5rem;
+}
+
+.is-untouched.is-pristine.av-invalid.form-control,
+.input.is-touched.is-dirty.av-valid.form-control {
+  padding-right: calc(1.5em + .75rem);
+}*!
 
 @mixin validationMessage {
   display: flex;
@@ -54,3 +65,4 @@
 .submitMessage {
   margin-top: 0;
 }
+*/

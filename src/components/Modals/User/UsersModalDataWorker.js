@@ -6,6 +6,18 @@ import { editMemberData } from "../../../firebase/apiSet";
 import { setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import RadioInputList from "./RadioInputList";
+import {
+  AvForm,
+  AvField,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvRadioGroup,
+  AvRadio,
+  AvCheckboxGroup,
+  AvCheckbox
+} from "availity-reactstrap-validation";
+import { Button, Label, FormGroup, CustomInput } from "reactstrap";
 
 class UsersModalDataWorker extends React.PureComponent {
 
@@ -56,7 +68,7 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   setUserDataToState = (data) => {
-    const {...thisState} = this.state;
+    const { ...thisState } = this.state;
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
         this.setState({
@@ -82,11 +94,12 @@ class UsersModalDataWorker extends React.PureComponent {
       }
       return (
         <li key={input} className="inputItem">
-          <TextInput inputName={input}
-                     value={thisState[input]}
-                     handleChange={this.handleChange}
-                     handleValidInput={this.handleValidInput}
-                     isSubmit={isSubmit} />
+          <TextInput
+            inputName={input}
+            value={thisState[input]}
+            handleChange={this.handleChange}
+            handleValidInput={this.handleValidInput}
+            isSubmit={isSubmit} />
         </li>
       );
     });
@@ -106,7 +119,9 @@ class UsersModalDataWorker extends React.PureComponent {
   };
 
   handleRadioInput = (event) => {
+
     const { name } = event.target;
+    console.log(name);
     this.setState({
       sex: name
     });
@@ -129,7 +144,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
   handleSubmit(event) {
 
-    event.preventDefault();
+    event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
     const { closeModalAndReload } = this.props;
 
@@ -156,20 +171,23 @@ class UsersModalDataWorker extends React.PureComponent {
     }
   }
 
+
   render() {
     const { closeModal } = this.props;
     return (
       <div className='modalData'>
-        <form className='userForm'>
+        <AvForm className="userForm" onSubmit={this.handleSubmit}>
           {this.createInputList()}
-        </form>
+          <div className='modalButtons'>
+            <Button color="success" size="lg">Submit</Button>
+            <Button outline color="secondary" size="lg" onClick={closeModal}>
+              Return to grid
+            </Button>
+          </div>
 
-        <div className='modalButtons'>
-          <SubmitButton handleSubmit={this.handleSubmit} />
-          <button className='submitButton' onClick={closeModal}>
-            Return to grid
-          </button>
-        </div>
+        </AvForm>
+
+
       </div>
     );
   }

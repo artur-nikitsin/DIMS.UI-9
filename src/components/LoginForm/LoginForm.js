@@ -4,6 +4,7 @@ import TextInput from "../common/Inputs/TextInput";
 import SubmitButton from "../common/Buttons/SubmitButton/SubmitButton";
 import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
+import { AvField, AvForm } from "availity-reactstrap-validation";
 
 class LoginForm extends React.Component {
 
@@ -58,13 +59,24 @@ class LoginForm extends React.Component {
     return (
       <div className='loginForm'>
         <div className='loginFormBody'>
-          <ul className='loginFormInputList'>
-            <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
+          <AvForm className='userForm'>
+            <ul className='loginFormInputList'>
+
+              <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
+                             handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
+              <li><TextInput inputName="password" value={password} handleChange={this.handleChange}
+                             handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
+              {/* <li><SubmitButton handleSubmit={this.handleSubmit} /></li>*/}
+              <li><SubmitButton handleSubmit={this.props.handleLogin} /></li>
+
+              {/*  <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
                            handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
             <li><TextInput inputName="password" value={password} handleChange={this.handleChange}
                            handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
             <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
-          </ul>
+            <li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
+            </ul>
+          </AvForm>
         </div>
       </div>
     );

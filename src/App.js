@@ -1,5 +1,6 @@
 import React from "react";
 import "./app.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./components/Header/Header";
 import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
@@ -63,6 +64,7 @@ class App extends React.PureComponent {
         <button onClick={this.changeContextUser}>User</button>
         <button onClick={this.changeContextAdmin}>Admin</button>
         <div className='App'>
+
           <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
           {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
           <Footer />
