@@ -9,9 +9,9 @@
 }
 
 .editButton {
-  @include simpleButton;
+  width: 5rem;
 }
 
 .deleteButton {
-  @include redButton;
+  width: 5rem;
 }
