@@ -66,3 +66,11 @@ export function createTask(taskData) {
     .doc(taskId)
     .set({ ...taskData, taskId });
 }
+
+export function editTask(taskId, taskData) {
+
+  return db
+    .collection("Tasks")
+    .doc(taskId)
+    .set({ ...taskData, taskId });
+}

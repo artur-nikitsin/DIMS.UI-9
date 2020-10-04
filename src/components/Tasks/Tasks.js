@@ -6,7 +6,7 @@ import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteBut
 import { deleteTask } from "../../firebase/apiDelete";
 
 import TaskCreateModal from "../Modals/Task/TaskCreateModal/TaskCreateModal";
-
+import TaskEditModal from "../Modals/Task/TaskEditModal/TaskEditModal";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -112,17 +112,17 @@ class Tasks extends React.Component {
     }
   };
 
-  /*taskEditModal = (modalState) => {
+  taskEditModal = (modalState) => {
     if (modalState) {
       return (
-        <UserEditModal
-          userId={this.state.activeUserId}
+        <TaskEditModal
+          taskId={this.state.activeTaskId}
           closeModal={this.handleCloseModal}
           closeModalAndReload={this.closeModalAndReload}
         />
       );
     }
-  };*/
+  };
 
   createTasksTable = () => {
     const tableHeaders = (
@@ -137,10 +137,11 @@ class Tasks extends React.Component {
       </thead>
     );
 
-    const { showCreateModal } = this.state;
+    const { showCreateModal, showEditModal } = this.state;
     return (
       <div>
         {this.taskCreateModal(showCreateModal)}
+        {this.taskEditModal(showEditModal)}
         <button className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
           Create
         </button>

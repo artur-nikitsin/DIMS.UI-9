@@ -1,7 +1,7 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { editMemberData } from "../../../firebase/apiSet";
+import { editMemberData, editTask } from "../../../firebase/apiSet";
 import { createTask } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 
@@ -117,12 +117,12 @@ class TaskModalDataWorker extends React.PureComponent {
     if (isFormValid) {
 
       if (this.props.modalType === "Edit") {
-        /*
-                editMemberData(userId, dataToSend)
-                  .then(closeModalAndReload())
-                  .catch(function(error) {
-                    console.log("Error writing document:", error);
-                  });*/
+        editTask(taskId, dataToSend);
+        editTask(taskId, dataToSend)
+          .then(closeModalAndReload())
+          .catch(function(error) {
+            console.log("Error writing document:", error);
+          });
       } else {
         createTask(dataToSend).then(closeModalAndReload())
           .catch(function(error) {
@@ -145,10 +145,7 @@ class TaskModalDataWorker extends React.PureComponent {
               Return to grid
             </Button>
           </div>
-
         </AvForm>
-
-
       </div>
     );
   }
