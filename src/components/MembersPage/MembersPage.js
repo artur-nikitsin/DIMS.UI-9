@@ -4,6 +4,7 @@ import Buttons from "./Buttons/Buttons";
 import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
 import "./membersPage.scss";
+import { Button } from 'reactstrap';
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
 import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModal";
@@ -201,9 +202,9 @@ class MembersPage extends React.PureComponent {
       <div>
         {this.userRegisterModal(this.state.showRegisterModal)}
         {this.userEditModal(this.state.showEditModal)}
-        <button className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
+        <Button outline color="primary" className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
           Register
-        </button>
+        </Button>
         <table className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.members}</tbody>

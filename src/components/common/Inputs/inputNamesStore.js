@@ -11,7 +11,10 @@ const inputNamesStore = {
   adress: "Adress",
   mobilePhone: "Mobile Phone",
   skype: "Skype",
-  password: "Password"
+  password: "Password",
+  name: "Name",
+  deadlineDate: "Deadline date",
+  description: "Description"
 };
 
 export default inputNamesStore;

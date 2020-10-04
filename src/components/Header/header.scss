@@ -10,7 +10,6 @@
   background: rgb(36, 41, 46);
 
   .logoutButton {
-    @include simpleButton;
     margin-right: 2rem;
   }
 }

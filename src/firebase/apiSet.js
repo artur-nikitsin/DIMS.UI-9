@@ -58,3 +58,11 @@ const saveDataTemplate = (userId, data) => {
     skype: data.skype
   };
 };
+
+export function createTask(taskData) {
+  const taskId = faker.fake("{{random.number}}");
+  return db
+    .collection("Tasks")
+    .doc(taskId)
+    .set({ ...taskData, taskId });
+}

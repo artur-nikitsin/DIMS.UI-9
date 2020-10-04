@@ -4,8 +4,8 @@ import { getTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import { deleteTask } from "../../firebase/apiDelete";
-import Buttons from "../MembersPage/Buttons/Buttons";
 
+import TaskCreateModal from "../Modals/Task/TaskCreateModal/TaskCreateModal";
 
 
 class Tasks extends React.Component {
@@ -42,13 +42,10 @@ class Tasks extends React.Component {
   handleDelete = (taskId) => () => {
 
     deleteTask(taskId)
-      .then((status) => {
-        if (status === "OK") {
-          this.reloadTasksPage();
-        }
+      .then(() => {
+        this.reloadTasksPage();
       });
   };
-
 
 
   handleCloseModal = () => {
@@ -72,7 +69,7 @@ class Tasks extends React.Component {
       showCreateModal: false
     });
     this.handleCloseModal();
-    this.reloadMembersPage();
+    this.reloadTasksPage();
   };
 
   getTasks = () => {
@@ -105,6 +102,28 @@ class Tasks extends React.Component {
     });
   };
 
+  taskCreateModal = (modalState) => {
+    if (modalState) {
+      return (
+        <TaskCreateModal
+          closeModal={this.handleCloseModal}
+          closeModalAndReload={this.closeModalAndReload}
+        />);
+    }
+  };
+
+  /*taskEditModal = (modalState) => {
+    if (modalState) {
+      return (
+        <UserEditModal
+          userId={this.state.activeUserId}
+          closeModal={this.handleCloseModal}
+          closeModalAndReload={this.closeModalAndReload}
+        />
+      );
+    }
+  };*/
+
   createTasksTable = () => {
     const tableHeaders = (
       <thead>
@@ -118,9 +137,10 @@ class Tasks extends React.Component {
       </thead>
     );
 
+    const { showCreateModal } = this.state;
     return (
       <div>
-
+        {this.taskCreateModal(showCreateModal)}
         <button className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
           Create
         </button>
@@ -134,7 +154,8 @@ class Tasks extends React.Component {
 
   render() {
 
-    const { loading } = this.state;
+    const { loading, showCreateModal } = this.state;
+
     return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
 
   }

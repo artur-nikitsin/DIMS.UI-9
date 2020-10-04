@@ -1,9 +1,9 @@
-import db from './db';
+import db from "./db";
 import getLocaleDate from "../components/helpers/getLocaleDate/getLocalDate";
 
 export function getMembers() {
   return db
-    .collection('Users')
+    .collection("Users")
     .get()
     .then((users) => {
       const members = users.docs.map((user) => {
@@ -15,18 +15,18 @@ export function getMembers() {
           directionId,
           education,
           startDate,
-          userId,
+          userId
         };
       });
       return members;
     })
-    .catch(({ message }) => ({ message, messageType: 'warning' }));
+    .catch(({ message }) => ({ message, messageType: "warning" }));
 }
 
 export function getMember(userId) {
   const member = {};
   return db
-    .collection('Users')
+    .collection("Users")
     .doc(userId)
     .get()
     .then((user) => {
@@ -44,7 +44,7 @@ export function getMember(userId) {
         adress,
         mobilePhone,
         skype,
-        sex,
+        sex
       } = user.data();
 
       member.firstName = firstName;
@@ -64,13 +64,13 @@ export function getMember(userId) {
 
       return member;
     })
-    .catch(({ message }) => ({ message, messageType: 'warning' }));
+    .catch(({ message }) => ({ message, messageType: "warning" }));
 }
 
 export function getUserTaskList(userId) {
   return db
-    .collection('UserTasks')
-    .where('userId', '==', userId)
+    .collection("UserTasks")
+    .where("userId", "==", userId)
     .get()
     .then((userTasks) => {
       const userTaskList = userTasks.docs.map((userTask) => {
@@ -95,7 +95,7 @@ export function getTasks(taskId) {
   const taskData = {};
   if (taskId) {
     return db
-      .collection('Tasks')
+      .collection("Tasks")
       .doc(taskId)
       .get()
       .then((task) => {
@@ -112,7 +112,7 @@ export function getTasks(taskId) {
       });
   } else {
     return db
-      .collection('Tasks')
+      .collection("Tasks")
       .get()
       .then((tasks) => {
         const taskData = tasks.docs.map((task) => {
@@ -122,7 +122,7 @@ export function getTasks(taskId) {
             name,
             description,
             startDate,
-            deadlineDate,
+            deadlineDate
           };
         });
         return taskData;
@@ -133,10 +133,29 @@ export function getTasks(taskId) {
   }
 }
 
+export function getTask(taskId) {
+  return db
+    .collection("Tasks")
+    .doc(taskId)
+    .get()
+    .then((task) => {
+      const { startDate, deadlineDate } = task.data();
+      return {
+        ...task.data(),
+        startDate: getLocaleDate(startDate),
+        deadlineDate: getLocaleDate(deadlineDate)
+      };
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
+}
+
+
 export function getUserTrackList(userId) {
   return db
-    .collection('UserTasks')
-    .where('userId', '==', userId)
+    .collection("UserTasks")
+    .where("userId", "==", userId)
     .get()
     .then((userTasks) => {
       const userTaskList = userTasks.docs.map((userTask) => {
@@ -160,7 +179,7 @@ export function getUserTrackList(userId) {
 
 function getTaskName(userTaskId, taskId) {
   return db
-    .collection('Tasks')
+    .collection("Tasks")
     .doc(taskId)
     .get()
     .then((taskData) => {
@@ -176,8 +195,8 @@ function getTaskName(userTaskId, taskId) {
 export function getTaskTrackData(userTaskId, name) {
   const tracks = {};
   return db
-    .collection('TaskTracks')
-    .where('userTaskId', '==', userTaskId)
+    .collection("TaskTracks")
+    .where("userTaskId", "==", userTaskId)
     .get()
     .then((trackData) => {
       trackData.docs.forEach((userTrack) => {
