@@ -6,6 +6,7 @@ import TrackButton from "./Buttons/TrackButton";
 import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
 import MembersPage from "../MembersPage/MembersPage";
+import { Table } from "reactstrap";
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -75,10 +76,10 @@ class MemberTasks extends React.Component {
         <div>
           <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
         </div>
-        <table className={"memberTasksTable"}>
+        <Table striped className={"memberTasksTable"}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>
-        </table>
+        </Table>
       </div>
     );
   };

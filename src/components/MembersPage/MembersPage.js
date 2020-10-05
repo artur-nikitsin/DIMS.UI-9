@@ -11,7 +11,7 @@ import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModa
 import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
-import { register } from "../../firebase/auth";
+import { Table } from "reactstrap";
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -207,10 +207,10 @@ class MembersPage extends React.PureComponent {
         <Button outline color="primary" className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
           Register
         </Button>
-        <table className='membersTable'>
+        <Table striped className='membersTable'>
           {tableHeaders}
           <tbody>{this.state.members}</tbody>
-        </table>
+        </Table>
       </div>
     );
   };
