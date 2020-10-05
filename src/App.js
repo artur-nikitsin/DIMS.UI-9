@@ -53,8 +53,7 @@ class App extends React.PureComponent {
 
 
   render() {
-    /*  FakerDB(5);*/
-    console.log(this.state);
+
     const { role, signedUserId, signedUserName } = this.state;
     return (
       <RoleContext.Provider value={{

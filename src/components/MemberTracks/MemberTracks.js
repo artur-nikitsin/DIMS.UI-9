@@ -53,7 +53,7 @@ class MemberTracks extends React.PureComponent {
       <div className='memberTracksTableContainer'>
         {this.props.navigationButtons()}
         <div>
-          <p className="userGreeting">{`Hi, dear '${this.props.userName}! This is your task tracks:`}</p>
+          <p className="userGreeting">{`Hi, dear ${this.props.userName}! This is your task tracks:`}</p>
         </div>
         <button className='trackCreateButton'>
           Create

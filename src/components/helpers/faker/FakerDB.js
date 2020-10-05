@@ -141,27 +141,33 @@ function FakerDB(number) {
           });
 
         //create TaskTrack
-        const taskTrackId = faker.fake("{{random.number}}");
-        const taskTracks = db.collection("TaskTracks");
-        const taskTrack = db.collection("TaskTracks").doc(taskTrackId);
 
-        taskTrack
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              console.log("Document data:", doc.data());
-            } else {
-              taskTracks.doc(taskTrackId).set({
-                taskTrackId: taskTrackId,
-                userTaskId: userTaskId,
-                trackDate: faker.fake("{{date.past}}"),
-                trackNote: faker.fake("{{lorem.paragraph}}")
-              });
-            }
-          })
-          .catch((error) => {
-            console.log("Error getting document:", error);
-          });
+        for (let i = 0; i <= 5; i++) {
+
+          const taskTrackId = faker.fake("{{random.number}}");
+          const taskTracks = db.collection("TaskTracks");
+          const taskTrack = db.collection("TaskTracks").doc(taskTrackId);
+
+          taskTrack
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                console.log("Document data:", doc.data());
+              } else {
+                taskTracks.doc(taskTrackId).set({
+                  taskTrackId: taskTrackId,
+                  userTaskId: userTaskId,
+                  trackDate: faker.fake("{{date.past}}"),
+                  trackNote: faker.fake("{{lorem.paragraph}}")
+                });
+              }
+            })
+            .catch((error) => {
+              console.log("Error getting document:", error);
+            });
+
+        }
+
       }
     }
   };

@@ -15,7 +15,7 @@ class MemberProfile extends React.PureComponent {
   }
 
   handleShowActivePage = (page, trackId, taskName) => () => {
-    console.log("sw");
+
     this.setState({
       activePage: page,
       currentTask: trackId,
