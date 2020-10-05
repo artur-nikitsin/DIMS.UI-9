@@ -66,7 +66,7 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { inputName, handleChange, value, isSubmit } = this.props;
+    const { inputName, handleChange, value, isSubmit, type } = this.props;
     const { message } = this.state;
     return (
 
@@ -74,7 +74,7 @@ class TextInput extends React.Component {
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
           required
-          type='text'
+          type={type}
           name={inputName}
           value={value || ""}
           onChange={handleChange}

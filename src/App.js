@@ -9,7 +9,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
 import FakerDB from "./components/helpers/faker/FakerDB";
-import AVtest from "./AVtest";
+import { registerNewUser } from "./firebase/auth";
 
 class App extends React.PureComponent {
 
@@ -55,6 +55,8 @@ class App extends React.PureComponent {
 
   render() {
 
+  /*  FakerDB(5);*/
+
     return (
       <RoleContext.Provider value={{
         role: this.state.role,
@@ -64,7 +66,6 @@ class App extends React.PureComponent {
         <button onClick={this.changeContextUser}>User</button>
         <button onClick={this.changeContextAdmin}>Admin</button>
         <div className='App'>
-          {/*  <AVtest />*/}
           <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
           {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
           <Footer />

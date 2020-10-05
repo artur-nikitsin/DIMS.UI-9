@@ -5,6 +5,7 @@ import SubmitButton from "../common/Buttons/SubmitButton/SubmitButton";
 import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
 import { AvField, AvForm } from "availity-reactstrap-validation";
+import { login } from "../../firebase/auth";
 
 class LoginForm extends React.Component {
 
@@ -30,13 +31,20 @@ class LoginForm extends React.Component {
 
 
   handleSubmit() {
-    this.setState({
-      isSubmit: true
-    });
+    /* this.setState({
+       isSubmit: true
+     });
 
-    if (this.state.isFormValid) {
-      this.props.handleLogin();
-    }
+     if (this.state.isFormValid) {
+       this.props.handleLogin();
+     }*/
+
+    const { email, password } = this.state;
+    console.log(email, password);
+
+    login(email, password).then((response) => {
+      console.log(response);
+    });
   }
 
   handleValidInput = (input, status, data) => {
@@ -62,12 +70,12 @@ class LoginForm extends React.Component {
           <AvForm className='userForm'>
             <ul className='loginFormInputList'>
 
-              <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
+              <li><TextInput inputName="email" type="text" value={this.state.email} handleChange={this.handleChange}
                              handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-              <li><TextInput inputName="password" value={password} handleChange={this.handleChange}
+              <li><TextInput inputName="password" type="password" value={password} handleChange={this.handleChange}
                              handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-              {/* <li><SubmitButton handleSubmit={this.handleSubmit} /></li>*/}
-              <li><SubmitButton handleSubmit={this.props.handleLogin} /></li>
+              <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
+              {/*<li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
 
               {/*  <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
                            handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>

@@ -68,6 +68,7 @@ class TaskModalDataWorker extends React.PureComponent {
       return (
         <li key={input} className="inputItem">
           <TextInput
+            type="text"
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}

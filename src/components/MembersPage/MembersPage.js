@@ -11,6 +11,7 @@ import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModa
 import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import {RoleContext} from "../../RoleContext";
+import {register} from "../../firebase/auth";
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -33,6 +34,7 @@ class MembersPage extends React.PureComponent {
     if (role === "admin") {
       this.getMembers();
     }
+
   }
 
   handleProgress = (userId, name) => () => {
