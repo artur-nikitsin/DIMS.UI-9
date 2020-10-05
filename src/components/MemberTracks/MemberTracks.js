@@ -1,6 +1,6 @@
 import React from "react";
 import "./memberTracks.scss";
-import { getUserTrackList } from "../../firebase/apiGet";
+import { getTaskTrack, getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import getSubString from "../helpers/getSubString/getSubString";
@@ -18,19 +18,19 @@ class MemberTracks extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.getUserTrackList(this.props.userId);
+    this.getUserTrackList(this.props.taskId);
   }
 
 
   getUserTrackList = (user) => {
 
     if (user) {
-      getUserTrackList(user).then((result) => {
+      getTaskTrack(user).then((result) => {
         let tracks = result.map((track, i) => {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>
-              <td>{track.name}</td>
+              <td>{this.props.taskName}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
               <td><EditDeleteButtons /></td>

@@ -1,12 +1,12 @@
 import React from "react";
 import "./memberTasks.scss";
-import { getUserTaskList } from "../../firebase/apiGet";
+import { getTaskTrack, getUserTaskList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import TrackButton from "./Buttons/TrackButton";
 import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
 import MembersPage from "../MembersPage/MembersPage";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -20,6 +20,12 @@ class MemberTasks extends React.Component {
   componentDidMount() {
     this.getUserTaskList(this.props.userId);
   }
+
+  showTaskTracks = (id) => {
+    const handleShowActivePage = this.props;
+    handleShowActivePage("taskTrack", id);
+    console.log(getTaskTrack(id));
+  };
 
   getUserTaskList = (user) => {
     if (user) {
@@ -35,7 +41,8 @@ class MemberTasks extends React.Component {
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
               <td className={"tasksButtons"}>Status</td>
               <td className={"tasksButtons"}>
-                <TrackButton />
+                <Button outline color="primary"
+                        onClick={this.props.handleShowActivePage("taskTrack", task.userTaskId, task.name)}>Track</Button>
               </td>
               <td className={"tasksButtons"}>
                 <StatusButtons />

@@ -1,5 +1,11 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
+.memberProfile {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
 .tasksButton,
 .tracksButton {
   @include simpleButton;

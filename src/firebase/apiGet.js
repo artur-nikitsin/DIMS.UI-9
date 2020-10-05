@@ -81,7 +81,7 @@ export function getUserTaskList(userId) {
     })
     .then((userTaskList) => {
       const tasks = userTaskList.map((task) => {
-        return getTasks(task.taskId);
+        return getTasks(task.taskId, task.userTaskId);
       });
       const taskData = Promise.all(tasks);
       return taskData;
@@ -91,7 +91,7 @@ export function getUserTaskList(userId) {
     });
 }
 
-export function getTasks(taskId) {
+export function getTasks(taskId, userTaskId) {
   const taskData = {};
   if (taskId) {
     return db
@@ -105,6 +105,7 @@ export function getTasks(taskId) {
         taskData.description = description;
         taskData.startDate = startDate;
         taskData.deadlineDate = deadlineDate;
+        taskData.userTaskId = userTaskId;
         return taskData;
       })
       .catch((error) => {
@@ -151,6 +152,24 @@ export function getTask(taskId) {
     });
 }
 
+
+export function getTaskTrack(userTaskId) {
+  return db
+    .collection("TaskTracks")
+    .where("userTaskId", "==", userTaskId)
+    .get()
+    .then((trackData) => {
+
+      const taskTrackList = trackData.docs.map((userTask) => {
+        const { taskTrackId, userTaskId, trackDate, trackNote } = userTask.data();
+        return { taskTrackId, userTaskId, trackDate, trackNote };
+      });
+      return taskTrackList;
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
+}
 
 export function getUserTrackList(userId) {
   return db
