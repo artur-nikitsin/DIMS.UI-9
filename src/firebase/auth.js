@@ -10,7 +10,7 @@ export function registerNewUser(email, password) {
     });
 }
 
-export function login(email, password) {
+export async function  login(email, password) {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)

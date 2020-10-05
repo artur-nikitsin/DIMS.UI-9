@@ -4,14 +4,14 @@ import Buttons from "./Buttons/Buttons";
 import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
 import "./membersPage.scss";
-import { Button } from 'reactstrap';
+import { Button } from "reactstrap";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
 import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModal";
 import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
-import {RoleContext} from "../../RoleContext";
-import {register} from "../../firebase/auth";
+import { RoleContext } from "../../RoleContext";
+import { register } from "../../firebase/auth";
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -31,7 +31,7 @@ class MembersPage extends React.PureComponent {
 
   componentDidMount() {
     const { role } = this.context;
-    if (role === "admin") {
+    if (role === "admin" || role === "mentor") {
       this.getMembers();
     }
 
@@ -164,14 +164,14 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-   userRegisterModal = (modalState) => {
-     if (modalState) {
-       return (<UserRegisterModal
-         closeModal={this.handleCloseModal}
-         closeModalAndReload={this.closeModalAndReload}
-       />);
-     }
-   };
+  userRegisterModal = (modalState) => {
+    if (modalState) {
+      return (<UserRegisterModal
+        closeModal={this.handleCloseModal}
+        closeModalAndReload={this.closeModalAndReload}
+      />);
+    }
+  };
 
   userEditModal = (modalState) => {
     if (modalState) {
@@ -219,7 +219,9 @@ class MembersPage extends React.PureComponent {
   render() {
 
     const { role, userId, signedUserName } = this.context;
+
     const { showRegisterModal, showEditModal, loading, activePage } = this.state;
+
     let admin = () => {
       return (
         <div>
@@ -230,7 +232,7 @@ class MembersPage extends React.PureComponent {
       );
     };
 
-    let user = () => {
+    let user = (userId) => {
       return (
         <div>
           <MemberProfile userId={userId}
@@ -242,13 +244,14 @@ class MembersPage extends React.PureComponent {
 
 
     return (
-      <RoleContext.Consumer>{({}) => {
-        return (
-          <div className='membersTableContainer'>
-            {role === "admin" ? admin() : null}
-            {role === "user" ? user() : null}
-          </div>);
-      }}
+      <RoleContext.Consumer>{
+        ({ role, userId }) => {
+          return (
+            <div className='membersTableContainer'>
+              {(role === "admin" || role === "mentor") ? admin() : null}
+              {role === "user" ? user(userId) : null}
+            </div>);
+        }}
       </RoleContext.Consumer>
     );
   }

@@ -56,7 +56,6 @@ function FakerDB(number) {
             const firstName = faker.fake("{{name.firstName}}");
             const lastName = faker.fake("{{name.lastName}}");
             const email = faker.fake("{{internet.email}}");
-            const role = "user";
 
             members.doc(userId).set({
               userId: userId,
@@ -79,7 +78,8 @@ function FakerDB(number) {
               firstName: firstName,
               lastName: lastName,
               email: email,
-              role: "user"
+              role: "user",
+              userId: userId
             });
 
             registerNewUser(email, "12345678").then(result => {

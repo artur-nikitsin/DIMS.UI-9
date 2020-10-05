@@ -6,6 +6,7 @@ import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
 import { AvField, AvForm } from "availity-reactstrap-validation";
 import { login } from "../../firebase/auth";
+import Preloader from "../common/Preloader/Preloader";
 
 class LoginForm extends React.Component {
 
@@ -15,7 +16,10 @@ class LoginForm extends React.Component {
       inputsStatus,
       email: null,
       password: null,
-      isSubmit: false
+      loading: false,
+      isSubmit: false,
+      isFailLogin: false,
+      message: null
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,20 +35,35 @@ class LoginForm extends React.Component {
 
 
   handleSubmit() {
-    /* this.setState({
-       isSubmit: true
-     });
 
-     if (this.state.isFormValid) {
-       this.props.handleLogin();
-     }*/
-
-    const { email, password } = this.state;
-    console.log(email, password);
-
-    login(email, password).then((response) => {
-      console.log(response);
+    this.setState({
+      isSubmit: true,
+      loading: true
     });
+
+    const { isFormValid } = this.state;
+    if (isFormValid) {
+
+      const { email, password } = this.state;
+      login(email, password)
+        .then((response) => {
+
+          const { role } = response;
+          if (role) {
+            this.setState({
+              loading: false
+            });
+            this.props.handleLogin(response);
+          } else {
+            const { message } = response;
+            this.setState({
+              loading: false,
+              isFailLogin: true,
+              message: message
+            });
+          }
+        });
+    }
   }
 
   handleValidInput = (input, status, data) => {
@@ -61,36 +80,32 @@ class LoginForm extends React.Component {
 
   render() {
 
-    const { handleLogin } = this.props;
-    const { email, password, isSubmit } = this.state;
+    const { email, password, isSubmit, loading, isFailLogin, message } = this.state;
 
     return (
-      <div className='loginForm'>
-        <div className='loginFormBody'>
-          <AvForm className='userForm'>
-            <ul className='loginFormInputList'>
 
-              <li><TextInput inputName="email" type="text" value={this.state.email} handleChange={this.handleChange}
-                             handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-              <li><TextInput inputName="password" type="password" value={password} handleChange={this.handleChange}
-                             handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-              <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
-              {/*<li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
+      loading ? <Preloader /> :
 
-              {/*  <li><TextInput inputName="email" value={this.state.email} handleChange={this.handleChange}
-                           handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-            <li><TextInput inputName="password" value={password} handleChange={this.handleChange}
-                           handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-            <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
-            <li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
-            </ul>
-          </AvForm>
+        <div className='loginForm'>
+          <div className='loginFormBody'>
+            {isFailLogin && <p>{message}</p>}
+            <AvForm className='userForm'>
+              <ul className='loginFormInputList'>
+
+                <li><TextInput inputName="email" type="text" value={this.state.email} handleChange={this.handleChange}
+                               handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
+                <li><TextInput inputName="password" type="password" value={password} handleChange={this.handleChange}
+                               handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
+                <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
+                {/*<li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
+
+              </ul>
+            </AvForm>
+          </div>
         </div>
-      </div>
+
     );
   }
-
-
 }
 
 export default LoginForm;

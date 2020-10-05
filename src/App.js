@@ -9,7 +9,7 @@ import Preloader from "./components/common/Preloader/Preloader";
 import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
 import FakerDB from "./components/helpers/faker/FakerDB";
-import { registerNewUser } from "./firebase/auth";
+import { logout, registerNewUser } from "./firebase/auth";
 
 class App extends React.PureComponent {
 
@@ -17,9 +17,10 @@ class App extends React.PureComponent {
     super(props);
     this.state = {
       isLogin: false,
-      role: "admin",
-      signedUser: "2718",
-      signedUserName: "Archie"
+      role: null,
+      signedUserId: null,
+      signedUserName: null,
+      signedUserLastName: null
     };
   }
 
@@ -27,44 +28,40 @@ class App extends React.PureComponent {
     document.title = DOCUMENT_TITLE;
   }
 
-  handleLogin = () => {
+  handleLogin = ({ email, firstName, lastName, role, userId }) => {
     this.setState({
-      isLogin: true
+      isLogin: true,
+      role: role,
+      signedUserId: userId,
+      signedUserName: firstName,
+      signedUserLastName: lastName
     });
   };
 
   handleLogout = () => {
     this.setState({
-      isLogin: false
+      isLogin: false,
+      role: null,
+      signedUserId: null,
+      signedUserName: null,
+      signedUserLastName: null
     });
-  };
-
-
-  changeContextUser = () => {
-    this.setState({
-      role: "user"
-    });
-  };
-
-  changeContextAdmin = () => {
-    this.setState({
-      role: "admin"
+    logout().then(message => {
+      console.log(message);
     });
   };
 
 
   render() {
-
-  /*  FakerDB(5);*/
-
+    /*  FakerDB(5);*/
+    console.log(this.state);
+    const { role, signedUserId, signedUserName } = this.state;
     return (
       <RoleContext.Provider value={{
-        role: this.state.role,
-        userId: this.state.signedUser,
-        signedUserName: this.state.signedUserName
+        role: role,
+        userId: signedUserId,
+        signedUserName: signedUserName
       }}>
-        <button onClick={this.changeContextUser}>User</button>
-        <button onClick={this.changeContextAdmin}>Admin</button>
         <div className='App'>
           <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
           {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
@@ -72,7 +69,7 @@ class App extends React.PureComponent {
         </div>
       </RoleContext.Provider>
     );
-  };
+  }
 }
 
 export default App;
