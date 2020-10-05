@@ -1,15 +1,25 @@
 @import "src/components/common/Styles/Mixins/Buttons/Buttons";
 
 .loginForm {
-  width: auto;
-  height: auto;
-  background: rgb(241, 248, 255);
-  border: 2px solid rgb(200, 225, 255);
 
   @mixin flex {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+  }
+
+  @include flex;
+  width: 30vw;
+  height: auto;
+  background: rgb(241, 248, 255);
+  border: 2px solid rgb(200, 225, 255);
+
+
+  .loginTitle {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 
   .loginFormBody {
@@ -19,10 +29,15 @@
 
     .loginFormInputList {
       @include flex;
-      align-items: flex-end;
       list-style-type: none;
       padding: 0;
     }
+
+      .loginButton {
+        margin-top: 2rem;
+        width: 8rem;
+      }
+
 
   }
 }

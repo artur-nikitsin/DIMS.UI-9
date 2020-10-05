@@ -7,6 +7,8 @@ import formValidator from "../helpers/FormValidator/formValidator";
 import { AvField, AvForm } from "availity-reactstrap-validation";
 import { login } from "../../firebase/auth";
 import Preloader from "../common/Preloader/Preloader";
+import { Button, Alert } from "reactstrap";
+
 
 class LoginForm extends React.Component {
 
@@ -19,6 +21,7 @@ class LoginForm extends React.Component {
       loading: false,
       isSubmit: false,
       isFailLogin: false,
+      isFormValid: false,
       message: null
     };
     this.handleChange = this.handleChange.bind(this);
@@ -36,13 +39,12 @@ class LoginForm extends React.Component {
 
   handleSubmit() {
 
-    this.setState({
-      isSubmit: true,
-      loading: true
-    });
-
     const { isFormValid } = this.state;
     if (isFormValid) {
+      this.setState({
+        isSubmit: true,
+        loading: true
+      });
 
       const { email, password } = this.state;
       login(email, password)
@@ -87,17 +89,17 @@ class LoginForm extends React.Component {
       loading ? <Preloader /> :
 
         <div className='loginForm'>
+          <p className="loginTitle">Login</p>
           <div className='loginFormBody'>
-            {isFailLogin && <p>{message}</p>}
-            <AvForm className='userForm'>
+            {isFailLogin && <Alert color="danger"> {message} </Alert>}
+            <AvForm className="userForm" onSubmit={this.handleSubmit}>
               <ul className='loginFormInputList'>
-
-                <li><TextInput inputName="email" type="text" value={this.state.email} handleChange={this.handleChange}
+                <li><TextInput inputName="email" type="text" value={email} handleChange={this.handleChange}
                                handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
                 <li><TextInput inputName="password" type="password" value={password} handleChange={this.handleChange}
                                handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-                <li><SubmitButton handleSubmit={this.handleSubmit} /></li>
-                {/*<li><SubmitButton handleSubmit={this.props.handleLogin} /></li>*/}
+                <li><Button className="loginButton" color="secondary"
+                            size="lg">Login</Button></li>
 
               </ul>
             </AvForm>
