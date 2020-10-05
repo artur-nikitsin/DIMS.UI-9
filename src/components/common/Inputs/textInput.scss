@@ -1,68 +1,8 @@
-/*
-@mixin input {
-  height: 1.5rem;
-  width: 20rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
 
-}
-
-!*.form-group {
+.textInputContainer{
   height: 5rem;
 }
 
-.is-untouched.is-pristine.av-invalid.form-control,
-.input.is-touched.is-dirty.av-valid.form-control {
-  padding-right: calc(1.5em + .75rem);
-}*!
-
-@mixin validationMessage {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  height: 1rem;
-  font-size: 0.8rem;
-}
-
 .textInput {
-  .input {
-    @include input;
-    border: 1px solid black;
-  }
-
-  .validationMessage.valid {
-    @include validationMessage;
-    color: green;
-  }
+  padding-right: calc(1.5em + .75rem);
 }
-
-
-.textInput.valid {
-  .input {
-    @include input;
-    border: 1px solid green;
-  }
-
-  .validationMessage.valid {
-    @include validationMessage;
-    color: green;
-  }
-}
-
-
-.textInput.invalid {
-  .input {
-    @include input;
-    border: 1px solid red;
-  }
-
-  .validationMessage.invalid {
-    @include validationMessage;
-    color: red;
-  }
-}
-
-.submitMessage {
-  margin-top: 0;
-}
-*/

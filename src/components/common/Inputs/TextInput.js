@@ -70,9 +70,10 @@ class TextInput extends React.Component {
     const { message } = this.state;
     return (
 
-      <AvGroup>
+      <AvGroup className="textInputContainer">
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
+          className="textInput"
           required
           type={type}
           name={inputName}
