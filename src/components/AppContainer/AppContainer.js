@@ -6,7 +6,7 @@ import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
 import Header from "../Header/Header";
 import { RoleContext } from "../../RoleContext";
-
+import { Button } from "reactstrap";
 
 class AppContainer extends React.PureComponent {
 
@@ -29,17 +29,17 @@ class AppContainer extends React.PureComponent {
 
   navigationButtons = () => {
     return (
-      <div>
-        <button
+      <div className="navigationButtons">
+        <Button outline color="secondary"
           onClick={this.handleShowActivePage("members")}
           className={`membersButton ${this.state.activePage === "members" ? "active" : null}`}>
           Members
-        </button>
-        <button
+        </Button>
+        <Button outline color="secondary"
           onClick={this.handleShowActivePage("tasks")}
           className={`tasksTabButton ${this.state.activePage === "tasks" ? "active" : null}`}>
           Tasks
-        </button>
+        </Button>
       </div>
     );
   };

@@ -12,44 +12,12 @@
   @include simpleButton;
 }
 
-@mixin successStatusButton {
-  min-width: 5rem;
-  min-height: 2rem;
-  margin-top: 5px;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  outline: none;
-  border: 2px solid rgba(27, 196, 39, 1);
-  border-radius: 3px;
-}
 
 .successStatusButton {
-  @include successStatusButton;
-
-  &:hover {
-    @include successStatusButton;
-    background: rgba(27, 196, 39, 1);
-    transition: background 0.5s ease, color 0.2s linear;
-  }
+  width: 5rem;
 }
 
-@mixin failStatusButton {
-  min-width: 5rem;
-  min-height: 2rem;
-  margin-top: 5px;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  outline: none;
-  border: 2px solid rgba(255, 0, 0, 1);
-  border-radius: 3px;
-}
 
 .failStatusButton {
-  @include failStatusButton;
-
-  &:hover {
-    @include failStatusButton;
-    background: rgba(212, 34, 34, 1);
-    transition: background 0.5s ease, color 0.2s linear;
-  }
+  width: 5rem;
 }

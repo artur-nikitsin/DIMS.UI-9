@@ -6,15 +6,10 @@
   justify-content: stretch;
   align-items: center;
 }
-.tasksButton,
-.tracksButton {
-  @include simpleButton;
-  margin-left: 1rem;
+
+.returnToMembersGrid,
+.returnToTasksGrid {
+  align-self: flex-start;
 }
 
-.tracksButton.active,
-.tasksButton.active {
-  @include simpleButton;
-  color: green;
-  margin-left: 1rem;
-}
+

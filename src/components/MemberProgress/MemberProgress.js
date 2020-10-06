@@ -2,6 +2,9 @@ import React from "react";
 import "./memberProgress.scss";
 import { getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
+import { Button } from "reactstrap";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -60,9 +63,10 @@ class MemberProgress extends React.Component {
 
     return (
       <div>
-        <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
-          Return to full list
-        </button>
+        <Button color="link" onClick={this.props.handleReturnToFullList}>
+          <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
+           Return to members manage grid
+        </Button>
         <table className='progressTable'>
           {tableHeaders}
           <tbody>{this.state.userTrackList}</tbody>

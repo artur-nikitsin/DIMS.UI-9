@@ -7,7 +7,7 @@ import { deleteTask } from "../../firebase/apiDelete";
 
 import TaskCreateModal from "../Modals/Task/TaskCreateModal/TaskCreateModal";
 import TaskEditModal from "../Modals/Task/TaskEditModal/TaskEditModal";
-import { Table } from "reactstrap";
+import { Table, Button } from "reactstrap";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -143,9 +143,9 @@ class Tasks extends React.Component {
       <div>
         {this.taskCreateModal(showCreateModal)}
         {this.taskEditModal(showEditModal)}
-        <button className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
+        <Button outline color="primary" className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
           Create
-        </button>
+        </Button>
         <Table striped className="tasksTable">
           {tableHeaders}
           <tbody>{this.state.tasks}</tbody>

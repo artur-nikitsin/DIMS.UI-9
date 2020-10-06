@@ -17,15 +17,12 @@
   margin-top: 2rem;
 }
 
-.membersButton,
-.tasksTabButton {
-  @include simpleButton;
-  margin-left: 1rem;
-}
 
-.membersButton.active,
-.tasksTabButton.active {
-  @include simpleButton;
-  color: green;
-  margin-left: 1rem;
+.navigationButtons {
+
+  .membersButton,
+  .tasksTabButton {
+    width: 8rem;
+    margin-top: 1rem;
+  }
 }

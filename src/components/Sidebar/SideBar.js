@@ -10,7 +10,7 @@ function SideBar({ navigationButtons }) {
       ({ role, userId }) => {
         return (
           <div className='sideBar'>
-            {(role === "admin" || role === "mentor") ? navigationButtons() : null}
+            {(role === "admin" || role === "mentor") && navigationButtons() }
           </div>
         );
       }}

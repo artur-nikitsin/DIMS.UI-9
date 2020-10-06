@@ -4,6 +4,8 @@ import MemberTracks from "../MemberTracks/MemberTracks";
 import "./membersProfile.scss";
 import { RoleContext } from "../../RoleContext";
 import { Button } from "reactstrap";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class MemberProfile extends React.PureComponent {
   constructor(props) {
@@ -52,12 +54,14 @@ class MemberProfile extends React.PureComponent {
 
       (role === "admin" || role === "mentor") ?
 
-        <Button color="link" onClick={this.props.handleReturnToFullList}>
+        <Button color="link" className="returnToMembersGrid" onClick={this.props.handleReturnToFullList}>
+          <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
           Return to members manage grid
         </Button>
         :
-        <Button color="link"
+        <Button color="link" className="returnToTasksGrid"
                 onClick={this.handleShowActivePage("tasks")}>
+          <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
           Return to task list
         </Button>
 
