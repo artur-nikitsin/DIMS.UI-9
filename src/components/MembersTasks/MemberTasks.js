@@ -24,12 +24,13 @@ class MemberTasks extends React.Component {
   showTaskTracks = (id) => {
     const handleShowActivePage = this.props;
     handleShowActivePage("taskTrack", id);
-    console.log(getTaskTrack(id));
   };
 
   getUserTaskList = (user) => {
     if (user) {
       getUserTaskList(user).then((result) => {
+
+        const { role } = this.context;
         let tasks = result.map((task, i) => {
           return (
             <tr key={task.taskId} className={i % 2 ? "darkLine" : "whiteLine"}>
@@ -40,10 +41,14 @@ class MemberTasks extends React.Component {
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
               <td className={"tasksButtons"}>Status</td>
+
+              {(role === "admin" || role === "mentor") ||
               <td className={"tasksButtons"}>
                 <Button outline color="primary"
-                        onClick={this.props.handleShowActivePage("taskTrack", task.userTaskId, task.name)}>Track</Button>
-              </td>
+                        onClick={this.props.handleShowActivePage("taskTrack", task.userTaskId, task.name)}>
+                  Track</Button>
+              </td>}
+
               <td className={"tasksButtons"}>
                 <StatusButtons />
               </td>
@@ -62,6 +67,7 @@ class MemberTasks extends React.Component {
   };
 
   createMemberTaskTable = () => {
+    const { role } = this.context;
     const tableHeaders = (
       <thead>
       <tr>
@@ -71,18 +77,19 @@ class MemberTasks extends React.Component {
         <th>Deadline</th>
         <th>Status</th>
         <th />
-        <th />
+        {(role === "admin" || role === "mentor") || <th />}
       </tr>
       </thead>
     );
 
     return (
       <div className={"memberTasksTableContainer"}>
-
-        {this.props.navigationButtons()}
-        <div>
-          <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
-        </div>
+        {(role === "admin" || role === "mentor") ? this.props.navigationButtons()
+          :
+          <div>
+            <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
+          </div>
+        }
         <Table striped className={"memberTasksTable"}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>

@@ -3,6 +3,7 @@ import MemberTasks from "../MembersTasks/MemberTasks";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import "./membersProfile.scss";
 import { RoleContext } from "../../RoleContext";
+import { Button } from "reactstrap";
 
 class MemberProfile extends React.PureComponent {
   constructor(props) {
@@ -45,26 +46,22 @@ class MemberProfile extends React.PureComponent {
 
   navigationButtons = () => {
 
-    let { role } = this.context;
-
+    const { role } = this.context;
+    const { activePage } = this.state;
     return (
-      <div>
-        {
-          role === "admin" ? <button className='returnToFullListButton' onClick={this.props.handleReturnToFullList}>
-            Return to full list
-          </button> : null
-        }
-        <button
-          onClick={this.handleShowActivePage("tasks")}
-          className={`tasksButton ${this.state.activePage === "tasks" ? "active" : null}`}>
-          Tasks
-        </button>
-        <button
-          onClick={this.handleShowActivePage("taskTrack", null)}
-          className={`tasksButton ${this.state.activePage === "taskTrack" ? "active" : null}`}>
-          Task tracks
-        </button>
-      </div>
+
+      (role === "admin" || role === "mentor") ?
+
+        <Button color="link" onClick={this.props.handleReturnToFullList}>
+          Return to members manage grid
+        </Button>
+        :
+        <Button color="link"
+                onClick={this.handleShowActivePage("tasks")}>
+          Return to task list
+        </Button>
+
+
     );
   };
 

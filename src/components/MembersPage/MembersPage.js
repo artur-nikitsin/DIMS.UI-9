@@ -131,6 +131,7 @@ class MembersPage extends React.PureComponent {
 
   getMembers = () => {
     getMembers().then((result) => {
+      const { role } = this.context;
       let members = result.map((member, i) => {
         return (
           <tr key={member.userId + "n"} className={i % 2 ? "darkLine" : "whiteLine"}>
@@ -142,8 +143,11 @@ class MembersPage extends React.PureComponent {
             <td key={member.userId + "d"}>{member.education}</td>
             <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
             <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
+
+
             <td key={member.userId + "h"} className='memberButtons'>
               <Buttons
+                role={role}
                 userId={member.userId}
                 handleProgress={this.handleProgress(member.userId, member.firstName)}
                 handleTasks={this.handleTasks(member.userId, member.firstName)}
@@ -151,6 +155,7 @@ class MembersPage extends React.PureComponent {
                 handleDelete={this.handleDelete(member.userId)}
               />
             </td>
+
           </tr>
         );
       });
@@ -186,6 +191,7 @@ class MembersPage extends React.PureComponent {
   };
 
   createMembersTable = () => {
+    const { role } = this.context;
     const tableHeaders = (
       <thead>
       <tr>
@@ -248,8 +254,7 @@ class MembersPage extends React.PureComponent {
         ({ role, userId }) => {
           return (
             <div className='membersTableContainer'>
-              {(role === "admin" || role === "mentor") ? admin() : null}
-              {role === "user" ? user(userId) : null}
+              {(role === "admin" || role === "mentor") ? admin() : user(userId)}
             </div>);
         }}
       </RoleContext.Consumer>

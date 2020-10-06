@@ -42,10 +42,10 @@ export function deleteTask(taskId) {
       .then((tasks) => {
         tasks.forEach((task) => {
           const { userTaskId, stateId } = task.data();
-          deleteDocumentById("UserTask", userTaskId);
+          deleteDocumentById("UserTasks", userTaskId);
 
           return db
-            .collection("TaskTrack")
+            .collection("TaskTracks")
             .where("userTaskId", "==", userTaskId)
             .get()
             .then((trackedTasks) => {

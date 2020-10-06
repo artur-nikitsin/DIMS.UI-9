@@ -75,6 +75,7 @@ export function getUserTaskList(userId) {
     .then((userTasks) => {
       const userTaskList = userTasks.docs.map((userTask) => {
         const { userTaskId, taskId, userId, stateId } = userTask.data();
+
         return { userTaskId, taskId, userId, stateId };
       });
       return userTaskList;
@@ -84,6 +85,7 @@ export function getUserTaskList(userId) {
         return getTasks(task.taskId, task.userTaskId);
       });
       const taskData = Promise.all(tasks);
+
       return taskData;
     })
     .catch((error) => {

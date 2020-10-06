@@ -6,7 +6,7 @@ import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteBut
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
 import TableTrackHeaders from "./TableHeaders";
-import { Table } from "reactstrap";
+import { Button, Table } from "reactstrap";
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -55,9 +55,9 @@ class MemberTracks extends React.PureComponent {
         <div>
           <p className="userGreeting">{`Hi, dear ${this.props.userName}! This is your task tracks:`}</p>
         </div>
-        <button className='trackCreateButton'>
-          Create
-        </button>
+        <Button outline color="primary" className='trackCreateButton'>
+          Add
+        </Button>
         <Table striped className='tracksTable'>
           <TableTrackHeaders />
           <tbody>{this.state.userTrackList}</tbody>
