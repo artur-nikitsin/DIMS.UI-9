@@ -11,6 +11,7 @@ import { DOCUMENT_TITLE } from "./components/constants/titles";
 import FakerDB from "./components/helpers/faker/FakerDB";
 import { logout, registerNewUser } from "./firebase/auth";
 
+
 class App extends React.PureComponent {
 
   constructor(props) {

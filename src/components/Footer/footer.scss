@@ -4,12 +4,40 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 10vh;
-  background: rgb(36,41,46);
+  min-height: 12vh;
+  background: rgb(36, 41, 46);
   border-top: 1px solid #000;
 
-  .allRights{
-    font-size: 1rem;
-    color: rgb(223,226,229);
+  .footerContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+    .linksContainer {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      width: 15rem;
+      list-style-type: none;
+      margin-top: 1rem;
+      padding: 0;
+    }
+
+    .linkIcon {
+      color: #ffffff;
+
+      &:hover {
+        color: green;
+        cursor: pointer;
+      }
+    }
+
+    .allRights {
+      font-size: 1rem;
+      color: rgb(223, 226, 229);
+    }
   }
+
 }

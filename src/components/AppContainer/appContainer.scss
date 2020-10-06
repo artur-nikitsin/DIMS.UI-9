@@ -3,12 +3,14 @@
 .appContainer {
   display: flex;
   flex-direction: row;
+
 }
+
 .pagesContainer {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: stretch;
   min-height: 80vh;
   min-width: 90vw;
   width: auto;
