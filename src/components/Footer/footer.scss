@@ -18,7 +18,7 @@
     .linksContainer {
       display: flex;
       flex-direction: row;
-      justify-content: space-around;
+      justify-content: space-between;
       width: 15rem;
       list-style-type: none;
       margin-top: 1rem;
@@ -31,10 +31,12 @@
       &:hover {
         color: green;
         cursor: pointer;
+        transition: color 200ms linear;
       }
     }
 
     .allRights {
+      width: 15rem;
       font-size: 1rem;
       color: rgb(223, 226, 229);
     }
