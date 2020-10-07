@@ -22,6 +22,7 @@ class UserRegisterModal extends React.Component {
             closeModalAndReload={closeModalAndReload}
           />
         }
+        className="ModalBootstrap"
         closeModal={closeModal}
       />
     );

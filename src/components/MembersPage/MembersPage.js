@@ -12,6 +12,8 @@ import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
+import UserModal from "../Modals/Common/ModalBootstrap/UserModal";
+
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -23,10 +25,11 @@ class MembersPage extends React.PureComponent {
       activeUserId: null,
       activeUserName: null,
       memberProgressShow: null,
-      showRegisterModal: false,
-      showEditModal: false,
-      reload: true
+      reload: true,
+      modalIsOpen: false
     };
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   componentDidMount() {
@@ -53,12 +56,6 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  handleEdit = (userId) => () => {
-    this.setState({
-      showEditModal: true,
-      activeUserId: userId
-    });
-  };
 
   handleDelete = (userId) => () => {
     deleteUser(userId).then(() => {
@@ -73,27 +70,6 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  handleShowRegisterUserModal = () => {
-    this.setState({
-      showRegisterModal: true
-    });
-  };
-
-  handleCloseModal = () => {
-    this.setState({
-      showRegisterModal: false,
-      showEditModal: false
-    });
-  };
-
-  closeModalAndReload = () => {
-    this.setState({
-      showRegisterModal: false,
-      showEditModal: false
-    });
-    this.handleCloseModal();
-    this.reloadMembersPage();
-  };
 
   reloadMembersPage = () => {
     this.setState({
@@ -132,6 +108,7 @@ class MembersPage extends React.PureComponent {
   getMembers = () => {
     getMembers().then((result) => {
       const { role } = this.context;
+
       let members = result.map((member, i) => {
         return (
           <tr key={member.userId + "n"} className={i % 2 ? "darkLine" : "whiteLine"}>
@@ -151,7 +128,7 @@ class MembersPage extends React.PureComponent {
                 userId={member.userId}
                 handleProgress={this.handleProgress(member.userId, member.firstName)}
                 handleTasks={this.handleTasks(member.userId, member.firstName)}
-                handleEdit={this.handleEdit(member.userId)}
+                handleEdit={this.openModal(member.userId)}
                 handleDelete={this.handleDelete(member.userId)}
               />
             </td>
@@ -169,25 +146,19 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  userRegisterModal = (modalState) => {
-    if (modalState) {
-      return (<UserRegisterModal
-        closeModal={this.handleCloseModal}
-        closeModalAndReload={this.closeModalAndReload}
-      />);
-    }
+
+  openModal = (userId) => () => {
+    this.setState({
+      modalIsOpen: true,
+      activeUserId: userId
+    });
   };
 
-  userEditModal = (modalState) => {
-    if (modalState) {
-      return (
-        <UserEditModal
-          userId={this.state.activeUserId}
-          closeModal={this.handleCloseModal}
-          closeModalAndReload={this.closeModalAndReload}
-        />
-      );
-    }
+  closeModal = (userId) => {
+    this.setState({
+      modalIsOpen: false,
+      activeUserId: userId
+    });
   };
 
   createMembersTable = () => {
@@ -205,16 +176,22 @@ class MembersPage extends React.PureComponent {
       </thead>
     );
 
+    const { members, modalIsOpen, activeUserId } = this.state;
     return (
       <div>
-        {this.userRegisterModal(this.state.showRegisterModal)}
-        {this.userEditModal(this.state.showEditModal)}
-        <Button outline color="primary" className='memberRegisterButton' onClick={this.handleShowRegisterUserModal}>
+        <UserModal className="ModalBootstrap"
+                   buttonLabel="UserModal"
+                   isOpen={modalIsOpen}
+                   closeModal={this.closeModal}
+                   userId={activeUserId}
+                   reloadMemberPage={this.reloadMembersPage}
+        />
+        <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null)}>
           Register
         </Button>
         <Table striped className='membersTable'>
           {tableHeaders}
-          <tbody>{this.state.members}</tbody>
+          <tbody>{members}</tbody>
         </Table>
       </div>
     );
@@ -230,8 +207,6 @@ class MembersPage extends React.PureComponent {
     let admin = () => {
       return (
         <div>
-          {this.userRegisterModal(showRegisterModal)}
-          {this.userEditModal(showEditModal)}
           {loading ? <Preloader /> : this.showActivePage(activePage)}
         </div>
       );

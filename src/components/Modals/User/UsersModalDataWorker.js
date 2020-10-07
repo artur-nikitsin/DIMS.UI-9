@@ -1,23 +1,10 @@
 import React from "react";
 import "./userModalDataWorker.scss";
-import SubmitButton from "../../common/Buttons/SubmitButton/SubmitButton";
 import formValidator from "../../helpers/FormValidator/formValidator";
 import { editMemberData } from "../../../firebase/apiSet";
 import { setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import RadioInputList from "./RadioInputList";
-import {
-  AvForm,
-  AvField,
-  AvGroup,
-  AvInput,
-  AvFeedback,
-  AvRadioGroup,
-  AvRadio,
-  AvCheckboxGroup,
-  AvCheckbox
-} from "availity-reactstrap-validation";
-import { Button, Label, FormGroup, CustomInput } from "reactstrap";
 import ModalContent from "../Common/ModalContent";
 
 class UsersModalDataWorker extends React.PureComponent {
@@ -49,26 +36,39 @@ class UsersModalDataWorker extends React.PureComponent {
     this.handleChange = this.handleChange.bind(this);
     this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleValidInput = this.handleValidInput.bind(this);
   }
 
 
   componentDidMount() {
+    const { userData } = this.props;
+    this.setUserDataToState(userData);
+  }
 
-    const { userData, modalTemplate } = this.props;
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { userData } = this.props;
+    const { userData: prevUserData } = prevProps;
+    if (prevUserData !== userData) {
+      const { userData } = this.props;
+
+      this.setUserDataToState(userData);
+    }
+  }
+
+
+  setUserDataToState = (data) => {
     const inputsStatus = {};
     const dataToSend = {};
+    const { modalTemplate } = this.props;
+
     Object.assign(inputsStatus, modalTemplate);
     Object.assign(dataToSend, modalTemplate);
 
-    this.setUserDataToState(userData);
     this.setState({
       inputsStatus: inputsStatus,
       dataToSend: dataToSend
     });
-  }
-
-  setUserDataToState = (data) => {
     const { ...thisState } = this.state;
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
@@ -78,6 +78,7 @@ class UsersModalDataWorker extends React.PureComponent {
       }
     }
   };
+
 
   createInputList = () => {
     const { modalTemplate } = this.props;
@@ -121,9 +122,7 @@ class UsersModalDataWorker extends React.PureComponent {
   };
 
   handleRadioInput = (event) => {
-
     const { name } = event.target;
-    console.log(name);
     this.setState({
       sex: name
     });
@@ -148,28 +147,35 @@ class UsersModalDataWorker extends React.PureComponent {
 
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
-    const { closeModalAndReload, modalType } = this.props;
+    const { reloadMemberPage, modalType, closeModal } = this.props;
 
     this.setState({
       isSubmit: true
     });
 
-    if (isFormValid) {
 
+    if (isFormValid) {
       if (modalType === "Edit") {
 
         editMemberData(userId, dataToSend)
-          .then(closeModalAndReload())
+          .then(() => {
+            closeModal();
+            reloadMemberPage();
+          })
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
       } else {
         setNewMemberData(
-          dataToSend).then(closeModalAndReload())
+          dataToSend).then(() => {
+          closeModal();
+          reloadMemberPage();
+        })
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
       }
+
     }
   }
 

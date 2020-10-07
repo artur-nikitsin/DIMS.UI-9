@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import "./modal.scss";
 import Preloader from "../../common/Preloader/Preloader";
@@ -22,3 +23,4 @@ function Modal({ closeModal, loading, dataWorker }) {
 }
 
 export default Modal;
+*/
