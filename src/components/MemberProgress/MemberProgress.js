@@ -17,7 +17,6 @@ class MemberProgress extends React.Component {
 
   componentDidMount() {
     const { userId } = this.props;
-    console.log(userId);
     this.getUserTrackList(userId);
   }
 
@@ -61,22 +60,30 @@ class MemberProgress extends React.Component {
       </thead>
     );
 
+    const { handleReturnToFullList } = this.props;
+    const { userTrackList } = this.state;
     return (
       <div>
-        <Button color="link" onClick={this.props.handleReturnToFullList}>
+        <Button color="link" onClick={handleReturnToFullList}>
           <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
-           Return to members manage grid
+          Return to members manage grid
         </Button>
         <table className='progressTable'>
           {tableHeaders}
-          <tbody>{this.state.userTrackList}</tbody>
+          <tbody>{userTrackList}</tbody>
         </table>
       </div>
     );
   };
 
   render() {
-    return <div>{this.state.loading ? <Preloader /> : this.createMemberProgressTable()}</div>;
+    const { loading } = this.state;
+    return (
+      <div>{loading ? <Preloader />
+        :
+        this.createMemberProgressTable()}
+      </div>
+    );
   }
 }
 

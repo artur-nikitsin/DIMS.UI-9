@@ -3,6 +3,7 @@ import "./buttons.scss";
 import { Button } from "reactstrap";
 
 class StatusButtons extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {};

@@ -49,25 +49,34 @@ class MemberTracks extends React.PureComponent {
   };
 
   createMemberProgressTable = () => {
+    const { navigationButtons, userName } = this.props;
+    const { userTrackList } = this.state;
     return (
       <div className='memberTracksTableContainer'>
-        {this.props.navigationButtons()}
+        {navigationButtons()}
         <div>
-          <p className="userGreeting">{`Hi, dear ${this.props.userName}! This is your task tracks:`}</p>
+          <p className="userGreeting">{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>
         <Button outline color="primary" className='trackCreateButton'>
           Add
         </Button>
         <Table striped className='tracksTable'>
           <TableTrackHeaders />
-          <tbody>{this.state.userTrackList}</tbody>
+          <tbody>{userTrackList}</tbody>
         </Table>
       </div>
     );
   };
 
   render() {
-    return <div>{this.state.loading ? <Preloader /> : this.createMemberProgressTable()}</div>;
+    const { loading } = this.state;
+    return (
+      <div>
+        {loading ? <Preloader />
+          :
+          this.createMemberProgressTable()}
+      </div>
+    );
   }
 }
 

@@ -1,7 +1,6 @@
 import React from "react";
 import "./loginForm.scss";
 import TextInput from "../common/Inputs/TextInput";
-import SubmitButton from "../common/Buttons/SubmitButton/SubmitButton";
 import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
 import { AvField, AvForm } from "availity-reactstrap-validation";
@@ -100,7 +99,6 @@ class LoginForm extends React.Component {
                                handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
                 <li><Button className="loginButton" color="secondary"
                             size="lg">Login</Button></li>
-
               </ul>
             </AvForm>
           </div>

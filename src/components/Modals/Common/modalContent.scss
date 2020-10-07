@@ -1,0 +1,23 @@
+@import '../../common/Styles/Mixins/Buttons/Buttons';
+
+.modalData {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .modalForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modalButtons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 6rem;
+    width: 50%;
+  }
+}

@@ -18,7 +18,6 @@ class MemberProfile extends React.PureComponent {
   }
 
   handleShowActivePage = (page, trackId, taskName) => () => {
-
     this.setState({
       activePage: page,
       currentTask: trackId,
@@ -49,12 +48,13 @@ class MemberProfile extends React.PureComponent {
   navigationButtons = () => {
 
     const { role } = this.context;
-    const { activePage } = this.state;
+
+    const { handleReturnToFullList } = this.props;
     return (
 
       (role === "admin" || role === "mentor") ?
 
-        <Button color="link" className="returnToMembersGrid" onClick={this.props.handleReturnToFullList}>
+        <Button color="link" className="returnToMembersGrid" onClick={handleReturnToFullList}>
           <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
           Return to members manage grid
         </Button>
@@ -64,13 +64,12 @@ class MemberProfile extends React.PureComponent {
           <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
           Return to task list
         </Button>
-
-
     );
   };
 
   render() {
-    return <div className='memberProfile'>{this.showActivePage(this.state.activePage)}</div>;
+    const { activePage } = this.state;
+    return <div className='memberProfile'>{this.showActivePage(activePage)}</div>;
   }
 }
 

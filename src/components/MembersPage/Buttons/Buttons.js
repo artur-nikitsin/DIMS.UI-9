@@ -7,7 +7,6 @@ function Buttons({ role, handleProgress, handleTasks, handleEdit, handleDelete, 
 
   return (
     <div className='membersButtonsGroup'>
-
       <Button outline color="secondary" className='progressMemberButton' id={userId}
               onClick={handleProgress}>
         Progress
@@ -16,7 +15,9 @@ function Buttons({ role, handleProgress, handleTasks, handleEdit, handleDelete, 
               onClick={handleTasks}>
         Tasks
       </Button>
+
       {role === "mentor" ||
+
       <div>
         <Button outline color="secondary" className='editMemberButton' id={userId}
                 onClick={handleEdit}>
@@ -26,7 +27,8 @@ function Buttons({ role, handleProgress, handleTasks, handleEdit, handleDelete, 
                 onClick={handleDelete}>
           Delete
         </Button>
-      </div>}
+      </div>
+      }
     </div>
   );
 }

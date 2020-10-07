@@ -18,6 +18,7 @@ import {
   AvCheckbox
 } from "availity-reactstrap-validation";
 import { Button, Label, FormGroup, CustomInput } from "reactstrap";
+import ModalContent from "../Common/ModalContent";
 
 class UsersModalDataWorker extends React.PureComponent {
 
@@ -147,7 +148,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
-    const { closeModalAndReload } = this.props;
+    const { closeModalAndReload, modalType } = this.props;
 
     this.setState({
       isSubmit: true
@@ -155,7 +156,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
     if (isFormValid) {
 
-      if (this.props.modalType === "Edit") {
+      if (modalType === "Edit") {
 
         editMemberData(userId, dataToSend)
           .then(closeModalAndReload())
@@ -176,20 +177,9 @@ class UsersModalDataWorker extends React.PureComponent {
   render() {
     const { closeModal } = this.props;
     return (
-      <div className='modalData'>
-        <AvForm className="userForm" onSubmit={this.handleSubmit}>
-          {this.createInputList()}
-          <div className='modalButtons'>
-            <Button color="success" size="lg">Submit</Button>
-            <Button outline color="secondary" size="lg" onClick={closeModal}>
-              Return to grid
-            </Button>
-          </div>
-
-        </AvForm>
-
-
-      </div>
+      <ModalContent createInputList={this.createInputList()}
+                    handleSubmit={this.handleSubmit}
+                    closeModal={closeModal} />
     );
   }
 }

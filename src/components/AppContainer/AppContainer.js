@@ -4,7 +4,6 @@ import Tasks from "../Tasks/Tasks";
 import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
-import Header from "../Header/Header";
 import { RoleContext } from "../../RoleContext";
 import { Button } from "reactstrap";
 
@@ -28,16 +27,17 @@ class AppContainer extends React.PureComponent {
   };
 
   navigationButtons = () => {
+    const { activePage } = this.state;
     return (
       <div className="navigationButtons">
         <Button outline color="secondary"
-          onClick={this.handleShowActivePage("members")}
-          className={`membersButton ${this.state.activePage === "members" ? "active" : null}`}>
+                onClick={this.handleShowActivePage("members")}
+                className={`membersButton ${activePage === "members" ? "active" : null}`}>
           Members
         </Button>
         <Button outline color="secondary"
-          onClick={this.handleShowActivePage("tasks")}
-          className={`tasksTabButton ${this.state.activePage === "tasks" ? "active" : null}`}>
+                onClick={this.handleShowActivePage("tasks")}
+                className={`tasksTabButton ${activePage === "tasks" ? "active" : null}`}>
           Tasks
         </Button>
       </div>
@@ -46,19 +46,17 @@ class AppContainer extends React.PureComponent {
 
 
   render() {
-
+    const { activePage } = this.state;
     return (
-
       <div className='appContainer'>
         <SideBar navigationButtons={this.navigationButtons} />
-        <div className='pagesContainer'>{this.showActivePage(this.state.activePage)}</div>
+        <div className='pagesContainer'>{this.showActivePage(activePage)}</div>
       </div>
-
     );
   }
 }
 
-AppContainer.contextType = RoleContext;
 
+AppContainer.contextType = RoleContext;
 export default AppContainer;
 

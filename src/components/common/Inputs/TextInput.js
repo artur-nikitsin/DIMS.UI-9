@@ -2,8 +2,8 @@ import React from "react";
 import validatorsManager from "../../helpers/validators/validatorsManager";
 import inputNamesStore from "./inputNamesStore";
 import "./textInput.scss";
-import { AvForm, AvField, AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
-import { Button, Label, FormGroup, CustomInput } from "reactstrap";
+import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
+import { Label } from "reactstrap";
 
 class TextInput extends React.Component {
 
@@ -13,7 +13,6 @@ class TextInput extends React.Component {
       name: null,
       value: null,
       status: "invalid",
-      valid: false,
       message: "Please enter data!"
     };
     this.validation = this.validation.bind(this);
@@ -28,15 +27,14 @@ class TextInput extends React.Component {
   }
 
 
-  validation(value, ctx) {
-    const { isSubmit } = this.props;
+  validation = (value) => {
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
       return isValid;
-    }
-    return false;
-  }
+    } else
+      return false;
+  };
 
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -66,10 +64,10 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { inputName, handleChange, value, isSubmit, type } = this.props;
+    const { inputName, handleChange, value, type } = this.props;
     const { message } = this.state;
-    return (
 
+    return (
       <AvGroup className="textInputContainer">
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
@@ -79,8 +77,7 @@ class TextInput extends React.Component {
           name={inputName}
           value={value || ""}
           onChange={handleChange}
-          validate={{ myValidation: this.validation.bind(this) }}
-        />
+          validate={{ myValidation: this.validation }} />
         <AvFeedback>{message}</AvFeedback>
       </AvGroup>
 

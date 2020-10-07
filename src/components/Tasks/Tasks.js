@@ -94,7 +94,7 @@ class Tasks extends React.Component {
         );
       });
 
-      if (this.state.tasks === null) {
+      if (!this.state.tasks) {
         this.setState({
           loading: false,
           tasks: tasks
@@ -108,8 +108,8 @@ class Tasks extends React.Component {
       return (
         <TaskCreateModal
           closeModal={this.handleCloseModal}
-          closeModalAndReload={this.closeModalAndReload}
-        />);
+          closeModalAndReload={this.closeModalAndReload} />
+      );
     }
   };
 
@@ -138,7 +138,7 @@ class Tasks extends React.Component {
       </thead>
     );
 
-    const { showCreateModal, showEditModal } = this.state;
+    const { showCreateModal, showEditModal, tasks } = this.state;
     return (
       <div>
         {this.taskCreateModal(showCreateModal)}
@@ -148,7 +148,7 @@ class Tasks extends React.Component {
         </Button>
         <Table striped className="tasksTable">
           {tableHeaders}
-          <tbody>{this.state.tasks}</tbody>
+          <tbody>{tasks}</tbody>
         </Table>
       </div>
     );
@@ -156,9 +156,14 @@ class Tasks extends React.Component {
 
   render() {
 
-    const { loading, showCreateModal } = this.state;
+    const { loading } = this.state;
 
-    return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
+    return (
+      <div className='tasksTableContainer'>
+        {loading ? <Preloader />
+          : this.createTasksTable()}
+      </div>
+    );
 
   }
 }

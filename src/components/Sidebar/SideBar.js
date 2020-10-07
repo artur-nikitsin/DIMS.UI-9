@@ -7,10 +7,10 @@ function SideBar({ navigationButtons }) {
 
   return (
     <RoleContext.Consumer>{
-      ({ role, userId }) => {
+      ({ role }) => {
         return (
           <div className='sideBar'>
-            {(role === "admin" || role === "mentor") && navigationButtons() }
+            {(role === "admin" || role === "mentor") && navigationButtons()}
           </div>
         );
       }}

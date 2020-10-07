@@ -191,7 +191,6 @@ class MembersPage extends React.PureComponent {
   };
 
   createMembersTable = () => {
-    const { role } = this.context;
     const tableHeaders = (
       <thead>
       <tr>

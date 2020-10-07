@@ -7,6 +7,7 @@ import TextInput from "../../common/Inputs/TextInput";
 
 import { AvForm } from "availity-reactstrap-validation";
 import { Button } from "reactstrap";
+import ModalContent from "../Common/ModalContent";
 
 
 class TaskModalDataWorker extends React.PureComponent {
@@ -137,17 +138,9 @@ class TaskModalDataWorker extends React.PureComponent {
   render() {
     const { closeModal } = this.props;
     return (
-      <div className='modalData'>
-        <AvForm className="userForm" onSubmit={this.handleSubmit}>
-          {this.createInputList()}
-          <div className='modalButtons'>
-            <Button color="success" size="lg">Submit</Button>
-            <Button outline color="secondary" size="lg" onClick={closeModal}>
-              Return to grid
-            </Button>
-          </div>
-        </AvForm>
-      </div>
+      <ModalContent createInputList={this.createInputList()}
+                    handleSubmit={this.handleSubmit}
+                    closeModal={closeModal} />
     );
   }
 }
