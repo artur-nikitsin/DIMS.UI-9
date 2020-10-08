@@ -173,6 +173,28 @@ export function getTaskTrack(userTaskId) {
     });
 }
 
+
+export function getTrack(taskTrackId) {
+  const trackData = {};
+  return db
+    .collection("TaskTracks")
+    .doc(taskTrackId)
+    .get()
+    .then((track) => {
+      const { taskTrackId, userTaskId, trackDate, trackNote } = track.data();
+
+      trackData.taskTrackId = taskTrackId;
+      trackData.userTaskId = userTaskId;
+      trackData.trackDate = getLocaleDate(trackDate);
+      trackData.trackNote = trackNote;
+      return trackData;
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
+}
+
+
 export function getUserTrackList(userId) {
   return db
     .collection("UserTasks")

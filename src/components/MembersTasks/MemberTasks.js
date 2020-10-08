@@ -21,10 +21,6 @@ class MemberTasks extends React.Component {
     this.getUserTaskList(this.props.userId);
   }
 
-  showTaskTracks = (id) => {
-    const handleShowActivePage = this.props;
-    handleShowActivePage("taskTrack", id);
-  };
 
   getUserTaskList = (user) => {
     if (user) {

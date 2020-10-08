@@ -74,3 +74,19 @@ export function editTask(taskId, taskData) {
     .doc(taskId)
     .set({ ...taskData, taskId });
 }
+
+
+export function createTrack(trackData) {
+  const taskTrackId = faker.fake("{{random.number}}");
+  return db
+    .collection("TaskTracks")
+    .doc(taskTrackId)
+    .set({ ...trackData, taskTrackId });
+}
+
+export function editTrack(taskTrackId, trackData) {
+  return db
+    .collection("TaskTracks")
+    .doc(taskTrackId)
+    .set({ ...trackData, taskTrackId });
+}

@@ -14,7 +14,9 @@ const inputNamesStore = {
   password: "Password",
   name: "Name",
   deadlineDate: "Deadline date",
-  description: "Description"
+  description: "Description",
+  trackDate: "Track Date",
+  trackNote: "Track Note"
 };
 
 export default inputNamesStore;

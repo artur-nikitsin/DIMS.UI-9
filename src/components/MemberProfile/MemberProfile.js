@@ -12,15 +12,15 @@ class MemberProfile extends React.PureComponent {
     super(props);
     this.state = {
       activePage: "tasks",
-      currentTask: null,
+      userTaskId: null,
       currentTaskName: null
     };
   }
 
-  handleShowActivePage = (page, trackId, taskName) => () => {
+  handleShowActivePage = (page, userTaskId, taskName) => () => {
     this.setState({
       activePage: page,
-      currentTask: trackId,
+      userTaskId: userTaskId,
       currentTaskName: taskName
     });
   };
@@ -37,7 +37,7 @@ class MemberProfile extends React.PureComponent {
           handleReturnToFullList={this.props.handleReturnToFullList} />
         :
         <MemberTracks
-          taskId={this.state.currentTask}
+          userTaskId={this.state.userTaskId}
           taskName={this.state.currentTaskName}
           userName={this.props.userName}
           navigationButtons={this.navigationButtons}

@@ -1,0 +1,10 @@
+@import "src/components/common/Styles/Mixins/Modals/modals";
+
+.trackModal {
+  @include modal;
+}
+
+
+.modalBody{
+  @include modalBody
+}

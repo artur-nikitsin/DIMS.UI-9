@@ -7,23 +7,44 @@ import getSubString from "../helpers/getSubString/getSubString";
 import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
 import TableTrackHeaders from "./TableHeaders";
 import { Button, Table } from "reactstrap";
+import TrackModal from "../Modals/Track/TrackModal";
+import TaskModal from "../Modals/Task/TaskModal";
+import { deleteTask } from "../../firebase/apiDelete";
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      userTrackList: null
+      userTrackList: null,
+      modalIsOpen: false,
+      activeTrackId: null,
+      userTaskId: null
     };
   }
 
   componentDidMount() {
-    this.getUserTrackList(this.props.taskId);
+    this.getUserTrackList(this.props.userTaskId);
   }
 
+  handleDelete = (trackId) => () => {
+    deleteTask(trackId)
+      .then(() => {
+        this.reloadTrackPage();
+      });
+  };
+
+
+  reloadTrackPage = () => {
+
+    this.setState({
+      loading: true,
+      userTrackList: null
+    });
+    this.getUserTrackList(this.props.userTaskId);
+  };
 
   getUserTrackList = (user) => {
-
     if (user) {
       getTaskTrack(user).then((result) => {
         let tracks = result.map((track, i) => {
@@ -33,7 +54,8 @@ class MemberTracks extends React.PureComponent {
               <td>{this.props.taskName}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
-              <td><EditDeleteButtons /></td>
+              <td><EditDeleteButtons handleEdit={this.openModal(track.taskTrackId)}
+                                     handleDelete={this.handleDelete(track.taskTrackId)} /></td>
             </tr>
           );
         });
@@ -48,16 +70,44 @@ class MemberTracks extends React.PureComponent {
     }
   };
 
-  createMemberProgressTable = () => {
-    const { navigationButtons, userName } = this.props;
-    const { userTrackList } = this.state;
+  openModal = (trackId, userTaskId) => () => {
+    this.setState({
+      modalIsOpen: true,
+      activeTrackId: trackId,
+      userTaskId: userTaskId
+    });
+  };
+
+  closeModal = (trackId) => {
+    this.setState({
+      modalIsOpen: false,
+      activeTrackId: trackId,
+      userTaskId: null
+    });
+  };
+
+
+  createMemberTrackTable = () => {
+
+    const { navigationButtons, userName, taskName, userTaskId } = this.props;
+    const { userTrackList, modalIsOpen, activeTrackId } = this.state;
     return (
       <div className='memberTracksTableContainer'>
         {navigationButtons()}
         <div>
           <p className="userGreeting">{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>
-        <Button outline color="primary" className='trackCreateButton'>
+
+        <TrackModal className="trackModal"
+                    buttonLabel="TrackModal"
+                    isOpen={modalIsOpen}
+                    closeModal={this.closeModal}
+                    trackId={activeTrackId}
+                    taskName={taskName}
+                    reloadTrackPage={this.reloadTrackPage}
+                    userTaskId={userTaskId}
+        />
+        <Button outline color="primary" className='trackCreateButton' onClick={this.openModal(null)}>
           Add
         </Button>
         <Table striped className='tracksTable'>
@@ -74,7 +124,7 @@ class MemberTracks extends React.PureComponent {
       <div>
         {loading ? <Preloader />
           :
-          this.createMemberProgressTable()}
+          this.createMemberTrackTable()}
       </div>
     );
   }
