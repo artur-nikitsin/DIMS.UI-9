@@ -3,8 +3,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./taskModal.scss";
 import { getMember, getTask } from "../../../firebase/apiGet";
 import Preloader from "../../common/Preloader/Preloader";
-import TaskModalDataWorker from "../Task/TaskModalDataWorker";
-import { taskModalTemplate } from "../Task/ModalInputsTemplate";
+import TaskModalDataWorker from "./TaskModalDataWorker";
+import { taskModalTemplate } from "./ModalInputsTemplate";
 
 const TaskModal = (props) => {
   const {

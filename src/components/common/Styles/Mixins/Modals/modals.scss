@@ -1,0 +1,13 @@
+@import "src/components/common/Styles/Mixins/Flex/flex";
+
+@mixin modal {
+  @include centerFlex;
+  min-width: 52rem;
+}
+
+@mixin modalBody {
+  @include centerFlex;
+  width: 50rem;
+  height: auto;
+  background: rgba(255, 255, 255, 1);
+}

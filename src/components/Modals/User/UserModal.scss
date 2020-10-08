@@ -1,0 +1,9 @@
+@import "src/components/common/Styles/Mixins/Modals/modals";
+
+.userModal {
+  @include modal;
+}
+
+.modalBody{
+  @include modalBody
+}

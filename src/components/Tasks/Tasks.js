@@ -4,13 +4,9 @@ import { getTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import { deleteTask } from "../../firebase/apiDelete";
-
-import TaskCreateModal from "../Modals/Task/TaskCreateModal/TaskCreateModal";
-import TaskEditModal from "../Modals/Task/TaskEditModal/TaskEditModal";
 import { Table, Button } from "reactstrap";
-import UserModal from "../Modals/UserModal/UserModal";
-import TaskModal from "../Modals/TaskModal/TaskModal";
-import Buttons from "../MembersPage/Buttons/Buttons";
+import TaskModal from "../Modals/Task/TaskModal";
+
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -108,7 +104,7 @@ class Tasks extends React.Component {
     const { tasks, modalIsOpen, activeTaskId } = this.state;
     return (
       <div>
-        <TaskModal className="ModalBootstrap"
+        <TaskModal className="taskModal"
                    buttonLabel="TaskModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}

@@ -1,0 +1,10 @@
+@import "src/components/common/Styles/Mixins/Modals/modals";
+
+.taskModal {
+ @include modal;
+}
+
+
+.modalBody{
+  @include modalBody
+}

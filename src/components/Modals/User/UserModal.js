@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import UsersModalDataWorker from "../User/UsersModalDataWorker";
-import { userModalTemplate } from "../User/ModalInputsTemplate";
+import UsersModalDataWorker from "./UsersModalDataWorker";
+import { userModalTemplate } from "./ModalInputsTemplate";
 import "./UserModal.scss";
 import { getMember } from "../../../firebase/apiGet";
 import Preloader from "../../common/Preloader/Preloader";

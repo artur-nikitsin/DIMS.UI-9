@@ -7,12 +7,10 @@ import "./membersPage.scss";
 import { Button } from "reactstrap";
 import Preloader from "../common/Preloader/Preloader";
 import MemberProfile from "../MemberProfile/MemberProfile";
-import UserRegisterModal from "../Modals/User/UserRegisterModal/UserRegisterModal";
-import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
-import UserModal from "../Modals/UserModal/UserModal";
+import UserModal from "../Modals/User/UserModal";
 
 
 class MembersPage extends React.PureComponent {
@@ -179,7 +177,7 @@ class MembersPage extends React.PureComponent {
     const { members, modalIsOpen, activeUserId } = this.state;
     return (
       <div>
-        <UserModal className="ModalBootstrap"
+        <UserModal className="userModal"
                    buttonLabel="UserModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
