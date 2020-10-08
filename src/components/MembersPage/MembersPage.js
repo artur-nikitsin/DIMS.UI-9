@@ -12,7 +12,7 @@ import UserEditModal from "../Modals/User/UserEditModal/UserEditModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
-import UserModal from "../Modals/Common/ModalBootstrap/UserModal";
+import UserModal from "../Modals/UserModal/UserModal";
 
 
 class MembersPage extends React.PureComponent {

@@ -8,6 +8,9 @@ import { deleteTask } from "../../firebase/apiDelete";
 import TaskCreateModal from "../Modals/Task/TaskCreateModal/TaskCreateModal";
 import TaskEditModal from "../Modals/Task/TaskEditModal/TaskEditModal";
 import { Table, Button } from "reactstrap";
+import UserModal from "../Modals/UserModal/UserModal";
+import TaskModal from "../Modals/TaskModal/TaskModal";
+import Buttons from "../MembersPage/Buttons/Buttons";
 
 class Tasks extends React.Component {
   constructor(props) {
@@ -17,6 +20,7 @@ class Tasks extends React.Component {
       tasks: null,
       showCreateModal: false,
       showEditModal: false,
+      modalIsOpen: false,
       activeTaskId: null
     };
   }
@@ -25,35 +29,11 @@ class Tasks extends React.Component {
     this.getTasks();
   }
 
-
-  handleShowCreateTaskModal = () => {
-    this.setState({
-      showCreateModal: true
-    });
-  };
-
-
-  handleEdit = (taskId) => () => {
-    this.setState({
-      showEditModal: true,
-      activeTaskId: taskId
-    });
-  };
-
   handleDelete = (taskId) => () => {
-
     deleteTask(taskId)
       .then(() => {
         this.reloadTasksPage();
       });
-  };
-
-
-  handleCloseModal = () => {
-    this.setState({
-      showCreateModal: false,
-      showEditModal: false
-    });
   };
 
 
@@ -65,13 +45,6 @@ class Tasks extends React.Component {
     this.getTasks();
   };
 
-  closeModalAndReload = () => {
-    this.setState({
-      showCreateModal: false
-    });
-    this.handleCloseModal();
-    this.reloadTasksPage();
-  };
 
   getTasks = () => {
     getTasks().then((result) => {
@@ -86,8 +59,9 @@ class Tasks extends React.Component {
             <td key={task.taskId + "j"}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
             <td key={task.taskId + "h"}>
 
-              <EditDeleteButtons handleEdit={this.handleEdit(task.taskId)}
-                                 handleDelete={this.handleDelete(task.taskId)} />
+              <EditDeleteButtons
+                handleEdit={this.openModal(task.taskId)}
+                handleDelete={this.handleDelete(task.taskId)} />
 
             </td>
           </tr>
@@ -103,26 +77,19 @@ class Tasks extends React.Component {
     });
   };
 
-  taskCreateModal = (modalState) => {
-    if (modalState) {
-      return (
-        <TaskCreateModal
-          closeModal={this.handleCloseModal}
-          closeModalAndReload={this.closeModalAndReload} />
-      );
-    }
+
+  openModal = (taskId) => () => {
+    this.setState({
+      modalIsOpen: true,
+      activeTaskId: taskId
+    });
   };
 
-  taskEditModal = (modalState) => {
-    if (modalState) {
-      return (
-        <TaskEditModal
-          taskId={this.state.activeTaskId}
-          closeModal={this.handleCloseModal}
-          closeModalAndReload={this.closeModalAndReload}
-        />
-      );
-    }
+  closeModal = (taskId) => {
+    this.setState({
+      modalIsOpen: false,
+      activeTaskId: taskId
+    });
   };
 
   createTasksTable = () => {
@@ -138,12 +105,17 @@ class Tasks extends React.Component {
       </thead>
     );
 
-    const { showCreateModal, showEditModal, tasks } = this.state;
+    const { tasks, modalIsOpen, activeTaskId } = this.state;
     return (
       <div>
-        {this.taskCreateModal(showCreateModal)}
-        {this.taskEditModal(showEditModal)}
-        <Button outline color="primary" className='taskCreateButton' onClick={this.handleShowCreateTaskModal}>
+        <TaskModal className="ModalBootstrap"
+                   buttonLabel="TaskModal"
+                   isOpen={modalIsOpen}
+                   closeModal={this.closeModal}
+                   taskId={activeTaskId}
+                   reloadTaskPage={this.reloadTasksPage}
+        />
+        <Button outline color="primary" className='taskCreateButton' onClick={this.openModal(null)}>
           Create
         </Button>
         <Table striped className="tasksTable">

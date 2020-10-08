@@ -51,7 +51,6 @@ class UsersModalDataWorker extends React.PureComponent {
     const { userData: prevUserData } = prevProps;
     if (prevUserData !== userData) {
       const { userData } = this.props;
-
       this.setUserDataToState(userData);
     }
   }

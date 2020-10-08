@@ -4,9 +4,6 @@ import formValidator from "../../helpers/FormValidator/formValidator";
 import { editMemberData, editTask } from "../../../firebase/apiSet";
 import { createTask } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
-
-import { AvForm } from "availity-reactstrap-validation";
-import { Button } from "reactstrap";
 import ModalContent from "../Common/ModalContent";
 
 
@@ -33,22 +30,33 @@ class TaskModalDataWorker extends React.PureComponent {
 
 
   componentDidMount() {
+    const { taskData } = this.props;
+    this.setTaskDataToState(taskData);
+  }
 
-    const { taskData, modalTemplate } = this.props;
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { taskData } = this.props;
+    const { taskData: prevTaskData } = prevProps;
+    if (prevTaskData !== taskData) {
+      const { taskData } = this.props;
+      this.setTaskDataToState(taskData);
+    }
+  }
+
+  setTaskDataToState = (data) => {
+
+    const { modalTemplate } = this.props;
     const inputsStatus = {};
     const dataToSend = {};
     Object.assign(inputsStatus, modalTemplate);
     Object.assign(dataToSend, modalTemplate);
 
-    this.setUserDataToState(taskData);
     this.setState({
       inputsStatus: inputsStatus,
       dataToSend: dataToSend
     });
-  }
 
-  setUserDataToState = (data) => {
     const { ...thisState } = this.state;
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
@@ -110,7 +118,7 @@ class TaskModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend } = this.state;
-    const { closeModalAndReload } = this.props;
+    const { reloadTaskPage, closeModal } = this.props;
 
     this.setState({
       isSubmit: true
@@ -119,14 +127,20 @@ class TaskModalDataWorker extends React.PureComponent {
     if (isFormValid) {
 
       if (this.props.modalType === "Edit") {
-        editTask(taskId, dataToSend);
+
         editTask(taskId, dataToSend)
-          .then(closeModalAndReload())
+          .then(() => {
+            closeModal();
+            reloadTaskPage();
+          })
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
       } else {
-        createTask(dataToSend).then(closeModalAndReload())
+        createTask(dataToSend).then(() => {
+          closeModal();
+          reloadTaskPage();
+        })
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
