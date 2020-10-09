@@ -5,52 +5,29 @@ import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
 import { RoleContext } from "../../RoleContext";
-import { Button } from "reactstrap";
+import { Route } from "react-router-dom";
 
 class AppContainer extends React.PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = {
-      activePage: "members"
-    };
+    this.state = {};
   }
-
-  showActivePage = (page) => {
-    return (page === "members" ? <MembersPage /> : <Tasks />);
-  };
-
-  handleShowActivePage = (page) => () => {
-    this.setState({
-      activePage: page
-    });
-  };
-
-  navigationButtons = () => {
-    const { activePage } = this.state;
-    return (
-      <div className="navigationButtons">
-        <Button outline color="secondary"
-                onClick={this.handleShowActivePage("members")}
-                className={`membersButton ${activePage === "members" ? "active" : null}`}>
-          Members
-        </Button>
-        <Button outline color="secondary"
-                onClick={this.handleShowActivePage("tasks")}
-                className={`tasksTabButton ${activePage === "tasks" ? "active" : null}`}>
-          Tasks
-        </Button>
-      </div>
-    );
-  };
 
 
   render() {
-    const { activePage } = this.state;
     return (
       <div className='appContainer'>
-        <SideBar navigationButtons={this.navigationButtons} />
-        <div className='pagesContainer'>{this.showActivePage(activePage)}</div>
+        <SideBar />
+
+        <Route path='/app/members'>
+          <MembersPage />
+        </Route>
+
+        <Route path='/app/tasks'>
+          <Tasks />
+        </Route>
+
       </div>
     );
   }

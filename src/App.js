@@ -10,7 +10,10 @@ import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
 import FakerDB from "./components/helpers/faker/FakerDB";
 import { logout, registerNewUser } from "./firebase/auth";
-
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
+import MembersPage from "./components/MembersPage/MembersPage";
+import Tasks from "./components/Tasks/Tasks";
+import SideBar from "./components/Sidebar/SideBar";
 
 class App extends React.PureComponent {
 
@@ -55,19 +58,38 @@ class App extends React.PureComponent {
 
   render() {
 
-    const { role, signedUserId, signedUserName } = this.state;
+    const { isLogin, role, signedUserId, signedUserName } = this.state;
     return (
-      <RoleContext.Provider value={{
-        role: role,
-        userId: signedUserId,
-        signedUserName: signedUserName
-      }}>
-        <div className='App'>
-          <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
-          {this.state.isLogin ? <AppContainer /> : <LoginForm handleLogin={this.handleLogin} />}
-          <Footer />
-        </div>
-      </RoleContext.Provider>
+      <BrowserRouter>
+        <RoleContext.Provider value={{
+          role: role,
+          userId: signedUserId,
+          signedUserName: signedUserName
+        }}>
+          <Route path='/'>
+            <div className='App'>
+
+              <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
+
+              {isLogin ? <Redirect from='/' to='/app/members' /> :
+                <Redirect from='/' to='/login' />}
+
+              {signedUserId && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
+
+              <Route path='/app'>
+                <AppContainer />
+              </Route>
+
+              <Route path='/login'>
+                <LoginForm handleLogin={this.handleLogin} />
+              </Route>
+
+              <Footer />
+
+            </div>
+          </Route>
+        </RoleContext.Provider>
+      </BrowserRouter>
     );
   }
 }

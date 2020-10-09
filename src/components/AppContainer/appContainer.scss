@@ -1,8 +1,11 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
 .appContainer {
+  border: 1px solid red;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  min-width: 100vw;
 }
 
 .pagesContainer {

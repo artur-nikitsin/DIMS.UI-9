@@ -8,7 +8,6 @@ import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
 import TableTrackHeaders from "./TableHeaders";
 import { Button, Table } from "reactstrap";
 import TrackModal from "../Modals/Track/TrackModal";
-import TaskModal from "../Modals/Task/TaskModal";
 import { deleteTask } from "../../firebase/apiDelete";
 
 class MemberTracks extends React.PureComponent {

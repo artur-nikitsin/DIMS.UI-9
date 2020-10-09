@@ -11,6 +11,7 @@ import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
 import UserModal from "../Modals/User/UserModal";
+import { Route } from "react-router-dom";
 
 
 class MembersPage extends React.PureComponent {
@@ -19,11 +20,8 @@ class MembersPage extends React.PureComponent {
     this.state = {
       loading: true,
       members: null,
-      activePage: "membersTable",
       activeUserId: null,
       activeUserName: null,
-      memberProgressShow: null,
-      reload: true,
       modalIsOpen: false
     };
     this.closeModal = this.closeModal.bind(this);
@@ -34,21 +32,18 @@ class MembersPage extends React.PureComponent {
     const { role } = this.context;
     if (role === "admin" || role === "mentor") {
       this.getMembers();
+    } else {
+      const { userId, signedUserName } = this.context;
+      this.setState({
+        activeUserId: userId,
+        activeUserName: signedUserName
+      });
     }
-
   }
 
-  handleProgress = (userId, name) => () => {
-    this.setState({
-      activePage: "membersProgress",
-      activeUserId: userId,
-      activeUserName: name
-    });
-  };
 
-  handleTasks = (userId, name) => () => {
+  getCurrentUser = (userId, name) => () => {
     this.setState({
-      activePage: "membersTasks",
       activeUserId: userId,
       activeUserName: name
     });
@@ -77,31 +72,6 @@ class MembersPage extends React.PureComponent {
     this.getMembers();
   };
 
-  showActivePage = (page) => {
-    switch (page) {
-
-      case "membersTable":
-        return this.createMembersTable();
-
-      case "membersProgress":
-        return (
-          <div>
-            <MemberProgress userId={this.state.activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
-          </div>
-        );
-
-      case "membersTasks":
-        return (
-          <div>
-            <MemberProfile
-              userId={this.state.activeUserId}
-              userName={this.state.activeUserName}
-              handleReturnToFullList={this.handleReturnToFullList}
-            />
-          </div>
-        );
-    }
-  };
 
   getMembers = () => {
     getMembers().then((result) => {
@@ -118,19 +88,17 @@ class MembersPage extends React.PureComponent {
             <td key={member.userId + "d"}>{member.education}</td>
             <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
             <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
-
-
             <td key={member.userId + "h"} className='memberButtons'>
               <Buttons
                 role={role}
+                toProgress={`/app/members/progress_user=${member.userId}`}
+                toTasks={`/app/members/tasks_user=${member.userId}`}
                 userId={member.userId}
-                handleProgress={this.handleProgress(member.userId, member.firstName)}
-                handleTasks={this.handleTasks(member.userId, member.firstName)}
+                handleProgress={this.getCurrentUser(member.userId, member.firstName)}
+                handleTasks={this.getCurrentUser(member.userId, member.firstName)}
                 handleEdit={this.openModal(member.userId)}
-                handleDelete={this.handleDelete(member.userId)}
-              />
+                handleDelete={this.handleDelete(member.userId)} />
             </td>
-
           </tr>
         );
       });
@@ -182,8 +150,7 @@ class MembersPage extends React.PureComponent {
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    userId={activeUserId}
-                   reloadMemberPage={this.reloadMembersPage}
-        />
+                   reloadMemberPage={this.reloadMembersPage}/>
         <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null)}>
           Register
         </Button>
@@ -198,35 +165,28 @@ class MembersPage extends React.PureComponent {
 
   render() {
 
-    const { role, userId, signedUserName } = this.context;
-
-    const { showRegisterModal, showEditModal, loading, activePage } = this.state;
-
-    let admin = () => {
-      return (
-        <div>
-          {loading ? <Preloader /> : this.showActivePage(activePage)}
-        </div>
-      );
-    };
-
-    let user = (userId) => {
-      return (
-        <div>
-          <MemberProfile userId={userId}
-                         userName={signedUserName}
-                         handleReturnToFullList={this.handleReturnToFullList} />
-        </div>
-      );
-    };
-
+    const { loading, activeUserId, activeUserName } = this.state;
 
     return (
       <RoleContext.Consumer>{
         ({ role, userId }) => {
           return (
             <div className='membersTableContainer'>
-              {(role === "admin" || role === "mentor") ? admin() : user(userId)}
+
+              <Route exact path={`/app/members`}>
+                {loading ? <Preloader /> : this.createMembersTable()}
+              </Route>
+
+              <Route path={`/app/members/progress_user=${activeUserId}`}>
+                <MemberProgress userId={activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
+              </Route>
+
+              <Route path={`/app/members/tasks_user=${activeUserId}`}>
+                <MemberProfile userId={activeUserId}
+                               userName={activeUserName}
+                               handleReturnToFullList={this.handleReturnToFullList} />
+              </Route>
+
             </div>);
         }}
       </RoleContext.Consumer>
