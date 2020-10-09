@@ -3,6 +3,7 @@ import "./sideBar.scss";
 import { RoleContext } from "../../RoleContext";
 import MembersPage from "../MembersPage/MembersPage";
 import { NavLink } from "react-router-dom";
+import { Button } from "reactstrap";
 
 function SideBar({ navigationButtons }) {
 
@@ -13,12 +14,19 @@ function SideBar({ navigationButtons }) {
           <div className='sideBar'>
             {(role === "admin" || role === "mentor") &&
             <div>
-              <NavLink to='/app/members'>
-                Members
+
+              <NavLink to='/app/members' activeClassName="active">
+                <Button className="navButton" outline color="secondary">
+                  Members
+                </Button>
               </NavLink>
-              <NavLink to='/app/tasks'>
-                Tasks
+
+              <NavLink to='/app/tasks' activeClassName="active">
+                <Button className="navButton" outline color="secondary">
+                  Tasks
+                </Button>
               </NavLink>
+
             </div>}
           </div>
         );

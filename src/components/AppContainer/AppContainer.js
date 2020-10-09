@@ -36,4 +36,3 @@ class AppContainer extends React.PureComponent {
 
 AppContainer.contextType = RoleContext;
 export default AppContainer;
-
