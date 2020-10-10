@@ -7,13 +7,17 @@ import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
 import MembersPage from "../MembersPage/MembersPage";
 import { Table, Button } from "reactstrap";
+import { NavLink, Redirect, Route } from "react-router-dom";
+import MemberTracks from "../MemberTracks/MemberTracks";
 
 class MemberTasks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loading: true,
-      userTaskList: null
+      userTaskList: null,
+      userTaskId: null,
+      currentTaskName: null
     };
   }
 
@@ -21,11 +25,18 @@ class MemberTasks extends React.Component {
     this.getUserTaskList(this.props.userId);
   }
 
+  setCurrentTask = (userTaskId, name) => () => {
+    this.setState({
+      userTaskId: userTaskId,
+      currentTaskName: name
+    });
+    console.log(this.state);
+  };
 
   getUserTaskList = (user) => {
     if (user) {
       getUserTaskList(user).then((result) => {
-
+        const { userId } = this.props;
         const { role } = this.context;
         let tasks = result.map((task, i) => {
           return (
@@ -40,9 +51,12 @@ class MemberTasks extends React.Component {
 
               {(role === "admin" || role === "mentor") ||
               <td className={"tasksButtons"}>
-                <Button outline color="primary"
-                        onClick={this.props.handleShowActivePage("taskTrack", task.userTaskId, task.name)}>
-                  Track</Button>
+                <NavLink to={`/app/members/tasks_user=${userId}/taskId=${task.userTaskId}`}>
+                  <Button outline color="primary"
+                          onClick={this.setCurrentTask(task.userTaskId, task.name)}>
+                    Track
+                  </Button>
+                </NavLink>
               </td>}
 
               <td className={"tasksButtons"}>
@@ -62,6 +76,7 @@ class MemberTasks extends React.Component {
     }
   };
 
+
   createMemberTaskTable = () => {
     const { role } = this.context;
     const tableHeaders = (
@@ -80,12 +95,14 @@ class MemberTasks extends React.Component {
 
     return (
       <div className={"memberTasksTableContainer"}>
-        {(role === "admin" || role === "mentor") ? this.props.navigationButtons()
-          :
-          <div>
-            <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
-          </div>
-        }
+
+        {role === "user" ? <div>
+          <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
+        </div> : <NavLink to={`/app/members`}>
+          Return to members manage grid
+        </NavLink>}
+
+
         <Table striped className={"memberTasksTable"}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>
@@ -95,7 +112,26 @@ class MemberTasks extends React.Component {
   };
 
   render() {
-    return <div>{this.state.loading ? <Preloader /> : this.createMemberTaskTable()}</div>;
+    const { userId } = this.props;
+    const { userTaskId } = this.state;
+
+    return (
+      <div>
+        <Route exact path={`/app/members/tasks_user=${userId}`}>
+          {this.state.loading ? <Preloader /> : this.createMemberTaskTable()}
+        </Route>
+
+        <Route path={`/app/members/tasks_user=${userId}/taskId=${userTaskId}`}>
+          <MemberTracks
+            userId={userId}
+            userTaskId={this.state.userTaskId}
+            taskName={this.state.currentTaskName}
+            userName={this.props.userName}
+          />
+        </Route>
+      </div>
+    );
+
   }
 }
 

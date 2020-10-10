@@ -5,15 +5,14 @@ import Header from "./components/Header/Header";
 import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
-import Preloader from "./components/common/Preloader/Preloader";
 import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
-import FakerDB from "./components/helpers/faker/FakerDB";
 import { logout, registerNewUser } from "./firebase/auth";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import MembersPage from "./components/MembersPage/MembersPage";
-import Tasks from "./components/Tasks/Tasks";
-import SideBar from "./components/Sidebar/SideBar";
+import { createBrowserHistory } from "history";
+
+
+const history = createBrowserHistory();
 
 class App extends React.PureComponent {
 
@@ -57,10 +56,10 @@ class App extends React.PureComponent {
 
 
   render() {
-
+    
     const { isLogin, role, signedUserId, signedUserName } = this.state;
     return (
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <RoleContext.Provider value={{
           role: role,
           userId: signedUserId,

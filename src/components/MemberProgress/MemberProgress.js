@@ -5,6 +5,7 @@ import Preloader from "../common/Preloader/Preloader";
 import { Button } from "reactstrap";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { NavLink } from "react-router-dom";
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -64,10 +65,9 @@ class MemberProgress extends React.Component {
     const { userTrackList } = this.state;
     return (
       <div>
-        <Button color="link" onClick={handleReturnToFullList}>
-          <FontAwesomeIcon size="sm" icon={faArrowLeft} className="linkIcon" />
+        <NavLink to={`/app/members`}>
           Return to members manage grid
-        </Button>
+        </NavLink>
         <table className='progressTable'>
           {tableHeaders}
           <tbody>{userTrackList}</tbody>

@@ -9,6 +9,7 @@ import TableTrackHeaders from "./TableHeaders";
 import { Button, Table } from "reactstrap";
 import TrackModal from "../Modals/Track/TrackModal";
 import { deleteTask } from "../../firebase/apiDelete";
+import { NavLink } from "react-router-dom";
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -88,11 +89,13 @@ class MemberTracks extends React.PureComponent {
 
   createMemberTrackTable = () => {
 
-    const { navigationButtons, userName, taskName, userTaskId } = this.props;
+    const { navigationButtons, userName, taskName, userTaskId, userId } = this.props;
     const { userTrackList, modalIsOpen, activeTrackId } = this.state;
     return (
       <div className='memberTracksTableContainer'>
-        {navigationButtons()}
+        <NavLink to={`/app/members/tasks_user=${userId}`}>
+          Return to task list
+        </NavLink>
         <div>
           <p className="userGreeting">{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>
@@ -104,8 +107,8 @@ class MemberTracks extends React.PureComponent {
                     trackId={activeTrackId}
                     taskName={taskName}
                     reloadTrackPage={this.reloadTrackPage}
-                    userTaskId={userTaskId}
-        />
+                    userTaskId={userTaskId} />
+
         <Button outline color="primary" className='trackCreateButton' onClick={this.openModal(null)}>
           Add
         </Button>

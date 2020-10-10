@@ -6,11 +6,11 @@ import { deleteUser } from "../../firebase/apiDelete";
 import "./membersPage.scss";
 import { Button } from "reactstrap";
 import Preloader from "../common/Preloader/Preloader";
-import MemberProfile from "../MemberProfile/MemberProfile";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
 import UserModal from "../Modals/User/UserModal";
+import MemberTasks from "../MembersTasks/MemberTasks";
 import { Route } from "react-router-dom";
 
 
@@ -150,7 +150,7 @@ class MembersPage extends React.PureComponent {
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    userId={activeUserId}
-                   reloadMemberPage={this.reloadMembersPage}/>
+                   reloadMemberPage={this.reloadMembersPage} />
         <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null)}>
           Register
         </Button>
@@ -182,9 +182,9 @@ class MembersPage extends React.PureComponent {
               </Route>
 
               <Route path={`/app/members/tasks_user=${activeUserId}`}>
-                <MemberProfile userId={activeUserId}
-                               userName={activeUserName}
-                               handleReturnToFullList={this.handleReturnToFullList} />
+                <MemberTasks userId={activeUserId}
+                             userName={activeUserName}
+                             handleReturnToFullList={this.handleReturnToFullList} />
               </Route>
 
             </div>);

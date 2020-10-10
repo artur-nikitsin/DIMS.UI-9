@@ -19,15 +19,15 @@ class AppContainer extends React.PureComponent {
     return (
       <div className='appContainer'>
         <SideBar />
+        <div className="pagesContainer">
+          <Route path='/app/members'>
+            <MembersPage />
+          </Route>
 
-        <Route path='/app/members'>
-          <MembersPage />
-        </Route>
-
-        <Route path='/app/tasks'>
-          <Tasks />
-        </Route>
-
+          <Route path='/app/tasks'>
+            <Tasks />
+          </Route>
+        </div>
       </div>
     );
   }
