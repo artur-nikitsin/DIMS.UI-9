@@ -17,7 +17,7 @@ class MemberProgress extends React.Component {
   }
 
   componentDidMount() {
-    const { userId } = this.props;
+    const { userId } = this.props.match.params;
     this.getUserTrackList(userId);
   }
 
@@ -61,7 +61,7 @@ class MemberProgress extends React.Component {
       </thead>
     );
 
-    const { handleReturnToFullList } = this.props;
+
     const { userTrackList } = this.state;
     return (
       <div>

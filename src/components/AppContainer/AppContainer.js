@@ -4,8 +4,10 @@ import Tasks from "../Tasks/Tasks";
 import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
+import PropTypes from "prop-types";
 import { RoleContext } from "../../RoleContext";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import MemberTasks from "../MembersTasks/MemberTasks";
 
 class AppContainer extends React.PureComponent {
 
@@ -16,17 +18,16 @@ class AppContainer extends React.PureComponent {
 
 
   render() {
+
     return (
       <div className='appContainer'>
         <SideBar />
         <div className="pagesContainer">
-          <Route path='/app/members'>
-            <MembersPage />
-          </Route>
+          <Switch>
+            <Route path='/app/members' component={MembersPage} />
 
-          <Route path='/app/tasks'>
-            <Tasks />
-          </Route>
+            <Route path='/app/tasks' component={Tasks} />
+          </Switch>
         </div>
       </div>
     );

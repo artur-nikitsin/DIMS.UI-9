@@ -2,12 +2,10 @@ import React from "react";
 import "./memberTasks.scss";
 import { getTaskTrack, getUserTaskList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
-import TrackButton from "./Buttons/TrackButton";
 import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
-import MembersPage from "../MembersPage/MembersPage";
 import { Table, Button } from "reactstrap";
-import { NavLink, Redirect, Route } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
 
 class MemberTasks extends React.Component {
@@ -22,7 +20,8 @@ class MemberTasks extends React.Component {
   }
 
   componentDidMount() {
-    this.getUserTaskList(this.props.userId);
+    const { userId } = this.props.match.params;
+    this.getUserTaskList(userId);
   }
 
   setCurrentTask = (userTaskId, name) => () => {
@@ -30,13 +29,14 @@ class MemberTasks extends React.Component {
       userTaskId: userTaskId,
       currentTaskName: name
     });
-    console.log(this.state);
   };
 
   getUserTaskList = (user) => {
+
     if (user) {
       getUserTaskList(user).then((result) => {
-        const { userId } = this.props;
+        const { userId } = this.props.match.params;
+        /* const { userId } = this.props;*/
         const { role } = this.context;
         let tasks = result.map((task, i) => {
           return (
@@ -57,8 +57,8 @@ class MemberTasks extends React.Component {
                     Track
                   </Button>
                 </NavLink>
-              </td>}
-
+              </td>
+              }
               <td className={"tasksButtons"}>
                 <StatusButtons />
               </td>
@@ -112,23 +112,26 @@ class MemberTasks extends React.Component {
   };
 
   render() {
-    const { userId } = this.props;
+    const { userId } = this.props.match.params;
     const { userTaskId } = this.state;
 
     return (
       <div>
-        <Route exact path={`/app/members/tasks_user=${userId}`}>
-          {this.state.loading ? <Preloader /> : this.createMemberTaskTable()}
-        </Route>
+        <Switch>
+          <Route exact path={`/app/members/tasks_user=${userId}`}>
+            {this.state.loading ? <Preloader /> : this.createMemberTaskTable()}
+          </Route>
 
-        <Route path={`/app/members/tasks_user=${userId}/taskId=${userTaskId}`}>
-          <MemberTracks
-            userId={userId}
-            userTaskId={this.state.userTaskId}
-            taskName={this.state.currentTaskName}
-            userName={this.props.userName}
-          />
-        </Route>
+          <Route path={`/app/members/tasks_user=${userId}/taskId=:userTaskId`}
+                 render={(props) => <MemberTracks
+                   userId={userId}
+                   userTaskId={this.state.userTaskId}
+                   taskName={this.state.currentTaskName}
+                   userName={this.props.userName}
+                   {...props} />}>
+
+          </Route>
+        </Switch>
       </div>
     );
 

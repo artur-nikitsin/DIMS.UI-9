@@ -11,7 +11,8 @@ import { RoleContext } from "../../RoleContext";
 import { Table } from "reactstrap";
 import UserModal from "../Modals/User/UserModal";
 import MemberTasks from "../MembersTasks/MemberTasks";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
+import PropTypes from "prop-types";
 
 
 class MembersPage extends React.PureComponent {
@@ -22,7 +23,8 @@ class MembersPage extends React.PureComponent {
       members: null,
       activeUserId: null,
       activeUserName: null,
-      modalIsOpen: false
+      modalIsOpen: false,
+      modalType: null
     };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -30,6 +32,7 @@ class MembersPage extends React.PureComponent {
 
   componentDidMount() {
     const { role } = this.context;
+
     if (role === "admin" || role === "mentor") {
       this.getMembers();
     } else {
@@ -41,6 +44,11 @@ class MembersPage extends React.PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps !== this.props) {
+      this.getMembers();
+    }
+  }
 
   getCurrentUser = (userId, name) => () => {
     this.setState({
@@ -53,13 +61,6 @@ class MembersPage extends React.PureComponent {
   handleDelete = (userId) => () => {
     deleteUser(userId).then(() => {
       this.reloadMembersPage();
-    });
-  };
-
-  handleReturnToFullList = () => {
-    this.setState({
-      activePage: "membersTable",
-      activeUserId: null
     });
   };
 
@@ -113,10 +114,11 @@ class MembersPage extends React.PureComponent {
   };
 
 
-  openModal = (userId) => () => {
+  openModal = (userId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeUserId: userId
+      activeUserId: userId,
+      modalType: modalType
     });
   };
 
@@ -173,20 +175,17 @@ class MembersPage extends React.PureComponent {
           return (
             <div className='membersTableContainer'>
 
-              <Route exact path={`/app/members`}>
-                {loading ? <Preloader /> : this.createMembersTable()}
-              </Route>
+              <Switch>
+                <Route exact path={`/app/members`}>
+                  {loading ? <Preloader /> : this.createMembersTable()}
+                </Route>
 
-              <Route path={`/app/members/progress_user=${activeUserId}`}>
-                <MemberProgress userId={activeUserId} handleReturnToFullList={this.handleReturnToFullList} />
-              </Route>
+                <Route path={`/app/members/progress_user=:userId`}
+                       render={(props) => <MemberProgress  {...props} />} />
 
-              <Route path={`/app/members/tasks_user=${activeUserId}`}>
-                <MemberTasks userId={activeUserId}
-                             userName={activeUserName}
-                             handleReturnToFullList={this.handleReturnToFullList} />
-              </Route>
-
+                <Route path={`/app/members/tasks_user=:userId`}
+                       render={(props) => <MemberTasks userName={activeUserName} {...props} />} />
+              </Switch>
             </div>);
         }}
       </RoleContext.Consumer>
@@ -194,6 +193,21 @@ class MembersPage extends React.PureComponent {
   }
 }
 
+MembersPage.propTypes = {
+  loading: PropTypes.bool,
+  members: PropTypes.object,
+  activeUserId: PropTypes.string,
+  activeUserName: PropTypes.string,
+  modalIsOpen: PropTypes.bool
+};
+
+MembersPage.defaultProps = {
+  loading: true,
+  members: null,
+  activeUserId: null,
+  activeUserName: null,
+  modalIsOpen: false
+};
 MembersPage.contextType = RoleContext;
 
 export default MembersPage;

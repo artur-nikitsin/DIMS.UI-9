@@ -8,11 +8,11 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import { RoleContext } from "./RoleContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
 import { logout, registerNewUser } from "./firebase/auth";
-import { BrowserRouter, Route, Redirect } from "react-router-dom";
-import { createBrowserHistory } from "history";
+import { Route, Redirect, Switch } from "react-router-dom";
+import getUserFromSessionStorage from "./components/helpers/sessionStorage/getUserFromSessionStorage";
+import setUserToSessionStorage from "./components/helpers/sessionStorage/setUserToSessionStorage";
+import deleteUserFromLocalStorage from "./components/helpers/sessionStorage/deleteUserFromLocalStorage";
 
-
-const history = createBrowserHistory();
 
 class App extends React.PureComponent {
 
@@ -20,6 +20,7 @@ class App extends React.PureComponent {
     super(props);
     this.state = {
       isLogin: false,
+      fromLogin: false,
       role: null,
       signedUserId: null,
       signedUserName: null,
@@ -28,16 +29,34 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
+    if (getUserFromSessionStorage()) {
+      const { firstName, lastName, role, userId } = getUserFromSessionStorage();
+      this.setState({
+        isLogin: true,
+        fromLoginForm: false,
+        role: role,
+        signedUserId: userId,
+        signedUserName: firstName,
+        signedUserLastName: lastName
+      });
+    }
     document.title = DOCUMENT_TITLE;
   }
 
-  handleLogin = ({ email, firstName, lastName, role, userId }) => {
+  handleLogin = ({ firstName, lastName, role, userId }) => {
     this.setState({
       isLogin: true,
+      fromLoginForm: true,
       role: role,
       signedUserId: userId,
       signedUserName: firstName,
       signedUserLastName: lastName
+    });
+    setUserToSessionStorage({
+      role: role,
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName
     });
   };
 
@@ -49,6 +68,7 @@ class App extends React.PureComponent {
       signedUserName: null,
       signedUserLastName: null
     });
+    deleteUserFromLocalStorage();
     logout().then(message => {
       console.log(message);
     });
@@ -56,39 +76,40 @@ class App extends React.PureComponent {
 
 
   render() {
-    
-    const { isLogin, role, signedUserId, signedUserName } = this.state;
+
+    const { isLogin, fromLoginForm, role, signedUserId, signedUserName } = this.state;
+    const savedUserData = sessionStorage.getItem("user");
+
+
     return (
-      <BrowserRouter history={history}>
-        <RoleContext.Provider value={{
-          role: role,
-          userId: signedUserId,
-          signedUserName: signedUserName
-        }}>
-          <Route path='/'>
+      <RoleContext.Provider value={{
+        role: role,
+        userId: signedUserId,
+        signedUserName: signedUserName
+      }}>
+
+        <Switch>
+          <>
             <div className='App'>
+              <Header handleLogout={this.handleLogout} isLogin={isLogin} />
 
-              <Header handleLogout={this.handleLogout} isLogin={this.state.isLogin} />
+              {fromLoginForm && <Redirect to='/app/members' />}
+              {!savedUserData && <Redirect to='/login' />}
+              {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
 
-              {isLogin ? <Redirect from='/' to='/app/members' /> :
-                <Redirect from='/' to='/login' />}
-
-              {signedUserId && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
-
-              <Route path='/app'>
-                <AppContainer />
-              </Route>
+              <Route path='/app' component={AppContainer} />
 
               <Route path='/login'>
                 <LoginForm handleLogin={this.handleLogin} />
               </Route>
 
               <Footer />
-
             </div>
-          </Route>
-        </RoleContext.Provider>
-      </BrowserRouter>
+          </>
+        </Switch>
+
+      </RoleContext.Provider>
+
     );
   }
 }

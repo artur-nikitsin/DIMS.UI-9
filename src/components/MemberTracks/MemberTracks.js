@@ -24,7 +24,8 @@ class MemberTracks extends React.PureComponent {
   }
 
   componentDidMount() {
-    this.getUserTrackList(this.props.userTaskId);
+    const { userTaskId } = this.props.match.params;
+    this.getUserTrackList(userTaskId);
   }
 
   handleDelete = (trackId) => () => {
@@ -36,12 +37,12 @@ class MemberTracks extends React.PureComponent {
 
 
   reloadTrackPage = () => {
-
+    const { userTaskId } = this.props.match.params;
     this.setState({
       loading: true,
       userTrackList: null
     });
-    this.getUserTrackList(this.props.userTaskId);
+    this.getUserTrackList(userTaskId);
   };
 
   getUserTrackList = (user) => {

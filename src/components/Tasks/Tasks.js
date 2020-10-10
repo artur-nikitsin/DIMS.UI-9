@@ -14,8 +14,6 @@ class Tasks extends React.Component {
     this.state = {
       loading: true,
       tasks: null,
-      showCreateModal: false,
-      showEditModal: false,
       modalIsOpen: false,
       activeTaskId: null
     };
