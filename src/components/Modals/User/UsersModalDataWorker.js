@@ -6,6 +6,8 @@ import { setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import RadioInputList from "./RadioInputList";
 import ModalContent from "../Common/ModalContent";
+import PropTypes from "prop-types";
+import TaskModalDataWorker from "../Task/TaskModalDataWorker";
 
 class UsersModalDataWorker extends React.PureComponent {
 
@@ -189,4 +191,11 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 }
 
+UsersModalDataWorker.propTypes = {
+  modalTemplate: PropTypes.object.isRequired,
+  userData: PropTypes.object,
+  modalType: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reloadMemberPage: PropTypes.func.isRequired
+};
 export default UsersModalDataWorker;

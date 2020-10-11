@@ -7,6 +7,8 @@ import { RoleContext } from "../../RoleContext";
 import { Table, Button } from "reactstrap";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
+import PropTypes from "prop-types";
+import MembersPage from "../MembersPage/MembersPage";
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -36,8 +38,8 @@ class MemberTasks extends React.Component {
     if (user) {
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
-        /* const { userId } = this.props;*/
         const { role } = this.context;
+
         let tasks = result.map((task, i) => {
           return (
             <tr key={task.taskId} className={i % 2 ? "darkLine" : "whiteLine"}>
@@ -137,6 +139,11 @@ class MemberTasks extends React.Component {
 
   }
 }
+
+MemberTasks.propTypes = {
+  match: PropTypes.object.isRequired,
+  userName: PropTypes.string
+};
 
 MemberTasks.contextType = RoleContext;
 export default MemberTasks;

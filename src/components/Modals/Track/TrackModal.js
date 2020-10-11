@@ -4,6 +4,8 @@ import "./trackModal.scss";
 import { getTrack } from "../../../firebase/apiGet";
 import { trackModalTemplate } from "./ModalInputsTemplate";
 import TrackModalDataWorker from "./TrackModalDataWorker";
+import PropTypes from "prop-types";
+
 
 const TrackModal = (props) => {
   const {
@@ -60,6 +62,16 @@ const TrackModal = (props) => {
       </Modal>
     </div>
   );
+};
+
+TrackModal.propTypes = {
+  className: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reloadTrackPage: PropTypes.func.isRequired,
+  trackId: PropTypes.string,
+  taskName: PropTypes.string,
+  userTaskId: PropTypes.string
 };
 
 export default TrackModal;

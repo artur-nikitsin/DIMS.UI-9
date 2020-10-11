@@ -7,6 +7,7 @@ import { AvField, AvForm } from "availity-reactstrap-validation";
 import { login } from "../../firebase/auth";
 import Preloader from "../common/Preloader/Preloader";
 import { Button, Alert } from "reactstrap";
+import PropTypes from "prop-types";
 
 
 class LoginForm extends React.Component {
@@ -107,5 +108,9 @@ class LoginForm extends React.Component {
     );
   }
 }
+
+LoginForm.propTypes = {
+  handleLogin: PropTypes.func.isRequired
+};
 
 export default LoginForm;

@@ -5,6 +5,7 @@ import { editMemberData, editTask } from "../../../firebase/apiSet";
 import { createTask } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
+import PropTypes from "prop-types";
 
 
 class TaskModalDataWorker extends React.PureComponent {
@@ -159,4 +160,11 @@ class TaskModalDataWorker extends React.PureComponent {
   }
 }
 
+TaskModalDataWorker.propTypes = {
+  modalTemplate: PropTypes.object.isRequired,
+  taskData: PropTypes.object,
+  modalType: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reloadTaskPage: PropTypes.func.isRequired
+};
 export default TaskModalDataWorker;

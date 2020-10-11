@@ -10,6 +10,8 @@ import { Button, Table } from "reactstrap";
 import TrackModal from "../Modals/Track/TrackModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -90,7 +92,7 @@ class MemberTracks extends React.PureComponent {
 
   createMemberTrackTable = () => {
 
-    const { navigationButtons, userName, taskName, userTaskId, userId } = this.props;
+    const { userName, taskName, userTaskId, userId } = this.props;
     const { userTrackList, modalIsOpen, activeTrackId } = this.state;
     return (
       <div className='memberTracksTableContainer'>
@@ -132,5 +134,13 @@ class MemberTracks extends React.PureComponent {
     );
   }
 }
+
+MemberTracks.propTypes = {
+  match: PropTypes.object.isRequired,
+  userName: PropTypes.string,
+  taskName: PropTypes.string,
+  userTaskId: PropTypes.string.isRequired,
+  userId: PropTypes.string.isRequired
+};
 
 export default MemberTracks;

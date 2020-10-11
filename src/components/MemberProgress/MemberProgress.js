@@ -2,10 +2,9 @@ import React from "react";
 import "./memberProgress.scss";
 import { getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
-import { Button } from "reactstrap";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
+import PropTypes from "prop-types";
+
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -86,5 +85,9 @@ class MemberProgress extends React.Component {
     );
   }
 }
+
+MemberProgress.propTypes = {
+  match: PropTypes.object.isRequired
+};
 
 export default MemberProgress;

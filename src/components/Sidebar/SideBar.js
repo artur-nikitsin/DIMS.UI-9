@@ -5,7 +5,7 @@ import MembersPage from "../MembersPage/MembersPage";
 import { NavLink } from "react-router-dom";
 import { Button } from "reactstrap";
 
-function SideBar({ navigationButtons }) {
+function SideBar() {
 
   return (
     <RoleContext.Consumer>{

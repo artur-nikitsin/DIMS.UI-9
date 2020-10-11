@@ -1,6 +1,8 @@
 import React from "react";
 import "./header.scss";
 import { Button } from "reactstrap";
+import PropTypes from "prop-types";
+
 
 function Header({ isLogin, handleLogout }) {
   return (
@@ -13,4 +15,8 @@ function Header({ isLogin, handleLogout }) {
   );
 }
 
+Header.propTypes = {
+  isLogin: PropTypes.bool.isRequired,
+  handleLogout: PropTypes.func.isRequired,
+};
 export default Header;

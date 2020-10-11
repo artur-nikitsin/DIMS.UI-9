@@ -1,7 +1,8 @@
 import React from "react";
 import "./radioInput.scss";
-
 import { Input } from "reactstrap";
+import PropTypes from "prop-types";
+
 
 class RadioInput extends React.PureComponent {
 
@@ -28,7 +29,6 @@ class RadioInput extends React.PureComponent {
     const { inputName, value, handleRadioInput } = this.props;
     return (
       <div className='radioButton'>
-
         <Input
           type="radio"
           name={inputName}
@@ -42,4 +42,10 @@ class RadioInput extends React.PureComponent {
   }
 }
 
+RadioInput.propTypes = {
+  value: PropTypes.string,
+  inputName: PropTypes.string.isRequired,
+  handleRadioInput: PropTypes.func.isRequired,
+  handleValidInput: PropTypes.func.isRequired,
+};
 export default RadioInput;

@@ -1,11 +1,13 @@
 import regExpTester from "./regExpTester";
 import { phoneNumberRegexp } from "./regExp";
+import PropTypes from "prop-types";
+import lastNameValidator from "./lastNameValidator";
 
 
-function mobilePhoneValidator(props) {
+function mobilePhoneValidator(number) {
 
-  if (props) {
-    if (regExpTester(phoneNumberRegexp, props)) {
+  if (number) {
+    if (regExpTester(phoneNumberRegexp, number)) {
       return (
         {
           isValid: true,
@@ -25,5 +27,8 @@ function mobilePhoneValidator(props) {
 
 }
 
+mobilePhoneValidator.propTypes = {
+  number: PropTypes.string.isRequired,
+};
 
 export default mobilePhoneValidator;

@@ -194,20 +194,9 @@ class MembersPage extends React.PureComponent {
 }
 
 MembersPage.propTypes = {
-  loading: PropTypes.bool,
-  members: PropTypes.object,
-  activeUserId: PropTypes.string,
-  activeUserName: PropTypes.string,
-  modalIsOpen: PropTypes.bool
+  match: PropTypes.object.isRequired
 };
 
-MembersPage.defaultProps = {
-  loading: true,
-  members: null,
-  activeUserId: null,
-  activeUserName: null,
-  modalIsOpen: false
-};
 MembersPage.contextType = RoleContext;
 
 export default MembersPage;

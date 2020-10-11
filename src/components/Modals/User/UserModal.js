@@ -5,6 +5,8 @@ import { userModalTemplate } from "./ModalInputsTemplate";
 import "./UserModal.scss";
 import { getMember } from "../../../firebase/apiGet";
 import Preloader from "../../common/Preloader/Preloader";
+import PropTypes from "prop-types";
+import TaskModal from "../Task/TaskModal";
 
 const UserModal = (props) => {
   const {
@@ -58,6 +60,14 @@ const UserModal = (props) => {
       </Modal>
     </div>
   );
+};
+
+UserModal.propTypes = {
+  className: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  userId: PropTypes.string,
+  reloadMemberPage: PropTypes.func.isRequired
 };
 
 export default UserModal;

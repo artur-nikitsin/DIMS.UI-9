@@ -1,6 +1,7 @@
 import React from "react";
 import "./editDeleteButtons.scss";
 import { Button } from "reactstrap";
+import PropTypes from "prop-types";
 
 function EditDeleteButtons({ handleEdit, handleDelete }) {
   return (
@@ -11,4 +12,8 @@ function EditDeleteButtons({ handleEdit, handleDelete }) {
   );
 }
 
+EditDeleteButtons.propTypes = {
+  handleEdit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired
+};
 export default EditDeleteButtons;

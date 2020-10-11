@@ -12,6 +12,7 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import getUserFromSessionStorage from "./components/helpers/sessionStorage/getUserFromSessionStorage";
 import setUserToSessionStorage from "./components/helpers/sessionStorage/setUserToSessionStorage";
 import deleteUserFromLocalStorage from "./components/helpers/sessionStorage/deleteUserFromLocalStorage";
+import Preloader from "./components/common/Preloader/Preloader";
 
 
 class App extends React.PureComponent {
@@ -63,6 +64,7 @@ class App extends React.PureComponent {
   handleLogout = () => {
     this.setState({
       isLogin: false,
+      fromLoginForm: false,
       role: null,
       signedUserId: null,
       signedUserName: null,
@@ -92,7 +94,6 @@ class App extends React.PureComponent {
           <>
             <div className='App'>
               <Header handleLogout={this.handleLogout} isLogin={isLogin} />
-
               {fromLoginForm && <Redirect to='/app/members' />}
               {!savedUserData && <Redirect to='/login' />}
               {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}

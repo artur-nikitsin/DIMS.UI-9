@@ -5,6 +5,8 @@ import { createTrack, editMemberData, editTask, editTrack } from "../../../fireb
 import { createTask } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
+import PropTypes from "prop-types";
+import UsersModalDataWorker from "../User/UsersModalDataWorker";
 
 
 class TrackModalDataWorker extends React.PureComponent {
@@ -158,4 +160,12 @@ class TrackModalDataWorker extends React.PureComponent {
   }
 }
 
+TrackModalDataWorker.propTypes = {
+  modalTemplate: PropTypes.object.isRequired,
+  trackData: PropTypes.object,
+  userTaskId: PropTypes.string,
+  modalType: PropTypes.string.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  reloadTrackPage: PropTypes.func.isRequired
+};
 export default TrackModalDataWorker;

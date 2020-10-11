@@ -4,6 +4,8 @@ import inputNamesStore from "./inputNamesStore";
 import "./textInput.scss";
 import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
 import { Label } from "reactstrap";
+import PropTypes from "prop-types";
+import RadioInput from "./RadioInput";
 
 class TextInput extends React.Component {
 
@@ -84,5 +86,13 @@ class TextInput extends React.Component {
     );
   }
 }
+
+TextInput.propTypes = {
+  value: PropTypes.string,
+  type: PropTypes.string,
+  inputName: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleValidInput: PropTypes.func.isRequired
+};
 
 export default TextInput;

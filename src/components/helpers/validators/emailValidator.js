@@ -1,5 +1,7 @@
 import regExpTester from "./regExpTester";
 import { emailRegexp } from "./regExp";
+import PropTypes from "prop-types";
+import Header from "../../Header/Header";
 
 
 function emailValidator(email) {
@@ -24,6 +26,8 @@ function emailValidator(email) {
   }
 
 }
-
+emailValidator.propTypes = {
+  email: PropTypes.string.isRequired,
+};
 
 export default emailValidator;

@@ -5,6 +5,8 @@ import { getMember, getTask } from "../../../firebase/apiGet";
 import Preloader from "../../common/Preloader/Preloader";
 import TaskModalDataWorker from "./TaskModalDataWorker";
 import { taskModalTemplate } from "./ModalInputsTemplate";
+import PropTypes from "prop-types";
+import ModalContent from "../Common/ModalContent";
 
 const TaskModal = (props) => {
   const {
@@ -59,4 +61,11 @@ const TaskModal = (props) => {
   );
 };
 
+TaskModal.propTypes = {
+  className: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  taskId: PropTypes.string,
+  reloadTaskPage: PropTypes.func.isRequired
+};
 export default TaskModal;
