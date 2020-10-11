@@ -53,7 +53,7 @@ const saveDataTemplate = (userId, data) => {
     sex: data.sex,
     university: data.university,
     mathScore: data.mathScore,
-    adress: data.adress,
+    address: data.address,
     mobilePhone: data.mobilePhone,
     skype: data.skype
   };

@@ -41,7 +41,7 @@ export function getMember(userId) {
         email,
         university,
         mathScore,
-        adress,
+        address,
         mobilePhone,
         skype,
         sex
@@ -57,7 +57,7 @@ export function getMember(userId) {
       member.email = email;
       member.university = university;
       member.mathScore = mathScore;
-      member.adress = adress;
+      member.address = address;
       member.mobilePhone = mobilePhone;
       member.skype = skype;
       member.sex = sex;

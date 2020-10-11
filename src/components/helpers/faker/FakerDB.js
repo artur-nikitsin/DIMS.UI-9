@@ -68,7 +68,7 @@ function FakerDB(number) {
               birthDate: faker.fake("{{date.past}}"),
               university: faker.fake("{{company.companyName}}"),
               mathScore: faker.fake("{{random.number}}"),
-              adress: faker.fake("{{address.streetAddress}}"),
+              address: faker.fake("{{address.streetAddress}}"),
               mobilePhone: faker.fake("{{phone.phoneNumber}}"),
               skype: faker.fake("{{internet.userName}}"),
               startDate: faker.fake("{{date.past}}")

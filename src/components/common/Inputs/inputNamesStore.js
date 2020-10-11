@@ -8,7 +8,7 @@ const inputNamesStore = {
   email: "Email",
   university: "University",
   mathScore: "Math Score",
-  adress: "Adress",
+  address: "Address",
   mobilePhone: "Mobile Phone",
   skype: "Skype",
   password: "Password",

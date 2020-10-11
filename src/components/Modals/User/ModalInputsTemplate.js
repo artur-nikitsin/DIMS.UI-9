@@ -8,7 +8,7 @@ export  const userModalTemplate = {
   email: null,
   university: null,
   mathScore: null,
-  adress: null,
+  address: null,
   mobilePhone: null,
   skype: null,
   sex: null,

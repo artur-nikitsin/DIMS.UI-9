@@ -30,7 +30,7 @@ class UsersModalDataWorker extends React.PureComponent {
       email: null,
       university: null,
       mathScore: null,
-      adress: null,
+      address: null,
       mobilePhone: null,
       skype: null,
       userId: null
@@ -167,8 +167,8 @@ class UsersModalDataWorker extends React.PureComponent {
             console.log("Error writing document:", error);
           });
       } else {
-        setNewMemberData(
-          dataToSend).then(() => {
+        console.log(dataToSend);
+        setNewMemberData(dataToSend).then(() => {
           closeModal();
           reloadMemberPage();
         })
