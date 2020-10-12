@@ -52,6 +52,7 @@ class MemberTracks extends React.PureComponent {
   getUserTrackList = (user) => {
     if (user) {
       getTaskTrack(user).then((result) => {
+
         let tracks = result.map((track, i) => {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>

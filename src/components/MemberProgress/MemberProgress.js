@@ -1,6 +1,6 @@
 import React from "react";
 import "./memberProgress.scss";
-import { getUserTrackList } from "../../firebase/apiGet";
+import { getTaskTrack, getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -23,7 +23,9 @@ class MemberProgress extends React.Component {
   getUserTrackList = (user) => {
     if (user) {
       getUserTrackList(user).then((result) => {
-        let tracks = result.map((track, i) => {
+        const allTaskWithSubtask = result.flat();
+
+        let tracks = allTaskWithSubtask.map((track, i) => {
           return (
             <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>

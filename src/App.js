@@ -26,7 +26,7 @@ class App extends React.PureComponent {
       signedUserId: null,
       signedUserName: null,
       signedUserLastName: null,
-      userData: null
+      userData: getUserFromSessionStorage()
     };
   }
 

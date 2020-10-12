@@ -154,8 +154,8 @@ export function getTask(taskId) {
     });
 }
 
-
-export function getTaskTrack(userTaskId) {
+// all track of current task
+export function getTaskTrack(userTaskId, name) {
   return db
     .collection("TaskTracks")
     .where("userTaskId", "==", userTaskId)
@@ -164,7 +164,7 @@ export function getTaskTrack(userTaskId) {
 
       const taskTrackList = trackData.docs.map((userTask) => {
         const { taskTrackId, userTaskId, trackDate, trackNote } = userTask.data();
-        return { taskTrackId, userTaskId, trackDate, trackNote };
+        return { name, taskTrackId, userTaskId, trackDate, trackNote };
       });
       return taskTrackList;
     })
@@ -173,7 +173,7 @@ export function getTaskTrack(userTaskId) {
     });
 }
 
-
+// track for modal
 export function getTrack(taskTrackId) {
   const trackData = {};
   return db
@@ -182,7 +182,6 @@ export function getTrack(taskTrackId) {
     .get()
     .then((track) => {
       const { taskTrackId, userTaskId, trackDate, trackNote } = track.data();
-
       trackData.taskTrackId = taskTrackId;
       trackData.userTaskId = userTaskId;
       trackData.trackDate = getLocaleDate(trackDate);
@@ -209,7 +208,7 @@ export function getUserTrackList(userId) {
     })
     .then((userTaskList) => {
       const userTracks = userTaskList.map((task) => {
-        let currentTrack = getTaskName(task.userTaskId, task.taskId);
+        let currentTrack = getTaskTracksWithName(task.userTaskId, task.taskId);
         return currentTrack;
       });
       const trackData = Promise.all(userTracks);
@@ -220,14 +219,15 @@ export function getUserTrackList(userId) {
     });
 }
 
-function getTaskName(userTaskId, taskId) {
+
+function getTaskTracksWithName(userTaskId, taskId) {
   return db
     .collection("Tasks")
     .doc(taskId)
     .get()
     .then((taskData) => {
       const { name } = taskData.data();
-      const track = getTaskTrackData(userTaskId, name);
+      const track = getTaskTrack(userTaskId, name);
       return track;
     })
     .catch((error) => {
@@ -235,6 +235,7 @@ function getTaskName(userTaskId, taskId) {
     });
 }
 
+// get track when its single
 export function getTaskTrackData(userTaskId, name) {
   const tracks = {};
   return db
