@@ -125,10 +125,11 @@ class MembersPage extends React.PureComponent {
     });
   };
 
-  closeModal = (userId) => {
+  closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeUserId: userId
+      activeUserId: null,
+      modalType: null
     });
   };
 

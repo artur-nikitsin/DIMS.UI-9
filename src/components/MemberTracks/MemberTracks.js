@@ -11,6 +11,7 @@ import TrackModal from "../Modals/Track/TrackModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import UserModal from "../Modals/User/UserModal";
 
 
 class MemberTracks extends React.PureComponent {
@@ -21,7 +22,8 @@ class MemberTracks extends React.PureComponent {
       userTrackList: null,
       modalIsOpen: false,
       activeTrackId: null,
-      userTaskId: null
+      userTaskId: null,
+      modalType: null
     };
   }
 
@@ -73,19 +75,21 @@ class MemberTracks extends React.PureComponent {
     }
   };
 
-  openModal = (trackId, userTaskId) => () => {
+  openModal = (trackId, userTaskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
       activeTrackId: trackId,
-      userTaskId: userTaskId
+      userTaskId: userTaskId,
+      modalType: modalType
     });
   };
 
-  closeModal = (trackId) => {
+  closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeTrackId: trackId,
-      userTaskId: null
+      activeTrackId: null,
+      userTaskId: null,
+      modalType: null
     });
   };
 
@@ -93,7 +97,7 @@ class MemberTracks extends React.PureComponent {
   createMemberTrackTable = () => {
 
     const { userName, taskName, userTaskId, userId } = this.props;
-    const { userTrackList, modalIsOpen, activeTrackId } = this.state;
+    const { userTrackList, modalIsOpen, activeTrackId, modalType } = this.state;
     return (
       <div className='memberTracksTableContainer'>
         <NavLink to={`/app/members/tasks_user=${userId}`}>
@@ -110,9 +114,11 @@ class MemberTracks extends React.PureComponent {
                     trackId={activeTrackId}
                     taskName={taskName}
                     reloadTrackPage={this.reloadTrackPage}
-                    userTaskId={userTaskId} />
+                    userTaskId={userTaskId}
+                    modalType={modalType} />
 
-        <Button outline color="primary" className='trackCreateButton' onClick={this.openModal(null)}>
+        <Button outline color="primary" className='trackCreateButton'
+                onClick={this.openModal(null, null, "register")}>
           Add
         </Button>
         <Table striped className='tracksTable'>

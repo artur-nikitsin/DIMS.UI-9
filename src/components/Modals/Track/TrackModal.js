@@ -16,17 +16,18 @@ const TrackModal = (props) => {
     trackId,
     taskName,
     reloadTrackPage,
+    modalType,
     userTaskId
   } = props;
 
   const [trackData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [modalType, setModalType] = useState("Register");
+
 
   const toggle = () => {
     closeModal(null);
     setData(null);
-    setModalType("Register");
+
   };
 
 
@@ -36,12 +37,10 @@ const TrackModal = (props) => {
       getTrack(trackId).then((result) => {
         setData(result);
         setLoading(false);
-        setModalType("Edit");
       });
     } else {
       setData(null);
       setLoading(false);
-      setModalType("Register");
     }
   }, [trackId]);
 

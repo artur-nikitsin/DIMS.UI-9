@@ -84,10 +84,11 @@ class Tasks extends React.Component {
     });
   };
 
-  closeModal = (taskId) => {
+  closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeTaskId: taskId
+      activeTaskId: null,
+      modalType: null
     });
   };
 

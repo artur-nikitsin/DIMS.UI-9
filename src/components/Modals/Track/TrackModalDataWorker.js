@@ -1,12 +1,11 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { createTrack, editMemberData, editTask, editTrack } from "../../../firebase/apiSet";
-import { createTask } from "../../../firebase/apiSet";
+import { createTrack, editTrack } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
-import UsersModalDataWorker from "../User/UsersModalDataWorker";
+
 
 
 class TrackModalDataWorker extends React.PureComponent {
@@ -69,7 +68,7 @@ class TrackModalDataWorker extends React.PureComponent {
   };
 
   createInputList = () => {
-    const { modalTemplate } = this.props;
+    const { modalTemplate, modalType } = this.props;
     const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
@@ -83,7 +82,8 @@ class TrackModalDataWorker extends React.PureComponent {
             value={thisState[input]}
             handleChange={this.handleChange}
             handleValidInput={this.handleValidInput}
-            isSubmit={isSubmit} />
+            isSubmit={isSubmit}
+            modalType={modalType} />
         </li>
       );
     });
@@ -119,7 +119,7 @@ class TrackModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskTrackId, userTaskId, dataToSend } = this.state;
-    const { reloadTrackPage, closeModal } = this.props;
+    const { reloadTrackPage, closeModal, modalType } = this.props;
 
     this.setState({
       isSubmit: true
@@ -127,7 +127,7 @@ class TrackModalDataWorker extends React.PureComponent {
 
     if (isFormValid) {
 
-      if (this.props.modalType === "Edit") {
+      if (modalType === "edit") {
         editTrack(taskTrackId, { ...dataToSend, userTaskId })
           .then(() => {
             closeModal();
@@ -136,9 +136,10 @@ class TrackModalDataWorker extends React.PureComponent {
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
-      } else {
+      }
+      if (modalType === "register") {
         const { userTaskId } = this.props;
-        createTrack( { ...dataToSend, userTaskId }).then(() => {
+        createTrack({ ...dataToSend, userTaskId }).then(() => {
           closeModal();
           reloadTrackPage();
         })
@@ -151,11 +152,12 @@ class TrackModalDataWorker extends React.PureComponent {
 
 
   render() {
-    const { closeModal } = this.props;
+    const { closeModal, modalType } = this.props;
     return (
       <ModalContent createInputList={this.createInputList()}
                     handleSubmit={this.handleSubmit}
-                    closeModal={closeModal} />
+                    closeModal={closeModal}
+                    modalType={modalType} />
     );
   }
 }

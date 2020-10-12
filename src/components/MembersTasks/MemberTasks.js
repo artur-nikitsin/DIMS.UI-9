@@ -99,7 +99,7 @@ class MemberTasks extends React.Component {
       <div className={"memberTasksTableContainer"}>
 
         {role === "user" ? <div>
-          <p className={"userGreeting"}>{"Hi, dear " + this.props.userName + "! This is your current tasks:"}</p>
+          <p className={"userGreeting"}>{"Hi, dear " + this.context.signedUserName  + "! This is your current tasks:"}</p>
         </div> : <NavLink to={`/app/members`}>
           Return to members manage grid
         </NavLink>}
@@ -129,7 +129,7 @@ class MemberTasks extends React.Component {
                    userId={userId}
                    userTaskId={this.state.userTaskId}
                    taskName={this.state.currentTaskName}
-                   userName={this.props.userName}
+                   userName={this.context.signedUserName}
                    {...props} />}>
 
           </Route>

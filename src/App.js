@@ -89,7 +89,6 @@ class App extends React.PureComponent {
         userId: signedUserId,
         signedUserName: signedUserName
       }}>
-
         <Switch>
           <>
             <div className='App'>
