@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./trackModal.scss";
 import { getTrack } from "../../../firebase/apiGet";
-import { trackModalTemplate } from "./ModalInputsTemplate";
+import { trackModalTemplate } from "../Common/ModalInputsTemplate";
 import TrackModalDataWorker from "./TrackModalDataWorker";
 import PropTypes from "prop-types";
 

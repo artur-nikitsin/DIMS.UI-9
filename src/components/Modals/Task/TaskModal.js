@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import "./taskModal.scss";
-import { getMember, getTask } from "../../../firebase/apiGet";
-import Preloader from "../../common/Preloader/Preloader";
+import { getTask } from "../../../firebase/apiGet";
 import TaskModalDataWorker from "./TaskModalDataWorker";
-import { taskModalTemplate } from "./ModalInputsTemplate";
+import { taskModalTemplate } from "../Common/ModalInputsTemplate";
 import PropTypes from "prop-types";
-import ModalContent from "../Common/ModalContent";
+
 
 const TaskModal = (props) => {
   const {

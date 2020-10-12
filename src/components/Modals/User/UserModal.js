@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import UsersModalDataWorker from "./UsersModalDataWorker";
-import { userModalTemplate } from "./ModalInputsTemplate";
+import { userModalTemplate } from "../Common/ModalInputsTemplate";
 import "./UserModal.scss";
 import { getMember } from "../../../firebase/apiGet";
-import Preloader from "../../common/Preloader/Preloader";
 import PropTypes from "prop-types";
-import TaskModal from "../Task/TaskModal";
+
 
 const UserModal = (props) => {
   const {
