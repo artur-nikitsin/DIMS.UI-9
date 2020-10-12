@@ -87,8 +87,7 @@ class Tasks extends React.Component {
   closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeTaskId: null,
-      modalType: null
+      activeTaskId: null
     });
   };
 

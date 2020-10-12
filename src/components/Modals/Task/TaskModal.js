@@ -63,6 +63,6 @@ TaskModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   taskId: PropTypes.string,
-  reloadTaskPage: PropTypes.func.isRequired
+  reloadTaskPage: PropTypes.func
 };
 export default TaskModal;

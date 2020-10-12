@@ -128,8 +128,7 @@ class MembersPage extends React.PureComponent {
   closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeUserId: null,
-      modalType: null
+      activeUserId: null
     });
   };
 

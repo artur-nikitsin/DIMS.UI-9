@@ -5,9 +5,10 @@ import Preloader from "../common/Preloader/Preloader";
 import StatusButtons from "./Buttons/StatusButtons";
 import { RoleContext } from "../../RoleContext";
 import { Table, Button } from "reactstrap";
-import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import { NavLink, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import PropTypes from "prop-types";
+import TaskModal from "../Modals/Task/TaskModal";
 
 
 class MemberTasks extends React.Component {
@@ -17,7 +18,9 @@ class MemberTasks extends React.Component {
       loading: true,
       userTaskList: null,
       userTaskId: null,
-      currentTaskName: null
+      currentTaskName: null,
+      modalIsOpen: false,
+      modalType: null
     };
   }
 
@@ -36,6 +39,7 @@ class MemberTasks extends React.Component {
   getUserTaskList = (user) => {
 
     if (user) {
+
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
         const { role } = this.context;
@@ -45,7 +49,10 @@ class MemberTasks extends React.Component {
             <tr key={task.taskId} className={i % 2 ? "darkLine" : "whiteLine"}>
               <td>{i + 1}</td>
               <td>
-                <a href=''>{task.name}</a>
+                <a href='' onClick={event => {
+                  event.preventDefault();
+                  this.openModal(task.taskId, "view")();
+                }}>{task.name}</a>
               </td>
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
@@ -78,6 +85,20 @@ class MemberTasks extends React.Component {
     }
   };
 
+  openModal = (taskId, modalType) => () => {
+    this.setState({
+      modalIsOpen: true,
+      activeTaskId: taskId,
+      modalType: modalType
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      modalIsOpen: false,
+      activeTaskId: null
+    });
+  };
 
   createMemberTaskTable = () => {
     const { role } = this.context;
@@ -95,6 +116,7 @@ class MemberTasks extends React.Component {
       </thead>
     );
 
+    const { modalIsOpen, activeTaskId, modalType } = this.state;
     return (
       <div className={"memberTasksTableContainer"}>
 
@@ -105,7 +127,13 @@ class MemberTasks extends React.Component {
           Return to members manage grid
         </NavLink>}
 
-
+        <TaskModal className="taskModal"
+                   buttonLabel="TaskModal"
+                   isOpen={modalIsOpen}
+                   closeModal={this.closeModal}
+                   taskId={activeTaskId}
+                   modalType={modalType}
+        />
         <Table striped className={"memberTasksTable"}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>

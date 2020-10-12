@@ -168,6 +168,6 @@ TaskModalDataWorker.propTypes = {
   taskData: PropTypes.object,
   modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  reloadTaskPage: PropTypes.func.isRequired
+  reloadTaskPage: PropTypes.func
 };
 export default TaskModalDataWorker;

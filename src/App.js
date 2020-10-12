@@ -85,8 +85,6 @@ class App extends React.PureComponent {
 
     const { isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
-
-
     return (
       <RoleContext.Provider value={{
         role: role,
