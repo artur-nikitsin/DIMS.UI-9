@@ -172,7 +172,7 @@ class MembersPage extends React.PureComponent {
 
   render() {
 
-    const { loading, activeUserId, activeUserName } = this.state;
+    const { loading, activeUserName } = this.state;
 
     return (
       <RoleContext.Consumer>{

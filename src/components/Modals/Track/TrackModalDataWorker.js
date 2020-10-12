@@ -166,7 +166,7 @@ TrackModalDataWorker.propTypes = {
   modalTemplate: PropTypes.object.isRequired,
   trackData: PropTypes.object,
   userTaskId: PropTypes.string,
-  modalType: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
   reloadTrackPage: PropTypes.func.isRequired
 };

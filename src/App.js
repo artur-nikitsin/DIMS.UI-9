@@ -25,7 +25,8 @@ class App extends React.PureComponent {
       role: null,
       signedUserId: null,
       signedUserName: null,
-      signedUserLastName: null
+      signedUserLastName: null,
+      userData: null
     };
   }
 
@@ -38,7 +39,8 @@ class App extends React.PureComponent {
         role: role,
         signedUserId: userId,
         signedUserName: firstName,
-        signedUserLastName: lastName
+        signedUserLastName: lastName,
+        userData: { firstName, lastName, role, userId }
       });
     }
     document.title = DOCUMENT_TITLE;
@@ -51,7 +53,8 @@ class App extends React.PureComponent {
       role: role,
       signedUserId: userId,
       signedUserName: firstName,
-      signedUserLastName: lastName
+      signedUserLastName: lastName,
+      userData: { firstName, lastName, role, userId }
     });
     setUserToSessionStorage({
       role: role,
@@ -68,7 +71,8 @@ class App extends React.PureComponent {
       role: null,
       signedUserId: null,
       signedUserName: null,
-      signedUserLastName: null
+      signedUserLastName: null,
+      userData: null
     });
     deleteUserFromLocalStorage();
     logout().then(message => {
@@ -79,8 +83,8 @@ class App extends React.PureComponent {
 
   render() {
 
-    const { isLogin, fromLoginForm, role, signedUserId, signedUserName } = this.state;
-    const savedUserData = sessionStorage.getItem("user");
+    const { isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
+
 
 
     return (
@@ -94,7 +98,7 @@ class App extends React.PureComponent {
             <div className='App'>
               <Header handleLogout={this.handleLogout} isLogin={isLogin} />
               {fromLoginForm && <Redirect to='/app/members' />}
-              {!savedUserData && <Redirect to='/login' />}
+              {!userData && <Redirect to='/login' />}
               {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
 
               <Route path='/app' component={AppContainer} />

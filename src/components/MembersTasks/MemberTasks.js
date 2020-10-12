@@ -8,7 +8,7 @@ import { Table, Button } from "reactstrap";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import PropTypes from "prop-types";
-import MembersPage from "../MembersPage/MembersPage";
+
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -99,7 +99,8 @@ class MemberTasks extends React.Component {
       <div className={"memberTasksTableContainer"}>
 
         {role === "user" ? <div>
-          <p className={"userGreeting"}>{"Hi, dear " + this.context.signedUserName  + "! This is your current tasks:"}</p>
+          <p
+            className={"userGreeting"}>{"Hi, dear " + this.context.signedUserName + "! This is your current tasks:"}</p>
         </div> : <NavLink to={`/app/members`}>
           Return to members manage grid
         </NavLink>}
@@ -115,20 +116,20 @@ class MemberTasks extends React.Component {
 
   render() {
     const { userId } = this.props.match.params;
-    const { userTaskId } = this.state;
+    const { userTaskId, currentTaskName, loading } = this.state;
 
     return (
       <div>
         <Switch>
           <Route exact path={`/app/members/tasks_user=${userId}`}>
-            {this.state.loading ? <Preloader /> : this.createMemberTaskTable()}
+            {loading ? <Preloader /> : this.createMemberTaskTable()}
           </Route>
 
           <Route path={`/app/members/tasks_user=${userId}/taskId=:userTaskId`}
                  render={(props) => <MemberTracks
                    userId={userId}
-                   userTaskId={this.state.userTaskId}
-                   taskName={this.state.currentTaskName}
+                   userTaskId={userTaskId}
+                   taskName={currentTaskName}
                    userName={this.context.signedUserName}
                    {...props} />}>
 

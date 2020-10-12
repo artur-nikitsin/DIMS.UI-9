@@ -166,7 +166,7 @@ class TaskModalDataWorker extends React.PureComponent {
 TaskModalDataWorker.propTypes = {
   modalTemplate: PropTypes.object.isRequired,
   taskData: PropTypes.object,
-  modalType: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
   reloadTaskPage: PropTypes.func.isRequired
 };

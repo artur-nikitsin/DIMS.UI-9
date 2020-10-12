@@ -196,7 +196,7 @@ class UsersModalDataWorker extends React.PureComponent {
 UsersModalDataWorker.propTypes = {
   modalTemplate: PropTypes.object.isRequired,
   userData: PropTypes.object,
-  modalType: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
   reloadMemberPage: PropTypes.func.isRequired
 };
