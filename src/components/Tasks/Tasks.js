@@ -6,6 +6,7 @@ import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteBut
 import { deleteTask } from "../../firebase/apiDelete";
 import { Table, Button } from "reactstrap";
 import TaskModal from "../Modals/Task/TaskModal";
+import UserModal from "../Modals/User/UserModal";
 
 
 class Tasks extends React.Component {
@@ -15,7 +16,8 @@ class Tasks extends React.Component {
       loading: true,
       tasks: null,
       modalIsOpen: false,
-      activeTaskId: null
+      activeTaskId: null,
+      modalType: null
     };
   }
 
@@ -47,16 +49,18 @@ class Tasks extends React.Component {
           <tr key={task.taskId + "z"} className={i % 2 ? "darkLine" : "whiteLine"}>
             <td key={task.taskId + "a"}>{i + 1}</td>
             <td key={task.taskId + "b"}>
-              <a href=''>{task.name}</a>
+              <a href='' onClick={event => {
+                event.preventDefault();
+                this.openModal(task.taskId, "view")();
+              }}>{task.name}</a>
             </td>
             <td key={task.taskId + "i"}>{new Date(task.startDate).toLocaleDateString()}</td>
             <td key={task.taskId + "j"}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
             <td key={task.taskId + "h"}>
 
               <EditDeleteButtons
-                handleEdit={this.openModal(task.taskId)}
+                handleEdit={this.openModal(task.taskId, "edit")}
                 handleDelete={this.handleDelete(task.taskId)} />
-
             </td>
           </tr>
         );
@@ -72,10 +76,11 @@ class Tasks extends React.Component {
   };
 
 
-  openModal = (taskId) => () => {
+  openModal = (taskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeTaskId: taskId
+      activeTaskId: taskId,
+      modalType: modalType
     });
   };
 
@@ -99,7 +104,7 @@ class Tasks extends React.Component {
       </thead>
     );
 
-    const { tasks, modalIsOpen, activeTaskId } = this.state;
+    const { tasks, modalIsOpen, activeTaskId, modalType } = this.state;
     return (
       <div>
         <TaskModal className="taskModal"
@@ -107,9 +112,10 @@ class Tasks extends React.Component {
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    taskId={activeTaskId}
+                   modalType={modalType}
                    reloadTaskPage={this.reloadTasksPage}
         />
-        <Button outline color="primary" className='taskCreateButton' onClick={this.openModal(null)}>
+        <Button outline color="primary" className='taskCreateButton' onClick={this.openModal(null, "register")}>
           Create
         </Button>
         <Table striped className="tasksTable">

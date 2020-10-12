@@ -21,13 +21,11 @@ const UserModal = (props) => {
 
   const [userData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
- /* const [modalType, setModalType] = useState("Register");*/
 
 
   const toggle = () => {
     closeModal(null);
     setData(null);
-   /* setModalType("Register");*/
   };
 
 
@@ -37,12 +35,10 @@ const UserModal = (props) => {
       getMember(userId).then((result) => {
         setData(result);
         setLoading(false);
-       /* setModalType("Edit");*/
       });
     } else {
       setData(null);
       setLoading(false);
-    /*  setModalType("Register");*/
     }
   }, [userId]);
 

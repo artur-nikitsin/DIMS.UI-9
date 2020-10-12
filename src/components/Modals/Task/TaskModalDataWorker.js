@@ -69,7 +69,7 @@ class TaskModalDataWorker extends React.PureComponent {
   };
 
   createInputList = () => {
-    const { modalTemplate } = this.props;
+    const { modalTemplate, modalType } = this.props;
     const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
@@ -83,7 +83,8 @@ class TaskModalDataWorker extends React.PureComponent {
             value={thisState[input]}
             handleChange={this.handleChange}
             handleValidInput={this.handleValidInput}
-            isSubmit={isSubmit} />
+            isSubmit={isSubmit}
+            modalType={modalType} />
         </li>
       );
     });
@@ -119,7 +120,7 @@ class TaskModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend } = this.state;
-    const { reloadTaskPage, closeModal } = this.props;
+    const { reloadTaskPage, closeModal, modalType } = this.props;
 
     this.setState({
       isSubmit: true
@@ -127,7 +128,7 @@ class TaskModalDataWorker extends React.PureComponent {
 
     if (isFormValid) {
 
-      if (this.props.modalType === "Edit") {
+      if (modalType === "edit") {
 
         editTask(taskId, dataToSend)
           .then(() => {
@@ -137,7 +138,8 @@ class TaskModalDataWorker extends React.PureComponent {
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
-      } else {
+      }
+      if (modalType === "register") {
         createTask(dataToSend).then(() => {
           closeModal();
           reloadTaskPage();
@@ -151,11 +153,12 @@ class TaskModalDataWorker extends React.PureComponent {
 
 
   render() {
-    const { closeModal } = this.props;
+    const { closeModal, modalType } = this.props;
     return (
       <ModalContent createInputList={this.createInputList()}
                     handleSubmit={this.handleSubmit}
-                    closeModal={closeModal} />
+                    closeModal={closeModal}
+                    modalType={modalType} />
     );
   }
 }
