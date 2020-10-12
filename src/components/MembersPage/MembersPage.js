@@ -83,7 +83,10 @@ class MembersPage extends React.PureComponent {
           <tr key={member.userId + "n"} className={i % 2 ? "darkLine" : "whiteLine"}>
             <td key={member.userId + "a"}>{i + 1}</td>
             <td key={member.userId + "b"}>
-              <a href=''>{member.firstName + " " + member.lastName}</a>
+              <a href='' onClick={event => {
+                event.preventDefault();
+                this.openModal(member.userId, "view")();
+              }}>{member.firstName + " " + member.lastName}</a>
             </td>
             <td key={member.userId + "c"}>{member.directionId}</td>
             <td key={member.userId + "d"}>{member.education}</td>
@@ -97,7 +100,7 @@ class MembersPage extends React.PureComponent {
                 userId={member.userId}
                 handleProgress={this.getCurrentUser(member.userId, member.firstName)}
                 handleTasks={this.getCurrentUser(member.userId, member.firstName)}
-                handleEdit={this.openModal(member.userId)}
+                handleEdit={this.openModal(member.userId, "edit")}
                 handleDelete={this.handleDelete(member.userId)} />
             </td>
           </tr>
@@ -144,7 +147,7 @@ class MembersPage extends React.PureComponent {
       </thead>
     );
 
-    const { members, modalIsOpen, activeUserId } = this.state;
+    const { members, modalIsOpen, activeUserId, modalType } = this.state;
     return (
       <div>
         <UserModal className="userModal"
@@ -152,8 +155,9 @@ class MembersPage extends React.PureComponent {
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    userId={activeUserId}
+                   modalType={modalType}
                    reloadMemberPage={this.reloadMembersPage} />
-        <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null)}>
+        <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null, "register")}>
           Register
         </Button>
         <Table striped className='membersTable'>

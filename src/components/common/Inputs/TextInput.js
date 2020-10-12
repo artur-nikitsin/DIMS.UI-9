@@ -5,7 +5,7 @@ import "./textInput.scss";
 import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
 import { Label } from "reactstrap";
 import PropTypes from "prop-types";
-import RadioInput from "./RadioInput";
+
 
 class TextInput extends React.Component {
 
@@ -52,8 +52,7 @@ class TextInput extends React.Component {
         handleValidInput(inputName, isValid, value);
         this.setState({
           message: message,
-          status: status,
-          valid: isValid
+          status: status
         });
       } else {
         this.setState({
@@ -66,13 +65,14 @@ class TextInput extends React.Component {
 
   render() {
 
-    const { inputName, handleChange, value, type } = this.props;
+    const { inputName, handleChange, value, type, modalType } = this.props;
     const { message } = this.state;
 
     return (
       <AvGroup className="textInputContainer">
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
+          disabled={modalType === "view"}
           className="textInput"
           required
           type={type}

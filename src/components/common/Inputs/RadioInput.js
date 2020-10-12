@@ -2,6 +2,7 @@ import React from "react";
 import "./radioInput.scss";
 import { Input } from "reactstrap";
 import PropTypes from "prop-types";
+import { AvInput } from "availity-reactstrap-validation";
 
 
 class RadioInput extends React.PureComponent {
@@ -26,10 +27,11 @@ class RadioInput extends React.PureComponent {
 
 
   render() {
-    const { inputName, value, handleRadioInput } = this.props;
+    const { inputName, value, handleRadioInput, modalType } = this.props;
     return (
       <div className='radioButton'>
         <Input
+          disabled={modalType === "view"}
           type="radio"
           name={inputName}
           checked={value === inputName}
@@ -46,6 +48,6 @@ RadioInput.propTypes = {
   value: PropTypes.string,
   inputName: PropTypes.string.isRequired,
   handleRadioInput: PropTypes.func.isRequired,
-  handleValidInput: PropTypes.func.isRequired,
+  handleValidInput: PropTypes.func.isRequired
 };
 export default RadioInput;

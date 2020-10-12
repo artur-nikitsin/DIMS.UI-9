@@ -15,18 +15,19 @@ const UserModal = (props) => {
     isOpen,
     closeModal,
     userId,
+    modalType,
     reloadMemberPage
   } = props;
 
   const [userData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [modalType, setModalType] = useState("Register");
+ /* const [modalType, setModalType] = useState("Register");*/
 
 
   const toggle = () => {
     closeModal(null);
     setData(null);
-    setModalType("Register");
+   /* setModalType("Register");*/
   };
 
 
@@ -36,12 +37,12 @@ const UserModal = (props) => {
       getMember(userId).then((result) => {
         setData(result);
         setLoading(false);
-        setModalType("Edit");
+       /* setModalType("Edit");*/
       });
     } else {
       setData(null);
       setLoading(false);
-      setModalType("Register");
+    /*  setModalType("Register");*/
     }
   }, [userId]);
 

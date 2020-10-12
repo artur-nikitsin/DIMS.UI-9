@@ -7,7 +7,7 @@ import TextInput from "../../common/Inputs/TextInput";
 import RadioInputList from "./RadioInputList";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
-import TaskModalDataWorker from "../Task/TaskModalDataWorker";
+
 
 class UsersModalDataWorker extends React.PureComponent {
 
@@ -82,7 +82,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
 
   createInputList = () => {
-    const { modalTemplate } = this.props;
+    const { modalTemplate, modalType } = this.props;
     const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
@@ -92,7 +92,8 @@ class UsersModalDataWorker extends React.PureComponent {
           <RadioInputList key={input} name={input} value={thisState[input]}
                           handleRadioInput={this.handleRadioInput}
                           handleValidInput={this.handleValidInput}
-                          isSubmit={isSubmit} />
+                          isSubmit={isSubmit}
+                          modalType={modalType} />
         );
       }
       return (
@@ -103,7 +104,8 @@ class UsersModalDataWorker extends React.PureComponent {
             value={thisState[input]}
             handleChange={this.handleChange}
             handleValidInput={this.handleValidInput}
-            isSubmit={isSubmit} />
+            isSubmit={isSubmit}
+            modalType={modalType} />
         </li>
       );
     });
@@ -156,8 +158,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
 
     if (isFormValid) {
-      if (modalType === "Edit") {
-
+      if (modalType === "edit") {
         editMemberData(userId, dataToSend)
           .then(() => {
             closeModal();
@@ -166,8 +167,8 @@ class UsersModalDataWorker extends React.PureComponent {
           .catch(function(error) {
             console.log("Error writing document:", error);
           });
-      } else {
-        console.log(dataToSend);
+      }
+      if (modalType === "register") {
         setNewMemberData(dataToSend).then(() => {
           closeModal();
           reloadMemberPage();
@@ -182,11 +183,12 @@ class UsersModalDataWorker extends React.PureComponent {
 
 
   render() {
-    const { closeModal } = this.props;
+    const { closeModal, modalType } = this.props;
     return (
       <ModalContent createInputList={this.createInputList()}
                     handleSubmit={this.handleSubmit}
-                    closeModal={closeModal} />
+                    closeModal={closeModal}
+                    modalType={modalType} />
     );
   }
 }
