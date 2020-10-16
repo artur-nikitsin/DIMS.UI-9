@@ -1,24 +1,24 @@
 import React from "react";
 import "./userModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { editMemberData } from "../../../firebase/apiSet";
 import { setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import RadioInputList from "./RadioInputList";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
+import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
 
 
-class UsersModalDataWorker extends React.PureComponent {
+class UsersModalDataWorker extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       isFormValid: false,
       isSubmit: false,
+      userData: null,
       inputsStatus: null,
       dataToSend: null,
-      userData: null,
 
       firstName: null,
       lastName: null,
@@ -35,6 +35,7 @@ class UsersModalDataWorker extends React.PureComponent {
       skype: null,
       userId: null
     };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,18 +60,14 @@ class UsersModalDataWorker extends React.PureComponent {
 
 
   setUserDataToState = (data) => {
-    const inputsStatus = {};
-    const dataToSend = {};
-    const { modalTemplate } = this.props;
-
-    Object.assign(inputsStatus, modalTemplate);
-    Object.assign(dataToSend, modalTemplate);
-
-    this.setState({
-      inputsStatus: inputsStatus,
-      dataToSend: dataToSend
-    });
     const { ...thisState } = this.state;
+    const { modalTemplate } = this.props;
+    this.setState(
+      {
+        inputsStatus: Object.assign({}, modalTemplate),
+        dataToSend: Object.assign({}, modalTemplate)
+      }
+    );
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
         this.setState({
@@ -133,15 +130,12 @@ class UsersModalDataWorker extends React.PureComponent {
 
 
   handleValidInput = (input, status, data) => {
-
-    let { inputsStatus, dataToSend } = this.state;
-
-    inputsStatus[input] = status;
-    dataToSend[input] = data;
-
-    this.setState({
-      isFormValid: formValidator(inputsStatus),
-      dataToSend: dataToSend
+    this.setState((prevState) => {
+      return {
+        dataToSend: { ...prevState.dataToSend, [input]: data },
+        inputsStatus: { ...prevState.inputsStatus, [input]: status },
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+      };
     });
   };
 
@@ -150,34 +144,17 @@ class UsersModalDataWorker extends React.PureComponent {
 
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
-    const { reloadMemberPage, modalType, closeModal } = this.props;
+    const { reloadMemberPage, modalType, closeModalAndReload } = this.props;
 
     this.setState({
       isSubmit: true
     });
 
-
     if (isFormValid) {
-      if (modalType === "edit") {
-        editMemberData(userId, dataToSend)
-          .then(() => {
-            closeModal();
-            reloadMemberPage();
-          })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
-      if (modalType === "register") {
-        setNewMemberData(dataToSend).then(() => {
-          closeModal();
-          reloadMemberPage();
-        })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
-
+      setNewMemberData(dataToSend, userId).then(() => {
+        closeModalAndReload();
+      })
+        .catch(error => ErrorWritingDocument(error));
     }
   }
 
@@ -194,10 +171,39 @@ class UsersModalDataWorker extends React.PureComponent {
 }
 
 UsersModalDataWorker.propTypes = {
-  modalTemplate: PropTypes.object.isRequired,
-  userData: PropTypes.object,
+  modalTemplate: PropTypes.shape({
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    birthDate: PropTypes.string,
+    directionId: PropTypes.string,
+    education: PropTypes.string,
+    startDate: PropTypes.string,
+    email: PropTypes.string,
+    university: PropTypes.string,
+    mathScore: PropTypes.string,
+    address: PropTypes.string,
+    mobilePhone: PropTypes.string,
+    skype: PropTypes.string,
+    sex: PropTypes.string
+  }),
+  userData: PropTypes.shape({
+    address: PropTypes.string,
+    birthDate: PropTypes.string,
+    directionId: PropTypes.string,
+    education: PropTypes.string,
+    email: PropTypes.string,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    mathScore: PropTypes.string,
+    mobilePhone: PropTypes.string,
+    sex: PropTypes.string,
+    skype: PropTypes.string,
+    startDate: PropTypes.string,
+    university: PropTypes.string,
+    userId: PropTypes.string
+  }),
   modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  reloadMemberPage: PropTypes.func.isRequired
+  closeModalAndReload: PropTypes.func.isRequired
 };
 export default UsersModalDataWorker;

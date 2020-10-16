@@ -4,7 +4,9 @@ import { getTaskTrack, getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-
+import { Table } from "reactstrap";
+import getSubString from "../helpers/getSubString/getSubString";
+import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -25,17 +27,17 @@ class MemberProgress extends React.Component {
       getUserTrackList(user).then((result) => {
         const allTaskWithSubtask = result.flat();
 
-        let tracks = allTaskWithSubtask.map((track, i) => {
+        let userTrackList = allTaskWithSubtask.map((track, i) => {
           return (
-            <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
+            <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
               <td>
                 <a href=''>{track.name}</a>
               </td>
               <td>
-                <a href=''>{track.trackNote.substr(0, 50) + "..."}</a>
+                <a href=''>{getSubString(track.trackNote, 50)}</a>
               </td>
-              <td>{new Date(track.trackDate).toLocaleDateString()}</td>
+              <td>{getLocaleDate(track.trackDate)}</td>
             </tr>
           );
         });
@@ -43,7 +45,7 @@ class MemberProgress extends React.Component {
         if (!this.state.userTrackList) {
           this.setState({
             loading: false,
-            userTrackList: tracks
+            userTrackList
           });
         }
       });
@@ -69,10 +71,10 @@ class MemberProgress extends React.Component {
         <NavLink to={`/app/members`}>
           Return to members manage grid
         </NavLink>
-        <table className='progressTable'>
+        <Table striped className='progressTable'>
           {tableHeaders}
           <tbody>{userTrackList}</tbody>
-        </table>
+        </Table>
       </div>
     );
   };
@@ -80,9 +82,10 @@ class MemberProgress extends React.Component {
   render() {
     const { loading } = this.state;
     return (
-      <div>{loading ? <Preloader />
-        :
-        this.createMemberProgressTable()}
+      <div>
+        {loading ? <Preloader />
+          :
+          this.createMemberProgressTable()}
       </div>
     );
   }

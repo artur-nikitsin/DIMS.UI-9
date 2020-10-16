@@ -82,10 +82,9 @@ export function getUserTaskList(userId) {
     })
     .then((userTaskList) => {
       const tasks = userTaskList.map((task) => {
-        return getTasks(task.taskId, task.userTaskId);
+        return getUserTasks(task.taskId, task.userTaskId, task.stateId);
       });
       const taskData = Promise.all(tasks);
-
       return taskData;
     })
     .catch((error) => {
@@ -93,9 +92,9 @@ export function getUserTaskList(userId) {
     });
 }
 
-export function getTasks(taskId, userTaskId) {
+export function getUserTasks(taskId, userTaskId, stateId) {
   const taskData = {};
-  if (taskId) {
+
     return db
       .collection("Tasks")
       .doc(taskId)
@@ -108,32 +107,47 @@ export function getTasks(taskId, userTaskId) {
         taskData.startDate = startDate;
         taskData.deadlineDate = deadlineDate;
         taskData.userTaskId = userTaskId;
-        return taskData;
-      })
+        taskData.stateId = stateId;
+///////////////////////////////////////////////////////////////////////////////////////rewrite with faker
+      }).then(async () => {
+          await db
+            .collection("TasksState")
+            .doc(stateId).get().then((doc) => {
+              if (doc.exists) {
+                taskData.status = doc.data().stateName;
+              } else {
+                taskData.status = "Active";
+              }
+            });
+          return taskData;
+        }
+      )
       .catch((error) => {
         console.error(`Error receiving data: ${error}`);
       });
-  } else {
-    return db
-      .collection("Tasks")
-      .get()
-      .then((tasks) => {
-        const taskData = tasks.docs.map((task) => {
-          const { taskId, name, description, startDate, deadlineDate } = task.data();
-          return {
-            taskId,
-            name,
-            description,
-            startDate,
-            deadlineDate
-          };
-        });
-        return taskData;
-      })
-      .catch((error) => {
-        console.error(`Error receiving data: ${error}`);
+}
+
+
+export function getAllTasks() {
+  return db
+    .collection("Tasks")
+    .get()
+    .then((tasks) => {
+      const taskData = tasks.docs.map((task) => {
+        const { taskId, name, description, startDate, deadlineDate } = task.data();
+        return {
+          taskId,
+          name,
+          description,
+          startDate,
+          deadlineDate
+        };
       });
-  }
+      return taskData;
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
 }
 
 export function getTask(taskId) {

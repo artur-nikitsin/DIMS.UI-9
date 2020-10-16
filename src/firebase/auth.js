@@ -1,7 +1,7 @@
 import firebase from "firebase";
 import db from "./db";
 
-export function registerNewUser(email, password) {
+export function register(email, password) {
   return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
@@ -10,16 +10,29 @@ export function registerNewUser(email, password) {
     });
 }
 
-export async function  login(email, password) {
+export async function login(email, password) {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => getRole(email))
-    .then((result) => {
-      return result;
+    .then(() => {
+      return getRole(email);
     })
-    .catch(({ message }) => ({ message, messageType: "warning" }));
+    .catch(response => {
+      let { code } = response;
+      let message = returnLoginMessage(code);
+      return { message, messageType: "warning" };
+    });
 }
+
+function returnLoginMessage(code) {
+  if (code === "auth/user-not-found") {
+    return "This login not exists";
+  }
+  if (code === "auth/wrong-password") {
+    return "Wrong password";
+  }
+}
+
 
 export function logout() {
   return firebase
@@ -46,6 +59,6 @@ export function getRole(email) {
         userData.lastName = lastName;
         userData.email = email;
       });
-    })
-    .then(() => userData);
+      return userData;
+    });
 }

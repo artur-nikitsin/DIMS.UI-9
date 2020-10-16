@@ -2,7 +2,6 @@ import React from "react";
 import "./radioInput.scss";
 import { Input } from "reactstrap";
 import PropTypes from "prop-types";
-import { AvInput } from "availity-reactstrap-validation";
 
 
 class RadioInput extends React.PureComponent {

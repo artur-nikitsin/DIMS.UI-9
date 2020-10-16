@@ -9,6 +9,7 @@ import { NavLink, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import PropTypes from "prop-types";
 import TaskModal from "../Modals/Task/TaskModal";
+import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 
 
 class MemberTasks extends React.Component {
@@ -31,7 +32,7 @@ class MemberTasks extends React.Component {
 
   setCurrentTask = (userTaskId, name) => () => {
     this.setState({
-      userTaskId: userTaskId,
+      userTaskId,
       currentTaskName: name
     });
   };
@@ -43,10 +44,10 @@ class MemberTasks extends React.Component {
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
         const { role } = this.context;
+        let userTaskList = result.map((task, i) => {
 
-        let tasks = result.map((task, i) => {
           return (
-            <tr key={task.taskId} className={i % 2 ? "darkLine" : "whiteLine"}>
+            <tr key={task.taskId}>
               <td>{i + 1}</td>
               <td>
                 <a href='' onClick={event => {
@@ -56,39 +57,41 @@ class MemberTasks extends React.Component {
               </td>
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-              <td className={"tasksButtons"}>Status</td>
+              <td>{task.status}</td>
 
-              {(role === "admin" || role === "mentor") ||
-              <td className={"tasksButtons"}>
-                <NavLink to={`/app/members/tasks_user=${userId}/taskId=${task.userTaskId}`}>
-                  <Button outline color="primary"
-                          onClick={this.setCurrentTask(task.userTaskId, task.name)}>
-                    Track
-                  </Button>
-                </NavLink>
-              </td>
+              {
+                isAdminOrMentor(role) ?
+                  <td className={"tasksButtons"}>
+                    <StatusButtons stateId={task.stateId} />
+                  </td>
+                  :
+                  <td className={"tasksButtons"}>
+                    <NavLink to={`/app/members/tasks_user=${userId}/taskId=${task.userTaskId}`}>
+                      <Button outline color="primary"
+                              onClick={this.setCurrentTask(task.userTaskId, task.name)}>
+                        Track
+                      </Button>
+                    </NavLink>
+                  </td>
               }
-              <td className={"tasksButtons"}>
-                <StatusButtons />
-              </td>
             </tr>
           );
         });
 
-        if (this.state.userTaskList === null) {
+        if (!this.state.userTaskList) {
           this.setState({
             loading: false,
-            userTaskList: tasks
+            userTaskList
           });
         }
       });
     }
   };
 
-  openModal = (taskId, modalType) => () => {
+  openModal = (activeTaskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeTaskId: taskId,
+      activeTaskId,
       modalType: modalType
     });
   };
@@ -99,6 +102,7 @@ class MemberTasks extends React.Component {
       activeTaskId: null
     });
   };
+
 
   createMemberTaskTable = () => {
     const { role } = this.context;
@@ -111,7 +115,6 @@ class MemberTasks extends React.Component {
         <th>Deadline</th>
         <th>Status</th>
         <th />
-        {(role === "admin" || role === "mentor") || <th />}
       </tr>
       </thead>
     );

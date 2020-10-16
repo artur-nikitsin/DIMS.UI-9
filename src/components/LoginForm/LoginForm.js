@@ -3,7 +3,7 @@ import "./loginForm.scss";
 import TextInput from "../common/Inputs/TextInput";
 import { loginTemplate as inputsStatus } from "./FormTemplate";
 import formValidator from "../helpers/FormValidator/formValidator";
-import { AvField, AvForm } from "availity-reactstrap-validation";
+import { AvForm } from "availity-reactstrap-validation";
 import { login } from "../../firebase/auth";
 import Preloader from "../common/Preloader/Preloader";
 import { Button, Alert } from "reactstrap";
@@ -61,21 +61,19 @@ class LoginForm extends React.Component {
             this.setState({
               loading: false,
               isFailLogin: true,
-              message: message
+              message
             });
           }
         });
     }
   }
 
-  handleValidInput = (input, status, data) => {
-
-    let { inputsStatus } = this.state;
-
-    inputsStatus[input] = status;
-
-    this.setState({
-      isFormValid: formValidator(inputsStatus)
+  handleValidInput = (input, status) => {
+    this.setState((prevState) => {
+      return {
+        inputsStatus: { ...prevState.inputsStatus, [input]: status },
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+      };
     });
   };
 

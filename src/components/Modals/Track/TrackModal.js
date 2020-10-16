@@ -13,9 +13,9 @@ const TrackModal = (props) => {
     className,
     isOpen,
     closeModal,
+    closeModalAndReload,
     trackId,
     taskName,
-    reloadTrackPage,
     modalType,
     userTaskId
   } = props;
@@ -24,12 +24,16 @@ const TrackModal = (props) => {
   const [loading, setLoading] = useState(false);
 
 
-  const toggle = () => {
-    closeModal(null);
+  const useToggle = () => {
     setData(null);
-
+    closeModal();
   };
 
+
+  const newTrack = () => {
+    setData(null);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (trackId) {
@@ -39,14 +43,13 @@ const TrackModal = (props) => {
         setLoading(false);
       });
     } else {
-      setData(null);
-      setLoading(false);
+      newTrack();
     }
   }, [trackId]);
 
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={toggle} className={className}>
+      <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
           <ModalHeader> {taskName}</ModalHeader>
           <TrackModalDataWorker
@@ -54,8 +57,8 @@ const TrackModal = (props) => {
             trackData={trackData}
             userTaskId={userTaskId}
             modalType={modalType}
-            closeModal={toggle}
-            reloadTrackPage={reloadTrackPage}
+            closeModal={useToggle}
+            closeModalAndReload={closeModalAndReload}
           />
         </ModalBody>
       </Modal>
@@ -67,7 +70,7 @@ TrackModal.propTypes = {
   className: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  reloadTrackPage: PropTypes.func.isRequired,
+  closeModalAndReload: PropTypes.func.isRequired,
   trackId: PropTypes.string,
   taskName: PropTypes.string,
   userTaskId: PropTypes.string

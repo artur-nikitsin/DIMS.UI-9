@@ -17,19 +17,19 @@ class TextInput extends React.Component {
       status: "invalid",
       message: "Please enter data!"
     };
-    this.validation = this.validation.bind(this);
+    this.validator = this.validator.bind(this);
   }
 
 
   componentDidMount() {
     const { value } = this.props;
     this.setState({
-      value: value
+      value
     });
   }
 
 
-  validation = (value) => {
+  validator = (value) => {
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
@@ -47,12 +47,13 @@ class TextInput extends React.Component {
     if (value !== prevValue) {
 
       if (value) {
+
         const { isValid, message, status } = validatorsManager(inputName, value);
         //return current input name & its status to parent:
         handleValidInput(inputName, isValid, value);
         this.setState({
-          message: message,
-          status: status
+          message,
+          status
         });
       } else {
         this.setState({
@@ -79,7 +80,7 @@ class TextInput extends React.Component {
           name={inputName}
           value={value || ""}
           onChange={handleChange}
-          validate={{ myValidation: this.validation }} />
+          validate={{ myValidation: this.validator.bind(this) }} />
         <AvFeedback>{message}</AvFeedback>
       </AvGroup>
 

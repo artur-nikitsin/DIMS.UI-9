@@ -29,7 +29,6 @@ function FakerDB(number) {
     console.log(result);
   });
 
-
   db.collection("Users")
     .get()
     .then((users) => {
@@ -128,12 +127,15 @@ function FakerDB(number) {
             if (doc.exists) {
               console.log("Document data:", doc.data());
             } else {
+              let stateId = faker.fake("{{random.number}}");
+              setTaskState(stateId, "Active");
               userTasks.doc(userTaskId).set({
                 userTaskId: userTaskId,
                 taskId: taskId,
                 userId: userId,
-                stateId: "2"
-              });
+                stateId: stateId
+              })
+              ;
             }
           })
           .catch(function(error) {

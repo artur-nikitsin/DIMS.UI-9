@@ -1,11 +1,11 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { editMemberData, editTask } from "../../../firebase/apiSet";
-import { createTask } from "../../../firebase/apiSet";
+import { setTask } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
+import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
 
 
 class TaskModalDataWorker extends React.PureComponent {
@@ -46,19 +46,14 @@ class TaskModalDataWorker extends React.PureComponent {
   }
 
   setTaskDataToState = (data) => {
-
-    const { modalTemplate } = this.props;
-    const inputsStatus = {};
-    const dataToSend = {};
-    Object.assign(inputsStatus, modalTemplate);
-    Object.assign(dataToSend, modalTemplate);
-
-    this.setState({
-      inputsStatus: inputsStatus,
-      dataToSend: dataToSend
-    });
-
     const { ...thisState } = this.state;
+    const { modalTemplate } = this.props;
+    this.setState(
+      {
+        inputsStatus: Object.assign({}, modalTemplate),
+        dataToSend: Object.assign({}, modalTemplate)
+      }
+    );
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
         this.setState({
@@ -104,15 +99,12 @@ class TaskModalDataWorker extends React.PureComponent {
   };
 
   handleValidInput = (input, status, data) => {
-
-    let { inputsStatus, dataToSend } = this.state;
-
-    inputsStatus[input] = status;
-    dataToSend[input] = data;
-
-    this.setState({
-      isFormValid: formValidator(inputsStatus),
-      dataToSend: dataToSend
+    this.setState((prevState) => {
+      return {
+        dataToSend: { ...prevState.dataToSend, [input]: data },
+        inputsStatus: { ...prevState.inputsStatus, [input]: status },
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+      };
     });
   };
 
@@ -120,34 +112,18 @@ class TaskModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend } = this.state;
-    const { reloadTaskPage, closeModal, modalType } = this.props;
+    const { reloadTaskPage, closeModalAndReload, modalType } = this.props;
 
     this.setState({
       isSubmit: true
     });
 
     if (isFormValid) {
-
-      if (modalType === "edit") {
-
-        editTask(taskId, dataToSend)
-          .then(() => {
-            closeModal();
-            reloadTaskPage();
-          })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
-      if (modalType === "register") {
-        createTask(dataToSend).then(() => {
-          closeModal();
-          reloadTaskPage();
+      setTask(dataToSend, taskId)
+        .then(() => {
+          closeModalAndReload();
         })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
+        .catch(error => ErrorWritingDocument(error));
     }
   }
 
@@ -164,10 +140,21 @@ class TaskModalDataWorker extends React.PureComponent {
 }
 
 TaskModalDataWorker.propTypes = {
-  modalTemplate: PropTypes.object.isRequired,
-  taskData: PropTypes.object,
+  modalTemplate: PropTypes.shape({
+    name: PropTypes.string,
+    startDate: PropTypes.string,
+    deadlineDate: PropTypes.string,
+    description: PropTypes.string
+  }),
+  taskData: PropTypes.shape({
+    deadlineDate: PropTypes.string,
+    description: PropTypes.string,
+    name: PropTypes.string,
+    startDate: PropTypes.string,
+    taskId: PropTypes.string
+  }),
   modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  reloadTaskPage: PropTypes.func
+  closeModalAndReload: PropTypes.func
 };
 export default TaskModalDataWorker;

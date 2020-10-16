@@ -5,6 +5,7 @@ import { userModalTemplate } from "../Common/ModalInputsTemplate";
 import "./UserModal.scss";
 import { getMember } from "../../../firebase/apiGet";
 import PropTypes from "prop-types";
+import Preloader from "../../common/Preloader/Preloader";
 
 
 const UserModal = (props) => {
@@ -15,18 +16,26 @@ const UserModal = (props) => {
     closeModal,
     userId,
     modalType,
-    reloadMemberPage
+    closeModalAndReload
   } = props;
 
   const [userData, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+  const [loading, setLoading] = useState(true);
 
   const toggle = () => {
-    closeModal(null);
     setData(null);
+    closeModal();
   };
 
+  const useToggle = () => {
+    setData(null);
+    closeModal();
+  };
+
+  const newUser = () => {
+    setData(null);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (userId) {
@@ -36,22 +45,23 @@ const UserModal = (props) => {
         setLoading(false);
       });
     } else {
-      setData(null);
-      setLoading(false);
+      newUser();
     }
   }, [userId]);
 
+
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={toggle} className={className}>
+      <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
-          <UsersModalDataWorker
-            modalTemplate={userModalTemplate}
-            userData={userData}
-            modalType={modalType}
-            closeModal={toggle}
-            reloadMemberPage={reloadMemberPage}
-          />
+          {loading ? <Preloader /> :
+            <UsersModalDataWorker
+              modalTemplate={userModalTemplate}
+              userData={userData}
+              modalType={modalType}
+              closeModal={useToggle}
+              closeModalAndReload={closeModalAndReload}
+            />}
         </ModalBody>
       </Modal>
     </div>
@@ -63,7 +73,7 @@ UserModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   userId: PropTypes.string,
-  reloadMemberPage: PropTypes.func.isRequired
+  closeModalAndReload: PropTypes.func.isRequired
 };
 
 export default UserModal;

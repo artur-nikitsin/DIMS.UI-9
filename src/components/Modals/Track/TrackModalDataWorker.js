@@ -1,11 +1,11 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { createTrack, editTrack } from "../../../firebase/apiSet";
+import { setTrack, editTrack } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
-
+import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
 
 
 class TrackModalDataWorker extends React.PureComponent {
@@ -45,19 +45,14 @@ class TrackModalDataWorker extends React.PureComponent {
   }
 
   setTaskDataToState = (data) => {
-
-    const { modalTemplate } = this.props;
-    const inputsStatus = {};
-    const dataToSend = {};
-    Object.assign(inputsStatus, modalTemplate);
-    Object.assign(dataToSend, modalTemplate);
-
-    this.setState({
-      inputsStatus: inputsStatus,
-      dataToSend: dataToSend
-    });
-
     const { ...thisState } = this.state;
+    const { modalTemplate } = this.props;
+    this.setState(
+      {
+        inputsStatus: Object.assign({}, modalTemplate),
+        dataToSend: Object.assign({}, modalTemplate)
+      }
+    );
     for (let value in data) {
       if (thisState.hasOwnProperty(value)) {
         this.setState({
@@ -103,50 +98,32 @@ class TrackModalDataWorker extends React.PureComponent {
   };
 
   handleValidInput = (input, status, data) => {
-
-    let { inputsStatus, dataToSend } = this.state;
-
-    inputsStatus[input] = status;
-    dataToSend[input] = data;
-
-    this.setState({
-      isFormValid: formValidator(inputsStatus),
-      dataToSend: dataToSend
+    this.setState((prevState) => {
+      return {
+        dataToSend: { ...prevState.dataToSend, [input]: data },
+        inputsStatus: { ...prevState.inputsStatus, [input]: status },
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+      };
     });
   };
 
 
   handleSubmit(event) {
     event.persist();
-    const { isFormValid, taskTrackId, userTaskId, dataToSend } = this.state;
-    const { reloadTrackPage, closeModal, modalType } = this.props;
+    const { isFormValid, taskTrackId, dataToSend } = this.state;
+    const { reloadTrackPage, closeModalAndReload, modalType } = this.props;
 
     this.setState({
       isSubmit: true
     });
 
     if (isFormValid) {
-
-      if (modalType === "edit") {
-        editTrack(taskTrackId, { ...dataToSend, userTaskId })
-          .then(() => {
-            closeModal();
-            reloadTrackPage();
-          })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
-      if (modalType === "register") {
-        const { userTaskId } = this.props;
-        createTrack({ ...dataToSend, userTaskId }).then(() => {
-          closeModal();
-          reloadTrackPage();
+      const { userTaskId } = this.props;
+      setTrack({ ...dataToSend, userTaskId }, taskTrackId)
+        .then(() => {
+          closeModalAndReload();
         })
-          .catch(function(error) {
-            console.log("Error writing document:", error);
-          });
-      }
+        .catch(error => ErrorWritingDocument(error));
     }
   }
 
@@ -163,11 +140,20 @@ class TrackModalDataWorker extends React.PureComponent {
 }
 
 TrackModalDataWorker.propTypes = {
-  modalTemplate: PropTypes.object.isRequired,
-  trackData: PropTypes.object,
+  modalTemplate: PropTypes.shape({
+    trackDate: PropTypes.string,
+    trackNote: PropTypes.string
+  }),
+  trackData: PropTypes.shape({
+    taskTrackId: PropTypes.string,
+    trackDate: PropTypes.string,
+    trackNote: PropTypes.string,
+    userTaskId: PropTypes.string
+  }),
   userTaskId: PropTypes.string,
   modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  reloadTrackPage: PropTypes.func.isRequired
+  closeModalAndReload: PropTypes.func.isRequired
 };
+
 export default TrackModalDataWorker;

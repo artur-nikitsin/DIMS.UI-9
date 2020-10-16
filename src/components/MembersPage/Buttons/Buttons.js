@@ -1,28 +1,19 @@
 import React from "react";
 import "./buttons.scss";
 import { Button } from "reactstrap";
-import { NavLink, NavButton, Redirect, Route } from "react-router-dom";
+import NavButton from "../../common/Buttons/NavButton/NavButton";
+import isMentor from "../../common/Conditions/isMentor";
 
 
 function Buttons({ role, toProgress, toTasks, handleProgress, handleTasks, handleEdit, handleDelete, userId }) {
 
-
   return (
     <div className='membersButtonsGroup'>
-      <NavLink to={toProgress}>
-        <Button outline color="secondary" className='progressMemberButton' id={userId}
-                onClick={handleProgress}>
-          Progress
-        </Button>
-      </NavLink>
-      <NavLink to={toTasks}>
-        <Button outline color="secondary" className='tasksMemberButton' id={userId}
-                onClick={handleTasks}>
-          Tasks
-        </Button>
-      </NavLink>
-      {role === "mentor" ||
+      <NavButton label="Progress" to={toProgress} color="secondary" className='progressMemberButton'
+                 onClick={handleProgress} />
+      <NavButton label="Tasks" to={toTasks} color="secondary" className='tasksMemberButton' onClick={handleTasks} />
 
+      {isMentor(role) ||
       <div>
         <Button outline color="secondary" className='editMemberButton' id={userId}
                 onClick={handleEdit}>

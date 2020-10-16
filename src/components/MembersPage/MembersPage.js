@@ -13,6 +13,7 @@ import UserModal from "../Modals/User/UserModal";
 import MemberTasks from "../MembersTasks/MemberTasks";
 import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
+import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 
 
 class MembersPage extends React.PureComponent {
@@ -33,7 +34,7 @@ class MembersPage extends React.PureComponent {
   componentDidMount() {
     const { role } = this.context;
 
-    if (role === "admin" || role === "mentor") {
+    if (isAdminOrMentor(role)) {
       this.getMembers();
     } else {
       const { userId, signedUserName } = this.context;
@@ -80,7 +81,7 @@ class MembersPage extends React.PureComponent {
 
       let members = result.map((member, i) => {
         return (
-          <tr key={member.userId + "n"} className={i % 2 ? "darkLine" : "whiteLine"}>
+          <tr key={member.userId + "n"}>
             <td key={member.userId + "a"}>{i + 1}</td>
             <td key={member.userId + "b"}>
               <a href='' onClick={event => {
@@ -110,18 +111,18 @@ class MembersPage extends React.PureComponent {
       if (!this.state.members) {
         this.setState({
           loading: false,
-          members: members
+          members
         });
       }
     });
   };
 
 
-  openModal = (userId, modalType) => () => {
+  openModal = (activeUserId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeUserId: userId,
-      modalType: modalType
+      activeUserId,
+      modalType
     });
   };
 
@@ -130,6 +131,11 @@ class MembersPage extends React.PureComponent {
       modalIsOpen: false,
       activeUserId: null
     });
+  };
+
+  closeModalAndReload = () => {
+    this.closeModal();
+    this.reloadMembersPage();
   };
 
   createMembersTable = () => {
@@ -156,7 +162,7 @@ class MembersPage extends React.PureComponent {
                    closeModal={this.closeModal}
                    userId={activeUserId}
                    modalType={modalType}
-                   reloadMemberPage={this.reloadMembersPage} />
+                   closeModalAndReload={this.closeModalAndReload} />
         <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null, "register")}>
           Register
         </Button>
@@ -174,26 +180,20 @@ class MembersPage extends React.PureComponent {
     const { loading, activeUserName } = this.state;
 
     return (
-      <RoleContext.Consumer>{
-        ({ role, userId }) => {
-          return (
-            <div className='membersTableContainer'>
+      <div className='membersTableContainer'>
 
-              <Switch>
-                <Route exact path={`/app/members`}>
-                  {loading ? <Preloader /> : this.createMembersTable()}
-                </Route>
+        <Switch>
+          <Route exact path={`/app/members`}>
+            {loading ? <Preloader /> : this.createMembersTable()}
+          </Route>
 
-                <Route path={`/app/members/progress_user=:userId`}
-                       render={(props) => <MemberProgress  {...props} />} />
+          <Route path={`/app/members/progress_user=:userId`}
+                 render={(props) => <MemberProgress  {...props} />} />
 
-                <Route path={`/app/members/tasks_user=:userId`}
-                       render={(props) => <MemberTasks userName={activeUserName} {...props} />} />
-              </Switch>
-            </div>);
-        }}
-      </RoleContext.Consumer>
-    );
+          <Route path={`/app/members/tasks_user=:userId`}
+                 render={(props) => <MemberTasks userName={activeUserName} {...props} />} />
+        </Switch>
+      </div>);
   }
 }
 

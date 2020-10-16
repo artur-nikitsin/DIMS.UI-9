@@ -1,15 +1,16 @@
 import React from "react";
 import "./tasks.scss";
-import { getTasks } from "../../firebase/apiGet";
+import { getAllTasks, getTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import { deleteTask } from "../../firebase/apiDelete";
 import { Table, Button } from "reactstrap";
 import TaskModal from "../Modals/Task/TaskModal";
 import UserModal from "../Modals/User/UserModal";
+import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 
 
-class Tasks extends React.Component {
+class Tasks extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +44,7 @@ class Tasks extends React.Component {
 
 
   getTasks = () => {
-    getTasks().then((result) => {
+    getAllTasks().then((result) => {
       let tasks = result.map((task, i) => {
         return (
           <tr key={task.taskId + "z"} className={i % 2 ? "darkLine" : "whiteLine"}>
@@ -54,8 +55,8 @@ class Tasks extends React.Component {
                 this.openModal(task.taskId, "view")();
               }}>{task.name}</a>
             </td>
-            <td key={task.taskId + "i"}>{new Date(task.startDate).toLocaleDateString()}</td>
-            <td key={task.taskId + "j"}>{new Date(task.deadlineDate).toLocaleDateString()}</td>
+            <td key={task.taskId + "i"}>{getLocaleDate(task.startDate)}</td>
+            <td key={task.taskId + "j"}>{getLocaleDate(task.deadlineDate)}</td>
             <td key={task.taskId + "h"}>
 
               <EditDeleteButtons
@@ -91,6 +92,11 @@ class Tasks extends React.Component {
     });
   };
 
+  closeModalAndReload = () => {
+    this.closeModal();
+    this.reloadTasksPage();
+  };
+
   createTasksTable = () => {
     const tableHeaders = (
       <thead>
@@ -106,14 +112,14 @@ class Tasks extends React.Component {
 
     const { tasks, modalIsOpen, activeTaskId, modalType } = this.state;
     return (
-      <div>
+      <>
         <TaskModal className="taskModal"
                    buttonLabel="TaskModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    taskId={activeTaskId}
                    modalType={modalType}
-                   reloadTaskPage={this.reloadTasksPage}
+                   closeModalAndReload={this.closeModalAndReload}
         />
         <Button outline color="primary" className='taskCreateButton' onClick={this.openModal(null, "register")}>
           Create
@@ -122,7 +128,7 @@ class Tasks extends React.Component {
           {tableHeaders}
           <tbody>{tasks}</tbody>
         </Table>
-      </div>
+      </>
     );
   };
 

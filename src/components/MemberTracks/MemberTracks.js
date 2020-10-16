@@ -94,6 +94,11 @@ class MemberTracks extends React.PureComponent {
     });
   };
 
+  closeModalAndReload = () => {
+    this.closeModal();
+    this.reloadTrackPage();
+  };
+
 
   createMemberTrackTable = () => {
 
@@ -112,9 +117,9 @@ class MemberTracks extends React.PureComponent {
                     buttonLabel="TrackModal"
                     isOpen={modalIsOpen}
                     closeModal={this.closeModal}
+                    closeModalAndReload={this.closeModalAndReload}
                     trackId={activeTrackId}
                     taskName={taskName}
-                    reloadTrackPage={this.reloadTrackPage}
                     userTaskId={userTaskId}
                     modalType={modalType} />
 

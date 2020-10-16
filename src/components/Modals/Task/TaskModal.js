@@ -15,17 +15,21 @@ const TaskModal = (props) => {
     closeModal,
     taskId,
     modalType,
-    reloadTaskPage
+    closeModalAndReload
   } = props;
 
   const [taskData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const toggle = () => {
-    closeModal(null);
+  const useToggle = () => {
     setData(null);
+    closeModal();
   };
 
+  const newTask = () => {
+    setData(null);
+    setLoading(false);
+  };
 
   useEffect(() => {
     if (taskId) {
@@ -35,21 +39,20 @@ const TaskModal = (props) => {
         setLoading(false);
       });
     } else {
-      setData(null);
-      setLoading(false);
+      newTask();
     }
   }, [taskId]);
 
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={toggle} className={className}>
+      <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
           <TaskModalDataWorker
             modalTemplate={taskModalTemplate}
             taskData={taskData}
             modalType={modalType}
-            closeModal={toggle}
-            reloadTaskPage={reloadTaskPage}
+            closeModal={useToggle}
+            closeModalAndReload={closeModalAndReload}
           />
         </ModalBody>
       </Modal>
@@ -62,6 +65,6 @@ TaskModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   taskId: PropTypes.string,
-  reloadTaskPage: PropTypes.func
+  closeModalAndReload: PropTypes.func
 };
 export default TaskModal;
