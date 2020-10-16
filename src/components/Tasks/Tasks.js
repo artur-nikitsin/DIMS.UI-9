@@ -6,7 +6,6 @@ import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteBut
 import { deleteTask } from "../../firebase/apiDelete";
 import { Table, Button } from "reactstrap";
 import TaskModal from "../Modals/Task/TaskModal";
-import UserModal from "../Modals/User/UserModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 
 
@@ -47,7 +46,7 @@ class Tasks extends React.PureComponent {
     getAllTasks().then((result) => {
       let tasks = result.map((task, i) => {
         return (
-          <tr key={task.taskId + "z"} className={i % 2 ? "darkLine" : "whiteLine"}>
+          <tr key={task.taskId + "z"}>
             <td key={task.taskId + "a"}>{i + 1}</td>
             <td key={task.taskId + "b"}>
               <a href='' onClick={event => {
@@ -70,18 +69,18 @@ class Tasks extends React.PureComponent {
       if (!this.state.tasks) {
         this.setState({
           loading: false,
-          tasks: tasks
+          tasks
         });
       }
     });
   };
 
 
-  openModal = (taskId, modalType) => () => {
+  openModal = (activeTaskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeTaskId: taskId,
-      modalType: modalType
+      activeTaskId,
+      modalType
     });
   };
 

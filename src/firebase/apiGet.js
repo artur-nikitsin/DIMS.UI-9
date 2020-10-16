@@ -108,7 +108,7 @@ export function getUserTasks(taskId, userTaskId, stateId) {
         taskData.deadlineDate = deadlineDate;
         taskData.userTaskId = userTaskId;
         taskData.stateId = stateId;
-///////////////////////////////////////////////////////////////////////////////////////rewrite with faker
+
       }).then(async () => {
           await db
             .collection("TasksState")

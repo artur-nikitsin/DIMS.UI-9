@@ -11,7 +11,6 @@ import TrackModal from "../Modals/Track/TrackModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
-import UserModal from "../Modals/User/UserModal";
 
 
 class MemberTracks extends React.PureComponent {
@@ -53,9 +52,9 @@ class MemberTracks extends React.PureComponent {
     if (user) {
       getTaskTrack(user).then((result) => {
 
-        let tracks = result.map((track, i) => {
+        let userTrackList = result.map((track, i) => {
           return (
-            <tr key={track.taskTrackId} className={i % 2 ? "darkLine" : "whiteLine"}>
+            <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
               <td>{this.props.taskName}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
@@ -69,19 +68,19 @@ class MemberTracks extends React.PureComponent {
         if (!this.state.userTrackList) {
           this.setState({
             loading: false,
-            userTrackList: tracks
+            userTrackList
           });
         }
       });
     }
   };
 
-  openModal = (trackId, userTaskId, modalType) => () => {
+  openModal = (activeTrackId, userTaskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
-      activeTrackId: trackId,
-      userTaskId: userTaskId,
-      modalType: modalType
+      activeTrackId,
+      userTaskId,
+      modalType
     });
   };
 
@@ -139,9 +138,11 @@ class MemberTracks extends React.PureComponent {
     const { loading } = this.state;
     return (
       <div>
-        {loading ? <Preloader />
-          :
-          this.createMemberTrackTable()}
+        {
+          loading ? <Preloader />
+            :
+            this.createMemberTrackTable()
+        }
       </div>
     );
   }

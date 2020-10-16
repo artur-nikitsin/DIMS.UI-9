@@ -67,4 +67,5 @@ TaskModal.propTypes = {
   taskId: PropTypes.string,
   closeModalAndReload: PropTypes.func
 };
+
 export default TaskModal;
