@@ -16,9 +16,14 @@
     align-self: flex-start;
   }
 
-  .membersTable {
+  .light.membersTable {
     @include commonTableStyles;
   }
+
+  .dark.membersTable {
+    @include darkTable;
+  }
+
   .memberButtons {
     padding: 0.5rem;
   }

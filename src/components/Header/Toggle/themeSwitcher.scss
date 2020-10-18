@@ -1,0 +1,20 @@
+.themeSwitcher.react-toggle--checked .react-toggle-track {
+  background-color: #008F02;
+}
+
+.react-toggle-thumb {
+  outline: none;
+  box-shadow: none !important;
+  -webkit-appearance: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+  }
+}
+.sunIcon{
+  color: #ffffff;
+}

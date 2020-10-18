@@ -7,13 +7,14 @@ import "./membersPage.scss";
 import { Button } from "reactstrap";
 import Preloader from "../common/Preloader/Preloader";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
-import { RoleContext } from "../../RoleContext";
+import { RoleContext } from "../../contexts/RoleContext";
 import { Table } from "reactstrap";
 import UserModal from "../Modals/User/UserModal";
 import MemberTasks from "../MembersTasks/MemberTasks";
 import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 class MembersPage extends React.PureComponent {
@@ -35,6 +36,7 @@ class MembersPage extends React.PureComponent {
     const { role } = this.context;
 
     if (isAdminOrMentor(role)) {
+      console.log("req");
       this.getMembers();
     } else {
       const { userId, signedUserName } = this.context;
@@ -154,6 +156,7 @@ class MembersPage extends React.PureComponent {
     );
 
     const { members, modalIsOpen, activeUserId, modalType } = this.state;
+    const { theme } = this.context;
     return (
       <div>
         <UserModal className="userModal"
@@ -163,10 +166,11 @@ class MembersPage extends React.PureComponent {
                    userId={activeUserId}
                    modalType={modalType}
                    closeModalAndReload={this.closeModalAndReload} />
-        <Button outline color="primary" className='memberRegisterButton' onClick={this.openModal(null, "register")}>
+        <Button outline color={theme === "dark" ? "secondary" : "primary"} className='memberRegisterButton'
+                onClick={this.openModal(null, "register")}>
           Register
         </Button>
-        <Table striped className='membersTable'>
+        <Table striped className={`${theme} membersTable`}>
           {tableHeaders}
           <tbody>{members}</tbody>
         </Table>
@@ -202,5 +206,6 @@ MembersPage.propTypes = {
 };
 
 MembersPage.contextType = RoleContext;
+MembersPage.contextType = ThemeContext;
 
 export default MembersPage;

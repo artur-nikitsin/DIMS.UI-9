@@ -11,8 +11,13 @@
   justify-content: flex-start;
   align-items: stretch;
 
-  .tasksTable {
+
+  .light.tasksTable {
     @include commonTableStyles;
+  }
+
+  .dark.tasksTable {
+    @include darkTable;
   }
 
   .taskCreateButton {

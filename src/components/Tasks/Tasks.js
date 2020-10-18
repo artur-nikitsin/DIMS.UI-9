@@ -7,6 +7,8 @@ import { deleteTask } from "../../firebase/apiDelete";
 import { Table, Button } from "reactstrap";
 import TaskModal from "../Modals/Task/TaskModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import MembersPage from "../MembersPage/MembersPage";
 
 
 class Tasks extends React.PureComponent {
@@ -110,6 +112,7 @@ class Tasks extends React.PureComponent {
     );
 
     const { tasks, modalIsOpen, activeTaskId, modalType } = this.state;
+    const { theme } = this.context;
     return (
       <>
         <TaskModal className="taskModal"
@@ -120,10 +123,11 @@ class Tasks extends React.PureComponent {
                    modalType={modalType}
                    closeModalAndReload={this.closeModalAndReload}
         />
-        <Button outline color="primary" className='taskCreateButton' onClick={this.openModal(null, "register")}>
+        <Button outline color={theme === "dark" ? "secondary" : "primary"} className='taskCreateButton'
+                onClick={this.openModal(null, "register")}>
           Create
         </Button>
-        <Table striped className="tasksTable">
+        <Table striped className={`${theme} tasksTable`}>
           {tableHeaders}
           <tbody>{tasks}</tbody>
         </Table>
@@ -145,4 +149,5 @@ class Tasks extends React.PureComponent {
   }
 }
 
+Tasks.contextType = ThemeContext;
 export default Tasks;

@@ -1,4 +1,4 @@
-.sideBar {
+@mixin sideBar {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -9,20 +9,30 @@
   padding-top: 2rem;
   padding-right: 1rem;
   padding-left: 1rem;
+
+}
+
+.dark.sideBar {
+  @include sideBar;
+  background: rgb(36, 41, 46);
+}
+
+.light.sideBar {
+  @include sideBar;
   background: rgb(241, 248, 255);
   border-right: 1px solid rgb(200, 225, 255);
+}
 
+.navButton {
+  margin-top: 1rem;
+  width: 8rem;
+}
+
+.active {
   .navButton {
     margin-top: 1rem;
     width: 8rem;
-  }
-
-  .active {
-    .navButton {
-      margin-top: 1rem;
-      width: 8rem;
-      background: #6c757d;
-      color: black;
-    }
+    background: #6c757d;
+    color: black;
   }
 }

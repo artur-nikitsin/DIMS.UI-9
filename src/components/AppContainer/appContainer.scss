@@ -1,10 +1,19 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
-.appContainer {
+@mixin appContainer{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   min-width: 100vw;
+}
+
+.dark.appContainer {
+  @include appContainer;
+  background: rgba(108, 117, 125, 0.6);
+}
+
+.light.appContainer {
+  @include appContainer;
 }
 
 .pagesContainer {

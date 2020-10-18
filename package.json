@@ -23,7 +23,9 @@
     "react-router": "5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-toggle": "4.1.1",
     "reactstrap": "8.6.0",
+    "redux": "^4.0.5",
     "sass-loader": "10.0.2"
   },
   "scripts": {

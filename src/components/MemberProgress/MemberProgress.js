@@ -7,6 +7,8 @@ import PropTypes from "prop-types";
 import { Table } from "reactstrap";
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import Tasks from "../Tasks/Tasks";
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -66,12 +68,13 @@ class MemberProgress extends React.Component {
 
 
     const { userTrackList } = this.state;
+    const { theme } = this.context;
     return (
       <div>
         <NavLink to={`/app/members`}>
           Return to members manage grid
         </NavLink>
-        <Table striped className='progressTable'>
+        <Table striped className={`${theme} progressTable`}>
           {tableHeaders}
           <tbody>{userTrackList}</tbody>
         </Table>
@@ -95,4 +98,5 @@ MemberProgress.propTypes = {
   match: PropTypes.object.isRequired
 };
 
+MemberProgress.contextType = ThemeContext;
 export default MemberProgress;

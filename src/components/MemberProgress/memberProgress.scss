@@ -1,6 +1,11 @@
 @import '../common/Styles/Mixins/Tables/commonTableStyles';
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
-.progressTable {
+
+.light.progressTable {
   @include commonTableStyles;
+}
+
+.dark.progressTable {
+  @include darkTable;
 }

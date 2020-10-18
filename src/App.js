@@ -5,7 +5,8 @@ import Header from "./components/Header/Header";
 import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
-import { RoleContext } from "./RoleContext";
+import { RoleContext } from "./contexts/RoleContext";
+import { ThemeContext } from "./contexts/ThemeContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
 import { logout, registerNewUser } from "./firebase/auth";
 import { Route, Redirect, Switch } from "react-router-dom";
@@ -20,6 +21,7 @@ class App extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+      theme: "light",
       isLogin: false,
       fromLogin: false,
       role: null,
@@ -81,9 +83,14 @@ class App extends React.PureComponent {
   };
 
 
+  onSwitchTheme = (theme) => {
+    this.setState({ theme });
+  };
+
+
   render() {
 
-    const { isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
+    const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
     return (
       <RoleContext.Provider value={{
@@ -91,27 +98,28 @@ class App extends React.PureComponent {
         userId: signedUserId,
         signedUserName: signedUserName
       }}>
-        <Switch>
-          <>
-            <div className='App'>
-              <Header handleLogout={this.handleLogout} isLogin={isLogin} />
-              {fromLoginForm && <Redirect to='/app/members' />}
-              {!userData && <Redirect to='/login' />}
-              {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
+        <ThemeContext.Provider value={{ theme, onSwitchTheme: this.onSwitchTheme }}>
+          <Switch>
+            <>
+              <div className='App'>
+                <Header handleLogout={this.handleLogout} isLogin={isLogin} />
+                {fromLoginForm && <Redirect to='/app/members' />}
+                {!userData && <Redirect to='/login' />}
+                {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
 
-              <Route path='/app' component={AppContainer} />
+                <Route path='/app' component={AppContainer} />
 
-              <Route path='/login'>
-                <LoginForm handleLogin={this.handleLogin} />
-              </Route>
+                <Route path='/login'>
+                  <LoginForm handleLogin={this.handleLogin} />
+                </Route>
 
-              <Footer />
-            </div>
-          </>
-        </Switch>
+                <Footer />
+              </div>
+            </>
+          </Switch>
 
+        </ThemeContext.Provider>
       </RoleContext.Provider>
-
     );
   }
 }

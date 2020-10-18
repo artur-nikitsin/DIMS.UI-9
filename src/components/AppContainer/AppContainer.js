@@ -4,15 +4,18 @@ import Tasks from "../Tasks/Tasks";
 import SideBar from "../Sidebar/SideBar";
 import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
 import "./appContainer.scss";
-import { RoleContext } from "../../RoleContext";
+import { RoleContext } from "../../contexts/RoleContext";
 import { Route, Switch } from "react-router-dom";
+import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 class AppContainer extends React.PureComponent {
 
+
   render() {
+    const { theme } = this.context;
     return (
-      <div className='appContainer'>
+      <div className={`${theme} appContainer`}>
         <SideBar />
         <div className="pagesContainer">
           <Switch>
@@ -26,5 +29,5 @@ class AppContainer extends React.PureComponent {
 }
 
 
-AppContainer.contextType = RoleContext;
+AppContainer.contextType = ThemeContext;
 export default AppContainer;

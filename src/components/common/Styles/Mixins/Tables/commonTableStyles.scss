@@ -20,4 +20,25 @@
   }
 }
 
+@mixin darkTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid black;
+  background: rgb(220, 220, 220);
+
+  & td {
+    width: 200px;
+    height: 80px;
+    text-align: center;
+    border: 1px solid rgba(157, 157, 158, 1);
+  }
+
+  & th {
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid rgba(157, 157, 158, 1);;
+    background: rgb(108, 117, 125);
+  }
+}
 

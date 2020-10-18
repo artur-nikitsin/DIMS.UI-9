@@ -3,13 +3,15 @@ import "./memberTasks.scss";
 import { getTaskTrack, getUserTaskList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import StatusButtons from "./Buttons/StatusButtons";
-import { RoleContext } from "../../RoleContext";
+import { RoleContext } from "../../contexts/RoleContext";
 import { Table, Button } from "reactstrap";
 import { NavLink, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
 import PropTypes from "prop-types";
 import TaskModal from "../Modals/Task/TaskModal";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import Tasks from "../Tasks/Tasks";
 
 
 class MemberTasks extends React.Component {
@@ -43,7 +45,7 @@ class MemberTasks extends React.Component {
 
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
-        const { role } = this.context;
+        const { role, theme } = this.context;
         let userTaskList = result.map((task, i) => {
 
           return (
@@ -67,7 +69,7 @@ class MemberTasks extends React.Component {
                   :
                   <td className={"tasksButtons"}>
                     <NavLink to={`/app/members/tasks_user=${userId}/taskId=${task.userTaskId}`}>
-                      <Button outline color="primary"
+                      <Button outline color={theme === "dark" ? "secondary" : "primary"}
                               onClick={this.setCurrentTask(task.userTaskId, task.name)}>
                         Track
                       </Button>
@@ -105,7 +107,7 @@ class MemberTasks extends React.Component {
 
 
   createMemberTaskTable = () => {
-    const { role } = this.context;
+    const { role, theme } = this.context;
     const tableHeaders = (
       <thead>
       <tr>
@@ -137,7 +139,7 @@ class MemberTasks extends React.Component {
                    taskId={activeTaskId}
                    modalType={modalType}
         />
-        <Table striped className={"memberTasksTable"}>
+        <Table striped className={`${theme} memberTasksTable`}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>
         </Table>
@@ -178,4 +180,5 @@ MemberTasks.propTypes = {
 };
 
 MemberTasks.contextType = RoleContext;
+MemberTasks.contextType = ThemeContext;
 export default MemberTasks;
