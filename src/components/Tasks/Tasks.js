@@ -115,7 +115,7 @@ class Tasks extends React.PureComponent {
     const { theme } = this.context;
     return (
       <>
-        <TaskModal className="taskModal"
+        <TaskModal className={`${theme} taskModal`}
                    buttonLabel="TaskModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}

@@ -18,6 +18,7 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 
 class MembersPage extends React.PureComponent {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -33,13 +34,12 @@ class MembersPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { role } = this.context;
 
+    const { role } = this.props;
     if (isAdminOrMentor(role)) {
-      console.log("req");
       this.getMembers();
     } else {
-      const { userId, signedUserName } = this.context;
+      const { userId, signedUserName } = this.props;
       this.setState({
         activeUserId: userId,
         activeUserName: signedUserName
@@ -159,7 +159,7 @@ class MembersPage extends React.PureComponent {
     const { theme } = this.context;
     return (
       <div>
-        <UserModal className="userModal"
+        <UserModal className={`${theme} userModal`}
                    buttonLabel="UserModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
@@ -194,8 +194,17 @@ class MembersPage extends React.PureComponent {
           <Route path={`/app/members/progress_user=:userId`}
                  render={(props) => <MemberProgress  {...props} />} />
 
-          <Route path={`/app/members/tasks_user=:userId`}
-                 render={(props) => <MemberTasks userName={activeUserName} {...props} />} />
+          <RoleContext.Consumer>
+            {({ role, userId, signedUserName }) => (
+              <Route path={`/app/members/tasks_user=:userId`}
+                     render={(props) =>
+                       <MemberTasks role={role}
+                                    userId={userId}
+                                    signedUserName={signedUserName}
+                                    {...props} />} />
+            )}
+          </RoleContext.Consumer>
+
         </Switch>
       </div>);
   }
@@ -205,7 +214,5 @@ MembersPage.propTypes = {
   match: PropTypes.object.isRequired
 };
 
-MembersPage.contextType = RoleContext;
 MembersPage.contextType = ThemeContext;
-
 export default MembersPage;

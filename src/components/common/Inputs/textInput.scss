@@ -6,3 +6,9 @@
 .textInput {
   padding-right: calc(1.5em + .75rem);
 }
+
+.dark.textInput{
+  padding-right: calc(1.5em + .75rem);
+  background:  rgb(220, 220, 220);
+  border: 1px solid rgba(157, 157, 158, 1);
+}

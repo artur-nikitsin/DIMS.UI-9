@@ -8,3 +8,9 @@
 .modalBody{
   @include modalBody
 }
+
+.dark.trackModal{
+  .modal-content{
+    background:  rgb(209, 209, 209);
+  }
+}

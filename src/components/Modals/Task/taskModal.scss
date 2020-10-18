@@ -4,7 +4,12 @@
  @include modal;
 }
 
-
 .modalBody{
   @include modalBody
+}
+
+.dark.taskModal{
+  .modal-content{
+    background:  rgb(209, 209, 209);
+  }
 }

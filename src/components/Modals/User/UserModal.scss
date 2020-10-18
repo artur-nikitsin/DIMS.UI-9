@@ -4,6 +4,12 @@
   @include modal;
 }
 
-.modalBody{
+.modalBody {
   @include modalBody
+}
+
+.dark.userModal{
+  .modal-content{
+    background:  rgb(209, 209, 209);
+  }
 }

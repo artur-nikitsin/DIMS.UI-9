@@ -58,6 +58,7 @@ class App extends React.PureComponent {
       signedUserLastName: lastName,
       userData: { firstName, lastName, role, userId }
     });
+
     setUserToSessionStorage({
       role: role,
       userId: userId,
@@ -68,6 +69,7 @@ class App extends React.PureComponent {
 
   handleLogout = () => {
     this.setState({
+      theme: "light",
       isLogin: false,
       fromLoginForm: false,
       role: null,

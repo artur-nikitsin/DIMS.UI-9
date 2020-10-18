@@ -107,7 +107,9 @@ class MemberTasks extends React.Component {
 
 
   createMemberTaskTable = () => {
-    const { role, theme } = this.context;
+    const { theme } = this.context;
+    const { role } = this.props;
+
     const tableHeaders = (
       <thead>
       <tr>
@@ -127,18 +129,19 @@ class MemberTasks extends React.Component {
 
         {role === "user" ? <div>
           <p
-            className={"userGreeting"}>{"Hi, dear " + this.context.signedUserName + "! This is your current tasks:"}</p>
+            className={"userGreeting"}>{"Hi, dear " + this.props.signedUserName + "! This is your current tasks:"}</p>
         </div> : <NavLink to={`/app/members`}>
           Return to members manage grid
         </NavLink>}
 
-        <TaskModal className="taskModal"
+        <TaskModal className={`${theme} taskModal`}
                    buttonLabel="TaskModal"
                    isOpen={modalIsOpen}
                    closeModal={this.closeModal}
                    taskId={activeTaskId}
                    modalType={modalType}
         />
+
         <Table striped className={`${theme} memberTasksTable`}>
           {tableHeaders}
           <tbody>{this.state.userTaskList}</tbody>
@@ -163,7 +166,7 @@ class MemberTasks extends React.Component {
                    userId={userId}
                    userTaskId={userTaskId}
                    taskName={currentTaskName}
-                   userName={this.context.signedUserName}
+                   userName={this.props.signedUserName}
                    {...props} />}>
 
           </Route>
@@ -179,6 +182,5 @@ MemberTasks.propTypes = {
   userName: PropTypes.string
 };
 
-MemberTasks.contextType = RoleContext;
 MemberTasks.contextType = ThemeContext;
 export default MemberTasks;

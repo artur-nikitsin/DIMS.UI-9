@@ -5,6 +5,8 @@ import "./textInput.scss";
 import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
 import { Label } from "reactstrap";
 import PropTypes from "prop-types";
+import { ThemeContext } from "../../../contexts/ThemeContext";
+import MembersPage from "../../MembersPage/MembersPage";
 
 
 class TextInput extends React.Component {
@@ -68,13 +70,13 @@ class TextInput extends React.Component {
 
     const { inputName, handleChange, value, type, modalType } = this.props;
     const { message } = this.state;
-
+    const { theme } = this.context;
     return (
       <AvGroup className="textInputContainer">
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
           disabled={modalType === "view"}
-          className="textInput"
+          className={`${theme} textInput`}
           required
           type={type}
           name={inputName}
@@ -96,4 +98,5 @@ TextInput.propTypes = {
   handleValidInput: PropTypes.func.isRequired
 };
 
+TextInput.contextType = ThemeContext;
 export default TextInput;

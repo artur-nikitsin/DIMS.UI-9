@@ -11,6 +11,9 @@ import TrackModal from "../Modals/Track/TrackModal";
 import { deleteTask } from "../../firebase/apiDelete";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import Tasks from "../Tasks/Tasks";
+import { RoleContext } from "../../contexts/RoleContext";
 
 
 class MemberTracks extends React.PureComponent {
@@ -103,6 +106,7 @@ class MemberTracks extends React.PureComponent {
 
     const { userName, taskName, userTaskId, userId } = this.props;
     const { userTrackList, modalIsOpen, activeTrackId, modalType } = this.state;
+    const { theme } = this.context;
     return (
       <div className='memberTracksTableContainer'>
         <NavLink to={`/app/members/tasks_user=${userId}`}>
@@ -112,7 +116,7 @@ class MemberTracks extends React.PureComponent {
           <p className="userGreeting">{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>
 
-        <TrackModal className="trackModal"
+        <TrackModal className={`${theme} trackModal`}
                     buttonLabel="TrackModal"
                     isOpen={modalIsOpen}
                     closeModal={this.closeModal}
@@ -122,7 +126,7 @@ class MemberTracks extends React.PureComponent {
                     userTaskId={userTaskId}
                     modalType={modalType} />
 
-        <Button outline color="primary" className='trackCreateButton'
+        <Button outline color={theme === "dark" ? "secondary" : "primary"} className='trackCreateButton'
                 onClick={this.openModal(null, null, "register")}>
           Add
         </Button>
@@ -156,4 +160,6 @@ MemberTracks.propTypes = {
   userId: PropTypes.string.isRequired
 };
 
+MemberTracks.contextType = RoleContext
+MemberTracks.contextType = ThemeContext;
 export default MemberTracks;

@@ -11,23 +11,36 @@ import { ThemeContext } from "../../contexts/ThemeContext";
 
 class AppContainer extends React.PureComponent {
 
-
   render() {
-    const { theme } = this.context;
     return (
-      <div className={`${theme} appContainer`}>
-        <SideBar />
-        <div className="pagesContainer">
-          <Switch>
-            <Route path='/app/members' component={MembersPage} />
-            <Route path='/app/tasks' component={Tasks} />
-          </Switch>
-        </div>
-      </div>
+      <RoleContext.Consumer>
+        {({ role, userId, signedUserName }) => (
+          <ThemeContext.Consumer>
+            {({ theme }) => (
+              <div className={`${theme} appContainer`}>
+                <SideBar />
+                <div className="pagesContainer">
+                  <Switch>
+
+                    <Route path={"/app/members"}
+                           render={(props) => <MembersPage
+                             role={role}
+                             userId={userId}
+                             signedUserName={signedUserName}
+                             {...props} />}>
+                    </Route>
+
+                    <Route path='/app/tasks' component={Tasks} />
+                  </Switch>
+                </div>
+              </div>
+            )}
+          </ThemeContext.Consumer>
+        )}
+      </RoleContext.Consumer>
+
     );
   }
 }
 
-
-AppContainer.contextType = ThemeContext;
 export default AppContainer;
