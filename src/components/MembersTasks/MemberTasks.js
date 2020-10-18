@@ -45,7 +45,9 @@ class MemberTasks extends React.Component {
 
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
-        const { role, theme } = this.context;
+        const { role } = this.props;
+        const { theme } = this.context;
+
         let userTaskList = result.map((task, i) => {
 
           return (

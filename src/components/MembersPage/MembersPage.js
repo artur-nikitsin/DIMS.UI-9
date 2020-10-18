@@ -79,7 +79,8 @@ class MembersPage extends React.PureComponent {
 
   getMembers = () => {
     getMembers().then((result) => {
-      const { role } = this.context;
+
+      const { role } = this.props;
 
       let members = result.map((member, i) => {
         return (
@@ -157,6 +158,7 @@ class MembersPage extends React.PureComponent {
 
     const { members, modalIsOpen, activeUserId, modalType } = this.state;
     const { theme } = this.context;
+    const { role } = this.props;
     return (
       <div>
         <UserModal className={`${theme} userModal`}
@@ -166,10 +168,13 @@ class MembersPage extends React.PureComponent {
                    userId={activeUserId}
                    modalType={modalType}
                    closeModalAndReload={this.closeModalAndReload} />
+
+        {role === "mentor" ||
         <Button outline color={theme === "dark" ? "secondary" : "primary"} className='memberRegisterButton'
                 onClick={this.openModal(null, "register")}>
           Register
-        </Button>
+        </Button>}
+
         <Table striped className={`${theme} membersTable`}>
           {tableHeaders}
           <tbody>{members}</tbody>
