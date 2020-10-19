@@ -127,6 +127,7 @@ class MembersPage extends React.Component {
 
 
   members = () => {
+    console.log(this.props);
     const { members } = this.props;
     let table = [];
     if (members) {
@@ -260,8 +261,22 @@ class MembersPage extends React.Component {
 
 
 const mapStateToProps = (state) => {
-  const { members } = state.members;
-  return { members };
+  const {
+    members,
+    loading,
+    activeUserId,
+    activeUserName,
+    modalIsOpen,
+    modalType
+  } = state.members;
+  return {
+    members,
+    loading,
+    activeUserId,
+    activeUserName,
+    modalIsOpen,
+    modalType
+  };
 };
 
 
