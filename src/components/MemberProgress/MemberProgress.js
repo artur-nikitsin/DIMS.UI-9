@@ -8,7 +8,7 @@ import { Table } from "reactstrap";
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import Tasks from "../Tasks/Tasks";
+
 
 class MemberProgress extends React.Component {
   constructor(props) {

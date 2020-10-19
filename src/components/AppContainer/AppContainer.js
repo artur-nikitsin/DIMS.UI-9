@@ -23,11 +23,12 @@ class AppContainer extends React.PureComponent {
                   <Switch>
 
                     <Route path={"/app/members"}
-                           render={(props) => <MembersPage
-                             role={role}
-                             userId={userId}
-                             signedUserName={signedUserName}
-                             {...props} />}>
+                           render={(props) =>
+                             <MembersPage
+                               role={role}
+                               userId={userId}
+                               signedUserName={signedUserName}
+                               {...props} />}>
                     </Route>
 
                     <Route path='/app/tasks' component={Tasks} />

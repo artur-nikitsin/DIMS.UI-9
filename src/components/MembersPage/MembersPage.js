@@ -15,9 +15,11 @@ import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { connect } from "react-redux";
+import { getAllMembers } from "../../redux/reducers/membersReducer";
 
 
-class MembersPage extends React.PureComponent {
+class MembersPage extends React.Component {
 
   constructor(props) {
     super(props);
@@ -34,6 +36,9 @@ class MembersPage extends React.PureComponent {
   }
 
   componentDidMount() {
+    const { getAllMembers, members } = this.props;
+
+    getAllMembers();
 
     const { role } = this.props;
     if (isAdminOrMentor(role)) {
@@ -121,6 +126,44 @@ class MembersPage extends React.PureComponent {
   };
 
 
+  members = () => {
+    const { members } = this.props;
+    let table = [];
+    if (members) {
+      table = members.map((member, i) => {
+        return (
+          <tr key={member.userId + "n"}>
+            <td key={member.userId + "a"}>{i + 1}</td>
+            <td key={member.userId + "b"}>
+              <a href='' onClick={event => {
+                event.preventDefault();
+                this.openModal(member.userId, "view")();
+              }}>{member.firstName + " " + member.lastName}</a>
+            </td>
+            <td key={member.userId + "c"}>{member.directionId}</td>
+            <td key={member.userId + "d"}>{member.education}</td>
+            <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
+            <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
+            <td key={member.userId + "h"} className='memberButtons'>
+              <Buttons
+
+                toProgress={`/app/members/progress_user=${member.userId}`}
+                toTasks={`/app/members/tasks_user=${member.userId}`}
+                userId={member.userId}
+                handleProgress={this.getCurrentUser(member.userId, member.firstName)}
+                handleTasks={this.getCurrentUser(member.userId, member.firstName)}
+                handleEdit={this.openModal(member.userId, "edit")}
+                handleDelete={this.handleDelete(member.userId)} />
+            </td>
+          </tr>
+        );
+      });
+
+    }
+    return table;
+  };
+
+
   openModal = (activeUserId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
@@ -177,7 +220,7 @@ class MembersPage extends React.PureComponent {
 
         <Table striped className={`${theme} membersTable`}>
           {tableHeaders}
-          <tbody>{members}</tbody>
+          <tbody>{this.members()}</tbody>
         </Table>
       </div>
     );
@@ -186,7 +229,7 @@ class MembersPage extends React.PureComponent {
 
   render() {
 
-    const { loading, activeUserName } = this.state;
+    const { loading } = this.state;
 
     return (
       <div className='membersTableContainer'>
@@ -215,9 +258,19 @@ class MembersPage extends React.PureComponent {
   }
 }
 
+
+const mapStateToProps = (state) => {
+  const { members } = state.members;
+  return { members };
+};
+
+
 MembersPage.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  members: PropTypes.array
 };
 
 MembersPage.contextType = ThemeContext;
-export default MembersPage;
+export default connect(mapStateToProps, { getAllMembers })(MembersPage);
+
+
