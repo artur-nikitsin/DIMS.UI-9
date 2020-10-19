@@ -89,12 +89,14 @@ class App extends React.PureComponent {
       <RoleContext.Provider value={{
         role: role,
         userId: signedUserId,
-        signedUserName: signedUserName
+        signedUserName: signedUserName,
+        handleLogin: this.handleLogin,
+        handleLogout: this.handleLogout
       }}>
         <Switch>
           <>
             <div className='App'>
-              <Header handleLogout={this.handleLogout} isLogin={isLogin} />
+              <Header  isLogin={isLogin} />
               {fromLoginForm && <Redirect to='/app/members' />}
               {!userData && <Redirect to='/login' />}
               {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}
@@ -102,7 +104,7 @@ class App extends React.PureComponent {
               <Route path='/app' component={AppContainer} />
 
               <Route path='/login'>
-                <LoginForm handleLogin={this.handleLogin} />
+                <LoginForm />
               </Route>
 
               <Footer />
