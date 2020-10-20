@@ -78,8 +78,8 @@ class MembersPage extends React.PureComponent {
   getMembers = () => {
     getMembers().then((result) => {
       const { role } = this.context;
-
-      let members = result.map((member, i) => {
+      const { members } = this.state;
+      let membersTable = result.map((member, i) => {
         return (
           <tr key={member.userId + "n"}>
             <td key={member.userId + "a"}>{i + 1}</td>
@@ -108,10 +108,10 @@ class MembersPage extends React.PureComponent {
         );
       });
 
-      if (!this.state.members) {
+      if (!members) {
         this.setState({
           loading: false,
-          members
+          members: membersTable
         });
       }
     });

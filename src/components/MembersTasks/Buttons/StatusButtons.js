@@ -12,7 +12,6 @@ class StatusButtons extends React.Component {
 
   setTaskStatus = (stateId, status) => () => {
     setTaskState(stateId, status);
-    console.log(stateId, status);
   };
 
   render() {

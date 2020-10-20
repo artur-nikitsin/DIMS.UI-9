@@ -41,14 +41,13 @@ class LoginForm extends React.Component {
 
   handleSubmit() {
 
-    const { isFormValid } = this.state;
+    const { isFormValid, email, password } = this.state;
     if (isFormValid) {
       this.setState({
         isSubmit: true,
         loading: true
       });
 
-      const { email, password } = this.state;
       const { handleLogin } = this.context;
       login(email, password)
         .then((response) => {
@@ -110,9 +109,7 @@ class LoginForm extends React.Component {
   }
 }
 
-LoginForm.propTypes = {
-
-};
+LoginForm.propTypes = {};
 
 LoginForm.contextType = RoleContext;
 export default LoginForm;
