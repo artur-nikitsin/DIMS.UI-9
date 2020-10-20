@@ -22,7 +22,7 @@ class AppContainer extends React.PureComponent {
                 <div className="pagesContainer">
                   <Switch>
 
-                    <Route exact  path={"/app/members"}
+                    <Route path={"/app/members"}
                            render={(props) =>
                              <MembersPage
                                role={role}

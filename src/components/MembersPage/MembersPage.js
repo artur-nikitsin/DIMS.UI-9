@@ -29,6 +29,10 @@ class MembersPage extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      activeUserId: null,
+      activeUserName: null
+    };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
   }
@@ -141,8 +145,7 @@ class MembersPage extends React.Component {
 
 
   render() {
-    const { loading, role, userId, signedUserName } = this.props;
-    console.log(this.props);
+    const { loading } = this.props;
     return (
       <div className='membersTableContainer'>
 
@@ -196,7 +199,6 @@ MembersPage.propTypes = {
   members: PropTypes.array
 };
 
-MembersPage.contextType = ThemeContext;
 
 export default connect(mapStateToProps, {
   getAllMembers,
