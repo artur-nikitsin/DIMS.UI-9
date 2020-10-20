@@ -155,7 +155,7 @@ class MemberTasks extends React.Component {
   render() {
     const { userId } = this.props.match.params;
     const { userTaskId, currentTaskName, loading } = this.state;
-
+    console.log(this.props);
     return (
       <div>
         <Switch>

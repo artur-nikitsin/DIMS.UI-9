@@ -14,7 +14,7 @@ class AppContainer extends React.PureComponent {
   render() {
     return (
       <RoleContext.Consumer>
-        {({ role, userId, signedUserName }) => (
+        {({ role, signedUserId, signedUserName }) => (
           <ThemeContext.Consumer>
             {({ theme }) => (
               <div className={`${theme} appContainer`}>
@@ -22,11 +22,12 @@ class AppContainer extends React.PureComponent {
                 <div className="pagesContainer">
                   <Switch>
 
-                    <Route path={"/app/members"}
+                    <Route exact  path={"/app/members"}
                            render={(props) =>
                              <MembersPage
                                role={role}
-                               userId={userId}
+                               theme={theme}
+                               signedUserId={signedUserId}
                                signedUserName={signedUserName}
                                {...props} />}>
                     </Route>

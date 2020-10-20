@@ -1,7 +1,6 @@
 import React from "react";
 import MemberProgress from "../MemberProgress/MemberProgress";
 import Buttons from "./Buttons/Buttons";
-import { getMembers } from "../../firebase/apiGet";
 import { deleteUser } from "../../firebase/apiDelete";
 import "./membersPage.scss";
 import { Button } from "reactstrap";
@@ -16,54 +15,28 @@ import PropTypes from "prop-types";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { connect } from "react-redux";
-import { getAllMembers } from "../../redux/reducers/membersReducer";
+import {
+  closeModal,
+  getAllMembers, openModal,
+  setActiveUserId, setActiveUserName,
+  setLoading, setMembers,
+  setModal,
+  setModalType
+} from "../../redux/reducers/membersReducer";
 
 
 class MembersPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      members: null,
-      activeUserId: null,
-      activeUserName: null,
-      modalIsOpen: false,
-      modalType: null
-    };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
   }
 
   componentDidMount() {
-    const { getAllMembers, members } = this.props;
-
+    const { getAllMembers } = this.props;
     getAllMembers();
-
-    const { role } = this.props;
-    if (isAdminOrMentor(role)) {
-      this.getMembers();
-    } else {
-      const { userId, signedUserName } = this.props;
-      this.setState({
-        activeUserId: userId,
-        activeUserName: signedUserName
-      });
-    }
   }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps !== this.props) {
-      this.getMembers();
-    }
-  }
-
-  getCurrentUser = (userId, name) => () => {
-    this.setState({
-      activeUserId: userId,
-      activeUserName: name
-    });
-  };
 
 
   handleDelete = (userId) => () => {
@@ -74,110 +47,50 @@ class MembersPage extends React.Component {
 
 
   reloadMembersPage = () => {
-    this.setState({
-      members: null,
-      loading: true
-    });
-    this.getMembers();
+    const { getAllMembers } = this.props;
+    getAllMembers();
   };
 
-
-  getMembers = () => {
-    getMembers().then((result) => {
-
-      const { role } = this.props;
-
-      let members = result.map((member, i) => {
-        return (
-          <tr key={member.userId + "n"}>
-            <td key={member.userId + "a"}>{i + 1}</td>
-            <td key={member.userId + "b"}>
-              <a href='' onClick={event => {
-                event.preventDefault();
-                this.openModal(member.userId, "view")();
-              }}>{member.firstName + " " + member.lastName}</a>
-            </td>
-            <td key={member.userId + "c"}>{member.directionId}</td>
-            <td key={member.userId + "d"}>{member.education}</td>
-            <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
-            <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
-            <td key={member.userId + "h"} className='memberButtons'>
-              <Buttons
-                role={role}
-                toProgress={`/app/members/progress_user=${member.userId}`}
-                toTasks={`/app/members/tasks_user=${member.userId}`}
-                userId={member.userId}
-                handleProgress={this.getCurrentUser(member.userId, member.firstName)}
-                handleTasks={this.getCurrentUser(member.userId, member.firstName)}
-                handleEdit={this.openModal(member.userId, "edit")}
-                handleDelete={this.handleDelete(member.userId)} />
-            </td>
-          </tr>
-        );
-      });
-
-      if (!this.state.members) {
-        this.setState({
-          loading: false,
-          members
-        });
-      }
-    });
-  };
-
-
-  members = () => {
-    console.log(this.props);
+  membersTable() {
     const { members } = this.props;
     let table = [];
-    if (members) {
-      table = members.map((member, i) => {
-        return (
-          <tr key={member.userId + "n"}>
-            <td key={member.userId + "a"}>{i + 1}</td>
-            <td key={member.userId + "b"}>
-              <a href='' onClick={event => {
-                event.preventDefault();
-                this.openModal(member.userId, "view")();
-              }}>{member.firstName + " " + member.lastName}</a>
-            </td>
-            <td key={member.userId + "c"}>{member.directionId}</td>
-            <td key={member.userId + "d"}>{member.education}</td>
-            <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
-            <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
-            <td key={member.userId + "h"} className='memberButtons'>
-              <Buttons
-
-                toProgress={`/app/members/progress_user=${member.userId}`}
-                toTasks={`/app/members/tasks_user=${member.userId}`}
-                userId={member.userId}
-                handleProgress={this.getCurrentUser(member.userId, member.firstName)}
-                handleTasks={this.getCurrentUser(member.userId, member.firstName)}
-                handleEdit={this.openModal(member.userId, "edit")}
-                handleDelete={this.handleDelete(member.userId)} />
-            </td>
-          </tr>
-        );
-      });
-
-    }
+    table = members.map((member, i) => {
+      return (
+        <tr key={member.userId + "n"}>
+          <td key={member.userId + "a"}>{i + 1}</td>
+          <td key={member.userId + "b"}>
+            <a href='' onClick={event => {
+              event.preventDefault();
+              this.openModal(member.userId, "view")();
+            }}>{member.firstName + " " + member.lastName}</a>
+          </td>
+          <td key={member.userId + "c"}>{member.directionId}</td>
+          <td key={member.userId + "d"}>{member.education}</td>
+          <td key={member.userId + "i"}>{getLocaleDate(member.startDate)}</td>
+          <td key={member.userId + "j"}>{getLocaleDate(member.birthDate)}</td>
+          <td key={member.userId + "h"} className='memberButtons'>
+            <Buttons
+              toProgress={`/app/members/progress_user=${member.userId}`}
+              toTasks={`/app/members/tasks_user=${member.userId}`}
+              userId={member.userId}
+              handleEdit={this.openModal(member.userId, "edit")}
+              handleDelete={this.handleDelete(member.userId)} />
+          </td>
+        </tr>
+      );
+    });
     return table;
   };
 
 
   openModal = (activeUserId, modalType) => () => {
-    this.setState({
-      modalIsOpen: true,
-      activeUserId,
-      modalType
-    });
+    const { openModal } = this.props;
+    openModal(activeUserId, modalType);
   };
 
   closeModal = () => {
-    this.setState({
-      modalIsOpen: false,
-      activeUserId: null
-    });
+    const { closeModal } = this.props;
+    closeModal();
   };
 
   closeModalAndReload = () => {
@@ -200,9 +113,8 @@ class MembersPage extends React.Component {
       </thead>
     );
 
-    const { members, modalIsOpen, activeUserId, modalType } = this.state;
-    const { theme } = this.context;
-    const { role } = this.props;
+    const { role, theme, modalIsOpen, activeUserId, modalType } = this.props;
+
     return (
       <div>
         <UserModal className={`${theme} userModal`}
@@ -221,7 +133,7 @@ class MembersPage extends React.Component {
 
         <Table striped className={`${theme} membersTable`}>
           {tableHeaders}
-          <tbody>{this.members()}</tbody>
+          <tbody>{this.membersTable()}</tbody>
         </Table>
       </div>
     );
@@ -229,9 +141,8 @@ class MembersPage extends React.Component {
 
 
   render() {
-
-    const { loading } = this.state;
-
+    const { loading, role, userId, signedUserName } = this.props;
+    console.log(this.props);
     return (
       <div className='membersTableContainer'>
 
@@ -286,6 +197,11 @@ MembersPage.propTypes = {
 };
 
 MembersPage.contextType = ThemeContext;
-export default connect(mapStateToProps, { getAllMembers })(MembersPage);
+
+export default connect(mapStateToProps, {
+  getAllMembers,
+  openModal,
+  closeModal
+})(MembersPage);
 
 

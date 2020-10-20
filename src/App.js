@@ -13,7 +13,6 @@ import { Route, Redirect, Switch } from "react-router-dom";
 import getUserFromSessionStorage from "./components/helpers/sessionStorage/getUserFromSessionStorage";
 import setUserToSessionStorage from "./components/helpers/sessionStorage/setUserToSessionStorage";
 import deleteUserFromLocalStorage from "./components/helpers/sessionStorage/deleteUserFromLocalStorage";
-import Preloader from "./components/common/Preloader/Preloader";
 
 
 class App extends React.PureComponent {
