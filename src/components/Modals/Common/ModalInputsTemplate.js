@@ -14,6 +14,22 @@ export const userModalTemplate = {
   sex: null
 };
 
+export const userModalTypes = {
+  firstName: "text",
+  lastName: "text",
+  birthDate: "date",
+  directionId: "text",
+  education: "text",
+  startDate: "date",
+  email: "email",
+  university: "text",
+  mathScore:"text",
+  address: "text",
+  mobilePhone: "tel",
+  skype: "text",
+  sex: "text"
+};
+
 export const taskModalTemplate = {
   name: null,
   startDate: null,

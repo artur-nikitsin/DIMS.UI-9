@@ -3,11 +3,13 @@ import "./userModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
 import { setNewMemberData } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
+import DropDownInput from "../../common/Inputs/DropDownInput";
 import RadioInputList from "./RadioInputList";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
 import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
-
+import { userModalTypes } from "../Common/ModalInputsTemplate";
+import { AvField } from "availity-reactstrap-validation";
 
 class UsersModalDataWorker extends React.Component {
 
@@ -93,10 +95,17 @@ class UsersModalDataWorker extends React.Component {
                           modalType={modalType} />
         );
       }
+      if (input === "directionId") {
+        return (
+          <li key={input} className="inputItem">
+            <DropDownInput />
+          </li>
+        );
+      }
       return (
         <li key={input} className="inputItem">
           <TextInput
-            type="text"
+            type={userModalTypes[input]}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}
@@ -125,6 +134,13 @@ class UsersModalDataWorker extends React.Component {
     const { name } = event.target;
     this.setState({
       sex: name
+    });
+  };
+
+  handleDropInput = (event) => {
+    const { value } = event.target;
+    this.setState({
+      directionId: value
     });
   };
 

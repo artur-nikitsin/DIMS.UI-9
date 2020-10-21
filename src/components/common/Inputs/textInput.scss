@@ -1,14 +1,14 @@
 
-.textInputContainer{
+.textInputContainer {
   height: 5rem;
 }
 
 .textInput {
-  padding-right: calc(1.5em + .75rem);
+  width: 15rem;
 }
 
-.dark.textInput{
+.dark.textInput {
   padding-right: calc(1.5em + .75rem);
-  background:  rgb(220, 220, 220);
+  background: rgb(220, 220, 220);
   border: 1px solid rgba(157, 157, 158, 1);
 }
