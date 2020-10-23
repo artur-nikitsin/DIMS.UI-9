@@ -12,16 +12,10 @@ import UserModal from "../Modals/User/UserModal";
 import MemberTasks from "../MembersTasks/MemberTasks";
 import { Route, Switch } from "react-router-dom";
 import PropTypes from "prop-types";
-import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
-import { ThemeContext } from "../../contexts/ThemeContext";
 import { connect } from "react-redux";
 import {
   closeModal,
-  getAllMembers, openModal,
-  setActiveUserId, setActiveUserName,
-  setLoading, setMembers,
-  setModal,
-  setModalType
+  getAllMembers, openModal
 } from "../../redux/reducers/membersReducer";
 
 
@@ -29,10 +23,6 @@ class MembersPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      activeUserId: null,
-      activeUserName: null
-    };
     this.closeModal = this.closeModal.bind(this);
     this.openModal = this.openModal.bind(this);
   }

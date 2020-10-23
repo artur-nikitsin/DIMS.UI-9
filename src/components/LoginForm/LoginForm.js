@@ -7,9 +7,8 @@ import { AvForm } from "availity-reactstrap-validation";
 import { login } from "../../firebase/auth";
 import Preloader from "../common/Preloader/Preloader";
 import { Button, Alert } from "reactstrap";
-import PropTypes from "prop-types";
-import { RoleContext } from "../../RoleContext";
-import MembersPage from "../MembersPage/MembersPage";
+import { RoleContext } from "../../contexts/RoleContext";
+
 
 
 class LoginForm extends React.Component {

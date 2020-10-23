@@ -6,7 +6,7 @@ import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
 import { Label } from "reactstrap";
 import PropTypes from "prop-types";
 import { ThemeContext } from "../../../contexts/ThemeContext";
-import MembersPage from "../../MembersPage/MembersPage";
+
 
 
 class TextInput extends React.Component {
@@ -35,7 +35,6 @@ class TextInput extends React.Component {
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
-      console.log(isValid);
       return isValid;
     } else
       return false;

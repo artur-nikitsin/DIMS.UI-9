@@ -95,13 +95,13 @@ class UsersModalDataWorker extends React.Component {
                           modalType={modalType} />
         );
       }
-     /* if (input === "directionId") {
+      if (input === "directionId") {
         return (
           <li key={input} className="inputItem">
             <DropDownInput handleDropInput={this.handleDropInput} />
           </li>
         );
-      }*/
+      }
       return (
         <li key={input} className="inputItem">
           <TextInput

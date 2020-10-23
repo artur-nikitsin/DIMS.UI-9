@@ -98,7 +98,8 @@ class App extends React.PureComponent {
       <RoleContext.Provider value={{
         role: role,
         userId: signedUserId,
-        signedUserName: signedUserName
+        signedUserName: signedUserName,
+        handleLogin: this.handleLogin
       }}>
         <ThemeContext.Provider value={{ theme, onSwitchTheme: this.onSwitchTheme }}>
           <Switch>
