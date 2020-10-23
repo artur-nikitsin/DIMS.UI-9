@@ -14,11 +14,13 @@ function SideBar() {
         <ThemeContext.Consumer>
           {({ theme }) => (
             <div className={`${theme} sideBar`}>
-              {isAdminOrMentor(role) &&
+              {
+                isAdminOrMentor(role) &&
               <div>
                 <NavButton label="Members" to='/app/members' className="navButton" color="secondary" />
                 <NavButton label="Tasks" to='/app/tasks' className="navButton" color="secondary" />
-              </div>}
+              </div>
+              }
             </div>
           )}
         </ThemeContext.Consumer>

@@ -14,6 +14,7 @@ import getUserFromSessionStorage from "./components/helpers/sessionStorage/getUs
 import setUserToSessionStorage from "./components/helpers/sessionStorage/setUserToSessionStorage";
 import deleteUserFromLocalStorage from "./components/helpers/sessionStorage/deleteUserFromLocalStorage";
 import Preloader from "./components/common/Preloader/Preloader";
+import AdaptHeader from "./components/Header/AdaptHeader";
 
 
 class App extends React.PureComponent {
@@ -105,7 +106,9 @@ class App extends React.PureComponent {
           <Switch>
             <>
               <div className='App'>
-                <Header handleLogout={this.handleLogout} isLogin={isLogin} />
+                <AdaptHeader handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} role={role} />
+              {/*  <Header handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} />*/}
+
                 {fromLoginForm && <Redirect to='/app/members' />}
                 {!userData && <Redirect to='/login' />}
                 {signedUserId && fromLoginForm && <Redirect from='/' to={`/app/members/tasks_user=${signedUserId}`} />}

@@ -1,6 +1,7 @@
 @import "src/components/common/Styles/Mixins/Buttons/Buttons";
 
-.header {
+
+@mixin header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -8,7 +9,7 @@
   width: 100%;
   min-height: 10vh;
   border-bottom: 3px solid #008F02;
-  background: rgb(36, 41, 46);
+
 
   .devIncubatorLogo {
     margin-left: 3rem;
@@ -22,9 +23,16 @@
     flex-direction: row;
     align-items: center;
     width: 15rem;
-    .logoutButton {
-    /*  margin-right: 2rem;*/
-    }
   }
+}
 
+
+.header {
+  @include header;
+  background: rgb(241, 248, 255);
+}
+
+.dark.header {
+  @include header;
+  background:  rgb(36, 41, 46);
 }

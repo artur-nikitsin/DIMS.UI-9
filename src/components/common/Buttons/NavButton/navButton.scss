@@ -1,0 +1,13 @@
+.navButton {
+  /*margin-top: 1rem;*/
+  width: 8rem;
+}
+
+.active {
+  .navButton {
+    /*  margin-top: 1rem;*/
+    width: 8rem;
+    background: #6c757d;
+    color: black;
+  }
+}

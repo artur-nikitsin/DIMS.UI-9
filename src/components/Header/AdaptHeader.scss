@@ -1,0 +1,58 @@
+@mixin AdaptHeader {
+  min-height: 10vh;
+  width: 100vw;
+  border-bottom: 3px solid #008F02;
+
+  .mr-auto {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logoContainer{
+    width: 40%;
+    .devIncubatorLogo {
+      margin-left: 3rem;
+      height: 2.5rem;
+      width: auto;
+    }
+  }
+
+
+  .navButtons {
+    width: 18rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem;
+  }
+
+  .buttonsContainer {
+    align-self: flex-end;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    align-items: center;
+    width: 18rem;
+    margin: 1rem;
+
+    .themeSwitcher{
+      margin-right: 2rem;
+    }
+  }
+}
+
+
+.AdaptHeader {
+  @include AdaptHeader;
+  background: rgb(241, 248, 255);
+}
+
+.dark.AdaptHeader {
+  @include AdaptHeader;
+  background: rgb(36, 41, 46);
+}

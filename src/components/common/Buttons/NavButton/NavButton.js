@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "reactstrap";
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
+import "./navButton.scss";
 
 
 function NavButton({ label, to, className, color }) {

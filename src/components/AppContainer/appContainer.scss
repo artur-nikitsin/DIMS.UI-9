@@ -9,7 +9,7 @@
 
 .dark.appContainer {
   @include appContainer;
-  background: rgba(108, 117, 125, 0.6);
+  background: rgba(108, 117, 125, 1);
 }
 
 .light.appContainer {
@@ -22,7 +22,7 @@
   justify-content: flex-start;
   align-items: stretch;
   min-height: 80vh;
-  min-width: 90vw;
+  min-width: 100vw;
   width: auto;
   margin-top: 2rem;
 }

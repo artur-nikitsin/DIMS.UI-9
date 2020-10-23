@@ -18,7 +18,7 @@ class AppContainer extends React.PureComponent {
           <ThemeContext.Consumer>
             {({ theme }) => (
               <div className={`${theme} appContainer`}>
-                <SideBar />
+            {/*    <SideBar />*/}
                 <div className="pagesContainer">
                   <Switch>
 
