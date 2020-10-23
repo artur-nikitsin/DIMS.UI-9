@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import firebase from "firebase/firebase";
 import db from "./db";
 
 export function register(email, password) {

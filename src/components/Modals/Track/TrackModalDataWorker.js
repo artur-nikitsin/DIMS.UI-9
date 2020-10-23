@@ -1,7 +1,7 @@
 import React from "react";
 import "./taskModalDataWorker.scss";
 import formValidator from "../../helpers/FormValidator/formValidator";
-import { setTrack, editTrack } from "../../../firebase/apiSet";
+import { setTrack } from "../../../firebase/apiSet";
 import TextInput from "../../common/Inputs/TextInput";
 import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
@@ -111,7 +111,7 @@ class TrackModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskTrackId, dataToSend } = this.state;
-    const { reloadTrackPage, closeModalAndReload, modalType } = this.props;
+    const { closeModalAndReload } = this.props;
 
     this.setState({
       isSubmit: true

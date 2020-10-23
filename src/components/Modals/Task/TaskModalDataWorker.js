@@ -112,7 +112,7 @@ class TaskModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend } = this.state;
-    const { reloadTaskPage, closeModalAndReload, modalType } = this.props;
+    const { closeModalAndReload } = this.props;
 
     this.setState({
       isSubmit: true

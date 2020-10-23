@@ -1,7 +1,6 @@
 import regExpTester from "./regExpTester";
 import { nameRegexp } from "./regExp";
 import PropTypes from "prop-types";
-import emailValidator from "./emailValidator";
 
 
 function lastNameValidator(lastName) {

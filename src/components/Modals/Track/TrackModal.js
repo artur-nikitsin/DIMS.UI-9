@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import {  Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./trackModal.scss";
 import { getTrack } from "../../../firebase/apiGet";
-import { trackModalTemplate } from "../Common/ModalInputsTemplate";
+import { trackModalTemplate, userModalTemplate } from "../Common/ModalInputsTemplate";
 import TrackModalDataWorker from "./TrackModalDataWorker";
 import PropTypes from "prop-types";
+import Preloader from "../../common/Preloader/Preloader";
 
 
 const TrackModal = (props) => {
   const {
-    buttonLabel,
     className,
     isOpen,
     closeModal,
@@ -51,15 +51,19 @@ const TrackModal = (props) => {
     <div>
       <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
-          <ModalHeader> {taskName}</ModalHeader>
-          <TrackModalDataWorker
-            modalTemplate={trackModalTemplate}
-            trackData={trackData}
-            userTaskId={userTaskId}
-            modalType={modalType}
-            closeModal={useToggle}
-            closeModalAndReload={closeModalAndReload}
-          />
+          {loading ? <Preloader /> :
+            <>
+              <ModalHeader> {taskName}</ModalHeader>
+              <TrackModalDataWorker
+                modalTemplate={trackModalTemplate}
+                trackData={trackData}
+                userTaskId={userTaskId}
+                modalType={modalType}
+                closeModal={useToggle}
+                closeModalAndReload={closeModalAndReload}
+              />
+            </>}
+
         </ModalBody>
       </Modal>
     </div>

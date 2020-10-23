@@ -1,7 +1,6 @@
 import React from "react";
 import "./sideBar.scss";
 import { RoleContext } from "../../contexts/RoleContext";
-import MembersPage from "../MembersPage/MembersPage";
 import NavButton from "../common/Buttons/NavButton/NavButton";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 import { ThemeContext } from "../../contexts/ThemeContext";

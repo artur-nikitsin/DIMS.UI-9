@@ -3,13 +3,10 @@
 
 .membersTableContainer {
   min-height: 80vh;
-  margin-left: 5rem;
-  margin-right: 5rem;
-  margin-bottom: 5rem;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
 
   .memberRegisterButton {
     @include memberRegisterButton;
@@ -17,6 +14,7 @@
   }
 
   .light.membersTable {
+    max-width: 90vw;
     @include commonTableStyles;
   }
 

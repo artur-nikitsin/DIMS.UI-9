@@ -1,19 +1,17 @@
 import React from "react";
 import "./app.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Header from "./components/Header/Header";
 import AppContainer from "./components/AppContainer/AppContainer";
 import Footer from "./components/Footer/Footer";
 import LoginForm from "./components/LoginForm/LoginForm";
 import { RoleContext } from "./contexts/RoleContext";
 import { ThemeContext } from "./contexts/ThemeContext";
 import { DOCUMENT_TITLE } from "./components/constants/titles";
-import { logout, registerNewUser } from "./firebase/auth";
+import { logout } from "./firebase/auth";
 import { Route, Redirect, Switch } from "react-router-dom";
 import getUserFromSessionStorage from "./components/helpers/sessionStorage/getUserFromSessionStorage";
 import setUserToSessionStorage from "./components/helpers/sessionStorage/setUserToSessionStorage";
 import deleteUserFromLocalStorage from "./components/helpers/sessionStorage/deleteUserFromLocalStorage";
-import Preloader from "./components/common/Preloader/Preloader";
 import AdaptHeader from "./components/Header/AdaptHeader";
 
 
@@ -105,9 +103,9 @@ class App extends React.PureComponent {
         <ThemeContext.Provider value={{ theme, onSwitchTheme: this.onSwitchTheme }}>
           <Switch>
             <>
-              <div className='App'>
+              <div className={`${theme} App`}>
                 <AdaptHeader handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} role={role} />
-              {/*  <Header handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} />*/}
+
 
                 {fromLoginForm && <Redirect to='/app/members' />}
                 {!userData && <Redirect to='/login' />}

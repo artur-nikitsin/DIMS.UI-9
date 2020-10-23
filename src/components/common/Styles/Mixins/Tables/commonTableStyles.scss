@@ -7,13 +7,15 @@
   & td {
     width: 200px;
     height: 80px;
+    height: 2rem;
     text-align: center;
     border: 1px solid rgba(157, 157, 158, 1);
   }
 
   & th {
-    width: 100px;
-    height: 40px;
+    min-width: 2rem;
+    width: auto;
+    height: 2rem;
     text-align: center;
     border: 1px solid rgba(157, 157, 158, 1);;
     background: rgba(16, 120, 224, 0.9);

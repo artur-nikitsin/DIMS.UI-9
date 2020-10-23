@@ -1,6 +1,6 @@
 import React from "react";
 import "./memberProgress.scss";
-import { getTaskTrack, getUserTrackList } from "../../firebase/apiGet";
+import { getUserTrackList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -8,6 +8,7 @@ import { Table } from "reactstrap";
 import getSubString from "../helpers/getSubString/getSubString";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { ThemeContext } from "../../contexts/ThemeContext";
+import { Button } from "react-bootstrap";
 
 
 class MemberProgress extends React.Component {
@@ -35,10 +36,10 @@ class MemberProgress extends React.Component {
             <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
               <td>
-                <a href=''>{track.name}</a>
+                <Button  color="link" href='#'>{track.name}</Button>
               </td>
               <td>
-                <a href=''>{getSubString(track.trackNote, 50)}</a>
+                <Button  color="link">{getSubString(track.trackNote, 50)}</Button>
               </td>
               <td>{getLocaleDate(track.trackDate)}</td>
             </tr>

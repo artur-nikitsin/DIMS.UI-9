@@ -9,9 +9,11 @@ function Buttons({ role, toProgress, toTasks, handleProgress, handleTasks, handl
 
   return (
     <div className='membersButtonsGroup'>
+      <div>
       <NavButton label="Progress" to={toProgress} color="secondary" className='progressMemberButton'
                  onClick={handleProgress} />
       <NavButton label="Tasks" to={toTasks} color="secondary" className='tasksMemberButton' onClick={handleTasks} />
+      </div>
 
       {isMentor(role) ||
       <div>

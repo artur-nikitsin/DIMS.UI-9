@@ -1,6 +1,6 @@
 import React from "react";
 import "./memberTracks.scss";
-import { getTaskTrack, getUserTrackList } from "../../firebase/apiGet";
+import { getTaskTrack } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import getSubString from "../helpers/getSubString/getSubString";
@@ -12,7 +12,6 @@ import { deleteTask } from "../../firebase/apiDelete";
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import Tasks from "../Tasks/Tasks";
 import { RoleContext } from "../../contexts/RoleContext";
 
 

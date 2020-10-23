@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 import "./taskModal.scss";
 import { getTask } from "../../../firebase/apiGet";
 import TaskModalDataWorker from "./TaskModalDataWorker";
 import { taskModalTemplate } from "../Common/ModalInputsTemplate";
 import PropTypes from "prop-types";
+import Preloader from "../../common/Preloader/Preloader";
 
 
 const TaskModal = (props) => {
   const {
-    buttonLabel,
     className,
     isOpen,
     closeModal,
@@ -47,13 +47,14 @@ const TaskModal = (props) => {
     <div>
       <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
-          <TaskModalDataWorker
-            modalTemplate={taskModalTemplate}
-            taskData={taskData}
-            modalType={modalType}
-            closeModal={useToggle}
-            closeModalAndReload={closeModalAndReload}
-          />
+          {loading ? <Preloader /> :
+            <TaskModalDataWorker
+              modalTemplate={taskModalTemplate}
+              taskData={taskData}
+              modalType={modalType}
+              closeModal={useToggle}
+              closeModalAndReload={closeModalAndReload}
+            />}
         </ModalBody>
       </Modal>
     </div>

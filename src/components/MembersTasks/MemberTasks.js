@@ -1,9 +1,8 @@
 import React from "react";
 import "./memberTasks.scss";
-import { getTaskTrack, getUserTaskList } from "../../firebase/apiGet";
+import {  getUserTaskList } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import StatusButtons from "./Buttons/StatusButtons";
-import { RoleContext } from "../../contexts/RoleContext";
 import { Table, Button } from "reactstrap";
 import { NavLink, Route, Switch } from "react-router-dom";
 import MemberTracks from "../MemberTracks/MemberTracks";
@@ -11,7 +10,6 @@ import PropTypes from "prop-types";
 import TaskModal from "../Modals/Task/TaskModal";
 import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import Tasks from "../Tasks/Tasks";
 
 
 class MemberTasks extends React.Component {
@@ -54,10 +52,10 @@ class MemberTasks extends React.Component {
             <tr key={task.taskId}>
               <td>{i + 1}</td>
               <td>
-                <a href='' onClick={event => {
+                <Button  color="link" onClick={event => {
                   event.preventDefault();
                   this.openModal(task.taskId, "view")();
-                }}>{task.name}</a>
+                }}>{task.name}</Button>
               </td>
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>

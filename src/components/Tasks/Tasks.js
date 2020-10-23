@@ -1,6 +1,6 @@
 import React from "react";
 import "./tasks.scss";
-import { getAllTasks, getTasks } from "../../firebase/apiGet";
+import { getAllTasks } from "../../firebase/apiGet";
 import Preloader from "../common/Preloader/Preloader";
 import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
 import { deleteTask } from "../../firebase/apiDelete";
@@ -8,7 +8,7 @@ import { Table, Button } from "reactstrap";
 import TaskModal from "../Modals/Task/TaskModal";
 import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import MembersPage from "../MembersPage/MembersPage";
+
 
 
 class Tasks extends React.PureComponent {

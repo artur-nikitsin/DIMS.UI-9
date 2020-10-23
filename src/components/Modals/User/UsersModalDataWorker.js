@@ -9,7 +9,8 @@ import ModalContent from "../Common/ModalContent";
 import PropTypes from "prop-types";
 import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
 import { userModalTypes } from "../Common/ModalInputsTemplate";
-import { AvField } from "availity-reactstrap-validation";
+
+
 
 class UsersModalDataWorker extends React.Component {
 
@@ -138,9 +139,7 @@ class UsersModalDataWorker extends React.Component {
   };
 
   handleDropInput = (event) => {
-
     const { value } = event.target;
-    console.log(value);
     this.setState({
       directionId: value
     });
@@ -162,7 +161,7 @@ class UsersModalDataWorker extends React.Component {
 
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
-    const { reloadMemberPage, modalType, closeModalAndReload } = this.props;
+    const { closeModalAndReload } = this.props;
 
     this.setState({
       isSubmit: true

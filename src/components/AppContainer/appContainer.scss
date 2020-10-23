@@ -2,14 +2,13 @@
 
 @mixin appContainer{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  min-width: 100vw;
+  width: 100vw;
 }
 
 .dark.appContainer {
   @include appContainer;
-  background: rgba(108, 117, 125, 1);
 }
 
 .light.appContainer {
@@ -22,7 +21,6 @@
   justify-content: flex-start;
   align-items: stretch;
   min-height: 80vh;
-  min-width: 100vw;
-  width: auto;
+  width: 100%;
   margin-top: 2rem;
 }
