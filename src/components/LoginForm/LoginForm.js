@@ -8,6 +8,8 @@ import { login } from "../../firebase/auth";
 import Preloader from "../common/Preloader/Preloader";
 import { Button, Alert } from "reactstrap";
 import PropTypes from "prop-types";
+import { RoleContext } from "../../RoleContext";
+import MembersPage from "../MembersPage/MembersPage";
 
 
 class LoginForm extends React.Component {
@@ -39,14 +41,14 @@ class LoginForm extends React.Component {
 
   handleSubmit() {
 
-    const { isFormValid } = this.state;
+    const { isFormValid, email, password } = this.state;
     if (isFormValid) {
       this.setState({
         isSubmit: true,
         loading: true
       });
 
-      const { email, password } = this.state;
+      const { handleLogin } = this.context;
       login(email, password)
         .then((response) => {
 
@@ -55,7 +57,7 @@ class LoginForm extends React.Component {
             this.setState({
               loading: false
             });
-            this.props.handleLogin(response);
+            handleLogin(response);
           } else {
             const { message } = response;
             this.setState({
@@ -107,8 +109,7 @@ class LoginForm extends React.Component {
   }
 }
 
-LoginForm.propTypes = {
-  handleLogin: PropTypes.func.isRequired
-};
+LoginForm.propTypes = {};
 
+LoginForm.contextType = RoleContext;
 export default LoginForm;

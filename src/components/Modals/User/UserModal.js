@@ -22,17 +22,8 @@ const UserModal = (props) => {
   const [userData, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const toggle = () => {
-    setData(null);
-    closeModal();
-  };
 
-  const useToggle = () => {
-    setData(null);
-    closeModal();
-  };
-
-  const newUser = () => {
+    const newUser = () => {
     setData(null);
     setLoading(false);
   };
@@ -52,14 +43,14 @@ const UserModal = (props) => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={useToggle} className={className}>
+      <Modal isOpen={isOpen} toggle={closeModal} className={className}>
         <ModalBody>
           {loading ? <Preloader /> :
             <UsersModalDataWorker
               modalTemplate={userModalTemplate}
               userData={userData}
               modalType={modalType}
-              closeModal={useToggle}
+              closeModal={closeModal}
               closeModalAndReload={closeModalAndReload}
             />}
         </ModalBody>
