@@ -95,13 +95,13 @@ class UsersModalDataWorker extends React.Component {
                           modalType={modalType} />
         );
       }
-      if (input === "directionId") {
+     /* if (input === "directionId") {
         return (
           <li key={input} className="inputItem">
-            <DropDownInput />
+            <DropDownInput handleDropInput={this.handleDropInput} />
           </li>
         );
-      }
+      }*/
       return (
         <li key={input} className="inputItem">
           <TextInput
@@ -138,7 +138,9 @@ class UsersModalDataWorker extends React.Component {
   };
 
   handleDropInput = (event) => {
+
     const { value } = event.target;
+    console.log(value);
     this.setState({
       directionId: value
     });

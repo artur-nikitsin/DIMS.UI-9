@@ -35,6 +35,7 @@ class TextInput extends React.Component {
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
+      console.log(isValid);
       return isValid;
     } else
       return false;

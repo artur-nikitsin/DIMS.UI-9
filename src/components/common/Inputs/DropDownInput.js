@@ -10,20 +10,16 @@ class DropDownInput extends React.PureComponent {
     super(props);
   }
 
-  onChange(event) {
-    console.log(this.props);
-  }
 
   render() {
     const { handleDropInput } = this.props;
-    console.log(this.props)
     return (
       <AvField className="dropDownInput" type="select" name="select" label="Direction:" onChange={handleDropInput}>
         <option></option>
-        <option>React</option>
-        <option>Angular</option>
-        <option>Java</option>
-        <option>.NET</option>
+        <option value={"1"}>React</option>
+        <option value={"2"}>Angular</option>
+        <option value={"3"}>Java</option>
+        <option value={"4"}>.NET</option>
       </AvField>
     );
   }

@@ -25,7 +25,7 @@ export const userModalTypes = {
   university: "text",
   mathScore:"text",
   address: "text",
-  mobilePhone: "tel",
+  mobilePhone: "text",
   skype: "text",
   sex: "text"
 };
