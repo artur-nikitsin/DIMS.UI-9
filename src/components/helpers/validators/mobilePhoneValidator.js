@@ -1,7 +1,6 @@
 import regExpTester from "./regExpTester";
 import { phoneNumberRegexp } from "./regExp";
 import PropTypes from "prop-types";
-import lastNameValidator from "./lastNameValidator";
 
 
 function mobilePhoneValidator(number) {

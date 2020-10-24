@@ -53,10 +53,10 @@ class MembersPage extends React.Component {
         <tr key={member.userId + "n"}>
           <td key={member.userId + "a"}>{i + 1}</td>
           <td key={member.userId + "b"}>
-            <a href='' onClick={event => {
+            <Button color="link" onClick={event => {
               event.preventDefault();
               this.openModal(member.userId, "view")();
-            }}>{member.firstName + " " + member.lastName}</a>
+            }}>{member.firstName + " " + member.lastName}</Button>
           </td>
           <td key={member.userId + "c"}>{member.directionId}</td>
           <td key={member.userId + "d"}>{member.education}</td>

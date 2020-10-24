@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Modal, ModalBody } from "reactstrap";
 import UsersModalDataWorker from "./UsersModalDataWorker";
 import { userModalTemplate } from "../Common/ModalInputsTemplate";
 import "./UserModal.scss";
@@ -10,7 +10,6 @@ import Preloader from "../../common/Preloader/Preloader";
 
 const UserModal = (props) => {
   const {
-    buttonLabel,
     className,
     isOpen,
     closeModal,
@@ -23,7 +22,7 @@ const UserModal = (props) => {
   const [loading, setLoading] = useState(true);
 
 
-    const newUser = () => {
+  const newUser = () => {
     setData(null);
     setLoading(false);
   };

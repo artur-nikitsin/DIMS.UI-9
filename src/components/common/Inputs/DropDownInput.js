@@ -6,10 +6,6 @@ import "./dropDownInput.scss";
 
 class DropDownInput extends React.PureComponent {
 
-  constructor(props) {
-    super(props);
-  }
-
 
   render() {
     const { handleDropInput } = this.props;

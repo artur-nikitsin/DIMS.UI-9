@@ -10,7 +10,6 @@ import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
 import { ThemeContext } from "../../contexts/ThemeContext";
 
 
-
 class Tasks extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -51,10 +50,10 @@ class Tasks extends React.PureComponent {
           <tr key={task.taskId + "z"}>
             <td key={task.taskId + "a"}>{i + 1}</td>
             <td key={task.taskId + "b"}>
-              <a href='' onClick={event => {
+              <Button color="link" onClick={event => {
                 event.preventDefault();
                 this.openModal(task.taskId, "view")();
-              }}>{task.name}</a>
+              }}>{task.name}</Button>
             </td>
             <td key={task.taskId + "i"}>{getLocaleDate(task.startDate)}</td>
             <td key={task.taskId + "j"}>{getLocaleDate(task.deadlineDate)}</td>

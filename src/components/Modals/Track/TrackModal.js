@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import {  Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./trackModal.scss";
 import { getTrack } from "../../../firebase/apiGet";
-import { trackModalTemplate, userModalTemplate } from "../Common/ModalInputsTemplate";
+import { trackModalTemplate } from "../Common/ModalInputsTemplate";
 import TrackModalDataWorker from "./TrackModalDataWorker";
 import PropTypes from "prop-types";
 import Preloader from "../../common/Preloader/Preloader";

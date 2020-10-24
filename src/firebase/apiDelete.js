@@ -41,7 +41,7 @@ export function deleteTask(taskId) {
       .get()
       .then((tasks) => {
         tasks.forEach((task) => {
-          const { userTaskId, stateId } = task.data();
+          const { userTaskId } = task.data();
           deleteDocumentById("UserTasks", userTaskId);
 
           return db

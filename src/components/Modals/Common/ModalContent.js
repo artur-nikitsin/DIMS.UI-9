@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 
 
 function ModalContent({ handleSubmit, createInputList, closeModal, modalType }) {
+
   return (
     <div className='modalData'>
       <AvForm className="modalForm" onSubmit={handleSubmit}>
