@@ -1,15 +1,15 @@
-@import "src/components/common/Styles/Mixins/Modals/modals";
+@import 'src/components/common/Styles/Mixins/Modals/modals';
 
 .userModal {
   @include modal;
 }
 
 .modalBody {
-  @include modalBody
+  @include modalBody;
 }
 
-.dark.userModal{
-  .modal-content{
-    background:  rgb(209, 209, 209);
+.dark.userModal {
+  .modal-content {
+    background: rgb(209, 209, 209);
   }
 }

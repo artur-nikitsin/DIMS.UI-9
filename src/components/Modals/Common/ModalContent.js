@@ -16,7 +16,7 @@ function ModalContent({ handleSubmit, createInputList, closeModal, modalType }) 
             </Button>
           )}
           <Button outline color='secondary' size='lg' onClick={closeModal}>
-            Return to grid
+            Return
           </Button>
         </div>
       </AvForm>

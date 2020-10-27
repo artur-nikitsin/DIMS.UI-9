@@ -1,5 +1,4 @@
 import React from 'react';
-import './taskModalDataWorker.scss';
 import PropTypes from 'prop-types';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setTask } from '../../../firebase/apiSet';
@@ -78,7 +77,7 @@ class TaskModalDataWorker extends React.PureComponent {
       );
     });
 
-    return <ul className='tasksInputList'>{inputList}</ul>;
+    return <ul className='inputList'>{inputList}</ul>;
   };
 
   handleChange = (event) => {

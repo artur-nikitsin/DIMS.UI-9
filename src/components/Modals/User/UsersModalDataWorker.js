@@ -1,5 +1,4 @@
 import React from 'react';
-import './userModalDataWorker.scss';
 import PropTypes from 'prop-types';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setNewMemberData } from '../../../firebase/apiSet';
@@ -113,7 +112,7 @@ class UsersModalDataWorker extends React.Component {
       );
     });
 
-    return <ul className='userRegisterInputList'>{inputList}</ul>;
+    return <ul className='inputList'>{inputList}</ul>;
   };
 
   handleChange = (event) => {
