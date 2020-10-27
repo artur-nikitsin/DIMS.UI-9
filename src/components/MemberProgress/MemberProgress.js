@@ -35,10 +35,15 @@ class MemberProgress extends React.Component {
               <td>
                 <Button color='link'>{track.name}</Button>
               </td>
-              <td>
-                <Button color='link'>{getSubString(track.trackNote, 50)}</Button>
+              <td className='collapsed'>{getSubString(track.trackNote, 50)}</td>
+              <td className='collapsed'>{getLocaleDate(track.trackDate)}</td>
+              <td className='minRow'>
+                <ul className='tableInfo'>
+                  <li>{`Note: ${getSubString(track.trackNote, 50)}`}</li>
+                  <hr />
+                  <li>{`Date: ${getLocaleDate(track.trackDate)}`}</li>
+                </ul>
               </td>
-              <td>{getLocaleDate(track.trackDate)}</td>
             </tr>
           );
         });
@@ -59,8 +64,9 @@ class MemberProgress extends React.Component {
         <tr>
           <th>#</th>
           <th>Task</th>
-          <th>Note</th>
-          <th>Date</th>
+          <th className='collapsed'>Note</th>
+          <th className='collapsed'>Date</th>
+          <th className='minRow'> Information</th>
         </tr>
       </thead>
     );
@@ -71,7 +77,7 @@ class MemberProgress extends React.Component {
 
     if (userTrackList.length) {
       return (
-        <div>
+        <div className='progressTableContainer'>
           <NavLink to='/users'>Return to members manage grid</NavLink>
           <Table striped className={`${theme} progressTable`}>
             {tableHeaders}

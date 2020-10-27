@@ -1,11 +1,21 @@
 @import '../common/Styles/Mixins/Tables/commonTableStyles';
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
+.progressTableContainer {
+  min-height: 80vh;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
-.light.progressTable {
-  @include commonTableStyles;
-}
+  .light.progressTable {
+    @include commonTableStyles;
+  }
 
-.dark.progressTable {
-  @include darkTable;
+  .dark.progressTable {
+    @include darkTable;
+  }
 }

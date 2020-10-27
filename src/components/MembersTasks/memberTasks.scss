@@ -2,10 +2,14 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
 .memberTasksTableContainer {
+  min-height: 80vh;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
   .light.memberTasksTable {
     @include commonTableStyles;

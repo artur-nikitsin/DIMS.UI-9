@@ -11,6 +11,7 @@ import TaskModal from '../Modals/Task/TaskModal';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import NoDataMessage from '../common/Messages/NoDataMessage';
+import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -59,10 +60,18 @@ class MemberTasks extends React.Component {
                   {task.name}
                 </Button>
               </td>
-              <td>{new Date(task.startDate).toLocaleDateString()}</td>
-              <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
-              <td>{task.status}</td>
-
+              <td className='collapsed'>{getLocaleDate(task.startDate)}</td>
+              <td className='collapsed'>{getLocaleDate(task.deadlineDate)}</td>
+              <td className='collapsed'>{task.status}</td>
+              <td className='minRow'>
+                <ul className='tableInfo'>
+                  <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
+                  <hr />
+                  <li>{`Start date: ${getLocaleDate(task.deadlineDate)}`}</li>
+                  <hr />
+                  <li>{`Status: ${task.status}`}</li>
+                </ul>
+              </td>
               {isAdminOrMentor(role) ? (
                 <td className='tasksButtons'>
                   <StatusButtons stateId={task.stateId} />
@@ -118,9 +127,10 @@ class MemberTasks extends React.Component {
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Start</th>
-          <th>Deadline</th>
-          <th>Status</th>
+          <th className='collapsed'>Start</th>
+          <th className='collapsed'>Deadline</th>
+          <th className='collapsed'>Status</th>
+          <th className='minRow'> Information</th>
           <th />
         </tr>
       </thead>
