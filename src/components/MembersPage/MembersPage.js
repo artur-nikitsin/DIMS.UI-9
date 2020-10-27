@@ -68,7 +68,7 @@ class MembersPage extends React.Component {
             {getLocaleDate(member.birthDate)}
           </td>
           <td className='minRow'>
-            <ul className='memberInfo'>
+            <ul className='tableInfo'>
               <li>{`Direction: ${member.directionId}`}</li>
               <hr />
               <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>

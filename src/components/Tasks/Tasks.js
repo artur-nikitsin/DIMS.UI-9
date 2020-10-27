@@ -56,8 +56,20 @@ class Tasks extends React.PureComponent {
                 {task.name}
               </Button>
             </td>
-            <td key={`${task.taskId}i`}>{getLocaleDate(task.startDate)}</td>
-            <td key={`${task.taskId}j`}>{getLocaleDate(task.deadlineDate)}</td>
+            <td key={`${task.taskId}i`} className='collapsed'>
+              {getLocaleDate(task.startDate)}
+            </td>
+            <td key={`${task.taskId}j`} className='collapsed'>
+              {getLocaleDate(task.deadlineDate)}
+            </td>
+            <td className='minRow'>
+              <ul className='tableInfo'>
+                <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
+                <hr />
+                <li>{`Deadline date: ${getLocaleDate(task.deadlineDate)}`}</li>
+                <hr />
+              </ul>
+            </td>
             <td key={`${task.taskId}h`}>
               <EditDeleteButtons
                 handleEdit={this.openModal(task.taskId, 'edit')}
@@ -103,8 +115,9 @@ class Tasks extends React.PureComponent {
         <tr>
           <th>#</th>
           <th>Name</th>
-          <th>Start</th>
-          <th>Deadline</th>
+          <th className='collapsed'>Start</th>
+          <th className='collapsed'>Deadline</th>
+          <th className='minRow'> Information</th>
           <th />
         </tr>
       </thead>
