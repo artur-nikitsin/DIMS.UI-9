@@ -156,7 +156,6 @@ class UsersModalDataWorker extends React.Component {
       isSubmit: true,
     });
 
-    console.log(this.state);
     if (isFormValid) {
       setNewMemberData(dataToSend, userId)
         .then(() => {

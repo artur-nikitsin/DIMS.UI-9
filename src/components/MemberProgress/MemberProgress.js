@@ -72,7 +72,6 @@ class MemberProgress extends React.Component {
     );
 
     const { userTrackList } = this.state;
-    console.log(userTrackList);
     const { theme } = this.context;
 
     if (userTrackList.length) {
