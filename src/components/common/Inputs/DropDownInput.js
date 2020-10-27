@@ -4,9 +4,17 @@ import './dropDownInput.scss';
 
 class DropDownInput extends React.PureComponent {
   render() {
-    const { handleDropInput } = this.props;
+    const { handleDropInput, value, modalType } = this.props;
     return (
-      <AvField className='dropDownInput' type='select' name='select' label='Direction:' onChange={handleDropInput}>
+      <AvField
+        className='dropDownInput'
+        disabled={modalType === 'view'}
+        type='select'
+        name='select'
+        label='Direction:'
+        onChange={handleDropInput}
+        value={value}
+      >
         <option />
         <option value='1'>React</option>
         <option value='2'>Angular</option>

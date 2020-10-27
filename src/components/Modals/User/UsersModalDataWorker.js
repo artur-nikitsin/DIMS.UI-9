@@ -93,7 +93,7 @@ class UsersModalDataWorker extends React.Component {
       if (input === 'directionId') {
         return (
           <li key={input} className='inputItem'>
-            <DropDownInput handleDropInput={this.handleDropInput} />
+            <DropDownInput handleDropInput={this.handleDropInput} value={thisState[input]} modalType={modalType} />
           </li>
         );
       }
@@ -134,6 +134,7 @@ class UsersModalDataWorker extends React.Component {
     this.setState({
       directionId: value,
     });
+    this.handleValidInput('directionId', true, value);
   };
 
   handleValidInput = (input, status, data) => {
@@ -155,6 +156,7 @@ class UsersModalDataWorker extends React.Component {
       isSubmit: true,
     });
 
+    console.log(this.state);
     if (isFormValid) {
       setNewMemberData(dataToSend, userId)
         .then(() => {
