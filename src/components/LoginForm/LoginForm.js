@@ -79,7 +79,7 @@ class LoginForm extends React.Component {
       <div className='loginForm'>
         <p className='loginTitle'>Login</p>
         <div className='loginFormBody'>
-          {isFailLogin && <Alert color='danger'> {message} </Alert>}
+          {isFailLogin && <Alert color='danger'>{message}</Alert>}
           <AvForm className='userForm' onSubmit={this.handleSubmit}>
             <ul className='loginFormInputList'>
               <li>
@@ -114,8 +114,6 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-LoginForm.propTypes = {};
 
 LoginForm.contextType = RoleContext;
 export default LoginForm;

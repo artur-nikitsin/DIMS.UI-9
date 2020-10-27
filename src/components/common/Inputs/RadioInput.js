@@ -4,15 +4,7 @@ import { Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class RadioInput extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: 'invalid',
-      message: 'Please enter sex!',
-    };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  componentDidUpdate(prevProps) {
     const prevValue = prevProps.value;
     const { handleValidInput } = this.props;
     const { value } = this.props;
@@ -41,8 +33,14 @@ class RadioInput extends React.PureComponent {
 
 RadioInput.propTypes = {
   value: PropTypes.string,
+  modalType: PropTypes.string,
   inputName: PropTypes.string.isRequired,
   handleRadioInput: PropTypes.func.isRequired,
   handleValidInput: PropTypes.func.isRequired,
+};
+
+RadioInput.defaultProps = {
+  value: '',
+  modalType: 'view',
 };
 export default RadioInput;

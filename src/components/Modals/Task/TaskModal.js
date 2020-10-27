@@ -53,10 +53,17 @@ const TaskModal = (props) => {
 
 TaskModal.propTypes = {
   className: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   taskId: PropTypes.string,
   closeModalAndReload: PropTypes.func,
+};
+
+TaskModal.defaultProps = {
+  taskId: '',
+  modalType: 'view',
+  closeModalAndReload: null,
 };
 
 export default TaskModal;

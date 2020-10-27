@@ -12,7 +12,6 @@ import TableTrackHeaders from './TableHeaders';
 import TrackModal from '../Modals/Track/TrackModal';
 import { deleteTask } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import { RoleContext } from '../../contexts/RoleContext';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -146,13 +145,18 @@ class MemberTracks extends React.PureComponent {
 }
 
 MemberTracks.propTypes = {
-  match: PropTypes.object.isRequired,
   userName: PropTypes.string,
   taskName: PropTypes.string,
-  userTaskId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired,
+  userTaskId: PropTypes.string,
+  userId: PropTypes.string,
 };
 
-MemberTracks.contextType = RoleContext;
+MemberTracks.defaultProps = {
+  userName: '',
+  taskName: '',
+  userTaskId: '',
+  userId: '',
+};
+
 MemberTracks.contextType = ThemeContext;
 export default MemberTracks;

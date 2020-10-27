@@ -83,9 +83,16 @@ class TextInput extends React.Component {
 TextInput.propTypes = {
   value: PropTypes.string,
   type: PropTypes.string,
+  modalType: PropTypes.string,
   inputName: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleValidInput: PropTypes.func.isRequired,
+};
+
+TextInput.defaultProps = {
+  value: '',
+  type: '',
+  modalType: 'view',
 };
 
 TextInput.contextType = ThemeContext;

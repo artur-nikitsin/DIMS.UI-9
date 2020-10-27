@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { AvField } from 'availity-reactstrap-validation';
 import './dropDownInput.scss';
 
@@ -24,5 +25,16 @@ class DropDownInput extends React.PureComponent {
     );
   }
 }
+
+DropDownInput.propTypes = {
+  handleDropInput: PropTypes.func.isRequired,
+  value: PropTypes.string,
+  modalType: PropTypes.string,
+};
+
+DropDownInput.defaultProps = {
+  value: '',
+  modalType: 'view',
+};
 
 export default DropDownInput;

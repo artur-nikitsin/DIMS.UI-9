@@ -53,10 +53,16 @@ const UserModal = (props) => {
 
 UserModal.propTypes = {
   className: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   userId: PropTypes.string,
   closeModalAndReload: PropTypes.func.isRequired,
+};
+
+UserModal.defaultProps = {
+  userId: '',
+  modalType: 'view',
 };
 
 export default UserModal;

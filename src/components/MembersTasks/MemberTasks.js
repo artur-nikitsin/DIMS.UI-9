@@ -10,7 +10,7 @@ import MemberTracks from '../MemberTracks/MemberTracks';
 import TaskModal from '../Modals/Task/TaskModal';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import NoDataMessage from '../common/Messages/NoDataMessage';
+import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import NavButton from '../common/Buttons/NavButton/NavButton';
 
@@ -194,10 +194,13 @@ class MemberTasks extends React.Component {
 }
 
 MemberTasks.propTypes = {
-  match: PropTypes.object.isRequired,
   userName: PropTypes.string,
   signedUserName: PropTypes.string,
 };
 
+MemberTasks.defaultProps = {
+  userName: '',
+  signedUserName: '',
+};
 MemberTasks.contextType = ThemeContext;
 export default MemberTasks;

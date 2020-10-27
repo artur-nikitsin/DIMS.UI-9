@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Header.scss';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 import NavButton from '../common/Buttons/NavButton/NavButton';
 import ThemeSwitcher from './Toggle/ThemeSwitcher';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
@@ -55,4 +56,17 @@ const Header = ({ isLogin, handleLogout, theme, role }) => {
   );
 };
 
+Header.propTypes = {
+  isLogin: PropTypes.bool,
+  theme: PropTypes.string,
+  role: PropTypes.string,
+  handleLogout: PropTypes.func,
+};
+
+Header.defaultProps = {
+  isLogin: false,
+  theme: PropTypes.string,
+  role: '',
+  handleLogout: null,
+};
 export default Header;

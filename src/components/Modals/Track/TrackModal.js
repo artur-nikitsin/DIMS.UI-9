@@ -62,12 +62,20 @@ const TrackModal = (props) => {
 
 TrackModal.propTypes = {
   className: PropTypes.string.isRequired,
+  modalType: PropTypes.string,
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   closeModalAndReload: PropTypes.func.isRequired,
   trackId: PropTypes.string,
   taskName: PropTypes.string,
   userTaskId: PropTypes.string,
+};
+
+TrackModal.defaultProps = {
+  modalType: 'view',
+  trackId: '',
+  taskName: '',
+  userTaskId: '',
 };
 
 export default TrackModal;

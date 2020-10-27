@@ -8,7 +8,7 @@ import { getUserTrackList } from '../../firebase/apiGet';
 import getSubString from '../helpers/getSubString/getSubString';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import NoDataMessage from '../common/Messages/NoDataMessage';
+import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -93,10 +93,6 @@ class MemberProgress extends React.Component {
     return <div>{loading ? <Preloader /> : this.createMemberProgressTable()}</div>;
   }
 }
-
-MemberProgress.propTypes = {
-  match: PropTypes.object.isRequired,
-};
 
 MemberProgress.contextType = ThemeContext;
 export default MemberProgress;
