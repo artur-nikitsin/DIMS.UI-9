@@ -8,6 +8,7 @@ import { getUserTrackList } from '../../firebase/apiGet';
 import getSubString from '../helpers/getSubString/getSubString';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import NoDataMessage from '../common/Messages/NoDataMessage';
 
 class MemberProgress extends React.Component {
   constructor(props) {
@@ -27,7 +28,6 @@ class MemberProgress extends React.Component {
     if (user) {
       getUserTrackList(user).then((result) => {
         const allTaskWithSubtask = result.flat();
-
         const userTrackList = allTaskWithSubtask.map((track, i) => {
           return (
             <tr key={track.taskTrackId}>
@@ -66,16 +66,21 @@ class MemberProgress extends React.Component {
     );
 
     const { userTrackList } = this.state;
+    console.log(userTrackList);
     const { theme } = this.context;
-    return (
-      <div>
-        <NavLink to='/members'>Return to members manage grid</NavLink>
-        <Table striped className={`${theme} progressTable`}>
-          {tableHeaders}
-          <tbody>{userTrackList}</tbody>
-        </Table>
-      </div>
-    );
+
+    if (userTrackList.length) {
+      return (
+        <div>
+          <NavLink to='/users'>Return to members manage grid</NavLink>
+          <Table striped className={`${theme} progressTable`}>
+            {tableHeaders}
+            <tbody>{userTrackList}</tbody>
+          </Table>
+        </div>
+      );
+    }
+    return <NoDataMessage />;
   };
 
   render() {

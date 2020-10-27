@@ -10,6 +10,7 @@ import MemberTracks from '../MemberTracks/MemberTracks';
 import TaskModal from '../Modals/Task/TaskModal';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import NoDataMessage from '../common/Messages/NoDataMessage';
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -125,32 +126,36 @@ class MemberTasks extends React.Component {
       </thead>
     );
 
-    const { modalIsOpen, activeTaskId, modalType } = this.state;
-    return (
-      <div className='memberTasksTableContainer'>
-        {role === 'user' ? (
-          <div>
-            <p className='userGreeting'>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
-          </div>
-        ) : (
-          <NavLink to='/members'> Return to members manage grid</NavLink>
-        )}
+    const { userTaskList, modalIsOpen, activeTaskId, modalType } = this.state;
 
-        <TaskModal
-          className={`${theme} taskModal`}
-          buttonLabel='TaskModal'
-          isOpen={modalIsOpen}
-          closeModal={this.closeModal}
-          taskId={activeTaskId}
-          modalType={modalType}
-        />
+    if (userTaskList.length) {
+      return (
+        <div className='memberTasksTableContainer'>
+          {role === 'user' ? (
+            <div>
+              <p className='userGreeting'>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
+            </div>
+          ) : (
+            <NavLink to='/users'> Return to members manage grid</NavLink>
+          )}
 
-        <Table striped className={`${theme} memberTasksTable`}>
-          {tableHeaders}
-          <tbody>{this.state.userTaskList}</tbody>
-        </Table>
-      </div>
-    );
+          <TaskModal
+            className={`${theme} taskModal`}
+            buttonLabel='TaskModal'
+            isOpen={modalIsOpen}
+            closeModal={this.closeModal}
+            taskId={activeTaskId}
+            modalType={modalType}
+          />
+
+          <Table striped className={`${theme} memberTasksTable`}>
+            {tableHeaders}
+            <tbody>{userTaskList}</tbody>
+          </Table>
+        </div>
+      );
+    }
+    return <NoDataMessage backLink={<NavLink to='/users'> Return to members manage grid</NavLink>} />;
   };
 
   render() {
