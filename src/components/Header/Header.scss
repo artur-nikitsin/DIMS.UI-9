@@ -1,7 +1,7 @@
 @mixin AdaptHeader {
   min-height: 10vh;
   width: 100vw;
-  border-bottom: 3px solid #008F02;
+  border-bottom: 3px solid #008f02;
 
   .mr-auto {
     width: 100%;
@@ -12,7 +12,7 @@
     align-items: center;
   }
 
-  .logoContainer{
+  .logoContainer {
     width: 40%;
     .devIncubatorLogo {
       margin-left: 3rem;
@@ -20,7 +20,6 @@
       width: auto;
     }
   }
-
 
   .navButtons {
     width: 18rem;
@@ -40,12 +39,11 @@
     width: 18rem;
     margin: 1rem;
 
-    .themeSwitcher{
+    .themeSwitcher {
       margin-right: 2rem;
     }
   }
 }
-
 
 .AdaptHeader {
   @include AdaptHeader;

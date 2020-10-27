@@ -13,11 +13,6 @@ const TaskModal = (props) => {
   const [taskData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const useToggle = () => {
-    setData(null);
-    closeModal();
-  };
-
   const newTask = () => {
     setData(null);
     setLoading(false);
@@ -37,7 +32,7 @@ const TaskModal = (props) => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={useToggle} className={className}>
+      <Modal isOpen={isOpen} toggle={closeModal} className={className}>
         <ModalBody>
           {loading ? (
             <Preloader />
@@ -46,7 +41,7 @@ const TaskModal = (props) => {
               modalTemplate={taskModalTemplate}
               taskData={taskData}
               modalType={modalType}
-              closeModal={useToggle}
+              closeModal={closeModal}
               closeModalAndReload={closeModalAndReload}
             />
           )}

@@ -56,6 +56,11 @@ class UsersModalDataWorker extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log('unmount');
+    console.log(this.state);
+  }
+
   setUserDataToState = (data) => {
     const { ...thisState } = this.state;
     const { modalTemplate } = this.props;
@@ -214,4 +219,5 @@ UsersModalDataWorker.propTypes = {
   closeModal: PropTypes.func.isRequired,
   closeModalAndReload: PropTypes.func.isRequired,
 };
+
 export default UsersModalDataWorker;

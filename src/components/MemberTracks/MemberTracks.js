@@ -106,7 +106,7 @@ class MemberTracks extends React.PureComponent {
     const { theme } = this.context;
     return (
       <div className='memberTracksTableContainer'>
-        <NavLink to={`/members/tasks-user/${userId}`}>Return to task list</NavLink>
+        <NavLink to={`/users/${userId}/tasks`}>Return to task list</NavLink>
         <div>
           <p className='userGreeting'>{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>

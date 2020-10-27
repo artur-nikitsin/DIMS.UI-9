@@ -68,7 +68,7 @@ class MemberTasks extends React.Component {
                 </td>
               ) : (
                 <td className='tasksButtons'>
-                  <NavLink to={`/members/tasks-user/${userId}/taskId/${task.userTaskId}`}>
+                  <NavLink to={`/users/${userId}/tasks/${task.userTaskId}/track`}>
                     <Button
                       outline
                       color={theme === 'dark' ? 'secondary' : 'primary'}
@@ -155,20 +155,19 @@ class MemberTasks extends React.Component {
 
   render() {
     const { userId } = this.props.match.params;
-    const { userTaskId, currentTaskName, loading } = this.state;
+    const { currentTaskName, loading } = this.state;
     return (
       <div>
         <Switch>
-          <Route exact path={`/members/tasks-user/${userId}`}>
+          <Route exact path={`/users/${userId}/tasks`}>
             {loading ? <Preloader /> : this.createMemberTaskTable()}
           </Route>
 
           <Route
-            path={`/members/tasks-user/${userId}/taskId/:userTaskId`}
+            path={`/users/${userId}/tasks/:userTaskId/track`}
             render={(props) => (
               <MemberTracks
                 userId={userId}
-                userTaskId={userTaskId}
                 taskName={currentTaskName}
                 userName={this.props.signedUserName}
                 {...props}

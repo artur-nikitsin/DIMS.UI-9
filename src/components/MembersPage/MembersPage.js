@@ -1,17 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
+import { Button, Table } from 'reactstrap';
 import MemberProgress from '../MemberProgress/MemberProgress';
 import Buttons from './Buttons/Buttons';
 import { deleteUser } from '../../firebase/apiDelete';
 import './membersPage.scss';
-import { Button, Table } from 'reactstrap';
 import Preloader from '../common/Preloader/Preloader';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { RoleContext } from '../../contexts/RoleContext';
 import UserModal from '../Modals/User/UserModal';
 import MemberTasks from '../MembersTasks/MemberTasks';
-import { Route, Switch } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
 
 class MembersPage extends React.Component {
@@ -61,8 +61,8 @@ class MembersPage extends React.Component {
           <td key={`${member.userId}j`}>{getLocaleDate(member.birthDate)}</td>
           <td key={`${member.userId}h`} className='memberButtons'>
             <Buttons
-              toProgress={`/members/progress-user/${member.userId}`}
-              toTasks={`/members/tasks-user/${member.userId}`}
+              toProgress={`/users/${member.userId}/progress`}
+              toTasks={`/users/${member.userId}/tasks`}
               userId={member.userId}
               handleEdit={this.openModal(member.userId, 'edit')}
               handleDelete={this.handleDelete(member.userId)}
@@ -139,28 +139,7 @@ class MembersPage extends React.Component {
 
   render() {
     const { loading } = this.props;
-    return (
-      <div className='membersTableContainer'>
-        <Switch>
-          <Route exact path='/members'>
-            {loading ? <Preloader /> : this.createMembersTable()}
-          </Route>
-
-          <Route path='/members/progress-user/:userId' render={(props) => <MemberProgress {...props} />} />
-
-          <RoleContext.Consumer>
-            {({ role, userId, signedUserName }) => (
-              <Route
-                path='/members/tasks-user/:userId'
-                render={(props) => (
-                  <MemberTasks role={role} userId={userId} signedUserName={signedUserName} {...props} />
-                )}
-              />
-            )}
-          </RoleContext.Consumer>
-        </Switch>
-      </div>
-    );
+    return <div className='membersTableContainer'>{loading ? <Preloader /> : this.createMembersTable()}</div>;
   }
 }
 

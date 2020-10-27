@@ -11,9 +11,11 @@ import { logout } from './firebase/auth';
 import getUserFromSessionStorage from './components/helpers/sessionStorage/getUserFromSessionStorage';
 import setUserToSessionStorage from './components/helpers/sessionStorage/setUserToSessionStorage';
 import deleteUserFromLocalStorage from './components/helpers/sessionStorage/deleteUserFromLocalStorage';
-import AdaptHeader from './components/Header/AdaptHeader';
+import Header from './components/Header/Header';
 import MembersPage from './components/MembersPage/MembersPage';
 import Tasks from './components/Tasks/Tasks';
+import MemberProgress from './components/MemberProgress/MemberProgress';
+import MemberTasks from './components/MembersTasks/MemberTasks';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -112,14 +114,15 @@ class App extends React.PureComponent {
           <Switch>
             <>
               <div className={`${theme} App`}>
-                <AdaptHeader handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} role={role} />
+                <Header handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} role={role} />
 
-                {fromLoginForm && <Redirect to='/members' />}
+                {fromLoginForm && <Redirect to='/users' />}
                 {!userData && <Redirect to='/login' />}
-                {signedUserId && fromLoginForm && <Redirect from='/' to={`/members/tasks-user/${signedUserId}`} />}
+                {signedUserId && fromLoginForm && <Redirect from='/' to={`/users/${signedUserId}/tasks`} />}
 
                 <Route
-                  path='/members'
+                  exact
+                  path='/users'
                   render={(props) => (
                     <MembersPage
                       role={role}
@@ -131,6 +134,16 @@ class App extends React.PureComponent {
                   )}
                 />
                 <Route path='/tasks' component={Tasks} />
+
+                <Route path='/users/:userId/progress' render={(props) => <MemberProgress {...props} />} />
+
+                <Route
+                  path='/users/:userId/tasks'
+                  render={(props) => (
+                    <MemberTasks role={role} userId={signedUserId} signedUserName={signedUserName} {...props} />
+                  )}
+                />
+
                 <Route path='/login'>
                   <LoginForm handleLogin={this.handleLogin} />
                 </Route>

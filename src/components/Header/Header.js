@@ -1,31 +1,58 @@
-import React from 'react';
-import './header.scss';
-import { Button } from 'reactstrap';
-
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import './Header.scss';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
+import NavButton from '../common/Buttons/NavButton/NavButton';
 import ThemeSwitcher from './Toggle/ThemeSwitcher';
+import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 
-function Header({ isLogin, handleLogout, theme }) {
+const Header = ({ isLogin, handleLogout, theme, role }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
+
   return (
-    <div className={`${theme} header`}>
-      <div className='logoContainer'>
-        <img className='devIncubatorLogo' src='/assets/img/logo.png' alt='devIncubator' />
-      </div>
-      {isLogin && (
-        <div className='buttonsContainer'>
-          <ThemeSwitcher />
-          <Button outline color='secondary' className='logoutButton' onClick={handleLogout}>
-            Logout
-          </Button>
-        </div>
-      )}
+    <div>
+      <Navbar light expand='md' className={`${theme} AdaptHeader`}>
+        <NavbarBrand href='/' className='logoContainer'>
+          <img className='devIncubatorLogo' src='/assets/img/logo.png' alt='devIncubator' />
+        </NavbarBrand>
+        <NavbarToggler onClick={toggle} />
+        <Collapse isOpen={isOpen} navbar>
+          <Nav className='mr-auto' navbar>
+            {isAdminOrMentor(role) && (
+              <NavItem className='navButtons'>
+                <NavButton
+                  label='Members'
+                  to='/users'
+                  className={`${theme} navButton`}
+                  color={theme === 'dark' ? 'secondary' : 'primary'}
+                />
+                <NavButton
+                  label='Tasks'
+                  to='/tasks'
+                  className={`${theme} navButton`}
+                  color={theme === 'dark' ? 'secondary' : 'primary'}
+                />
+              </NavItem>
+            )}
+            {isLogin && (
+              <div className='buttonsContainer'>
+                <ThemeSwitcher className='themeSwitcher' />
+                <Button
+                  outline
+                  color={theme === 'dark' ? 'secondary' : 'primary'}
+                  className='logoutButton'
+                  onClick={handleLogout}
+                >
+                  Logout
+                </Button>
+              </div>
+            )}
+          </Nav>
+        </Collapse>
+      </Navbar>
     </div>
   );
-}
-
-Header.propTypes = {
-  isLogin: PropTypes.bool.isRequired,
-  handleLogout: PropTypes.func.isRequired,
 };
 
 export default Header;

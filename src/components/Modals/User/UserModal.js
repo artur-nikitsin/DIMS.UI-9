@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Modal, ModalBody } from 'reactstrap';
 import UsersModalDataWorker from './UsersModalDataWorker';
 import { userModalTemplate } from '../Common/ModalInputsTemplate';
 import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
-import PropTypes from 'prop-types';
 import Preloader from '../../common/Preloader/Preloader';
 
 const UserModal = (props) => {
@@ -19,6 +19,7 @@ const UserModal = (props) => {
   };
 
   useEffect(() => {
+    console.log('effect');
     if (userId) {
       setLoading(true);
       getMember(userId).then((result) => {
