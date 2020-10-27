@@ -12,6 +12,7 @@ import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import NoDataMessage from '../common/Messages/NoDataMessage';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
+import NavButton from '../common/Buttons/NavButton/NavButton';
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -78,15 +79,12 @@ class MemberTasks extends React.Component {
                 </td>
               ) : (
                 <td className='tasksButtons'>
-                  <NavLink to={`/users/${userId}/tasks/${task.userTaskId}/track`}>
-                    <Button
-                      outline
-                      color={theme === 'dark' ? 'secondary' : 'primary'}
-                      onClick={this.setCurrentTask(task.userTaskId, task.name)}
-                    >
-                      Track
-                    </Button>
-                  </NavLink>
+                  <NavButton
+                    label='Track'
+                    to={`/users/${userId}/tasks/${task.userTaskId}/track`}
+                    color={theme === 'dark' ? 'secondary' : 'primary'}
+                    onClick={this.setCurrentTask(task.userTaskId, task.name)}
+                  />
                 </td>
               )}
             </tr>

@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import MemberProgress from '../MemberProgress/MemberProgress';
 import Buttons from './Buttons/Buttons';
 import { deleteUser } from '../../firebase/apiDelete';
 import './membersPage.scss';
 import Preloader from '../common/Preloader/Preloader';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
-import { RoleContext } from '../../contexts/RoleContext';
 import UserModal from '../Modals/User/UserModal';
-import MemberTasks from '../MembersTasks/MemberTasks';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
 
 class MembersPage extends React.Component {
@@ -36,60 +32,6 @@ class MembersPage extends React.Component {
     const { getAllMembers } = this.props;
     getAllMembers();
   };
-
-  membersTable() {
-    const { members } = this.props;
-    let table = [];
-    table = members.map((member, i) => {
-      return (
-        <tr key={`${member.userId}n`}>
-          <td key={`${member.userId}a`}>{i + 1}</td>
-          <td key={`${member.userId}b`}>
-            <Button
-              color='link'
-              onClick={(event) => {
-                event.preventDefault();
-                this.openModal(member.userId, 'view')();
-              }}
-            >
-              {`${member.firstName} ${member.lastName}`}
-            </Button>
-          </td>
-          <td key={`${member.userId}c`} className='collapsed'>
-            {member.directionId}
-          </td>
-          <td key={`${member.userId}d`} className='collapsed'>
-            {member.education}
-          </td>
-          <td key={`${member.userId}i`} className='collapsed'>
-            {getLocaleDate(member.startDate)}
-          </td>
-          <td key={`${member.userId}j`} className='collapsed'>
-            {getLocaleDate(member.birthDate)}
-          </td>
-          <td className='minRow'>
-            <ul className='tableInfo'>
-              <li>{`Direction: ${member.directionId}`}</li>
-              <hr />
-              <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>
-              <hr />
-              <li>{`Age: ${getLocaleDate(member.birthDate)}`}</li>
-            </ul>
-          </td>
-          <td key={`${member.userId}h`} className='memberButtons'>
-            <Buttons
-              toProgress={`/users/${member.userId}/progress`}
-              toTasks={`/users/${member.userId}/tasks`}
-              userId={member.userId}
-              handleEdit={this.openModal(member.userId, 'edit')}
-              handleDelete={this.handleDelete(member.userId)}
-            />
-          </td>
-        </tr>
-      );
-    });
-    return table;
-  }
 
   openModal = (activeUserId, modalType) => () => {
     const { openModal } = this.props;
@@ -155,6 +97,59 @@ class MembersPage extends React.Component {
     );
   };
 
+  membersTable() {
+    const { members } = this.props;
+    const table = members.map((member, i) => {
+      return (
+        <tr key={`${member.userId}n`}>
+          <td key={`${member.userId}a`}>{i + 1}</td>
+          <td key={`${member.userId}b`}>
+            <Button
+              color='link'
+              onClick={(event) => {
+                event.preventDefault();
+                this.openModal(member.userId, 'view')();
+              }}
+            >
+              {`${member.firstName} ${member.lastName}`}
+            </Button>
+          </td>
+          <td key={`${member.userId}c`} className='collapsed'>
+            {member.directionId}
+          </td>
+          <td key={`${member.userId}d`} className='collapsed'>
+            {member.education}
+          </td>
+          <td key={`${member.userId}i`} className='collapsed'>
+            {getLocaleDate(member.startDate)}
+          </td>
+          <td key={`${member.userId}j`} className='collapsed'>
+            {getLocaleDate(member.birthDate)}
+          </td>
+          <td className='minRow'>
+            <ul className='tableInfo'>
+              <li>{`Direction: ${member.directionId}`}</li>
+              <hr />
+              <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>
+              <hr />
+              <li>{`Age: ${getLocaleDate(member.birthDate)}`}</li>
+            </ul>
+          </td>
+          <td key={`${member.userId}h`} className='memberButtons'>
+            <Buttons
+              toProgress={`/users/${member.userId}/progress`}
+              toTasks={`/users/${member.userId}/tasks`}
+              userId={member.userId}
+              handleEdit={this.openModal(member.userId, 'edit')}
+              handleDelete={this.handleDelete(member.userId)}
+            />
+          </td>
+        </tr>
+      );
+    });
+    return table;
+  }
+
   render() {
     const { loading } = this.props;
     return <div className='membersTableContainer'>{loading ? <Preloader /> : this.createMembersTable()}</div>;
@@ -174,8 +169,29 @@ const mapStateToProps = (state) => {
 };
 
 MembersPage.propTypes = {
-  match: PropTypes.object.isRequired,
-  members: PropTypes.array,
+  members: PropTypes.arrayOf(PropTypes.string),
+  getAllMembers: PropTypes.func,
+  openModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  loading: PropTypes.bool,
+  role: PropTypes.string,
+  theme: PropTypes.string,
+  modalIsOpen: PropTypes.bool,
+  activeUserId: PropTypes.string,
+  modalType: PropTypes.string,
+};
+
+MembersPage.defaultProps = {
+  members: [],
+  getAllMembers: null,
+  openModal: null,
+  closeModal: null,
+  loading: false,
+  role: '',
+  theme: 'light',
+  modalIsOpen: false,
+  activeUserId: '',
+  modalType: 'view',
 };
 
 export default connect(mapStateToProps, {

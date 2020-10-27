@@ -7,13 +7,6 @@ import './themeSwitcher.scss';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 
 class ThemeSwitcher extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      soupIsReady: false,
-    };
-  }
-
   handleSwitch = (event) => {
     const { value } = event.target;
     const theme = value === 'dark' ? 'light' : 'dark';
