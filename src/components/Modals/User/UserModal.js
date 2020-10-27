@@ -19,7 +19,6 @@ const UserModal = (props) => {
   };
 
   useEffect(() => {
-    console.log('effect');
     if (userId) {
       setLoading(true);
       getMember(userId).then((result) => {

@@ -55,10 +55,27 @@ class MembersPage extends React.Component {
               {`${member.firstName} ${member.lastName}`}
             </Button>
           </td>
-          <td key={`${member.userId}c`}>{member.directionId}</td>
-          <td key={`${member.userId}d`}>{member.education}</td>
-          <td key={`${member.userId}i`}>{getLocaleDate(member.startDate)}</td>
-          <td key={`${member.userId}j`}>{getLocaleDate(member.birthDate)}</td>
+          <td key={`${member.userId}c`} className='collapsed'>
+            {member.directionId}
+          </td>
+          <td key={`${member.userId}d`} className='collapsed'>
+            {member.education}
+          </td>
+          <td key={`${member.userId}i`} className='collapsed'>
+            {getLocaleDate(member.startDate)}
+          </td>
+          <td key={`${member.userId}j`} className='collapsed'>
+            {getLocaleDate(member.birthDate)}
+          </td>
+          <td className='minRow'>
+            <ul className='memberInfo'>
+              <li>{`Direction: ${member.directionId}`}</li>
+              <hr />
+              <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>
+              <hr />
+              <li>{`Age: ${getLocaleDate(member.birthDate)}`}</li>
+            </ul>
+          </td>
           <td key={`${member.userId}h`} className='memberButtons'>
             <Buttons
               toProgress={`/users/${member.userId}/progress`}
@@ -95,10 +112,11 @@ class MembersPage extends React.Component {
         <tr>
           <th>#</th>
           <th>Full Name</th>
-          <th>Direction</th>
-          <th>Education</th>
-          <th>Start</th>
-          <th>Age</th>
+          <th className='collapsed'>Direction</th>
+          <th className='collapsed'>Education</th>
+          <th className='collapsed'>Start</th>
+          <th className='collapsed'>Age</th>
+          <th className='minRow'> Information</th>
           <th />
         </tr>
       </thead>

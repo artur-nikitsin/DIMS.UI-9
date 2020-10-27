@@ -4,20 +4,85 @@
   border: 1px solid black;
   background: #ffffff;
 
-  & td {
-    width: 200px;
-    height: 2rem;
-    text-align: center;
-    border: 1px solid rgba(157, 157, 158, 1);
+  @media screen and (max-width: 480px) {
+    & td {
+      max-width: 10rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgba(16, 120, 224, 0.9);
+    }
+    .collapsed {
+      display: none;
+    }
+    .minRow {
+      display: none;
+
+      .memberInfo {
+        display: none;
+      }
+    }
   }
 
-  & th {
-    min-width: 2rem;
-    width: auto;
-    height: 2rem;
-    text-align: center;
-    border: 1px solid rgba(157, 157, 158, 1);
-    background: rgba(16, 120, 224, 0.9);
+  @media screen and (max-width: 800px) {
+    & td {
+      max-width: 10rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgba(16, 120, 224, 0.9);
+    }
+    .collapsed {
+      display: none;
+    }
+    .minRow {
+      text-align: start;
+
+      .memberInfo {
+        list-style-type: none;
+        padding: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    & td {
+      width: 20rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgba(16, 120, 224, 0.9);
+    }
+    .minRow {
+      display: none;
+    }
   }
 }
 
@@ -27,21 +92,91 @@
   border: 1px solid black;
   background: rgb(36, 41, 46);
 
-  & td {
-    width: 200px;
-    height: 2rem;
-    text-align: center;
-    border: 1px solid rgba(157, 157, 158, 1);
-    color: #ffffff;
+  @media screen and (max-width: 480px) {
+    & td {
+      max-width: 10rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgb(36, 41, 46);
+      color: #ffffff;
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgb(36, 41, 46);
+      color: #ffffff;
+    }
+    .collapsed {
+      display: none;
+    }
+    .minRow {
+      display: none;
+
+      .memberInfo {
+        display: none;
+      }
+    }
   }
 
-  & th {
-    min-width: 2rem;
-    width: auto;
-    height: 2rem;
-    text-align: center;
-    border: 1px solid rgba(157, 157, 158, 1);
-    background: rgb(36, 41, 46);
-    color: #ffffff;
+  @media screen and (max-width: 800px) {
+    & td {
+      max-width: 10rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      color: #ffffff;
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgb(36, 41, 46);
+      color: #ffffff;
+    }
+    .collapsed {
+      display: none;
+    }
+    .minRow {
+      text-align: start;
+
+      .memberInfo {
+        list-style-type: none;
+        padding: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    & td {
+      width: 20rem;
+      min-width: 2rem;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      color: #ffffff;
+    }
+
+    & th {
+      min-width: 2rem;
+      width: auto;
+      height: 2rem;
+      text-align: center;
+      border: 1px solid rgba(157, 157, 158, 1);
+      background: rgb(36, 41, 46);
+      color: #ffffff;
+    }
+    .minRow {
+      display: none;
+    }
   }
 }
