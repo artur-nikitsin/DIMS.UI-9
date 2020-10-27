@@ -1,5 +1,5 @@
 const deleteUserFromLocalStorage = () => {
-  sessionStorage.removeItem("user");
+  sessionStorage.removeItem('user');
 };
 
 export default deleteUserFromLocalStorage;

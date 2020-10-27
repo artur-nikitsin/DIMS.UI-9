@@ -1,9 +1,9 @@
-import db from "./db";
-import getLocaleDate from "../components/helpers/getLocaleDate/getLocalDate";
+import db from './db';
+import getLocaleDate from '../components/helpers/getLocaleDate/getLocalDate';
 
 export function getMembers() {
   return db
-    .collection("Users")
+    .collection('Users')
     .get()
     .then((users) => {
       const members = users.docs.map((user) => {
@@ -15,18 +15,18 @@ export function getMembers() {
           directionId,
           education,
           startDate,
-          userId
+          userId,
         };
       });
       return members;
     })
-    .catch(({ message }) => ({ message, messageType: "warning" }));
+    .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
 export function getMember(userId) {
   const member = {};
   return db
-    .collection("Users")
+    .collection('Users')
     .doc(userId)
     .get()
     .then((user) => {
@@ -44,7 +44,7 @@ export function getMember(userId) {
         address,
         mobilePhone,
         skype,
-        sex
+        sex,
       } = user.data();
 
       member.firstName = firstName;
@@ -64,13 +64,13 @@ export function getMember(userId) {
 
       return member;
     })
-    .catch(({ message }) => ({ message, messageType: "warning" }));
+    .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
 export function getUserTaskList(userId) {
   return db
-    .collection("UserTasks")
-    .where("userId", "==", userId)
+    .collection('UserTasks')
+    .where('userId', '==', userId)
     .get()
     .then((userTasks) => {
       const userTaskList = userTasks.docs.map((userTask) => {
@@ -95,42 +95,42 @@ export function getUserTaskList(userId) {
 export function getUserTasks(taskId, userTaskId, stateId) {
   const taskData = {};
 
-    return db
-      .collection("Tasks")
-      .doc(taskId)
-      .get()
-      .then((task) => {
-        const { name, description, startDate, deadlineDate } = task.data();
-        taskData.taskId = taskId;
-        taskData.name = name;
-        taskData.description = description;
-        taskData.startDate = startDate;
-        taskData.deadlineDate = deadlineDate;
-        taskData.userTaskId = userTaskId;
-        taskData.stateId = stateId;
-
-      }).then(async () => {
-          await db
-            .collection("TasksState")
-            .doc(stateId).get().then((doc) => {
-              if (doc.exists) {
-                taskData.status = doc.data().stateName;
-              } else {
-                taskData.status = "Active";
-              }
-            });
-          return taskData;
-        }
-      )
-      .catch((error) => {
-        console.error(`Error receiving data: ${error}`);
-      });
+  return db
+    .collection('Tasks')
+    .doc(taskId)
+    .get()
+    .then((task) => {
+      const { name, description, startDate, deadlineDate } = task.data();
+      taskData.taskId = taskId;
+      taskData.name = name;
+      taskData.description = description;
+      taskData.startDate = startDate;
+      taskData.deadlineDate = deadlineDate;
+      taskData.userTaskId = userTaskId;
+      taskData.stateId = stateId;
+    })
+    .then(async () => {
+      await db
+        .collection('TasksState')
+        .doc(stateId)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            taskData.status = doc.data().stateName;
+          } else {
+            taskData.status = 'Active';
+          }
+        });
+      return taskData;
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
 }
-
 
 export function getAllTasks() {
   return db
-    .collection("Tasks")
+    .collection('Tasks')
     .get()
     .then((tasks) => {
       const taskData = tasks.docs.map((task) => {
@@ -140,7 +140,7 @@ export function getAllTasks() {
           name,
           description,
           startDate,
-          deadlineDate
+          deadlineDate,
         };
       });
       return taskData;
@@ -152,7 +152,7 @@ export function getAllTasks() {
 
 export function getTask(taskId) {
   return db
-    .collection("Tasks")
+    .collection('Tasks')
     .doc(taskId)
     .get()
     .then((task) => {
@@ -160,7 +160,7 @@ export function getTask(taskId) {
       return {
         ...task.data(),
         startDate: getLocaleDate(startDate),
-        deadlineDate: getLocaleDate(deadlineDate)
+        deadlineDate: getLocaleDate(deadlineDate),
       };
     })
     .catch((error) => {
@@ -171,11 +171,10 @@ export function getTask(taskId) {
 // all track of current task
 export function getTaskTrack(userTaskId, name) {
   return db
-    .collection("TaskTracks")
-    .where("userTaskId", "==", userTaskId)
+    .collection('TaskTracks')
+    .where('userTaskId', '==', userTaskId)
     .get()
     .then((trackData) => {
-
       const taskTrackList = trackData.docs.map((userTask) => {
         const { taskTrackId, userTaskId, trackDate, trackNote } = userTask.data();
         return { name, taskTrackId, userTaskId, trackDate, trackNote };
@@ -191,7 +190,7 @@ export function getTaskTrack(userTaskId, name) {
 export function getTrack(taskTrackId) {
   const trackData = {};
   return db
-    .collection("TaskTracks")
+    .collection('TaskTracks')
     .doc(taskTrackId)
     .get()
     .then((track) => {
@@ -207,11 +206,10 @@ export function getTrack(taskTrackId) {
     });
 }
 
-
 export function getUserTrackList(userId) {
   return db
-    .collection("UserTasks")
-    .where("userId", "==", userId)
+    .collection('UserTasks')
+    .where('userId', '==', userId)
     .get()
     .then((userTasks) => {
       const userTaskList = userTasks.docs.map((userTask) => {
@@ -222,7 +220,7 @@ export function getUserTrackList(userId) {
     })
     .then((userTaskList) => {
       const userTracks = userTaskList.map((task) => {
-        let currentTrack = getTaskTracksWithName(task.userTaskId, task.taskId);
+        const currentTrack = getTaskTracksWithName(task.userTaskId, task.taskId);
         return currentTrack;
       });
       const trackData = Promise.all(userTracks);
@@ -233,10 +231,9 @@ export function getUserTrackList(userId) {
     });
 }
 
-
 function getTaskTracksWithName(userTaskId, taskId) {
   return db
-    .collection("Tasks")
+    .collection('Tasks')
     .doc(taskId)
     .get()
     .then((taskData) => {
@@ -253,8 +250,8 @@ function getTaskTracksWithName(userTaskId, taskId) {
 export function getTaskTrackData(userTaskId, name) {
   const tracks = {};
   return db
-    .collection("TaskTracks")
-    .where("userTaskId", "==", userTaskId)
+    .collection('TaskTracks')
+    .where('userTaskId', '==', userTaskId)
     .get()
     .then((trackData) => {
       trackData.docs.forEach((userTrack) => {

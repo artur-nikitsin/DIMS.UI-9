@@ -1,10 +1,8 @@
-import mobilePhoneValidator from "./mobilePhoneValidator";
+import mobilePhoneValidator from './mobilePhoneValidator';
 
-describe("func checking last phone number string valid", () => {
-
-  test("true should be returned", () => {
-
-    const input = "300400500";
+describe('func checking last phone number string valid', () => {
+  test('true should be returned', () => {
+    const input = '300400500';
 
     const actual = mobilePhoneValidator(input).isValid;
 
@@ -13,9 +11,8 @@ describe("func checking last phone number string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("false should be returned", () => {
-
-    const input = "234234234h";
+  test('false should be returned', () => {
+    const input = '234234234h';
 
     const actual = mobilePhoneValidator(input).isValid;
 

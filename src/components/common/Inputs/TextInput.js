@@ -1,91 +1,81 @@
-import React from "react";
-import validatorsManager from "../../helpers/validators/validatorsManager";
-import inputNamesStore from "./inputNamesStore";
-import "./textInput.scss";
-import { AvFeedback, AvGroup, AvInput } from "availity-reactstrap-validation";
-import { Label } from "reactstrap";
-import PropTypes from "prop-types";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-
-
+import React from 'react';
+import validatorsManager from '../../helpers/validators/validatorsManager';
+import inputNamesStore from './inputNamesStore';
+import './textInput.scss';
+import { AvFeedback, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { Label } from 'reactstrap';
+import PropTypes from 'prop-types';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 
 class TextInput extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       name: null,
       value: null,
-      status: "invalid",
-      message: "Please enter data!"
+      status: 'invalid',
+      message: 'Please enter data!',
     };
     this.validator = this.validator.bind(this);
   }
 
-
   componentDidMount() {
     const { value } = this.props;
     this.setState({
-      value
+      value,
     });
   }
-
 
   validator = (value) => {
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
       return isValid;
-    } else
-      return false;
+    }
+    return false;
   };
 
-
   componentDidUpdate(prevProps, prevState, snapshot) {
-
     const { value: prevValue } = prevProps;
     const { value, inputName, handleValidInput } = this.props;
 
     if (value !== prevValue) {
-
       if (value) {
-
         const { isValid, message, status } = validatorsManager(inputName, value);
-        //return current input name & its status to parent:
+        // return current input name & its status to parent:
         handleValidInput(inputName, isValid, value);
         this.setState({
           message,
-          status
+          status,
         });
       } else {
         this.setState({
-          status: "invalid",
-          message: "Please enter data!"
+          status: 'invalid',
+          message: 'Please enter data!',
         });
       }
     }
   }
 
   render() {
-
     const { inputName, handleChange, value, type, modalType } = this.props;
     const { message } = this.state;
     const { theme } = this.context;
     return (
-      <AvGroup className="textInputContainer">
+      <AvGroup className='textInputContainer'>
         <Label for={inputName}>{inputNamesStore[inputName]}</Label>
         <AvInput
-          disabled={modalType === "view"}
+          disabled={modalType === 'view'}
           className={`${theme} textInput`}
           required
           type={type}
           name={inputName}
-          value={value || ""}
+          value={value || ''}
           onChange={handleChange}
-          validate={{ myValidation: this.validator.bind(this) }} />
+          validate={{ myValidation: this.validator.bind(this) }}
+        />
         <AvFeedback>{message}</AvFeedback>
       </AvGroup>
-
     );
   }
 }
@@ -95,7 +85,7 @@ TextInput.propTypes = {
   type: PropTypes.string,
   inputName: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleValidInput: PropTypes.func.isRequired
+  handleValidInput: PropTypes.func.isRequired,
 };
 
 TextInput.contextType = ThemeContext;

@@ -1,10 +1,8 @@
-import nameValidator from "./nameValidator";
+import nameValidator from './nameValidator';
 
-describe("func checking name string valid", () => {
-
-  test("true should be returned", () => {
-
-    const input = "Artur";
+describe('func checking name string valid', () => {
+  test('true should be returned', () => {
+    const input = 'Artur';
 
     const actual = nameValidator(input).isValid;
 
@@ -13,9 +11,8 @@ describe("func checking name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("false should be returned", () => {
-
-    const input = "Artur1";
+  test('false should be returned', () => {
+    const input = 'Artur1';
 
     const actual = nameValidator(input).isValid;
 

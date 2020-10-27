@@ -1,18 +1,15 @@
-import React from "react";
-import "./loginForm.scss";
-import TextInput from "../common/Inputs/TextInput";
-import { loginTemplate as inputsStatus } from "./FormTemplate";
-import formValidator from "../helpers/FormValidator/formValidator";
-import { AvForm } from "availity-reactstrap-validation";
-import { login } from "../../firebase/auth";
-import Preloader from "../common/Preloader/Preloader";
-import { Button, Alert } from "reactstrap";
-import { RoleContext } from "../../contexts/RoleContext";
-
-
+import React from 'react';
+import './loginForm.scss';
+import { AvForm } from 'availity-reactstrap-validation';
+import { Button, Alert } from 'reactstrap';
+import TextInput from '../common/Inputs/TextInput';
+import { loginTemplate as inputsStatus } from './FormTemplate';
+import formValidator from '../helpers/FormValidator/formValidator';
+import { login } from '../../firebase/auth';
+import Preloader from '../common/Preloader/Preloader';
+import { RoleContext } from '../../contexts/RoleContext';
 
 class LoginForm extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -23,49 +20,44 @@ class LoginForm extends React.Component {
       isSubmit: false,
       isFailLogin: false,
       isFormValid: false,
-      message: null
+      message: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-
   handleChange(event) {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
-
   handleSubmit() {
-
     const { isFormValid, email, password } = this.state;
     if (isFormValid) {
       this.setState({
         isSubmit: true,
-        loading: true
+        loading: true,
       });
 
       const { handleLogin } = this.context;
-      login(email, password)
-        .then((response) => {
-
-          const { role } = response;
-          if (role) {
-            this.setState({
-              loading: false
-            });
-            handleLogin(response);
-          } else {
-            const { message } = response;
-            this.setState({
-              loading: false,
-              isFailLogin: true,
-              message
-            });
-          }
-        });
+      login(email, password).then((response) => {
+        const { role } = response;
+        if (role) {
+          this.setState({
+            loading: false,
+          });
+          handleLogin(response);
+        } else {
+          const { message } = response;
+          this.setState({
+            loading: false,
+            isFailLogin: true,
+            message,
+          });
+        }
+      });
     }
   }
 
@@ -73,37 +65,52 @@ class LoginForm extends React.Component {
     this.setState((prevState) => {
       return {
         inputsStatus: { ...prevState.inputsStatus, [input]: status },
-        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status }),
       };
     });
   };
 
-
   render() {
-
     const { email, password, isSubmit, loading, isFailLogin, message } = this.state;
 
-    return (
-
-      loading ? <Preloader /> :
-
-        <div className='loginForm'>
-          <p className="loginTitle">Login</p>
-          <div className='loginFormBody'>
-            {isFailLogin && <Alert color="danger"> {message} </Alert>}
-            <AvForm className="userForm" onSubmit={this.handleSubmit}>
-              <ul className='loginFormInputList'>
-                <li><TextInput inputName="email" type="text" value={email} handleChange={this.handleChange}
-                               handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-                <li><TextInput inputName="password" type="password" value={password} handleChange={this.handleChange}
-                               handleValidInput={this.handleValidInput} isSubmit={isSubmit} /></li>
-                <li><Button className="loginButton" color="secondary"
-                            size="lg">Login</Button></li>
-              </ul>
-            </AvForm>
-          </div>
+    return loading ? (
+      <Preloader />
+    ) : (
+      <div className='loginForm'>
+        <p className='loginTitle'>Login</p>
+        <div className='loginFormBody'>
+          {isFailLogin && <Alert color='danger'> {message} </Alert>}
+          <AvForm className='userForm' onSubmit={this.handleSubmit}>
+            <ul className='loginFormInputList'>
+              <li>
+                <TextInput
+                  inputName='email'
+                  type='text'
+                  value={email}
+                  handleChange={this.handleChange}
+                  handleValidInput={this.handleValidInput}
+                  isSubmit={isSubmit}
+                />
+              </li>
+              <li>
+                <TextInput
+                  inputName='password'
+                  type='password'
+                  value={password}
+                  handleChange={this.handleChange}
+                  handleValidInput={this.handleValidInput}
+                  isSubmit={isSubmit}
+                />
+              </li>
+              <li>
+                <Button className='loginButton' color='secondary' size='lg'>
+                  Login
+                </Button>
+              </li>
+            </ul>
+          </AvForm>
         </div>
-
+      </div>
     );
   }
 }

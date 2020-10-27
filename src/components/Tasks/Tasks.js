@@ -1,14 +1,13 @@
-import React from "react";
-import "./tasks.scss";
-import { getAllTasks } from "../../firebase/apiGet";
-import Preloader from "../common/Preloader/Preloader";
-import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
-import { deleteTask } from "../../firebase/apiDelete";
-import { Table, Button } from "reactstrap";
-import TaskModal from "../Modals/Task/TaskModal";
-import getLocaleDate from "../helpers/getLocaleDate/getLocalDate";
-import { ThemeContext } from "../../contexts/ThemeContext";
-
+import React from 'react';
+import './tasks.scss';
+import { Table, Button } from 'reactstrap';
+import { getAllTasks } from '../../firebase/apiGet';
+import Preloader from '../common/Preloader/Preloader';
+import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
+import { deleteTask } from '../../firebase/apiDelete';
+import TaskModal from '../Modals/Task/TaskModal';
+import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 class Tasks extends React.PureComponent {
   constructor(props) {
@@ -18,7 +17,7 @@ class Tasks extends React.PureComponent {
       tasks: null,
       modalIsOpen: false,
       activeTaskId: null,
-      modalType: null
+      modalType: null,
     };
   }
 
@@ -27,41 +26,43 @@ class Tasks extends React.PureComponent {
   }
 
   handleDelete = (taskId) => () => {
-    deleteTask(taskId)
-      .then(() => {
-        this.reloadTasksPage();
-      });
+    deleteTask(taskId).then(() => {
+      this.reloadTasksPage();
+    });
   };
-
 
   reloadTasksPage = () => {
     this.setState({
       loading: true,
-      tasks: null
+      tasks: null,
     });
     this.getTasks();
   };
 
-
   getTasks = () => {
     getAllTasks().then((result) => {
-      let tasks = result.map((task, i) => {
+      const tasks = result.map((task, i) => {
         return (
-          <tr key={task.taskId + "z"}>
-            <td key={task.taskId + "a"}>{i + 1}</td>
-            <td key={task.taskId + "b"}>
-              <Button color="link" onClick={event => {
-                event.preventDefault();
-                this.openModal(task.taskId, "view")();
-              }}>{task.name}</Button>
+          <tr key={`${task.taskId}z`}>
+            <td key={`${task.taskId}a`}>{i + 1}</td>
+            <td key={`${task.taskId}b`}>
+              <Button
+                color='link'
+                onClick={(event) => {
+                  event.preventDefault();
+                  this.openModal(task.taskId, 'view')();
+                }}
+              >
+                {task.name}
+              </Button>
             </td>
-            <td key={task.taskId + "i"}>{getLocaleDate(task.startDate)}</td>
-            <td key={task.taskId + "j"}>{getLocaleDate(task.deadlineDate)}</td>
-            <td key={task.taskId + "h"}>
-
+            <td key={`${task.taskId}i`}>{getLocaleDate(task.startDate)}</td>
+            <td key={`${task.taskId}j`}>{getLocaleDate(task.deadlineDate)}</td>
+            <td key={`${task.taskId}h`}>
               <EditDeleteButtons
-                handleEdit={this.openModal(task.taskId, "edit")}
-                handleDelete={this.handleDelete(task.taskId)} />
+                handleEdit={this.openModal(task.taskId, 'edit')}
+                handleDelete={this.handleDelete(task.taskId)}
+              />
             </td>
           </tr>
         );
@@ -70,25 +71,24 @@ class Tasks extends React.PureComponent {
       if (!this.state.tasks) {
         this.setState({
           loading: false,
-          tasks
+          tasks,
         });
       }
     });
   };
 
-
   openModal = (activeTaskId, modalType) => () => {
     this.setState({
       modalIsOpen: true,
       activeTaskId,
-      modalType
+      modalType,
     });
   };
 
   closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeTaskId: null
+      activeTaskId: null,
     });
   };
 
@@ -100,13 +100,13 @@ class Tasks extends React.PureComponent {
   createTasksTable = () => {
     const tableHeaders = (
       <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Start</th>
-        <th>Deadline</th>
-        <th />
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Start</th>
+          <th>Deadline</th>
+          <th />
+        </tr>
       </thead>
     );
 
@@ -114,16 +114,21 @@ class Tasks extends React.PureComponent {
     const { theme } = this.context;
     return (
       <>
-        <TaskModal className={`${theme} taskModal`}
-                   buttonLabel="TaskModal"
-                   isOpen={modalIsOpen}
-                   closeModal={this.closeModal}
-                   taskId={activeTaskId}
-                   modalType={modalType}
-                   closeModalAndReload={this.closeModalAndReload}
+        <TaskModal
+          className={`${theme} taskModal`}
+          buttonLabel='TaskModal'
+          isOpen={modalIsOpen}
+          closeModal={this.closeModal}
+          taskId={activeTaskId}
+          modalType={modalType}
+          closeModalAndReload={this.closeModalAndReload}
         />
-        <Button outline color={theme === "dark" ? "secondary" : "primary"} className='taskCreateButton'
-                onClick={this.openModal(null, "register")}>
+        <Button
+          outline
+          color={theme === 'dark' ? 'secondary' : 'primary'}
+          className='taskCreateButton'
+          onClick={this.openModal(null, 'register')}
+        >
           Create
         </Button>
         <Table striped className={`${theme} tasksTable`}>
@@ -135,16 +140,9 @@ class Tasks extends React.PureComponent {
   };
 
   render() {
-
     const { loading } = this.state;
 
-    return (
-      <div className='tasksTableContainer'>
-        {loading ? <Preloader />
-          : this.createTasksTable()}
-      </div>
-    );
-
+    return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
   }
 }
 

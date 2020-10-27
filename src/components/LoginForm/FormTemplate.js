@@ -1,4 +1,4 @@
-export  const loginTemplate = {
+export const loginTemplate = {
   email: null,
-  password: null
+  password: null,
 };

@@ -1,10 +1,8 @@
-import lastNameValidator from "./lastNameValidator";
+import lastNameValidator from './lastNameValidator';
 
-describe("func checking last name string valid", () => {
-
-  test("true should be returned", () => {
-
-    const input = "Nikitsin";
+describe('func checking last name string valid', () => {
+  test('true should be returned', () => {
+    const input = 'Nikitsin';
 
     const actual = lastNameValidator(input).isValid;
 
@@ -13,9 +11,8 @@ describe("func checking last name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("false should be returned", () => {
-
-    const input = "Nikitsin1";
+  test('false should be returned', () => {
+    const input = 'Nikitsin1';
 
     const actual = lastNameValidator(input).isValid;
 

@@ -1,12 +1,10 @@
-import validatorsManager from "./validatorsManager";
+import validatorsManager from './validatorsManager';
 
-describe("func checking name string valid", () => {
+describe('func checking name string valid', () => {
+  test('true should be returned', () => {
+    const type = 'firstName';
 
-  test("true should be returned", () => {
-
-    const type = "firstName"
-
-    const input = "Artur";
+    const input = 'Artur';
 
     const actual = validatorsManager(type, input).isValid;
 
@@ -15,11 +13,10 @@ describe("func checking name string valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("true should be returned", () => {
+  test('true should be returned', () => {
+    const type = 'email';
 
-    const type = "email"
-
-    const input = "abcde@gmail.com";
+    const input = 'abcde@gmail.com';
 
     const actual = validatorsManager(type, input).isValid;
 

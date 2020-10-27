@@ -1,20 +1,18 @@
-import nameValidator from "./nameValidator";
-import lastNameValidator from "./lastNameValidator";
-import emailValidator from "./emailValidator";
-import lengthValidator from "./lengthValidator";
-import mobilePhoneValidator from "./mobilePhoneValidator";
-
+import nameValidator from './nameValidator';
+import lastNameValidator from './lastNameValidator';
+import emailValidator from './emailValidator';
+import lengthValidator from './lengthValidator';
+import mobilePhoneValidator from './mobilePhoneValidator';
 
 function validatorsManager(type, data) {
-
   switch (type) {
-    case "email":
+    case 'email':
       return emailValidator(data);
-    case "firstName":
+    case 'firstName':
       return nameValidator(data);
-    case "lastName":
+    case 'lastName':
       return lastNameValidator(data);
-    case "mobilePhone":
+    case 'mobilePhone':
       return mobilePhoneValidator(data);
     default:
       return lengthValidator(data);

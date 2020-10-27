@@ -1,24 +1,22 @@
-import React from "react";
-import Toggle from "react-toggle";
-import "react-toggle/style.css";
-import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./themeSwitcher.scss";
-import { ThemeContext } from "../../../contexts/ThemeContext";
-
+import React from 'react';
+import Toggle from 'react-toggle';
+import 'react-toggle/style.css';
+import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './themeSwitcher.scss';
+import { ThemeContext } from '../../../contexts/ThemeContext';
 
 class ThemeSwitcher extends React.PureComponent {
-
   constructor(props) {
     super(props);
     this.state = {
-      soupIsReady: false
+      soupIsReady: false,
     };
   }
 
   handleSwitch = (event) => {
     const { value } = event.target;
-    const theme = value === "dark" ? "light" : "dark";
+    const theme = value === 'dark' ? 'light' : 'dark';
     this.context.onSwitchTheme(theme);
   };
 
@@ -26,16 +24,15 @@ class ThemeSwitcher extends React.PureComponent {
     const { theme } = this.context;
     return (
       <Toggle
-        defaultChecked={theme === "dark"}
+        defaultChecked={theme === 'dark'}
         className='themeSwitcher'
         value={theme}
         icons={{
-          checked: <FontAwesomeIcon size="xs" icon={faMoon}
-                                    className="moonIcon" />,
-          unchecked: <FontAwesomeIcon size="xs" icon={faSun}
-                                      className="sunIcon" />
+          checked: <FontAwesomeIcon size='xs' icon={faMoon} className='moonIcon' />,
+          unchecked: <FontAwesomeIcon size='xs' icon={faSun} className='sunIcon' />,
         }}
-        onChange={this.handleSwitch} />
+        onChange={this.handleSwitch}
+      />
     );
   }
 }

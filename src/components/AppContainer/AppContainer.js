@@ -1,15 +1,13 @@
-import React from "react";
-import MembersPage from "../MembersPage/MembersPage";
-import Tasks from "../Tasks/Tasks";
-import "../common/Styles/Mixins/Tables/commonTableStyles.scss";
-import "./appContainer.scss";
-import { RoleContext } from "../../contexts/RoleContext";
-import { Route, Switch } from "react-router-dom";
-import { ThemeContext } from "../../contexts/ThemeContext";
-
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import MembersPage from '../MembersPage/MembersPage';
+import Tasks from '../Tasks/Tasks';
+import '../common/Styles/Mixins/Tables/commonTableStyles.scss';
+import './appContainer.scss';
+import { RoleContext } from '../../contexts/RoleContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 class AppContainer extends React.PureComponent {
-
   render() {
     return (
       <RoleContext.Consumer>
@@ -17,19 +15,20 @@ class AppContainer extends React.PureComponent {
           <ThemeContext.Consumer>
             {({ theme }) => (
               <div className={`${theme} appContainer`}>
-                <div className="pagesContainer">
+                <div className='pagesContainer'>
                   <Switch>
-
-                    <Route path={"/app/members"}
-                           render={(props) =>
-                             <MembersPage
-                               role={role}
-                               theme={theme}
-                               signedUserId={signedUserId}
-                               signedUserName={signedUserName}
-                               {...props} />}>
-                    </Route>
-
+                    <Route
+                      path='/app/members'
+                      render={(props) => (
+                        <MembersPage
+                          role={role}
+                          theme={theme}
+                          signedUserId={signedUserId}
+                          signedUserName={signedUserName}
+                          {...props}
+                        />
+                      )}
+                    />
                     <Route path='/app/tasks' component={Tasks} />
                   </Switch>
                 </div>
@@ -38,7 +37,6 @@ class AppContainer extends React.PureComponent {
           </ThemeContext.Consumer>
         )}
       </RoleContext.Consumer>
-
     );
   }
 }

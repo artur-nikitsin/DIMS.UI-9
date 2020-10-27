@@ -1,7 +1,7 @@
-import React from "react";
-import "./submitButton.scss";
-import PropTypes from "prop-types";
-import EditDeleteButtons from "../EditDeleteButtons/EditDeleteButtons";
+import React from 'react';
+import './submitButton.scss';
+import PropTypes from 'prop-types';
+import EditDeleteButtons from '../EditDeleteButtons/EditDeleteButtons';
 
 function SubmitButton({ handleSubmit }) {
   return (
@@ -12,6 +12,6 @@ function SubmitButton({ handleSubmit }) {
 }
 
 EditDeleteButtons.propTypes = {
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
 };
 export default SubmitButton;

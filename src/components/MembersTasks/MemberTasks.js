@@ -1,16 +1,15 @@
-import React from "react";
-import "./memberTasks.scss";
-import {  getUserTaskList } from "../../firebase/apiGet";
-import Preloader from "../common/Preloader/Preloader";
-import StatusButtons from "./Buttons/StatusButtons";
-import { Table, Button } from "reactstrap";
-import { NavLink, Route, Switch } from "react-router-dom";
-import MemberTracks from "../MemberTracks/MemberTracks";
-import PropTypes from "prop-types";
-import TaskModal from "../Modals/Task/TaskModal";
-import isAdminOrMentor from "../common/Conditions/isAdminOrMentor";
-import { ThemeContext } from "../../contexts/ThemeContext";
-
+import React from 'react';
+import './memberTasks.scss';
+import { Table, Button } from 'reactstrap';
+import { NavLink, Route, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { getUserTaskList } from '../../firebase/apiGet';
+import Preloader from '../common/Preloader/Preloader';
+import StatusButtons from './Buttons/StatusButtons';
+import MemberTracks from '../MemberTracks/MemberTracks';
+import TaskModal from '../Modals/Task/TaskModal';
+import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 class MemberTasks extends React.Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class MemberTasks extends React.Component {
       userTaskId: null,
       currentTaskName: null,
       modalIsOpen: false,
-      modalType: null
+      modalType: null,
     };
   }
 
@@ -33,49 +32,53 @@ class MemberTasks extends React.Component {
   setCurrentTask = (userTaskId, name) => () => {
     this.setState({
       userTaskId,
-      currentTaskName: name
+      currentTaskName: name,
     });
   };
 
   getUserTaskList = (user) => {
-
     if (user) {
-
       getUserTaskList(user).then((result) => {
         const { userId } = this.props.match.params;
         const { role } = this.props;
         const { theme } = this.context;
 
-        let userTaskList = result.map((task, i) => {
-
+        const userTaskList = result.map((task, i) => {
           return (
             <tr key={task.taskId}>
               <td>{i + 1}</td>
               <td>
-                <Button  color="link" onClick={event => {
-                  event.preventDefault();
-                  this.openModal(task.taskId, "view")();
-                }}>{task.name}</Button>
+                <Button
+                  color='link'
+                  onClick={(event) => {
+                    event.preventDefault();
+                    this.openModal(task.taskId, 'view')();
+                  }}
+                >
+                  {task.name}
+                </Button>
               </td>
               <td>{new Date(task.startDate).toLocaleDateString()}</td>
               <td>{new Date(task.deadlineDate).toLocaleDateString()}</td>
               <td>{task.status}</td>
 
-              {
-                isAdminOrMentor(role) ?
-                  <td className={"tasksButtons"}>
-                    <StatusButtons stateId={task.stateId} />
-                  </td>
-                  :
-                  <td className={"tasksButtons"}>
-                    <NavLink to={`/app/members/tasks_user=${userId}/taskId=${task.userTaskId}`}>
-                      <Button outline color={theme === "dark" ? "secondary" : "primary"}
-                              onClick={this.setCurrentTask(task.userTaskId, task.name)}>
-                        Track
-                      </Button>
-                    </NavLink>
-                  </td>
-              }
+              {isAdminOrMentor(role) ? (
+                <td className='tasksButtons'>
+                  <StatusButtons stateId={task.stateId} />
+                </td>
+              ) : (
+                <td className='tasksButtons'>
+                  <NavLink to={`/members/tasks-user/${userId}/taskId/${task.userTaskId}`}>
+                    <Button
+                      outline
+                      color={theme === 'dark' ? 'secondary' : 'primary'}
+                      onClick={this.setCurrentTask(task.userTaskId, task.name)}
+                    >
+                      Track
+                    </Button>
+                  </NavLink>
+                </td>
+              )}
             </tr>
           );
         });
@@ -83,7 +86,7 @@ class MemberTasks extends React.Component {
         if (!this.state.userTaskList) {
           this.setState({
             loading: false,
-            userTaskList
+            userTaskList,
           });
         }
       });
@@ -94,52 +97,52 @@ class MemberTasks extends React.Component {
     this.setState({
       modalIsOpen: true,
       activeTaskId,
-      modalType: modalType
+      modalType,
     });
   };
 
   closeModal = () => {
     this.setState({
       modalIsOpen: false,
-      activeTaskId: null
+      activeTaskId: null,
     });
   };
 
-
   createMemberTaskTable = () => {
     const { theme } = this.context;
-    const { role } = this.props;
+    const { role, signedUserName } = this.props;
 
     const tableHeaders = (
       <thead>
-      <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Start</th>
-        <th>Deadline</th>
-        <th>Status</th>
-        <th />
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Start</th>
+          <th>Deadline</th>
+          <th>Status</th>
+          <th />
+        </tr>
       </thead>
     );
 
     const { modalIsOpen, activeTaskId, modalType } = this.state;
     return (
-      <div className={"memberTasksTableContainer"}>
+      <div className='memberTasksTableContainer'>
+        {role === 'user' ? (
+          <div>
+            <p className='userGreeting'>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
+          </div>
+        ) : (
+          <NavLink to='/members'> Return to members manage grid</NavLink>
+        )}
 
-        {role === "user" ? <div>
-          <p
-            className={"userGreeting"}>{"Hi, dear " + this.props.signedUserName + "! This is your current tasks:"}</p>
-        </div> : <NavLink to={`/app/members`}>
-          Return to members manage grid
-        </NavLink>}
-
-        <TaskModal className={`${theme} taskModal`}
-                   buttonLabel="TaskModal"
-                   isOpen={modalIsOpen}
-                   closeModal={this.closeModal}
-                   taskId={activeTaskId}
-                   modalType={modalType}
+        <TaskModal
+          className={`${theme} taskModal`}
+          buttonLabel='TaskModal'
+          isOpen={modalIsOpen}
+          closeModal={this.closeModal}
+          taskId={activeTaskId}
+          modalType={modalType}
         />
 
         <Table striped className={`${theme} memberTasksTable`}>
@@ -156,29 +159,32 @@ class MemberTasks extends React.Component {
     return (
       <div>
         <Switch>
-          <Route exact path={`/app/members/tasks_user=${userId}`}>
+          <Route exact path={`/members/tasks-user/${userId}`}>
             {loading ? <Preloader /> : this.createMemberTaskTable()}
           </Route>
 
-          <Route path={`/app/members/tasks_user=${userId}/taskId=:userTaskId`}
-                 render={(props) => <MemberTracks
-                   userId={userId}
-                   userTaskId={userTaskId}
-                   taskName={currentTaskName}
-                   userName={this.props.signedUserName}
-                   {...props} />}>
-
-          </Route>
+          <Route
+            path={`/members/tasks-user/${userId}/taskId/:userTaskId`}
+            render={(props) => (
+              <MemberTracks
+                userId={userId}
+                userTaskId={userTaskId}
+                taskName={currentTaskName}
+                userName={this.props.signedUserName}
+                {...props}
+              />
+            )}
+          />
         </Switch>
       </div>
     );
-
   }
 }
 
 MemberTasks.propTypes = {
   match: PropTypes.object.isRequired,
-  userName: PropTypes.string
+  userName: PropTypes.string,
+  signedUserName: PropTypes.string,
 };
 
 MemberTasks.contextType = ThemeContext;

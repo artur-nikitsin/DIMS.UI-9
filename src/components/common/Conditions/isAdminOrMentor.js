@@ -1,6 +1,6 @@
-import { Roles } from "../Maps/roles";
+import { Roles } from '../Maps/roles';
 
 const isAdminOrMentor = (role) => {
-  return (role === Roles.admin || role === Roles.mentor);
+  return role === Roles.admin || role === Roles.mentor;
 };
 export default isAdminOrMentor;

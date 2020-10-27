@@ -1,9 +1,8 @@
-import emailValidator from "./emailValidator";
+import emailValidator from './emailValidator';
 
-describe("func checking e-mail valid", () => {
-  test("true should be returned", () => {
-
-    const input = "abcde@gmail.com";
+describe('func checking e-mail valid', () => {
+  test('true should be returned', () => {
+    const input = 'abcde@gmail.com';
 
     const actual = emailValidator(input).isValid;
 
@@ -12,9 +11,8 @@ describe("func checking e-mail valid", () => {
     expect(actual).toBe(expected);
   });
 
-  test("false should be returned", () => {
-
-    const input = "abcde.gmail.com";
+  test('false should be returned', () => {
+    const input = 'abcde.gmail.com';
 
     const actual = emailValidator(input).isValid;
 

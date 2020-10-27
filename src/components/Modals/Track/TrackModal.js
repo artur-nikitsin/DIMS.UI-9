@@ -1,34 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Modal, ModalHeader, ModalBody } from "reactstrap";
-import "./trackModal.scss";
-import { getTrack } from "../../../firebase/apiGet";
-import { trackModalTemplate } from "../Common/ModalInputsTemplate";
-import TrackModalDataWorker from "./TrackModalDataWorker";
-import PropTypes from "prop-types";
-import Preloader from "../../common/Preloader/Preloader";
-
+import React, { useState, useEffect } from 'react';
+import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import './trackModal.scss';
+import PropTypes from 'prop-types';
+import { getTrack } from '../../../firebase/apiGet';
+import { trackModalTemplate } from '../Common/ModalInputsTemplate';
+import TrackModalDataWorker from './TrackModalDataWorker';
+import Preloader from '../../common/Preloader/Preloader';
 
 const TrackModal = (props) => {
-  const {
-    className,
-    isOpen,
-    closeModal,
-    closeModalAndReload,
-    trackId,
-    taskName,
-    modalType,
-    userTaskId
-  } = props;
+  const { className, isOpen, closeModal, closeModalAndReload, trackId, taskName, modalType, userTaskId } = props;
 
   const [trackData, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-
 
   const useToggle = () => {
     setData(null);
     closeModal();
   };
-
 
   const newTrack = () => {
     setData(null);
@@ -51,7 +39,9 @@ const TrackModal = (props) => {
     <div>
       <Modal isOpen={isOpen} toggle={useToggle} className={className}>
         <ModalBody>
-          {loading ? <Preloader /> :
+          {loading ? (
+            <Preloader />
+          ) : (
             <>
               <ModalHeader> {taskName}</ModalHeader>
               <TrackModalDataWorker
@@ -62,8 +52,8 @@ const TrackModal = (props) => {
                 closeModal={useToggle}
                 closeModalAndReload={closeModalAndReload}
               />
-            </>}
-
+            </>
+          )}
         </ModalBody>
       </Modal>
     </div>
@@ -77,7 +67,7 @@ TrackModal.propTypes = {
   closeModalAndReload: PropTypes.func.isRequired,
   trackId: PropTypes.string,
   taskName: PropTypes.string,
-  userTaskId: PropTypes.string
+  userTaskId: PropTypes.string,
 };
 
 export default TrackModal;

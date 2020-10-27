@@ -1,19 +1,16 @@
-import React from "react";
-import "./userModalDataWorker.scss";
-import formValidator from "../../helpers/FormValidator/formValidator";
-import { setNewMemberData } from "../../../firebase/apiSet";
-import TextInput from "../../common/Inputs/TextInput";
-import DropDownInput from "../../common/Inputs/DropDownInput";
-import RadioInputList from "./RadioInputList";
-import ModalContent from "../Common/ModalContent";
-import PropTypes from "prop-types";
-import ErrorWritingDocument from "../../common/Messages/Errors/ErrorWritingDocument";
-import { userModalTypes } from "../Common/ModalInputsTemplate";
-
-
+import React from 'react';
+import './userModalDataWorker.scss';
+import PropTypes from 'prop-types';
+import formValidator from '../../helpers/FormValidator/formValidator';
+import { setNewMemberData } from '../../../firebase/apiSet';
+import TextInput from '../../common/Inputs/TextInput';
+import DropDownInput from '../../common/Inputs/DropDownInput';
+import RadioInputList from './RadioInputList';
+import ModalContent from '../Common/ModalContent';
+import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
+import { userModalTypes } from '../Common/ModalInputsTemplate';
 
 class UsersModalDataWorker extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +33,7 @@ class UsersModalDataWorker extends React.Component {
       address: null,
       mobilePhone: null,
       skype: null,
-      userId: null
+      userId: null,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -45,12 +42,10 @@ class UsersModalDataWorker extends React.Component {
     this.handleValidInput = this.handleValidInput.bind(this);
   }
 
-
   componentDidMount() {
     const { userData } = this.props;
     this.setUserDataToState(userData);
   }
-
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const { userData } = this.props;
@@ -61,25 +56,21 @@ class UsersModalDataWorker extends React.Component {
     }
   }
 
-
   setUserDataToState = (data) => {
     const { ...thisState } = this.state;
     const { modalTemplate } = this.props;
-    this.setState(
-      {
-        inputsStatus: Object.assign({}, modalTemplate),
-        dataToSend: Object.assign({}, modalTemplate)
-      }
-    );
-    for (let value in data) {
+    this.setState({
+      inputsStatus: { ...modalTemplate },
+      dataToSend: { ...modalTemplate },
+    });
+    for (const value in data) {
       if (thisState.hasOwnProperty(value)) {
         this.setState({
-          [value]: data[value]
+          [value]: data[value],
         });
       }
     }
   };
-
 
   createInputList = () => {
     const { modalTemplate, modalType } = this.props;
@@ -87,24 +78,28 @@ class UsersModalDataWorker extends React.Component {
     const dataKeys = Object.keys(modalTemplate);
 
     const inputList = dataKeys.map((input) => {
-      if (input === "sex") {
+      if (input === 'sex') {
         return (
-          <RadioInputList key={input} name={input} value={thisState[input]}
-                          handleRadioInput={this.handleRadioInput}
-                          handleValidInput={this.handleValidInput}
-                          isSubmit={isSubmit}
-                          modalType={modalType} />
+          <RadioInputList
+            key={input}
+            name={input}
+            value={thisState[input]}
+            handleRadioInput={this.handleRadioInput}
+            handleValidInput={this.handleValidInput}
+            isSubmit={isSubmit}
+            modalType={modalType}
+          />
         );
       }
-      if (input === "directionId") {
+      if (input === 'directionId') {
         return (
-          <li key={input} className="inputItem">
+          <li key={input} className='inputItem'>
             <DropDownInput handleDropInput={this.handleDropInput} />
           </li>
         );
       }
       return (
-        <li key={input} className="inputItem">
+        <li key={input} className='inputItem'>
           <TextInput
             type={userModalTypes[input]}
             inputName={input}
@@ -112,77 +107,73 @@ class UsersModalDataWorker extends React.Component {
             handleChange={this.handleChange}
             handleValidInput={this.handleValidInput}
             isSubmit={isSubmit}
-            modalType={modalType} />
+            modalType={modalType}
+          />
         </li>
       );
     });
 
-    return (
-      <ul className="userRegisterInputList">
-        {inputList}
-      </ul>
-    );
+    return <ul className='userRegisterInputList'>{inputList}</ul>;
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
   handleRadioInput = (event) => {
     const { name } = event.target;
     this.setState({
-      sex: name
+      sex: name,
     });
   };
 
   handleDropInput = (event) => {
     const { value } = event.target;
     this.setState({
-      directionId: value
+      directionId: value,
     });
   };
-
 
   handleValidInput = (input, status, data) => {
     this.setState((prevState) => {
       return {
         dataToSend: { ...prevState.dataToSend, [input]: data },
         inputsStatus: { ...prevState.inputsStatus, [input]: status },
-        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status })
+        isFormValid: formValidator({ ...prevState.inputsStatus, [input]: status }),
       };
     });
   };
 
-
   handleSubmit(event) {
-
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
     const { closeModalAndReload } = this.props;
 
     this.setState({
-      isSubmit: true
+      isSubmit: true,
     });
 
     if (isFormValid) {
-      setNewMemberData(dataToSend, userId).then(() => {
-        closeModalAndReload();
-      })
-        .catch(error => ErrorWritingDocument(error));
+      setNewMemberData(dataToSend, userId)
+        .then(() => {
+          closeModalAndReload();
+        })
+        .catch((error) => ErrorWritingDocument(error));
     }
   }
-
 
   render() {
     const { closeModal, modalType } = this.props;
     return (
-      <ModalContent createInputList={this.createInputList()}
-                    handleSubmit={this.handleSubmit}
-                    closeModal={closeModal}
-                    modalType={modalType} />
+      <ModalContent
+        createInputList={this.createInputList()}
+        handleSubmit={this.handleSubmit}
+        closeModal={closeModal}
+        modalType={modalType}
+      />
     );
   }
 }
@@ -201,7 +192,7 @@ UsersModalDataWorker.propTypes = {
     address: PropTypes.string,
     mobilePhone: PropTypes.string,
     skype: PropTypes.string,
-    sex: PropTypes.string
+    sex: PropTypes.string,
   }),
   userData: PropTypes.shape({
     address: PropTypes.string,
@@ -217,10 +208,10 @@ UsersModalDataWorker.propTypes = {
     skype: PropTypes.string,
     startDate: PropTypes.string,
     university: PropTypes.string,
-    userId: PropTypes.string
+    userId: PropTypes.string,
   }),
   modalType: PropTypes.string,
   closeModal: PropTypes.func.isRequired,
-  closeModalAndReload: PropTypes.func.isRequired
+  closeModalAndReload: PropTypes.func.isRequired,
 };
 export default UsersModalDataWorker;

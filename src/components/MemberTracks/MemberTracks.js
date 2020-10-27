@@ -1,19 +1,18 @@
-import React from "react";
-import "./memberTracks.scss";
-import { getTaskTrack } from "../../firebase/apiGet";
-import Preloader from "../common/Preloader/Preloader";
-import EditDeleteButtons from "../common/Buttons/EditDeleteButtons/EditDeleteButtons";
-import getSubString from "../helpers/getSubString/getSubString";
-import getLocalDate from "../helpers/getLocaleDate/getLocalDate";
-import TableTrackHeaders from "./TableHeaders";
-import { Button, Table } from "reactstrap";
-import TrackModal from "../Modals/Track/TrackModal";
-import { deleteTask } from "../../firebase/apiDelete";
-import { NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
-import { ThemeContext } from "../../contexts/ThemeContext";
-import { RoleContext } from "../../contexts/RoleContext";
-
+import React from 'react';
+import './memberTracks.scss';
+import { Button, Table } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { getTaskTrack } from '../../firebase/apiGet';
+import Preloader from '../common/Preloader/Preloader';
+import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
+import getSubString from '../helpers/getSubString/getSubString';
+import getLocalDate from '../helpers/getLocaleDate/getLocalDate';
+import TableTrackHeaders from './TableHeaders';
+import TrackModal from '../Modals/Track/TrackModal';
+import { deleteTask } from '../../firebase/apiDelete';
+import { ThemeContext } from '../../contexts/ThemeContext';
+import { RoleContext } from '../../contexts/RoleContext';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -24,7 +23,7 @@ class MemberTracks extends React.PureComponent {
       modalIsOpen: false,
       activeTrackId: null,
       userTaskId: null,
-      modalType: null
+      modalType: null,
     };
   }
 
@@ -34,18 +33,16 @@ class MemberTracks extends React.PureComponent {
   }
 
   handleDelete = (trackId) => () => {
-    deleteTask(trackId)
-      .then(() => {
-        this.reloadTrackPage();
-      });
+    deleteTask(trackId).then(() => {
+      this.reloadTrackPage();
+    });
   };
-
 
   reloadTrackPage = () => {
     const { userTaskId } = this.props.match.params;
     this.setState({
       loading: true,
-      userTrackList: null
+      userTrackList: null,
     });
     this.getUserTrackList(userTaskId);
   };
@@ -53,16 +50,19 @@ class MemberTracks extends React.PureComponent {
   getUserTrackList = (user) => {
     if (user) {
       getTaskTrack(user).then((result) => {
-
-        let userTrackList = result.map((track, i) => {
+        const userTrackList = result.map((track, i) => {
           return (
             <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
               <td>{this.props.taskName}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
-              <td><EditDeleteButtons handleEdit={this.openModal(track.taskTrackId)}
-                                     handleDelete={this.handleDelete(track.taskTrackId)} /></td>
+              <td>
+                <EditDeleteButtons
+                  handleEdit={this.openModal(track.taskTrackId)}
+                  handleDelete={this.handleDelete(track.taskTrackId)}
+                />
+              </td>
             </tr>
           );
         });
@@ -70,7 +70,7 @@ class MemberTracks extends React.PureComponent {
         if (!this.state.userTrackList) {
           this.setState({
             loading: false,
-            userTrackList
+            userTrackList,
           });
         }
       });
@@ -82,7 +82,7 @@ class MemberTracks extends React.PureComponent {
       modalIsOpen: true,
       activeTrackId,
       userTaskId,
-      modalType
+      modalType,
     });
   };
 
@@ -91,7 +91,7 @@ class MemberTracks extends React.PureComponent {
       modalIsOpen: false,
       activeTrackId: null,
       userTaskId: null,
-      modalType: null
+      modalType: null,
     });
   };
 
@@ -100,33 +100,35 @@ class MemberTracks extends React.PureComponent {
     this.reloadTrackPage();
   };
 
-
   createMemberTrackTable = () => {
-
     const { userName, taskName, userTaskId, userId } = this.props;
     const { userTrackList, modalIsOpen, activeTrackId, modalType } = this.state;
     const { theme } = this.context;
     return (
       <div className='memberTracksTableContainer'>
-        <NavLink to={`/app/members/tasks_user=${userId}`}>
-          Return to task list
-        </NavLink>
+        <NavLink to={`/members/tasks-user/${userId}`}>Return to task list</NavLink>
         <div>
-          <p className="userGreeting">{`Hi, dear ${userName}! This is your task tracks:`}</p>
+          <p className='userGreeting'>{`Hi, dear ${userName}! This is your task tracks:`}</p>
         </div>
 
-        <TrackModal className={`${theme} trackModal`}
-                    buttonLabel="TrackModal"
-                    isOpen={modalIsOpen}
-                    closeModal={this.closeModal}
-                    closeModalAndReload={this.closeModalAndReload}
-                    trackId={activeTrackId}
-                    taskName={taskName}
-                    userTaskId={userTaskId}
-                    modalType={modalType} />
+        <TrackModal
+          className={`${theme} trackModal`}
+          buttonLabel='TrackModal'
+          isOpen={modalIsOpen}
+          closeModal={this.closeModal}
+          closeModalAndReload={this.closeModalAndReload}
+          trackId={activeTrackId}
+          taskName={taskName}
+          userTaskId={userTaskId}
+          modalType={modalType}
+        />
 
-        <Button outline color={theme === "dark" ? "secondary" : "primary"} className='trackCreateButton'
-                onClick={this.openModal(null, null, "register")}>
+        <Button
+          outline
+          color={theme === 'dark' ? 'secondary' : 'primary'}
+          className='trackCreateButton'
+          onClick={this.openModal(null, null, 'register')}
+        >
           Add
         </Button>
         <Table striped className='tracksTable'>
@@ -139,15 +141,7 @@ class MemberTracks extends React.PureComponent {
 
   render() {
     const { loading } = this.state;
-    return (
-      <div>
-        {
-          loading ? <Preloader />
-            :
-            this.createMemberTrackTable()
-        }
-      </div>
-    );
+    return <div>{loading ? <Preloader /> : this.createMemberTrackTable()}</div>;
   }
 }
 
@@ -156,9 +150,9 @@ MemberTracks.propTypes = {
   userName: PropTypes.string,
   taskName: PropTypes.string,
   userTaskId: PropTypes.string.isRequired,
-  userId: PropTypes.string.isRequired
+  userId: PropTypes.string.isRequired,
 };
 
-MemberTracks.contextType = RoleContext
+MemberTracks.contextType = RoleContext;
 MemberTracks.contextType = ThemeContext;
 export default MemberTracks;

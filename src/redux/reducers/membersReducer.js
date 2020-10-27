@@ -1,14 +1,11 @@
-import { getMembers } from "../../firebase/apiGet";
+import { getMembers } from '../../firebase/apiGet';
 
-
-
-const SET_MEMBERS = "SET_MEMBERS";
-const SET_LOADING = "SET_LOADING";
-const SET_ACTIVE_USER_ID = "SET_ACTIVE_USER_ID";
-const SET_ACTIVE_USER_NAME = "SET_ACTIVE_USER_NAME";
-const SET_MODAL_IS_OPEN = "SET_MODAL_IS_OPEN";
-const SET_MODAL_TYPE = "SET_MODAL_TYPE";
-
+const SET_MEMBERS = 'SET_MEMBERS';
+const SET_LOADING = 'SET_LOADING';
+const SET_ACTIVE_USER_ID = 'SET_ACTIVE_USER_ID';
+const SET_ACTIVE_USER_NAME = 'SET_ACTIVE_USER_NAME';
+const SET_MODAL_IS_OPEN = 'SET_MODAL_IS_OPEN';
+const SET_MODAL_TYPE = 'SET_MODAL_TYPE';
 
 export const setMembers = (members) => ({ type: SET_MEMBERS, members });
 export const setLoading = (loading) => ({ type: SET_LOADING, loading });
@@ -23,9 +20,8 @@ const initialState = {
   activeUserId: null,
   activeUserName: null,
   modalIsOpen: false,
-  modalType: null
+  modalType: null,
 };
-
 
 export const getAllMembers = () => (dispatch) => {
   dispatch(setLoading(true));
@@ -40,7 +36,6 @@ export const openModal = (activeUserId, modalType) => (dispatch) => {
   dispatch(setModal(true));
   dispatch(setModalType(modalType));
 };
-
 
 export const closeModal = () => (dispatch) => {
   dispatch(setActiveUserId(null));
