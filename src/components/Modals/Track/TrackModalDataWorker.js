@@ -79,8 +79,7 @@ class TrackModalDataWorker extends React.PureComponent {
     return <ul className='inputList'>{inputList}</ul>;
   };
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
+  handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
     });

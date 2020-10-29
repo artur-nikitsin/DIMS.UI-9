@@ -92,7 +92,7 @@ TextInput.propTypes = {
 TextInput.defaultProps = {
   value: '',
   type: '',
-  modalType: 'view',
+  modalType: '',
 };
 
 TextInput.contextType = ThemeContext;
