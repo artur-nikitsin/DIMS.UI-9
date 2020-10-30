@@ -1,15 +1,18 @@
 @import '../common/Styles/Mixins/Tables/commonTableStyles';
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
-
 .memberTracksTableContainer {
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   align-items: center;
 
-  .tracksTable {
+  .light.tracksTable {
     @include commonTableStyles;
+  }
+
+  .dark.tracksTable {
+    @include darkTable;
   }
 
   .returnToFullListButton {

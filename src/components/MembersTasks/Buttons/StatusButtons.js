@@ -3,7 +3,7 @@ import './buttons.scss';
 import { Button } from 'reactstrap';
 import { setTaskState } from '../../../firebase/apiSet';
 
-class StatusButtons extends React.Component {
+class StatusButtons extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};

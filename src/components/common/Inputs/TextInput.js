@@ -7,7 +7,7 @@ import { Label } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { ThemeContext } from '../../../contexts/ThemeContext';
 
-class TextInput extends React.Component {
+class TextInput extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

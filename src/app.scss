@@ -1,21 +1,20 @@
-@mixin App {
+@mixin AppCommonStyles {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   min-height: 100vh;
-  background-repeat: repeat-x ;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("/assets/img/Matrix.Png");
-
+  background-repeat: repeat-x;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/assets/img/Matrix.Png');
 }
 
 .App {
-  @include App;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("/assets/img/Matrix.Png");
+  @include AppCommonStyles;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/assets/img/Matrix.Png');
 }
 
 .dark.App {
-  @include App;
+  @include AppCommonStyles;
   background-color: black;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/assets/img/Matrix.Png");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/assets/img/Matrix.Png');
 }

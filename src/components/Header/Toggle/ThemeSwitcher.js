@@ -4,31 +4,36 @@ import 'react-toggle/style.css';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './themeSwitcher.scss';
-import { ThemeContext } from '../../../contexts/ThemeContext';
+import PropTypes from 'prop-types';
 
-class ThemeSwitcher extends React.PureComponent {
-  handleSwitch = (event) => {
+const ThemeSwitcher = ({ theme, onSwitchTheme }) => {
+  const handleSwitch = (event) => {
     const { value } = event.target;
     const theme = value === 'dark' ? 'light' : 'dark';
-    this.context.onSwitchTheme(theme);
+    onSwitchTheme(theme);
   };
 
-  render() {
-    const { theme } = this.context;
-    return (
-      <Toggle
-        defaultChecked={theme === 'dark'}
-        className='themeSwitcher'
-        value={theme}
-        icons={{
-          checked: <FontAwesomeIcon size='xs' icon={faMoon} className='moonIcon' />,
-          unchecked: <FontAwesomeIcon size='xs' icon={faSun} className='sunIcon' />,
-        }}
-        onChange={this.handleSwitch}
-      />
-    );
-  }
-}
+  return (
+    <Toggle
+      defaultChecked={theme === 'dark'}
+      className='themeSwitcher'
+      value={theme}
+      icons={{
+        checked: <FontAwesomeIcon size='xs' icon={faMoon} className='moonIcon' />,
+        unchecked: <FontAwesomeIcon size='xs' icon={faSun} className='sunIcon' />,
+      }}
+      onChange={handleSwitch}
+    />
+  );
+};
 
-ThemeSwitcher.contextType = ThemeContext;
+ThemeSwitcher.propTypes = {
+  theme: PropTypes.string,
+  onSwitchTheme: PropTypes.func,
+};
+
+ThemeSwitcher.defaultProps = {
+  theme: 'light',
+  onSwitchTheme: null,
+};
 export default ThemeSwitcher;

@@ -9,7 +9,7 @@ import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { userModalTypes } from '../Common/ModalInputsTemplate';
 
-class UsersModalDataWorker extends React.Component {
+class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

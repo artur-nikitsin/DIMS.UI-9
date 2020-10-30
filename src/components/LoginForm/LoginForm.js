@@ -9,7 +9,7 @@ import { login } from '../../firebase/auth';
 import Preloader from '../common/Preloader/Preloader';
 import { RoleContext } from '../../contexts/RoleContext';
 
-class LoginForm extends React.Component {
+class LoginForm extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

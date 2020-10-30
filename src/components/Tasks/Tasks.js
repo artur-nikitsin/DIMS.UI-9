@@ -8,6 +8,7 @@ import { deleteTask } from '../../firebase/apiDelete';
 import TaskModal from '../Modals/Task/TaskModal';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
+import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
 
 class Tasks extends React.PureComponent {
   constructor(props) {
@@ -138,7 +139,7 @@ class Tasks extends React.PureComponent {
         />
         <Button
           outline
-          color={theme === 'dark' ? 'secondary' : 'primary'}
+          color={changeReactstrapColor(theme)}
           className='taskCreateButton'
           onClick={this.openModal(null, 'register')}
         >
@@ -154,7 +155,6 @@ class Tasks extends React.PureComponent {
 
   render() {
     const { loading } = this.state;
-
     return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
   }
 }

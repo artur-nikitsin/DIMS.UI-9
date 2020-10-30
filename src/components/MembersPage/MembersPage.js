@@ -9,8 +9,9 @@ import Preloader from '../common/Preloader/Preloader';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import UserModal from '../Modals/User/UserModal';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
+import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
 
-class MembersPage extends React.Component {
+class MembersPage extends React.PureComponent {
   constructor(props) {
     super(props);
     this.closeModal = this.closeModal.bind(this);
@@ -81,7 +82,7 @@ class MembersPage extends React.Component {
         {role === 'mentor' || (
           <Button
             outline
-            color={theme === 'dark' ? 'secondary' : 'primary'}
+            color={changeReactstrapColor(theme)}
             className='memberRegisterButton'
             onClick={this.openModal(null, 'register')}
           >

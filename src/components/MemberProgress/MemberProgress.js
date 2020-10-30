@@ -10,7 +10,7 @@ import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 
-class MemberProgress extends React.Component {
+class MemberProgress extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {

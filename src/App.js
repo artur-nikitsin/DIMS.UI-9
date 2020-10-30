@@ -29,6 +29,8 @@ class App extends React.PureComponent {
       signedUserName: null,
       signedUserLastName: null,
       userData: getUserFromSessionStorage(),
+      handleLogin: this.handleLogin,
+      onSwitchTheme: this.onSwitchTheme,
     };
   }
 
@@ -89,32 +91,21 @@ class App extends React.PureComponent {
   };
 
   render() {
-    const {
-      theme,
-      isLogin,
-      fromLoginForm,
-      role,
-      signedUserId,
-      signedUserName,
-      signedUserLastName,
-      userData,
-    } = this.state;
+    const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
     return (
-      <RoleContext.Provider
-        value={{
-          role,
-          userId: signedUserId,
-          signedUserName,
-          signedUserLastName,
-          handleLogin: this.handleLogin,
-        }}
-      >
-        <ThemeContext.Provider value={{ theme, onSwitchTheme: this.onSwitchTheme }}>
+      <RoleContext.Provider value={this.state}>
+        <ThemeContext.Provider value={this.state}>
           <Switch>
             <>
               <div className={`${theme} App`}>
-                <Header handleLogout={this.handleLogout} isLogin={isLogin} theme={theme} role={role} />
+                <Header
+                  handleLogout={this.handleLogout}
+                  isLogin={isLogin}
+                  theme={theme}
+                  role={role}
+                  onSwitchTheme={this.onSwitchTheme}
+                />
 
                 {fromLoginForm && <Redirect to='/users' />}
                 {!userData && <Redirect to='/login' />}
@@ -133,7 +124,6 @@ class App extends React.PureComponent {
                     />
                   )}
                 />
-                <Route path='/tasks' component={Tasks} />
 
                 <Route path='/users/:userId/progress' render={(props) => <MemberProgress {...props} />} />
 
@@ -143,6 +133,8 @@ class App extends React.PureComponent {
                     <MemberTasks role={role} userId={signedUserId} signedUserName={signedUserName} {...props} />
                   )}
                 />
+
+                <Route path='/tasks' component={Tasks} />
 
                 <Route path='/login'>
                   <LoginForm handleLogin={this.handleLogin} />
