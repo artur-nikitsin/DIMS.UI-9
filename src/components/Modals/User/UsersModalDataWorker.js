@@ -8,6 +8,7 @@ import RadioInputList from './RadioInputList';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { userModalTypes } from '../Common/ModalInputsTemplate';
+import { DropDownTemplate } from './DropDownTemptale';
 
 class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -93,7 +94,12 @@ class UsersModalDataWorker extends React.PureComponent {
       if (input === 'directionId') {
         return (
           <li key={input} className='inputItem'>
-            <DropDownInput handleDropInput={this.handleDropInput} value={thisState[input]} modalType={modalType} />
+            <DropDownInput
+              handleDropInput={this.handleDropInput}
+              value={thisState[input]}
+              modalType={modalType}
+              dataTemplate={DropDownTemplate}
+            />
           </li>
         );
       }
