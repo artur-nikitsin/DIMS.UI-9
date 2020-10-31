@@ -8,10 +8,12 @@ class CheckBox extends React.PureComponent {
     const { inputName, value, handleRadioInput, modalType, checked } = this.props;
     return (
       <div className='radioButton'>
-        <input
+        <AvInput
           type='checkbox'
           disabled={modalType === 'view'}
           name={inputName}
+          trueValue={checked}
+          falseValue=''
           checked={value === checked}
           value={value || ''}
           onChange={handleRadioInput(value)}

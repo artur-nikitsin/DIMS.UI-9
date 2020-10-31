@@ -9,7 +9,7 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import RadioInputList from '../../common/Inputs/RadioInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 
-class TaskModalDataWorker extends React.Component {
+class TaskModalDataWorker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ class TaskModalDataWorker extends React.Component {
       inputsStatus: null,
       inputList: [],
       dataToSend: null,
-      executor: [],
+      executors: [],
       membersList: null,
 
       name: null,
@@ -31,6 +31,7 @@ class TaskModalDataWorker extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleRadioInput = this.handleRadioInput.bind(this);
+    this.handleValidInput = this.handleValidInput.bind(this);
   }
 
   componentDidMount() {
@@ -45,9 +46,7 @@ class TaskModalDataWorker extends React.Component {
     const { taskData: prevTaskData } = prevProps;
     if (prevTaskData !== taskData) {
       const { taskData } = this.props;
-      this.setTaskDataToState(taskData).then(() => {
-        this.createInputList();
-      });
+      this.setTaskDataToState(taskData);
     }
   }
 
@@ -66,7 +65,7 @@ class TaskModalDataWorker extends React.Component {
     if (data) {
       await getExecutors(data.taskId).then((users) => {
         this.setState({
-          executor: users,
+          executors: users,
         });
       });
     }
@@ -82,15 +81,15 @@ class TaskModalDataWorker extends React.Component {
 
   createInputList = () => {
     const { modalTemplate, modalType } = this.props;
-    const { isSubmit, membersList, executor, ...thisState } = this.state;
+    const { isSubmit, membersList, executors, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
     const inputList = dataKeys.map((input) => {
-      if (input === 'executor' && membersList) {
+      if (input === 'executors' && membersList) {
         return (
           <RadioInputList
             dataTemplate={membersList}
-            values={executor}
+            values={executors}
             modalType={modalType}
             handleRadioInput={this.handleRadioInput}
           />
@@ -110,9 +109,8 @@ class TaskModalDataWorker extends React.Component {
         </li>
       );
     });
-    this.setState({
-      inputList: <ul className='inputList'>{inputList}</ul>,
-    });
+
+    return <ul className='inputList'>{inputList}</ul>;
   };
 
   handleChange = ({ target: { name, value } }) => {
@@ -123,12 +121,14 @@ class TaskModalDataWorker extends React.Component {
 
   handleRadioInput = (value) => () => {
     this.setState((prevState) => {
-      const newExecutor = prevState.executor;
-      newExecutor.push(value);
+      const newExecutors = prevState.executors;
+      newExecutors.push(value);
       return {
-        executor: newExecutor,
+        executors: newExecutors,
       };
     });
+    const { executors } = this.state;
+    this.handleValidInput('executors', true, executors);
   };
 
   handleValidInput = (input, status, data) => {
@@ -145,14 +145,12 @@ class TaskModalDataWorker extends React.Component {
     event.persist();
     const { isFormValid, taskId, dataToSend } = this.state;
     const { closeModalAndReload } = this.props;
-
+    const { deadlineDate, description, executors, name, startDate } = dataToSend;
     this.setState({
       isSubmit: true,
     });
-    console.log(this.state.executor);
-
     if (isFormValid) {
-      setTask(dataToSend, taskId)
+      setTask({ deadlineDate, description, executors, name, startDate }, taskId)
         .then(() => {
           closeModalAndReload();
         })
@@ -162,11 +160,9 @@ class TaskModalDataWorker extends React.Component {
 
   render() {
     const { closeModal, modalType } = this.props;
-    const { inputList } = this.state;
-
     return (
       <ModalContent
-        createInputList={inputList}
+        createInputList={this.createInputList()}
         handleSubmit={this.handleSubmit}
         closeModal={closeModal}
         modalType={modalType}
