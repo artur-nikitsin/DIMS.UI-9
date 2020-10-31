@@ -4,7 +4,7 @@ import formValidator from '../../helpers/FormValidator/formValidator';
 import { setNewMemberData } from '../../../firebase/apiSet';
 import TextInput from '../../common/Inputs/TextInput';
 import DropDownInput from '../../common/Inputs/DropDownInput';
-import RadioInputList from './RadioInputList';
+import GenderInputs from './GenderInputs';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { userModalTypes } from '../Common/ModalInputsTemplate';
@@ -80,7 +80,7 @@ class UsersModalDataWorker extends React.PureComponent {
     const inputList = dataKeys.map((input) => {
       if (input === 'sex') {
         return (
-          <RadioInputList
+          <GenderInputs
             key={input}
             name={input}
             value={thisState[input]}

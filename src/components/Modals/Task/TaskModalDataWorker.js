@@ -6,10 +6,10 @@ import { getExecutors } from '../../../firebase/apiGet';
 import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
-import DropDownInput from '../../common/Inputs/DropDownInput';
+import RadioInputList from '../../common/Inputs/RadioInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 
-class TaskModalDataWorker extends React.PureComponent {
+class TaskModalDataWorker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +18,7 @@ class TaskModalDataWorker extends React.PureComponent {
       inputsStatus: null,
       inputList: [],
       dataToSend: null,
-      executor: null,
+      executor: [],
       membersList: null,
 
       name: null,
@@ -30,6 +30,7 @@ class TaskModalDataWorker extends React.PureComponent {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleRadioInput = this.handleRadioInput.bind(this);
   }
 
   componentDidMount() {
@@ -51,30 +52,30 @@ class TaskModalDataWorker extends React.PureComponent {
   }
 
   setTaskDataToState = async (data) => {
-    if (data) {
-      const { ...thisState } = this.state;
-      const { modalTemplate } = this.props;
+    const { ...thisState } = this.state;
+    const { modalTemplate } = this.props;
 
-      await getMembersList().then((membersList) => {
-        this.setState({
-          membersList,
-          inputsStatus: { ...modalTemplate },
-          dataToSend: { ...modalTemplate },
-        });
+    await getMembersList().then((membersList) => {
+      this.setState({
+        membersList,
+        inputsStatus: { ...modalTemplate },
+        dataToSend: { ...modalTemplate },
       });
+    });
 
+    if (data) {
       await getExecutors(data.taskId).then((users) => {
         this.setState({
-          executor: users[0],
+          executor: users,
         });
       });
+    }
 
-      for (const value in data) {
-        if (thisState.hasOwnProperty(value)) {
-          this.setState({
-            [value]: data[value],
-          });
-        }
+    for (const value in data) {
+      if (thisState.hasOwnProperty(value)) {
+        this.setState({
+          [value]: data[value],
+        });
       }
     }
   };
@@ -87,15 +88,12 @@ class TaskModalDataWorker extends React.PureComponent {
     const inputList = dataKeys.map((input) => {
       if (input === 'executor' && membersList) {
         return (
-          <li key={input} className='inputItem'>
-            <DropDownInput
-              handleDropInput={this.handleDropInput}
-              value={executor}
-              modalType={modalType}
-              dataTemplate={membersList}
-              label='Executor:'
-            />
-          </li>
+          <RadioInputList
+            dataTemplate={membersList}
+            values={executor}
+            modalType={modalType}
+            handleRadioInput={this.handleRadioInput}
+          />
         );
       }
       return (
@@ -112,7 +110,6 @@ class TaskModalDataWorker extends React.PureComponent {
         </li>
       );
     });
-
     this.setState({
       inputList: <ul className='inputList'>{inputList}</ul>,
     });
@@ -124,12 +121,14 @@ class TaskModalDataWorker extends React.PureComponent {
     });
   };
 
-  handleDropInput = (event) => {
-    const { value } = event.target;
-    this.setState({
-      executors: value,
+  handleRadioInput = (value) => () => {
+    this.setState((prevState) => {
+      const newExecutor = prevState.executor;
+      newExecutor.push(value);
+      return {
+        executor: newExecutor,
+      };
     });
-    this.handleValidInput('executors', true, value);
   };
 
   handleValidInput = (input, status, data) => {
@@ -150,6 +149,7 @@ class TaskModalDataWorker extends React.PureComponent {
     this.setState({
       isSubmit: true,
     });
+    console.log(this.state.executor);
 
     if (isFormValid) {
       setTask(dataToSend, taskId)

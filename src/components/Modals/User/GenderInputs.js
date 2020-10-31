@@ -1,8 +1,8 @@
 import React from 'react';
 import RadioInput from '../../common/Inputs/RadioInput';
-import './radioInputsList.scss';
+import './genderInputs.scss';
 
-function RadioInputList({ name, value, handleRadioInput, isSubmit, handleValidInput, modalType }) {
+function GenderInputs({ name, value, handleRadioInput, isSubmit, handleValidInput, modalType }) {
   return (
     <li key={name} className='sexInputs'>
       <div className='radioInputs'>
@@ -14,6 +14,7 @@ function RadioInputList({ name, value, handleRadioInput, isSubmit, handleValidIn
           handleRadioInput={handleRadioInput}
           handleValidInput={handleValidInput}
           modalType={modalType}
+          checked={value === 'male'}
         />
         <RadioInput
           inputName='female'
@@ -21,6 +22,7 @@ function RadioInputList({ name, value, handleRadioInput, isSubmit, handleValidIn
           handleRadioInput={handleRadioInput}
           handleValidInput={handleValidInput}
           modalType={modalType}
+          checked={value === 'female'}
         />
 
         <div className='validationMessage'>
@@ -31,4 +33,4 @@ function RadioInputList({ name, value, handleRadioInput, isSubmit, handleValidIn
   );
 }
 
-export default RadioInputList;
+export default GenderInputs;
