@@ -128,15 +128,14 @@ class UsersModalDataWorker extends React.PureComponent {
     });
   };
 
-  handleRadioInput = (event) => {
-    const { name } = event.target;
+  handleRadioInput = ({ target: { name, value } }) => {
     this.setState({
       sex: name,
     });
+    this.handleValidInput('sex', true, value);
   };
 
-  handleDropInput = (event) => {
-    const { value } = event.target;
+  handleDropInput = ({ target: { value } }) => {
     this.setState({
       directionId: value,
     });

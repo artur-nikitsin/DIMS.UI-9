@@ -4,15 +4,6 @@ import { Input } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class RadioInput extends React.PureComponent {
-  componentDidUpdate(prevProps) {
-    const prevValue = prevProps.value;
-    const { handleValidInput } = this.props;
-    const { value } = this.props;
-    if (value !== prevValue) {
-      handleValidInput('sex', true, value);
-    }
-  }
-
   render() {
     const { inputName, value, handleRadioInput, modalType } = this.props;
     return (
@@ -25,7 +16,7 @@ class RadioInput extends React.PureComponent {
           value={value || ''}
           onChange={handleRadioInput}
         />
-        <label htmlFor='userMale'>{inputName}</label>
+        <label htmlFor={inputName}>{inputName}</label>
       </div>
     );
   }
