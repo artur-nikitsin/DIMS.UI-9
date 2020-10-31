@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setTask } from '../../../firebase/apiSet';
+import { getExecutors } from '../../../firebase/apiGet';
 import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
+import DropDownInput from '../../common/Inputs/DropDownInput';
+import getMembersList from '../../helpers/getMembersList/getMembersList';
 
 class TaskModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -13,7 +16,10 @@ class TaskModalDataWorker extends React.PureComponent {
       isFormValid: false,
       isSubmit: false,
       inputsStatus: null,
+      inputList: [],
       dataToSend: null,
+      executor: null,
+      membersList: null,
 
       name: null,
       startDate: null,
@@ -28,7 +34,9 @@ class TaskModalDataWorker extends React.PureComponent {
 
   componentDidMount() {
     const { taskData } = this.props;
-    this.setTaskDataToState(taskData);
+    this.setTaskDataToState(taskData).then(() => {
+      this.createInputList();
+    });
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -36,32 +44,60 @@ class TaskModalDataWorker extends React.PureComponent {
     const { taskData: prevTaskData } = prevProps;
     if (prevTaskData !== taskData) {
       const { taskData } = this.props;
-      this.setTaskDataToState(taskData);
+      this.setTaskDataToState(taskData).then(() => {
+        this.createInputList();
+      });
     }
   }
 
-  setTaskDataToState = (data) => {
-    const { ...thisState } = this.state;
-    const { modalTemplate } = this.props;
-    this.setState({
-      inputsStatus: { ...modalTemplate },
-      dataToSend: { ...modalTemplate },
-    });
-    for (const value in data) {
-      if (thisState.hasOwnProperty(value)) {
+  setTaskDataToState = async (data) => {
+    if (data) {
+      const { ...thisState } = this.state;
+      const { modalTemplate } = this.props;
+
+      await getMembersList().then((membersList) => {
         this.setState({
-          [value]: data[value],
+          membersList,
+          inputsStatus: { ...modalTemplate },
+          dataToSend: { ...modalTemplate },
         });
+      });
+
+      await getExecutors(data.taskId).then((users) => {
+        this.setState({
+          executor: users[0],
+        });
+      });
+
+      for (const value in data) {
+        if (thisState.hasOwnProperty(value)) {
+          this.setState({
+            [value]: data[value],
+          });
+        }
       }
     }
   };
 
   createInputList = () => {
     const { modalTemplate, modalType } = this.props;
-    const { isSubmit, ...thisState } = this.state;
+    const { isSubmit, membersList, executor, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
     const inputList = dataKeys.map((input) => {
+      if (input === 'executor' && membersList) {
+        return (
+          <li key={input} className='inputItem'>
+            <DropDownInput
+              handleDropInput={this.handleDropInput}
+              value={executor}
+              modalType={modalType}
+              dataTemplate={membersList}
+              label='Executor:'
+            />
+          </li>
+        );
+      }
       return (
         <li key={input} className='inputItem'>
           <TextInput
@@ -77,13 +113,23 @@ class TaskModalDataWorker extends React.PureComponent {
       );
     });
 
-    return <ul className='inputList'>{inputList}</ul>;
+    this.setState({
+      inputList: <ul className='inputList'>{inputList}</ul>,
+    });
   };
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
     });
+  };
+
+  handleDropInput = (event) => {
+    const { value } = event.target;
+    this.setState({
+      executors: value,
+    });
+    this.handleValidInput('executors', true, value);
   };
 
   handleValidInput = (input, status, data) => {
@@ -116,9 +162,11 @@ class TaskModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
+    const { inputList } = this.state;
+
     return (
       <ModalContent
-        createInputList={this.createInputList()}
+        createInputList={inputList}
         handleSubmit={this.handleSubmit}
         closeModal={closeModal}
         modalType={modalType}

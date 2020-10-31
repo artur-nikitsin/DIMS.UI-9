@@ -35,6 +35,7 @@ export const taskModalTemplate = {
   startDate: null,
   deadlineDate: null,
   description: null,
+  executor: null,
 };
 
 export const trackModalTemplate = {

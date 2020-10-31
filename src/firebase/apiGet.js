@@ -268,3 +268,21 @@ export function getTaskTrackData(userTaskId, name) {
       console.error(`Error receiving data: ${error}`);
     });
 }
+
+export function getExecutors(taskId) {
+  const executors = [];
+  return db
+    .collection('UserTasks')
+    .where('taskId', '==', taskId)
+    .get()
+    .then((userTasks) => {
+      userTasks.forEach((user) => {
+        const { userId } = user.data();
+        executors.push(userId);
+      });
+      return executors;
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
+}

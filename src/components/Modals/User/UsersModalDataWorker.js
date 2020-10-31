@@ -99,6 +99,7 @@ class UsersModalDataWorker extends React.PureComponent {
               value={thisState[input]}
               modalType={modalType}
               dataTemplate={DropDownTemplate}
+              label='Direction:'
             />
           </li>
         );
