@@ -117,8 +117,6 @@ export function getUserTasks(taskId, userTaskId, stateId) {
         .then((doc) => {
           if (doc.exists) {
             taskData.status = doc.data().stateName;
-          } else {
-            taskData.status = 'Active';
           }
         });
       return taskData;

@@ -1,6 +1,7 @@
 import faker from 'faker';
 import db from './db';
 import { deleteDocumentById } from './apiDelete';
+import { setTaskState } from './apiSet';
 
 export function unAssignTask(unAssignUsers, taskId) {
   return db
@@ -37,6 +38,7 @@ export function assignTaskToUsers(executors, executorsDBSnapshot, taskId) {
     userTask.taskId = taskId;
     userTask.userId = userId;
     userTask.stateId = faker.fake('{{random.number}}');
+    setTaskState(userTask.stateId, 'Active');
     return db
       .collection('UserTasks')
       .doc(userTask.userTaskId)
