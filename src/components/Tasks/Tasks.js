@@ -141,7 +141,7 @@ class Tasks extends React.PureComponent {
           outline
           color={changeReactstrapColor(theme)}
           className='taskCreateButton'
-          onClick={this.openModal(null, 'register')}
+          onClick={this.openModal(null, 'create')}
         >
           Create
         </Button>

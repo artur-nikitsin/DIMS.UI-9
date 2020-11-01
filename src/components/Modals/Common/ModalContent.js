@@ -27,12 +27,12 @@ function ModalContent({ handleSubmit, createInputList, closeModal, modalType }) 
 ModalContent.propTypes = {
   closeModal: PropTypes.func.isRequired,
   modalType: PropTypes.string,
-  createInputList: PropTypes.arrayOf(PropTypes.elementType),
+  createInputList: PropTypes.object,
   handleSubmit: PropTypes.func.isRequired,
 };
 ModalContent.defaultProps = {
   modalType: '',
-  createInputList: [],
+  createInputList: null,
 };
 
 export default ModalContent;

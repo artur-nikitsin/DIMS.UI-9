@@ -9,6 +9,7 @@ import Preloader from '../common/Preloader/Preloader';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import UserModal from '../Modals/User/UserModal';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
+import { getSnapShot } from '../../firebase/assign';
 import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
 
 class MembersPage extends React.PureComponent {

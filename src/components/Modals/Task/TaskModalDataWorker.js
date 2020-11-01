@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import faker from 'faker';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setTask } from '../../../firebase/apiSet';
 import { getExecutors } from '../../../firebase/apiGet';
@@ -8,18 +9,20 @@ import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import RadioInputList from '../../common/Inputs/RadioInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
+import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
 
-class TaskModalDataWorker extends React.PureComponent {
+class TaskModalDataWorker extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isFormValid: false,
       isSubmit: false,
       inputsStatus: null,
-      inputList: [],
       dataToSend: null,
       executors: [],
+      unAssignUsers: [],
       membersList: null,
+      dbSnapshot: [],
 
       name: null,
       startDate: null,
@@ -36,6 +39,14 @@ class TaskModalDataWorker extends React.PureComponent {
 
   componentDidMount() {
     const { taskData } = this.props;
+    if (taskData) {
+      getExecutors(taskData.taskId).then((users) => {
+        this.setState({
+          dbSnapshot: users,
+        });
+      });
+    }
+
     this.setTaskDataToState(taskData).then(() => {
       this.createInputList();
     });
@@ -52,7 +63,7 @@ class TaskModalDataWorker extends React.PureComponent {
 
   setTaskDataToState = async (data) => {
     const { ...thisState } = this.state;
-    const { modalTemplate } = this.props;
+    const { modalTemplate, modalType } = this.props;
 
     await getMembersList().then((membersList) => {
       this.setState({
@@ -67,6 +78,12 @@ class TaskModalDataWorker extends React.PureComponent {
         this.setState({
           executors: users,
         });
+      });
+    }
+
+    if (modalType === 'create') {
+      this.setState({
+        taskId: faker.fake('{{random.number}}'),
       });
     }
 
@@ -87,12 +104,14 @@ class TaskModalDataWorker extends React.PureComponent {
     const inputList = dataKeys.map((input) => {
       if (input === 'executors' && membersList) {
         return (
-          <RadioInputList
-            dataTemplate={membersList}
-            values={executors}
-            modalType={modalType}
-            handleRadioInput={this.handleRadioInput}
-          />
+          <li key={input} className='inputItem'>
+            <RadioInputList
+              dataTemplate={membersList}
+              values={executors}
+              modalType={modalType}
+              handleRadioInput={this.handleRadioInput}
+            />
+          </li>
         );
       }
       return (
@@ -121,10 +140,18 @@ class TaskModalDataWorker extends React.PureComponent {
 
   handleRadioInput = (value) => () => {
     this.setState((prevState) => {
-      const newExecutors = prevState.executors;
-      newExecutors.push(value);
+      let { executors, unAssignUsers } = prevState;
+
+      if (executors.includes(value)) {
+        executors = executors.filter((index) => index !== value);
+        unAssignUsers.push(value);
+      } else {
+        executors.push(value);
+        unAssignUsers = unAssignUsers.filter((index) => index !== value);
+      }
       return {
-        executors: newExecutors,
+        executors,
+        unAssignUsers,
       };
     });
     const { executors } = this.state;
@@ -143,15 +170,17 @@ class TaskModalDataWorker extends React.PureComponent {
 
   handleSubmit(event) {
     event.persist();
-    const { isFormValid, taskId, dataToSend } = this.state;
+    const { isFormValid, taskId, dataToSend, executors, unAssignUsers, dbSnapshot } = this.state;
     const { closeModalAndReload } = this.props;
-    const { deadlineDate, description, executors, name, startDate } = dataToSend;
+    const { deadlineDate, description, name, startDate } = dataToSend;
     this.setState({
       isSubmit: true,
     });
     if (isFormValid) {
-      setTask({ deadlineDate, description, executors, name, startDate }, taskId)
+      setTask({ deadlineDate, description, name, startDate }, taskId)
         .then(() => {
+          unAssignTask(unAssignUsers, taskId);
+          assignTaskToUsers(executors, dbSnapshot, taskId);
           closeModalAndReload();
         })
         .catch((error) => ErrorWritingDocument(error));
@@ -160,6 +189,7 @@ class TaskModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
+
     return (
       <ModalContent
         createInputList={this.createInputList()}

@@ -1,24 +1,23 @@
 import React from 'react';
-import './radioInput.scss';
+import './checkBox.scss';
 import PropTypes from 'prop-types';
-import { AvInput } from 'availity-reactstrap-validation';
 
 class CheckBox extends React.PureComponent {
   render() {
     const { inputName, value, handleRadioInput, modalType, checked } = this.props;
     return (
       <div className='radioButton'>
-        <AvInput
+        <input
           type='checkbox'
           disabled={modalType === 'view'}
           name={inputName}
-          trueValue={checked}
-          falseValue=''
           checked={value === checked}
           value={value || ''}
           onChange={handleRadioInput(value)}
         />
-        <label htmlFor={inputName}>{inputName}</label>
+        <label className='checkBoxLabel' htmlFor={inputName}>
+          {inputName}
+        </label>
       </div>
     );
   }
@@ -28,8 +27,7 @@ CheckBox.propTypes = {
   value: PropTypes.string,
   modalType: PropTypes.string,
   inputName: PropTypes.string.isRequired,
-  handleRadioInput: PropTypes.func.isRequired,
-  handleValidInput: PropTypes.func.isRequired,
+  handleRadioInput: PropTypes.func,
 };
 
 CheckBox.defaultProps = {

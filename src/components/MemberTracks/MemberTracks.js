@@ -101,8 +101,9 @@ class MemberTracks extends React.PureComponent {
   };
 
   createMemberTrackTable = () => {
-    const { userName, taskName, userTaskId, userId } = this.props;
+    const { userName, taskName, userId } = this.props;
     const { userTrackList, modalIsOpen, activeTrackId, modalType } = this.state;
+    const { userTaskId } = this.props.match.params;
     const { theme } = this.context;
     return (
       <div className='memberTracksTableContainer'>
@@ -127,7 +128,7 @@ class MemberTracks extends React.PureComponent {
           outline
           color={changeReactstrapColor(theme)}
           className='trackCreateButton'
-          onClick={this.openModal(null, null, 'register')}
+          onClick={this.openModal(activeTrackId, userTaskId, 'register')}
         >
           Add
         </Button>

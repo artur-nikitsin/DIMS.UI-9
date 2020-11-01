@@ -10,7 +10,7 @@ const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) =
     const list = names.map((name) => {
       const value = data[name];
       let checked = '';
-      if (values.includes(data[name])) {
+      if (values.includes(value)) {
         checked = value;
       }
       return (
@@ -29,14 +29,14 @@ const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) =
   };
 
   return (
-    <AvGroup check className='radioInputList'>
-      {createList(dataTemplate)}
+    <AvGroup check>
+      <ul className='radioInputList'>{createList(dataTemplate)}</ul>
     </AvGroup>
   );
 };
 
 RadioInputList.propTypes = {
-  handleDropInput: PropTypes.func.isRequired,
+  handleRadioInput: PropTypes.func,
   value: PropTypes.string,
   modalType: PropTypes.string,
 };

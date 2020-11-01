@@ -65,7 +65,7 @@ export function deleteTask(taskId) {
     });
 }
 
-const deleteDocumentById = (collection, docId) => {
+export const deleteDocumentById = (collection, docId) => {
   if (docId) {
     return db
       .collection(collection)

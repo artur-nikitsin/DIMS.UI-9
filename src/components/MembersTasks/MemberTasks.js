@@ -169,7 +169,7 @@ class MemberTasks extends React.PureComponent {
 
   render() {
     const { userId } = this.props.match.params;
-    const { currentTaskName, loading } = this.state;
+    const { currentTaskName, userTaskId, loading } = this.state;
     return (
       <div>
         <Switch>
@@ -182,6 +182,7 @@ class MemberTasks extends React.PureComponent {
             render={(props) => (
               <MemberTracks
                 userId={userId}
+                userTaskId={userTaskId}
                 taskName={currentTaskName}
                 userName={this.props.signedUserName}
                 {...props}
