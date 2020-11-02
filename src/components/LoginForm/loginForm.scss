@@ -1,7 +1,6 @@
-@import "src/components/common/Styles/Mixins/Buttons/Buttons";
+@import 'src/components/common/Styles/Mixins/Buttons/Buttons';
 
 .loginForm {
-
   @mixin flex {
     display: flex;
     flex-direction: column;
@@ -10,11 +9,15 @@
   }
 
   @include flex;
-  width: 25rem;
   height: auto;
   background: rgb(241, 248, 255);
   border: 2px solid rgb(200, 225, 255);
-
+  @media screen and (max-width: 400px) {
+    max-width: 100%;
+  }
+  @media screen and (min-width: 400px) {
+    width: 23rem;
+  }
 
   .loginTitle {
     margin-top: 1rem;
@@ -37,6 +40,5 @@
       margin-top: 2rem;
       width: 8rem;
     }
-
   }
 }

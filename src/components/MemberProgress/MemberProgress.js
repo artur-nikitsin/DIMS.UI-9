@@ -1,7 +1,6 @@
 import React from 'react';
 import './memberProgress.scss';
 import { NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import { Table, Button } from 'reactstrap';
 import Preloader from '../common/Preloader/Preloader';
 import { getUserTrackList } from '../../firebase/apiGet';

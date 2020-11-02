@@ -4,12 +4,13 @@ import 'react-toggle/style.css';
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './themeSwitcher.scss';
+import { themes } from '../../constants/themes';
 import PropTypes from 'prop-types';
 
 const ThemeSwitcher = ({ theme, onSwitchTheme }) => {
-  const handleSwitch = (event) => {
-    const { value } = event.target;
-    const theme = value === 'dark' ? 'light' : 'dark';
+  const handleSwitch = ({ target: { value } }) => {
+    const { dark, light } = themes;
+    const theme = value === 'dark' ? light : dark;
     onSwitchTheme(theme);
   };
 

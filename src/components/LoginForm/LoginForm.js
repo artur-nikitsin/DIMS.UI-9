@@ -26,8 +26,7 @@ class LoginForm extends React.PureComponent {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event) {
-    const { name, value } = event.target;
+  handleChange({ target: { name, value } }) {
     this.setState({
       [name]: value,
     });

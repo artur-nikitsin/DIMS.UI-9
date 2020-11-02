@@ -6,6 +6,7 @@ import NavButton from '../common/Buttons/NavButton/NavButton';
 import ThemeSwitcher from './Toggle/ThemeSwitcher';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
+import Logo from '../../Logo/Logo';
 
 const Header = ({ isLogin, handleLogout, theme, role, onSwitchTheme }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,9 +17,9 @@ const Header = ({ isLogin, handleLogout, theme, role, onSwitchTheme }) => {
     <div>
       <Navbar light expand='md' className={`${theme} AdaptHeader`}>
         <NavbarBrand href='/' className='logoContainer'>
-          <img className='devIncubatorLogo' src='/assets/img/logo.png' alt='devIncubator' />
+          <Logo path='/assets/img/logo.png' />
         </NavbarBrand>
-        <NavbarToggler onClick={toggle} />
+        {isLogin && <NavbarToggler onClick={toggle} />}
         <Collapse isOpen={isOpen} navbar>
           <Nav className='mr-auto' navbar>
             {isAdminOrMentor(role) && (

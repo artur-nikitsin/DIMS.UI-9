@@ -67,16 +67,16 @@
 @mixin collapsedHideDark {
   & td {
     @include cell;
-    border: 1px solid rgba(157, 157, 158, 1);
+    border: 1px solid black;
     background: rgb(36, 41, 46);
-    color: #ffffff;
+    color: lightgray;
   }
 
   & th {
     @include cell;
-    border: 1px solid rgba(157, 157, 158, 1);
+    border: 1px solid black;
     background: rgb(36, 41, 46);
-    color: #ffffff;
+    color: lightgray;
   }
 }
 

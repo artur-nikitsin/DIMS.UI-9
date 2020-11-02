@@ -25,10 +25,14 @@ const initialState = {
 
 export const getAllMembers = () => (dispatch) => {
   dispatch(setLoading(true));
-  getMembers().then((result) => {
-    dispatch(setMembers(result));
-    dispatch(setLoading(false));
-  });
+  getMembers()
+    .then((result) => {
+      dispatch(setMembers(result));
+      dispatch(setLoading(false));
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
 };
 
 export const openModal = (activeUserId, modalType) => (dispatch) => {
