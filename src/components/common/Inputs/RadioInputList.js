@@ -6,26 +6,20 @@ import CheckBox from './CheckBox';
 
 const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) => {
   const createList = (data) => {
-    const names = Object.keys(data);
-    const list = names.map((name) => {
-      const value = data[name];
-      let checked = '';
-      if (values.includes(value)) {
-        checked = value;
-      }
+    return data.map((user) => {
+      const { fullName, userId } = user;
       return (
-        <li key={value}>
+        <li key={userId}>
           <CheckBox
-            inputName={name}
-            value={value}
-            checked={checked}
+            inputName={fullName}
+            value={userId}
+            checked={values.includes(userId)}
             modalType={modalType}
             handleRadioInput={handleRadioInput}
           />
         </li>
       );
     });
-    return list;
   };
 
   return (

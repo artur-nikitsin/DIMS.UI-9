@@ -62,7 +62,6 @@ class TaskModalDataWorker extends React.Component {
   }
 
   setTaskDataToState = async (data) => {
-    const { ...thisState } = this.state;
     const { modalTemplate, modalType } = this.props;
 
     await getMembersList().then((membersList) => {
@@ -88,7 +87,7 @@ class TaskModalDataWorker extends React.Component {
     }
 
     for (const value in data) {
-      if (thisState.hasOwnProperty(value)) {
+      if (this.state.hasOwnProperty(value)) {
         this.setState({
           [value]: data[value],
         });
@@ -183,7 +182,9 @@ class TaskModalDataWorker extends React.Component {
           assignTaskToUsers(executors, dbSnapshot, taskId);
           closeModalAndReload();
         })
-        .catch((error) => ErrorWritingDocument(error));
+        .catch((error) => {
+          return ErrorWritingDocument(error);
+        });
     }
   }
 

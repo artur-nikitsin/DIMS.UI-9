@@ -9,7 +9,7 @@ import Preloader from '../common/Preloader/Preloader';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import UserModal from '../Modals/User/UserModal';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
-import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
+import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -82,7 +82,7 @@ class MembersPage extends React.PureComponent {
         {role === 'mentor' || (
           <Button
             outline
-            color={changeReactstrapColor(theme)}
+            color={getThemeColor(theme)}
             className='memberRegisterButton'
             onClick={this.openModal(null, 'register')}
           >

@@ -12,7 +12,7 @@ import TableTrackHeaders from './TableHeaders';
 import TrackModal from '../Modals/Track/TrackModal';
 import { deleteTask } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
+import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -126,7 +126,7 @@ class MemberTracks extends React.PureComponent {
 
         <Button
           outline
-          color={changeReactstrapColor(theme)}
+          color={getThemeColor(theme)}
           className='trackCreateButton'
           onClick={this.openModal(activeTrackId, userTaskId, 'register')}
         >

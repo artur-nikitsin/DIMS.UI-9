@@ -57,14 +57,13 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   setUserDataToState = (data) => {
-    const { ...thisState } = this.state;
     const { modalTemplate } = this.props;
     this.setState({
       inputsStatus: { ...modalTemplate },
       dataToSend: { ...modalTemplate },
     });
     for (const value in data) {
-      if (thisState.hasOwnProperty(value)) {
+      if (this.state.hasOwnProperty(value)) {
         this.setState({
           [value]: data[value],
         });
@@ -166,7 +165,9 @@ class UsersModalDataWorker extends React.PureComponent {
         .then(() => {
           closeModalAndReload();
         })
-        .catch((error) => ErrorWritingDocument(error));
+        .catch((error) => {
+          return ErrorWritingDocument(error);
+        });
     }
   }
 

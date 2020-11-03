@@ -13,7 +13,7 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import NavButton from '../common/Buttons/NavButton/NavButton';
-import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
+import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 
 class MemberTasks extends React.PureComponent {
   constructor(props) {
@@ -83,7 +83,7 @@ class MemberTasks extends React.PureComponent {
                   <NavButton
                     label='Track'
                     to={`/users/${userId}/tasks/${task.userTaskId}/track`}
-                    color={changeReactstrapColor(theme)}
+                    color={getThemeColor(theme)}
                     onClick={this.setCurrentTask(task.userTaskId, task.name)}
                   />
                 </td>

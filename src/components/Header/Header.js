@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import NavButton from '../common/Buttons/NavButton/NavButton';
 import ThemeSwitcher from './Toggle/ThemeSwitcher';
 import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
-import changeReactstrapColor from '../helpers/changeReactstrapColor/changeReactstrapColor';
+import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import Logo from '../../Logo/Logo';
 
 const Header = ({ isLogin, handleLogout, theme, role, onSwitchTheme }) => {
@@ -41,7 +41,7 @@ const Header = ({ isLogin, handleLogout, theme, role, onSwitchTheme }) => {
             {isLogin && (
               <div className='buttonsContainer'>
                 <ThemeSwitcher className='themeSwitcher' onSwitchTheme={onSwitchTheme} theme={theme} />
-                <Button outline color={changeReactstrapColor(theme)} className='logoutButton' onClick={handleLogout}>
+                <Button outline color={getThemeColor(theme)} className='logoutButton' onClick={handleLogout}>
                   Logout
                 </Button>
               </div>
