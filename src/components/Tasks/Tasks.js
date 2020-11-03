@@ -1,6 +1,8 @@
 import React from 'react';
 import './tasks.scss';
 import { Table, Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getAllTasks } from '../../firebase/apiGet';
 import Preloader from '../common/Preloader/Preloader';
 import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
@@ -9,21 +11,18 @@ import TaskModal from '../Modals/Task/TaskModal';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
+import { closeTaskModal, openTaskModal, getTasks } from '../../redux/reducers/tasksReducer';
 
 class Tasks extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      tasks: null,
-      modalIsOpen: false,
-      activeTaskId: null,
-      modalType: null,
-    };
+    this.closeModal = this.closeModal.bind(this);
+    this.openModal = this.openModal.bind(this);
   }
 
   componentDidMount() {
-    this.getTasks();
+    const { getTasks } = this.props;
+    getTasks();
   }
 
   handleDelete = (taskId) => () => {
@@ -33,76 +32,18 @@ class Tasks extends React.PureComponent {
   };
 
   reloadTasksPage = () => {
-    this.setState({
-      loading: true,
-      tasks: null,
-    });
-    this.getTasks();
-  };
-
-  getTasks = () => {
-    getAllTasks().then((result) => {
-      const tasks = result.map((task, i) => {
-        return (
-          <tr key={`${task.taskId}z`}>
-            <td key={`${task.taskId}a`}>{i + 1}</td>
-            <td key={`${task.taskId}b`}>
-              <Button
-                color='link'
-                onClick={(event) => {
-                  event.preventDefault();
-                  this.openModal(task.taskId, 'view')();
-                }}
-              >
-                {task.name}
-              </Button>
-            </td>
-            <td key={`${task.taskId}i`} className='collapsed'>
-              {getLocaleDate(task.startDate)}
-            </td>
-            <td key={`${task.taskId}j`} className='collapsed'>
-              {getLocaleDate(task.deadlineDate)}
-            </td>
-            <td className='minRow'>
-              <ul className='tableInfo'>
-                <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
-                <hr />
-                <li>{`Deadline date: ${getLocaleDate(task.deadlineDate)}`}</li>
-                <hr />
-              </ul>
-            </td>
-            <td key={`${task.taskId}h`}>
-              <EditDeleteButtons
-                handleEdit={this.openModal(task.taskId, 'edit')}
-                handleDelete={this.handleDelete(task.taskId)}
-              />
-            </td>
-          </tr>
-        );
-      });
-
-      if (!this.state.tasks) {
-        this.setState({
-          loading: false,
-          tasks,
-        });
-      }
-    });
+    const { getTasks } = this.props;
+    getTasks();
   };
 
   openModal = (activeTaskId, modalType) => () => {
-    this.setState({
-      modalIsOpen: true,
-      activeTaskId,
-      modalType,
-    });
+    const { openTaskModal } = this.props;
+    openTaskModal(activeTaskId, modalType);
   };
 
   closeModal = () => {
-    this.setState({
-      modalIsOpen: false,
-      activeTaskId: null,
-    });
+    const { closeTaskModal } = this.props;
+    closeTaskModal();
   };
 
   closeModalAndReload = () => {
@@ -124,7 +65,7 @@ class Tasks extends React.PureComponent {
       </thead>
     );
 
-    const { tasks, modalIsOpen, activeTaskId, modalType } = this.state;
+    const { tasks, modalIsOpen, activeTaskId, modalType } = this.props;
     const { theme } = this.context;
     return (
       <>
@@ -147,17 +88,99 @@ class Tasks extends React.PureComponent {
         </Button>
         <Table striped className={`${theme} tasksTable`}>
           {tableHeaders}
-          <tbody>{tasks}</tbody>
+          <tbody>{this.tasksTable()}</tbody>
         </Table>
       </>
     );
   };
 
+  tasksTable() {
+    const { tasks } = this.props;
+    const table = tasks.map((task, i) => {
+      return (
+        <tr key={`${task.taskId}z`}>
+          <td key={`${task.taskId}a`}>{i + 1}</td>
+          <td key={`${task.taskId}b`}>
+            <Button
+              color='link'
+              onClick={(event) => {
+                event.preventDefault();
+                this.openModal(task.taskId, 'view')();
+              }}
+            >
+              {task.name}
+            </Button>
+          </td>
+          <td key={`${task.taskId}i`} className='collapsed'>
+            {getLocaleDate(task.startDate)}
+          </td>
+          <td key={`${task.taskId}j`} className='collapsed'>
+            {getLocaleDate(task.deadlineDate)}
+          </td>
+          <td className='minRow'>
+            <ul className='tableInfo'>
+              <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
+              <hr />
+              <li>{`Deadline date: ${getLocaleDate(task.deadlineDate)}`}</li>
+              <hr />
+            </ul>
+          </td>
+          <td key={`${task.taskId}h`}>
+            <EditDeleteButtons
+              handleEdit={this.openModal(task.taskId, 'edit')}
+              handleDelete={this.handleDelete(task.taskId)}
+            />
+          </td>
+        </tr>
+      );
+    });
+    return table;
+  }
+
   render() {
-    const { loading } = this.state;
+    const { loading } = this.props;
     return <div className='tasksTableContainer'>{loading ? <Preloader /> : this.createTasksTable()}</div>;
   }
 }
 
+const mapStateToProps = (state) => {
+  const { tasks, loading, activeTaskId, modalIsOpen, modalType } = state.tasks;
+  return {
+    tasks,
+    loading,
+    activeTaskId,
+    modalIsOpen,
+    modalType,
+  };
+};
+Tasks.propTypes = {
+  tasks: PropTypes.array,
+  getAllMembers: PropTypes.func,
+  openModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  loading: PropTypes.bool,
+  role: PropTypes.string,
+  theme: PropTypes.string,
+  modalIsOpen: PropTypes.bool,
+  activeUserId: PropTypes.string,
+  modalType: PropTypes.string,
+};
+
+Tasks.defaultProps = {
+  tasks: [],
+  getAllMembers: null,
+  openModal: null,
+  closeModal: null,
+  loading: false,
+  role: '',
+  theme: 'light',
+  modalIsOpen: false,
+  activeUserId: '',
+  modalType: 'view',
+};
 Tasks.contextType = ThemeContext;
-export default Tasks;
+export default connect(mapStateToProps, {
+  getTasks,
+  openTaskModal,
+  closeTaskModal,
+})(Tasks);

@@ -1,9 +1,9 @@
 import { getMembers } from '../../firebase/apiGet';
 
 const SET_MEMBERS = 'SET_MEMBERS';
-const SET_LOADING = 'SET_LOADING';
 const SET_ACTIVE_USER_ID = 'SET_ACTIVE_USER_ID';
 const SET_ACTIVE_USER_NAME = 'SET_ACTIVE_USER_NAME';
+const SET_LOADING = 'SET_LOADING';
 const SET_MODAL_IS_OPEN = 'SET_MODAL_IS_OPEN';
 const SET_MODAL_TYPE = 'SET_MODAL_TYPE';
 
