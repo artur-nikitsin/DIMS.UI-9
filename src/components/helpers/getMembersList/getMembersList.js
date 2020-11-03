@@ -1,9 +1,9 @@
 import { getMembers } from '../../../firebase/apiGet';
 
 async function getMembersList() {
-  await getMembers().then((result) => {
+  return getMembers().then((result) => {
     return result.map((member) => {
-      return { [`${member.firstName} ${member.lastName}`]: member.userId };
+      return { fullName: `${member.firstName} ${member.lastName}`, userId: member.userId };
     });
   });
 }
