@@ -44,6 +44,7 @@ export const closeTaskModal = () => (dispatch) => {
   dispatch(setTaskModal(false));
   dispatch(setTaskModalType(null));
 };
+
 const tasksReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_LOADING:

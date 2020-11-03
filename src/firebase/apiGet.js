@@ -1,3 +1,4 @@
+import { setReceiveDataErrorToStore } from './connectApiToStore';
 import db from './db';
 import getLocaleDate from '../components/helpers/getLocaleDate/getLocalDate';
 
@@ -20,7 +21,9 @@ export function getMembers() {
       });
       return members;
     })
-    .catch(({ message }) => ({ message, messageType: 'warning' }));
+    .catch((error) => {
+      setReceiveDataErrorToStore(error);
+    });
 }
 
 export function getMember(userId) {
@@ -64,7 +67,9 @@ export function getMember(userId) {
 
       return member;
     })
-    .catch(({ message }) => ({ message, messageType: 'warning' }));
+    .catch((error) => {
+      setReceiveDataErrorToStore(error);
+    });
 }
 
 export function getUserTaskList(userId) {

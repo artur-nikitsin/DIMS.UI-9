@@ -1,5 +1,6 @@
 import firebase from 'firebase/firebase';
 import db from './db';
+import { setAuthErrorToStore } from './connectApiToStore';
 
 export function register(email, password) {
   return firebase
@@ -17,8 +18,9 @@ export async function login(email, password) {
     .then(() => {
       return getRole(email);
     })
-    .catch((response) => {
-      const { code } = response;
+    .catch((error) => {
+      setAuthErrorToStore(error);
+      const { code } = error;
       const message = returnLoginMessage(code);
       return { message, messageType: 'warning' };
     });

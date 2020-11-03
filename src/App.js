@@ -16,6 +16,7 @@ import MembersPage from './components/MembersPage/MembersPage';
 import Tasks from './components/Tasks/Tasks';
 import MemberProgress from './components/MemberProgress/MemberProgress';
 import MemberTasks from './components/MembersTasks/MemberTasks';
+import store from './redux/store';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -91,6 +92,7 @@ class App extends React.PureComponent {
   };
 
   render() {
+    console.log(store.getState().errors);
     const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
     return (
