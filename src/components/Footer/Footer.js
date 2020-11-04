@@ -1,9 +1,9 @@
 import React from 'react';
 import './footer.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { faGithub, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
 import { FOOTER_TITLE } from '../constants/titles';
+import LinkIcon from '../common/LinkIcon/LinkIcon';
 
 function Footer() {
   return (
@@ -11,19 +11,13 @@ function Footer() {
       <div className='footerContent'>
         <ul className='linksContainer'>
           <li>
-            <a href='https://t.me/zapecankin'>
-              <FontAwesomeIcon size='2x' icon={faTelegramPlane} className='linkIcon' />
-            </a>
+            <LinkIcon icon={faTelegramPlane} href='https://t.me/zapecankin' />
           </li>
           <li>
-            <a href='https://github.com/artur-nikitsin'>
-              <FontAwesomeIcon size='2x' icon={faGithub} className='linkIcon' />
-            </a>
+            <LinkIcon icon={faGithub} href='https://github.com/artur-nikitsin' />
           </li>
           <li>
-            <a href='mailto:artur.nikitsin@gmail.com'>
-              <FontAwesomeIcon size='2x' icon={faEnvelope} className='linkIcon' />
-            </a>
+            <LinkIcon icon={faEnvelope} href='mailto:artur.nikitsin@gmail.com' />
           </li>
         </ul>
         <p className='allRights'>{FOOTER_TITLE}</p>

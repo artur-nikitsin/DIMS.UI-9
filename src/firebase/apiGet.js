@@ -66,9 +66,6 @@ export function getMember(userId) {
       member.sex = sex;
 
       return member;
-    })
-    .catch((error) => {
-      setReceiveDataErrorToStore(error);
     });
 }
 

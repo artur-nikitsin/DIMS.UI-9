@@ -13,7 +13,7 @@ import setUserToSessionStorage from './components/helpers/sessionStorage/setUser
 import deleteUserFromLocalStorage from './components/helpers/sessionStorage/deleteUserFromLocalStorage';
 import Header from './components/Header/Header';
 import MembersPage from './components/MembersPage/MembersPage';
-import Tasks from './components/Tasks/Tasks';
+import TaskConnected from './components/Tasks/TasksConnected';
 import MemberProgress from './components/MemberProgress/MemberProgress';
 import MemberTasks from './components/MembersTasks/MemberTasks';
 import store from './redux/store';
@@ -126,7 +126,6 @@ class App extends React.PureComponent {
                     />
                   )}
                 />
-
                 <Route path='/users/:userId/progress' render={(props) => <MemberProgress {...props} />} />
 
                 <Route
@@ -136,7 +135,7 @@ class App extends React.PureComponent {
                   )}
                 />
 
-                <Route path='/tasks' component={Tasks} />
+                <Route path='/tasks' component={TaskConnected} />
 
                 <Route path='/login'>
                   <LoginForm handleLogin={this.handleLogin} />

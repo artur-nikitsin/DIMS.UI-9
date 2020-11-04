@@ -1,4 +1,6 @@
 import { getMembers } from '../../firebase/apiGet';
+import { setReceiveDataErrorToStore } from '../../firebase/connectApiToStore';
+import { catchAuthError } from './errorReducer';
 
 const SET_MEMBERS = 'SET_MEMBERS';
 const SET_ACTIVE_USER_ID = 'SET_ACTIVE_USER_ID';
@@ -31,7 +33,8 @@ export const getAllMembers = () => (dispatch) => {
       dispatch(setLoading(false));
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      setReceiveDataErrorToStore(error);
+      dispatch(catchAuthError(error));
     });
 };
 

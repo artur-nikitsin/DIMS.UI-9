@@ -4,7 +4,7 @@ const initialState = {
   authError: null,
 };
 
-const SET_RECEIVE_DATA_ERROR = 'SET_DATA_ERROR';
+const SET_RECEIVE_DATA_ERROR = 'SET_RECEIVE_DATA_ERROR';
 const SET_AUTH_ERROR = 'SET_AUTH_ERROR';
 const SET_SEND_DATA_ERROR = 'SET_SEND_DATA_ERROR';
 

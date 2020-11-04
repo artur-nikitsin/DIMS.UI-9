@@ -1,9 +1,7 @@
 import React from 'react';
 import './tasks.scss';
 import { Table, Button } from 'reactstrap';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getAllTasks } from '../../firebase/apiGet';
 import Preloader from '../common/Preloader/Preloader';
 import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
 import { deleteTask } from '../../firebase/apiDelete';
@@ -11,18 +9,10 @@ import TaskModal from '../Modals/Task/TaskModal';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
-import { closeTaskModal, openTaskModal, getTasks } from '../../redux/reducers/tasksReducer';
 
 class Tasks extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.closeModal = this.closeModal.bind(this);
-    this.openModal = this.openModal.bind(this);
-  }
-
   componentDidMount() {
-    const { getTasks } = this.props;
-    getTasks();
+    this.reloadTasksPage();
   }
 
   handleDelete = (taskId) => () => {
@@ -65,7 +55,7 @@ class Tasks extends React.PureComponent {
       </thead>
     );
 
-    const { tasks, modalIsOpen, activeTaskId, modalType } = this.props;
+    const { modalIsOpen, activeTaskId, modalType } = this.props;
     const { theme } = this.context;
     return (
       <>
@@ -101,13 +91,7 @@ class Tasks extends React.PureComponent {
         <tr key={`${task.taskId}z`}>
           <td key={`${task.taskId}a`}>{i + 1}</td>
           <td key={`${task.taskId}b`}>
-            <Button
-              color='link'
-              onClick={(event) => {
-                event.preventDefault();
-                this.openModal(task.taskId, 'view')();
-              }}
-            >
+            <Button color='link' onClick={this.openModal(task.taskId, 'view')}>
               {task.name}
             </Button>
           </td>
@@ -143,16 +127,8 @@ class Tasks extends React.PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { tasks, loading, activeTaskId, modalIsOpen, modalType } = state.tasks;
-  return {
-    tasks,
-    loading,
-    activeTaskId,
-    modalIsOpen,
-    modalType,
-  };
-};
+Tasks.contextType = ThemeContext;
+
 Tasks.propTypes = {
   tasks: PropTypes.array,
   getAllMembers: PropTypes.func,
@@ -178,9 +154,4 @@ Tasks.defaultProps = {
   activeUserId: '',
   modalType: 'view',
 };
-Tasks.contextType = ThemeContext;
-export default connect(mapStateToProps, {
-  getTasks,
-  openTaskModal,
-  closeTaskModal,
-})(Tasks);
+export default Tasks;
