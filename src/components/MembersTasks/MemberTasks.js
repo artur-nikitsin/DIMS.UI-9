@@ -20,16 +20,26 @@ class MemberTasks extends React.PureComponent {
     super(props);
     this.state = {
       loading: true,
-      userTaskList: null,
+      userId: null,
+      userTaskList: [],
       userTaskId: null,
       currentTaskName: null,
       modalIsOpen: false,
       modalType: null,
     };
+    this.loadMemberTaskPage = this.loadMemberTaskPage.bind(this);
   }
 
   componentDidMount() {
+    this.loadMemberTaskPage();
+  }
+
+  loadMemberTaskPage() {
     const { userId } = this.props.match.params;
+    this.setState({
+      loading: true,
+      userTaskList: [],
+    });
     this.getUserTaskList(userId);
   }
 
@@ -43,7 +53,7 @@ class MemberTasks extends React.PureComponent {
   getUserTaskList = (user) => {
     if (user) {
       getUserTaskList(user).then((result) => {
-        const { userId } = this.props.match.params;
+        console.log(result);
         const { role } = this.props;
         const { theme } = this.context;
 
@@ -64,25 +74,25 @@ class MemberTasks extends React.PureComponent {
               </td>
               <td className='collapsed'>{getLocaleDate(task.startDate)}</td>
               <td className='collapsed'>{getLocaleDate(task.deadlineDate)}</td>
-              <td className='collapsed'>{task.status}</td>
+              <td className={`collapsed  ${task.status}`}>{task.status}</td>
               <td className='minRow'>
                 <ul className='tableInfo'>
                   <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
                   <hr />
                   <li>{`Start date: ${getLocaleDate(task.deadlineDate)}`}</li>
                   <hr />
-                  <li>{`Status: ${task.status}`}</li>
+                  <li className={task.status}>{`Status: ${task.status}`}</li>
                 </ul>
               </td>
               {isAdminOrMentor(role) ? (
                 <td className='tasksButtons'>
-                  <StatusButtons stateId={task.stateId} />
+                  <StatusButtons stateId={task.stateId} loadMemberTaskPage={this.loadMemberTaskPage} />
                 </td>
               ) : (
                 <td className='tasksButtons'>
                   <NavButton
                     label='Track'
-                    to={`/users/${userId}/tasks/${task.userTaskId}/track`}
+                    to={`/users/${user}/tasks/${task.userTaskId}/track`}
                     color={getThemeColor(theme)}
                     onClick={this.setCurrentTask(task.userTaskId, task.name)}
                   />
@@ -92,7 +102,7 @@ class MemberTasks extends React.PureComponent {
           );
         });
 
-        if (!this.state.userTaskList) {
+        if (!this.state.userTaskList.length) {
           this.setState({
             loading: false,
             userTaskList,
