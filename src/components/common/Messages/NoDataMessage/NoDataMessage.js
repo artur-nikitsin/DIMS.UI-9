@@ -2,12 +2,20 @@ import React from 'react';
 import { Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 const NoDataMessage = ({ backLink }) => {
   return (
     <Alert color='dark'>
-      Nothing to show.
-      {backLink}
+      <p>
+        <strong>Nothing to show =(</strong>
+      </p>
+      <p>
+        {' '}
+        <FontAwesomeIcon size='sm' icon={faArrowLeft} className='linkIcon' />
+        {backLink}
+      </p>
     </Alert>
   );
 };

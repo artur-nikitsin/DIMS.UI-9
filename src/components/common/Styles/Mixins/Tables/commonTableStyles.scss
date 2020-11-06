@@ -20,13 +20,13 @@
   & th {
     @include cell;
     border: 1px solid rgba(157, 157, 158, 1);
-    background: rgba(16, 120, 224, 0.9);
+    background: #28a745;
   }
 }
 
 @mixin commonTableStyles {
   @include table;
-
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   @media screen and (max-width: 480px) {
     @include collapsedHide;
     .collapsed {
@@ -82,6 +82,7 @@
 
 @mixin darkTable {
   @include table;
+  box-shadow: 0 0 20px #007929;
   @media screen and (max-width: 480px) {
     @include collapsedHideDark;
     .collapsed {

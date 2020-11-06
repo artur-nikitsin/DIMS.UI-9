@@ -92,7 +92,6 @@ class App extends React.PureComponent {
   };
 
   render() {
-    console.log(store.getState().errors);
     const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
     return (

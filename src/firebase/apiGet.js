@@ -1,4 +1,3 @@
-import { setReceiveDataErrorToStore } from './connectApiToStore';
 import db from './db';
 import getLocaleDate from '../components/helpers/getLocaleDate/getLocalDate';
 
@@ -22,7 +21,7 @@ export function getMembers() {
       return members;
     })
     .catch((error) => {
-      setReceiveDataErrorToStore(error);
+      return error;
     });
 }
 
@@ -66,6 +65,9 @@ export function getMember(userId) {
       member.sex = sex;
 
       return member;
+    })
+    .catch((error) => {
+      return error;
     });
 }
 
@@ -90,7 +92,7 @@ export function getUserTaskList(userId) {
       return taskData;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -124,7 +126,7 @@ export function getUserTasks(taskId, userTaskId, stateId) {
       return taskData;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -146,7 +148,7 @@ export function getAllTasks() {
       return taskData;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -164,7 +166,7 @@ export function getTask(taskId) {
       };
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -182,7 +184,7 @@ export function getTaskTrack(userTaskId, name) {
       return taskTrackList;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -202,7 +204,7 @@ export function getTrack(taskTrackId) {
       return trackData;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -227,7 +229,7 @@ export function getUserTrackList(userId) {
       return trackData;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -242,7 +244,7 @@ function getTaskTracksWithName(userTaskId, taskId) {
       return track;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -265,7 +267,7 @@ export function getTaskTrackData(userTaskId, name) {
       return tracks;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }
 
@@ -283,6 +285,6 @@ export function getExecutors(taskId) {
       return executors;
     })
     .catch((error) => {
-      console.error(`Error receiving data: ${error}`);
+      return error;
     });
 }

@@ -7,6 +7,7 @@
   min-height: 12vh;
   background: rgb(36, 41, 46);
   border-top: 1px solid #000;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
   .footerContent {
     display: flex;
@@ -41,5 +42,4 @@
       color: rgb(223, 226, 229);
     }
   }
-
 }
