@@ -230,6 +230,32 @@ export function getTrack(taskTrackId) {
     });
 }
 
+// for member progress
+export function getUserTrackList(userId) {
+  return db
+    .collection('UserTasks')
+    .where('userId', '==', userId)
+    .get()
+    .then((userTasks) => {
+      const userTaskList = userTasks.docs.map((userTask) => {
+        const { userTaskId, taskId, userId, stateId } = userTask.data();
+        return { userTaskId, taskId, userId, stateId };
+      });
+      return userTaskList;
+    })
+    .then((userTaskList) => {
+      const userTracks = userTaskList.map((task) => {
+        const currentTrack = getTaskTracksWithName(task.userTaskId, task.taskId);
+        return currentTrack;
+      });
+      const trackData = Promise.all(userTracks);
+      return trackData;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
 function getTaskTracksWithName(userTaskId, taskId) {
   return db
     .collection('Tasks')
