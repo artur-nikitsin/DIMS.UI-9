@@ -179,7 +179,7 @@ export function getTaskTrack(userTaskId, name) {
     .then((trackData) => {
       const taskTrackList = trackData.docs.map((userTask) => {
         const { taskTrackId, userTaskId, trackDate, trackNote } = userTask.data();
-        return { taskTrackId, userTaskId, trackDate, trackNote };
+        return { name, taskTrackId, userTaskId, trackDate, trackNote };
       });
       return taskTrackList;
     })
