@@ -22,8 +22,6 @@ class MemberTasks extends React.PureComponent {
       loading: true,
       userId: null,
       userTaskList: [],
-      /*  userTaskId: null,
-      currentTaskName: null, */
       modalIsOpen: false,
       modalType: null,
     };
@@ -73,8 +71,13 @@ class MemberTasks extends React.PureComponent {
                   <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
                   <hr />
                   <li>{`Start date: ${getLocaleDate(task.deadlineDate)}`}</li>
-                  <hr />
-                  <li className={task.status}>{`Status: ${task.status}`}</li>
+
+                  {isAdminOrMentor(role) && (
+                    <>
+                      <hr />
+                      <li className={task.status}>{`Status: ${task.status}`}</li>
+                    </>
+                  )}
                 </ul>
               </td>
               {isAdminOrMentor(role) ? (

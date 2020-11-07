@@ -72,7 +72,7 @@ TrackModal.propTypes = {
 };
 
 TrackModal.defaultProps = {
-  modalType: 'view',
+  modalType: '',
   trackId: '',
   taskName: '',
   userTaskId: '',

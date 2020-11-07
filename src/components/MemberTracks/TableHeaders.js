@@ -6,8 +6,9 @@ function TableTrackHeaders() {
       <tr>
         <th>#</th>
         <th>Task</th>
-        <th>Note</th>
-        <th>Date</th>
+        <th className='collapsed'>Note</th>
+        <th className='collapsed'>Date</th>
+        <th className='minRow'> Information</th>
         <th />
       </tr>
     </thead>

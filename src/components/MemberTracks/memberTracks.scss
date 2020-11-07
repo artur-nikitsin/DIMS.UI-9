@@ -2,10 +2,14 @@
 @import '../common/Styles/Mixins/Buttons/Buttons';
 
 .memberTracksTableContainer {
+  min-height: 80vh;
+  width: 80vw;
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: center;
   align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 
   .light.tracksTable {
     @include commonTableStyles;

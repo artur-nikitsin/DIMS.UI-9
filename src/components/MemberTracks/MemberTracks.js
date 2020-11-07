@@ -13,6 +13,8 @@ import TrackModal from '../Modals/Track/TrackModal';
 import { deleteTask } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
+import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
+import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -66,8 +68,15 @@ class MemberTracks extends React.PureComponent {
             <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
               <td>{this.state.taskName}</td>
-              <td>{getSubString(track.trackNote, 50)}</td>
-              <td>{getLocalDate(track.trackDate)}</td>
+              <td className='collapsed'>{getSubString(track.trackNote, 50)}</td>
+              <td className='collapsed'>{getLocalDate(track.trackDate)}</td>
+              <td className='minRow'>
+                <ul className='tableInfo'>
+                  <li>{`Track note: ${getSubString(track.trackNote, 50)}`}</li>
+                  <hr />
+                  <li>{`Track date: ${getLocalDate(track.trackDate)}`}</li>
+                </ul>
+              </td>
               <td>
                 <EditDeleteButtons
                   handleEdit={this.openModal(track.taskTrackId)}
