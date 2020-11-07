@@ -3,7 +3,7 @@ import './memberTracks.scss';
 import { Button, Table } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { getTaskTrack } from '../../firebase/apiGet';
+import { getTaskName, getTaskTrack } from '../../firebase/apiGet';
 import Preloader from '../common/Preloader/Preloader';
 import EditDeleteButtons from '../common/Buttons/EditDeleteButtons/EditDeleteButtons';
 import getSubString from '../helpers/getSubString/getSubString';
@@ -23,18 +23,29 @@ class MemberTracks extends React.PureComponent {
       modalIsOpen: false,
       activeTrackId: null,
       userTaskId: null,
+      taskName: '',
       modalType: null,
     };
   }
 
   componentDidMount() {
     const { userTaskId } = this.props.match.params;
-    this.getUserTrackList(userTaskId);
+    this.getTaskName(userTaskId).then(() => {
+      this.getUserTrackList(userTaskId);
+    });
   }
 
   handleDelete = (trackId) => () => {
     deleteTask(trackId).then(() => {
       this.reloadTrackPage();
+    });
+  };
+
+  getTaskName = async (userTaskId) => {
+    await getTaskName(userTaskId).then((name) => {
+      this.setState({
+        taskName: name,
+      });
     });
   };
 
@@ -54,7 +65,7 @@ class MemberTracks extends React.PureComponent {
           return (
             <tr key={track.taskTrackId}>
               <td>{i + 1}</td>
-              <td>{this.props.taskName}</td>
+              <td>{this.state.taskName}</td>
               <td>{getSubString(track.trackNote, 50)}</td>
               <td>{getLocalDate(track.trackDate)}</td>
               <td>
@@ -108,9 +119,8 @@ class MemberTracks extends React.PureComponent {
     return (
       <div className='memberTracksTableContainer'>
         <NavLink to={`/users/${userId}/tasks`}>Return to task list</NavLink>
-        <div>
-          <p className='userGreeting'>{`Hi, dear ${userName}! This is your task tracks:`}</p>
-        </div>
+
+        <p className={`userGreeting ${theme}`}>{`Hi, dear ${userName}! This is your task tracks:`}</p>
 
         <TrackModal
           className={`${theme} trackModal`}

@@ -14,5 +14,4 @@ const reducers = combineReducers({
 });
 
 const store = createStore(reducers, applyMiddleware(thunkMiddleWare));
-console.log(store.getState().errors);
 export default store;

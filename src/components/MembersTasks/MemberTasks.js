@@ -22,8 +22,8 @@ class MemberTasks extends React.PureComponent {
       loading: true,
       userId: null,
       userTaskList: [],
-      userTaskId: null,
-      currentTaskName: null,
+      /*  userTaskId: null,
+      currentTaskName: null, */
       modalIsOpen: false,
       modalType: null,
     };
@@ -43,17 +43,9 @@ class MemberTasks extends React.PureComponent {
     this.getUserTaskList(userId);
   }
 
-  setCurrentTask = (userTaskId, name) => () => {
-    this.setState({
-      userTaskId,
-      currentTaskName: name,
-    });
-  };
-
   getUserTaskList = (user) => {
     if (user) {
       getUserTaskList(user).then((result) => {
-        console.log(result);
         const { role } = this.props;
         const { theme } = this.context;
 
@@ -74,7 +66,8 @@ class MemberTasks extends React.PureComponent {
               </td>
               <td className='collapsed'>{getLocaleDate(task.startDate)}</td>
               <td className='collapsed'>{getLocaleDate(task.deadlineDate)}</td>
-              <td className={`collapsed  ${task.status}`}>{task.status}</td>
+              {isAdminOrMentor(role) && <td className={`collapsed  ${task.status}`}>{task.status}</td>}
+
               <td className='minRow'>
                 <ul className='tableInfo'>
                   <li>{`Start date: ${getLocaleDate(task.startDate)}`}</li>
@@ -94,7 +87,6 @@ class MemberTasks extends React.PureComponent {
                     label='Track'
                     to={`/users/${user}/tasks/${task.userTaskId}/track`}
                     color={getThemeColor(theme)}
-                    onClick={this.setCurrentTask(task.userTaskId, task.name)}
                   />
                 </td>
               )}
@@ -138,7 +130,7 @@ class MemberTasks extends React.PureComponent {
           <th>Name</th>
           <th className='collapsed'>Start</th>
           <th className='collapsed'>Deadline</th>
-          <th className='collapsed'>Status</th>
+          {isAdminOrMentor(role) && <th className='collapsed'>Status</th>}
           <th className='minRow'> Information</th>
           <th />
         </tr>
@@ -151,9 +143,7 @@ class MemberTasks extends React.PureComponent {
       return (
         <div className='memberTasksTableContainer'>
           {role === 'user' ? (
-            <div>
-              <p className='userGreeting'>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
-            </div>
+            <p className={`userGreeting ${theme}`}>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
           ) : (
             <NavLink to='/users'> Return to members manage grid</NavLink>
           )}

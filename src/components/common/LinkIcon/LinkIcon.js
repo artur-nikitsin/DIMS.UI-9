@@ -11,7 +11,7 @@ const LinkIcon = ({ icon, href }) => {
 };
 
 LinkIcon.propTypes = {
-  icon: PropTypes.element,
+  icon: PropTypes.object,
   href: PropTypes.string,
 };
 LinkIcon.defaultProps = {

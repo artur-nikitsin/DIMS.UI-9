@@ -10,6 +10,7 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import RadioInputList from '../../common/Inputs/RadioInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
+import { taskModalTypes } from '../Common/ModalInputsTemplate';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -116,7 +117,7 @@ class TaskModalDataWorker extends React.Component {
       return (
         <li key={input} className='inputItem'>
           <TextInput
-            type='text'
+            type={taskModalTypes[input]}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}

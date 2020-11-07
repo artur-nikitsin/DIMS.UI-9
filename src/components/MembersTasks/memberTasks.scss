@@ -23,6 +23,10 @@
     @include returnToFullListButton;
   }
 
+  .userGreeting.dark {
+    color: #008f02;
+  }
+
   .userGreeting {
     font-size: 25px;
   }

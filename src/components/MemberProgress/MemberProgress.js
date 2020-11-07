@@ -34,7 +34,7 @@ class MemberProgress extends React.PureComponent {
               <td>
                 <Button color='link'>{track.name}</Button>
               </td>
-              <td className='collapsed'>{getSubString(track.trackNote, 50)}</td>
+              <td className='collapsed'>{track.trackNote}</td>
               <td className='collapsed'>{getLocaleDate(track.trackDate)}</td>
               <td className='minRow'>
                 <ul className='tableInfo'>

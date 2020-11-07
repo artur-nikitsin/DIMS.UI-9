@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import './noDataMessage.scss';
 
 const NoDataMessage = ({ backLink }) => {
   return (
-    <Alert color='dark'>
+    <Alert color='secondary' className='noDataMessage'>
       <p>
         <strong>Nothing to show =(</strong>
       </p>

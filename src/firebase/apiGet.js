@@ -170,7 +170,7 @@ export function getTask(taskId) {
     });
 }
 
-// all track of current task
+// all tracks of current task
 export function getTaskTrack(userTaskId, name) {
   return db
     .collection('TaskTracks')
@@ -179,7 +179,7 @@ export function getTaskTrack(userTaskId, name) {
     .then((trackData) => {
       const taskTrackList = trackData.docs.map((userTask) => {
         const { taskTrackId, userTaskId, trackDate, trackNote } = userTask.data();
-        return { name, taskTrackId, userTaskId, trackDate, trackNote };
+        return { taskTrackId, userTaskId, trackDate, trackNote };
       });
       return taskTrackList;
     })
@@ -188,7 +188,29 @@ export function getTaskTrack(userTaskId, name) {
     });
 }
 
-// track for modal
+// for task tracks
+export function getTaskName(userTaskId) {
+  return db
+    .collection('UserTasks')
+    .doc(userTaskId)
+    .get()
+    .then((userTaskData) => {
+      const { taskId } = userTaskData.data();
+      return db
+        .collection('Tasks')
+        .doc(taskId)
+        .get()
+        .then((taskData) => {
+          const { name } = taskData.data();
+          return name;
+        });
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+// track data for modal
 export function getTrack(taskTrackId) {
   const trackData = {};
   return db
@@ -201,31 +223,6 @@ export function getTrack(taskTrackId) {
       trackData.userTaskId = userTaskId;
       trackData.trackDate = getLocaleDate(trackDate);
       trackData.trackNote = trackNote;
-      return trackData;
-    })
-    .catch((error) => {
-      return error;
-    });
-}
-
-export function getUserTrackList(userId) {
-  return db
-    .collection('UserTasks')
-    .where('userId', '==', userId)
-    .get()
-    .then((userTasks) => {
-      const userTaskList = userTasks.docs.map((userTask) => {
-        const { userTaskId, taskId, userId, stateId } = userTask.data();
-        return { userTaskId, taskId, userId, stateId };
-      });
-      return userTaskList;
-    })
-    .then((userTaskList) => {
-      const userTracks = userTaskList.map((task) => {
-        const currentTrack = getTaskTracksWithName(task.userTaskId, task.taskId);
-        return currentTrack;
-      });
-      const trackData = Promise.all(userTracks);
       return trackData;
     })
     .catch((error) => {

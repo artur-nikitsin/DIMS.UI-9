@@ -37,8 +37,20 @@ export const taskModalTemplate = {
   description: null,
   executors: null,
 };
+export const taskModalTypes = {
+  name: 'text',
+  startDate: 'date',
+  deadlineDate: 'date',
+  description: 'text',
+  executors: null,
+};
 
 export const trackModalTemplate = {
   trackDate: null,
   trackNote: null,
+};
+
+export const trackModalTypes = {
+  trackDate: 'date',
+  trackNote: 'text',
 };

@@ -5,6 +5,7 @@ import { setTrack } from '../../../firebase/apiSet';
 import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
+import { trackModalTypes } from '../Common/ModalInputsTemplate';
 
 class TrackModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -63,7 +64,7 @@ class TrackModalDataWorker extends React.PureComponent {
       return (
         <li key={input} className='inputItem'>
           <TextInput
-            type='text'
+            type={trackModalTypes[input]}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}
