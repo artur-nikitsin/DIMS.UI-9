@@ -4,6 +4,7 @@ import { deleteDocumentById } from './apiDelete';
 import { setTaskState } from './apiSet';
 
 export function unAssignTask(unAssignUsers, taskId) {
+  unAssignUsers = unAssignUsers.filter((userId) => userId !== null);
   return db
     .collection('UserTasks')
     .where('taskId', '==', taskId)
@@ -30,9 +31,9 @@ export function unAssignTask(unAssignUsers, taskId) {
     });
 }
 
-export function assignTaskToUsers(executors, executorsDBSnapshot, taskId) {
-  const difference = executors.filter((user) => !executorsDBSnapshot.includes(user));
-  difference.forEach((userId) => {
+export function assignTaskToUsers(executors, taskId) {
+  executors = executors.filter((userId) => userId !== null);
+  executors.forEach((userId) => {
     const userTask = {};
     userTask.userTaskId = faker.fake('{{random.number}}');
     userTask.taskId = taskId;

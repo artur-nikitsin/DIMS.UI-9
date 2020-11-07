@@ -8,12 +8,13 @@ const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) =
   const createList = (data) => {
     return data.map((user) => {
       const { fullName, userId } = user;
+
       return (
         <li key={userId}>
           <CheckBox
             inputName={fullName}
             value={userId}
-            checked={values.includes(userId)}
+            checked={!!values[userId] && !!values[userId].assign}
             modalType={modalType}
             handleRadioInput={handleRadioInput}
           />

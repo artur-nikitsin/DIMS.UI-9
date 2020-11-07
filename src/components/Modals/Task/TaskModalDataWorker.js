@@ -19,10 +19,8 @@ class TaskModalDataWorker extends React.Component {
       isSubmit: false,
       inputsStatus: null,
       dataToSend: null,
-      executors: [],
-      unAssignUsers: [],
+      executors: {},
       membersList: null,
-      dbSnapshot: [],
 
       name: null,
       startDate: null,
@@ -137,20 +135,18 @@ class TaskModalDataWorker extends React.Component {
     });
   };
 
-  handleRadioInput = (value) => () => {
+  handleRadioInput = (userId) => () => {
     this.setState((prevState) => {
-      let { executors, unAssignUsers } = prevState;
-
-      if (executors.includes(value)) {
-        executors = executors.filter((index) => index !== value);
-        unAssignUsers.push(value);
+      const { executors } = prevState;
+      let newAssign = {};
+      if (executors[userId]) {
+        newAssign = { ...executors[userId] };
+        newAssign.assign = !executors[userId].assign;
       } else {
-        executors.push(value);
-        unAssignUsers = unAssignUsers.filter((index) => index !== value);
+        newAssign = { prevAssign: false, assign: true };
       }
       return {
-        executors,
-        unAssignUsers,
+        executors: { ...prevState.executors, [userId]: newAssign },
       };
     });
     const { executors } = this.state;
@@ -169,17 +165,34 @@ class TaskModalDataWorker extends React.Component {
 
   handleSubmit(event) {
     event.persist();
-    const { isFormValid, taskId, dataToSend, executors, unAssignUsers, dbSnapshot } = this.state;
+    const { isFormValid, taskId, dataToSend, executors } = this.state;
     const { closeModalAndReload } = this.props;
     const { deadlineDate, description, name, startDate } = dataToSend;
     this.setState({
       isSubmit: true,
     });
     if (isFormValid) {
+      const executorsId = Object.keys(executors);
+      const newExecutors = executorsId.map((userId) => {
+        const { prevAssign, assign } = executors[userId];
+        if (!prevAssign && assign) {
+          return userId;
+        }
+        return null;
+      });
+
+      const unAssignExecutors = executorsId.map((userId) => {
+        const { prevAssign, assign } = executors[userId];
+        if (prevAssign && !assign) {
+          return userId;
+        }
+        return null;
+      });
+
       setTask({ deadlineDate, description, name, startDate }, taskId)
         .then(() => {
-          unAssignTask(unAssignUsers, taskId);
-          assignTaskToUsers(executors, dbSnapshot, taskId);
+          unAssignTask(unAssignExecutors, taskId);
+          assignTaskToUsers(newExecutors, taskId);
           closeModalAndReload();
         })
         .catch((error) => {
