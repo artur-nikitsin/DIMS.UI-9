@@ -51,10 +51,10 @@ export function getMember(userId) {
 
       member.firstName = firstName;
       member.lastName = lastName;
-      member.birthDate = getLocaleDate(birthDate);
+      member.birthDate = getLocaleDate(birthDate, 'fr-CA');
       member.directionId = directionId;
       member.education = education;
-      member.startDate = getLocaleDate(startDate);
+      member.startDate = getLocaleDate(startDate, 'fr-CA');
       member.userId = userId;
       member.email = email;
       member.university = university;
@@ -161,8 +161,8 @@ export function getTask(taskId) {
       const { startDate, deadlineDate } = task.data();
       return {
         ...task.data(),
-        startDate: getLocaleDate(startDate),
-        deadlineDate: getLocaleDate(deadlineDate),
+        startDate: getLocaleDate(startDate, 'fr-CA'),
+        deadlineDate: getLocaleDate(deadlineDate, 'fr-CA'),
       };
     })
     .catch((error) => {
@@ -221,7 +221,7 @@ export function getTrack(taskTrackId) {
       const { taskTrackId, userTaskId, trackDate, trackNote } = track.data();
       trackData.taskTrackId = taskTrackId;
       trackData.userTaskId = userTaskId;
-      trackData.trackDate = getLocaleDate(trackDate);
+      trackData.trackDate = getLocaleDate(trackDate, 'fr-CA');
       trackData.trackNote = trackNote;
       return trackData;
     })
@@ -306,6 +306,23 @@ export function getExecutors(taskId) {
         executors.push(userId);
       });
       return executors;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export function getDirections() {
+  return db
+    .collection('Directions')
+    .orderBy('directionId')
+    .get()
+    .then((directions) => {
+      const directionsList = directions.docs.map((direction) => {
+        const { directionId, name } = direction.data();
+        return { directionId, name };
+      });
+      return directionsList;
     })
     .catch((error) => {
       return error;

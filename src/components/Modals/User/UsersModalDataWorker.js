@@ -8,7 +8,7 @@ import GenderInputs from './GenderInputs';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { userModalTypes } from '../Common/ModalInputsTemplate';
-import { DropDownTemplate } from './DropDownTemptale';
+import { connect } from 'react-redux';
 
 class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -68,11 +68,17 @@ class UsersModalDataWorker extends React.PureComponent {
           [value]: data[value],
         });
       }
+      if (value === 'sex') {
+        this.handleValidInput('sex', true, data[value]);
+      }
+      if (value === 'directionId') {
+        this.handleValidInput('directionId', true, data[value]);
+      }
     }
   };
 
   createInputList = () => {
-    const { modalTemplate, modalType } = this.props;
+    const { modalTemplate, modalType, directions } = this.props;
     const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(modalTemplate);
 
@@ -97,7 +103,7 @@ class UsersModalDataWorker extends React.PureComponent {
               handleDropInput={this.handleDropInput}
               value={thisState[input]}
               modalType={modalType}
-              dataTemplate={DropDownTemplate}
+              dataTemplate={directions}
               label='Direction:'
             />
           </li>
@@ -173,6 +179,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
+
     return (
       <ModalContent
         createInputList={this.createInputList()}
@@ -221,4 +228,11 @@ UsersModalDataWorker.propTypes = {
   closeModalAndReload: PropTypes.func.isRequired,
 };
 
-export default UsersModalDataWorker;
+const mapStateToProps = (state) => {
+  const { directions } = state.members;
+  return {
+    directions,
+  };
+};
+
+export default connect(mapStateToProps, {})(UsersModalDataWorker);

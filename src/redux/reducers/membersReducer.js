@@ -1,7 +1,8 @@
-import { getMembers } from '../../firebase/apiGet';
+import { getMembers, getDirections } from '../../firebase/apiGet';
 import { catchReceiveDataError } from './errorReducer';
 
 const SET_MEMBERS = 'SET_MEMBERS';
+const SET_DIRECTIONS = 'SET_DIRECTIONS';
 const SET_ACTIVE_USER_ID = 'SET_ACTIVE_USER_ID';
 const SET_ACTIVE_USER_NAME = 'SET_ACTIVE_USER_NAME';
 const SET_LOADING = 'SET_LOADING';
@@ -9,6 +10,7 @@ const SET_MODAL_IS_OPEN = 'SET_MODAL_IS_OPEN';
 const SET_MODAL_TYPE = 'SET_MODAL_TYPE';
 
 export const setMembers = (members) => ({ type: SET_MEMBERS, members });
+export const setDirections = (directions) => ({ type: SET_DIRECTIONS, directions });
 export const setLoading = (loading) => ({ type: SET_LOADING, loading });
 export const setActiveUserId = (activeUserId) => ({ type: SET_ACTIVE_USER_ID, activeUserId });
 export const setActiveUserName = (activeUserName) => ({ type: SET_ACTIVE_USER_NAME, activeUserName });
@@ -18,6 +20,7 @@ export const setModalType = (modalType) => ({ type: SET_MODAL_TYPE, modalType })
 const initialState = {
   loading: true,
   members: [],
+  directions: [],
   activeUserId: null,
   activeUserName: null,
   modalIsOpen: false,
@@ -26,10 +29,15 @@ const initialState = {
 
 export const getAllMembers = () => (dispatch) => {
   dispatch(setLoading(true));
+
   getMembers()
     .then((result) => {
       dispatch(setMembers(result));
       dispatch(setLoading(false));
+
+      getDirections().then((result) => {
+        dispatch(setDirections(result));
+      });
     })
     .catch((error) => {
       dispatch(catchReceiveDataError(error));
@@ -54,6 +62,8 @@ const membersReducer = (state = initialState, action) => {
       return { ...state, loading: action.loading };
     case SET_MEMBERS:
       return { ...state, members: action.members };
+    case SET_DIRECTIONS:
+      return { ...state, directions: action.directions };
     case SET_ACTIVE_USER_ID:
       return { ...state, activeUserId: action.activeUserId };
     case SET_ACTIVE_USER_NAME:

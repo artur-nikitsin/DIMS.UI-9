@@ -7,7 +7,7 @@ import { getExecutors } from '../../../firebase/apiGet';
 import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
-import RadioInputList from '../../common/Inputs/RadioInputList';
+import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
 import { taskModalTypes } from '../Common/ModalInputsTemplate';
@@ -78,6 +78,7 @@ class TaskModalDataWorker extends React.Component {
         this.setState({
           executors: users,
         });
+        this.handleValidInput('executors', true, users);
       });
     }
 
@@ -105,7 +106,7 @@ class TaskModalDataWorker extends React.Component {
       if (input === 'executors' && membersList) {
         return (
           <li key={input} className='inputItem'>
-            <RadioInputList
+            <CheckInputList
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
@@ -191,7 +192,6 @@ class TaskModalDataWorker extends React.Component {
 
   render() {
     const { closeModal, modalType } = this.props;
-
     return (
       <ModalContent
         createInputList={this.createInputList()}

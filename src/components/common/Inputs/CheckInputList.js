@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './radioInputList.scss';
+import './checkInputList.scss';
 import { AvGroup } from 'availity-reactstrap-validation';
 import CheckBox from './CheckBox';
 
-const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) => {
+const CheckInputList = ({ handleRadioInput, values, modalType, dataTemplate }) => {
   const createList = (data) => {
     return data.map((user) => {
       const { fullName, userId } = user;
@@ -29,15 +29,15 @@ const RadioInputList = ({ handleRadioInput, values, modalType, dataTemplate }) =
   );
 };
 
-RadioInputList.propTypes = {
+CheckInputList.propTypes = {
   handleRadioInput: PropTypes.func,
   value: PropTypes.string,
   modalType: PropTypes.string,
 };
 
-RadioInputList.defaultProps = {
+CheckInputList.defaultProps = {
   value: '',
   modalType: 'view',
 };
 
-export default RadioInputList;
+export default CheckInputList;

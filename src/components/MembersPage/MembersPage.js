@@ -10,6 +10,7 @@ import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import UserModal from '../Modals/User/UserModal';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
+import getDirectionName from '../helpers/getDirectionName/getDirectionName';
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -99,24 +100,18 @@ class MembersPage extends React.PureComponent {
   };
 
   membersTable() {
-    const { members } = this.props;
+    const { members, directions } = this.props;
     const table = members.map((member, i) => {
       return (
         <tr key={`${member.userId}n`}>
           <td key={`${member.userId}a`}>{i + 1}</td>
           <td key={`${member.userId}b`}>
-            <Button
-              color='link'
-              onClick={(event) => {
-                event.preventDefault();
-                this.openModal(member.userId, 'view')();
-              }}
-            >
+            <Button color='link' onClick={this.openModal(member.userId, 'view')}>
               {`${member.firstName} ${member.lastName}`}
             </Button>
           </td>
           <td key={`${member.userId}c`} className='collapsed'>
-            {member.directionId}
+            {getDirectionName(directions, member.directionId)}
           </td>
           <td key={`${member.userId}d`} className='collapsed'>
             {member.education}
@@ -158,9 +153,10 @@ class MembersPage extends React.PureComponent {
 }
 
 const mapStateToProps = (state) => {
-  const { members, loading, activeUserId, activeUserName, modalIsOpen, modalType } = state.members;
+  const { members, directions, loading, activeUserId, activeUserName, modalIsOpen, modalType } = state.members;
   return {
     members,
+    directions,
     loading,
     activeUserId,
     activeUserName,

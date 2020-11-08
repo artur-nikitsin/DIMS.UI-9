@@ -1,5 +1,5 @@
-function getLocaleDate(date) {
-  return new Date(date).toLocaleDateString('fr-CA');
+function getLocaleDate(date, format) {
+  return new Date(date).toLocaleDateString(format);
 }
 
 export default getLocaleDate;

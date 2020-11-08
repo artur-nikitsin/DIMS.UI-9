@@ -5,10 +5,10 @@ import './dropDownInput.scss';
 
 const DropDownInput = ({ handleDropInput, value, modalType, dataTemplate, label }) => {
   const createList = (data) => {
-    const names = Object.keys(data);
-    const list = names.map((name) => {
+    const list = data.map((direction) => {
+      const { directionId, name } = direction;
       return (
-        <option key={data[name]} value={data[name]}>
+        <option key={directionId} value={directionId}>
           {name}
         </option>
       );
