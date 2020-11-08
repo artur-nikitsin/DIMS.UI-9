@@ -63,10 +63,12 @@ class TaskModalDataWorker extends React.Component {
     const { modalTemplate, modalType } = this.props;
 
     await getMembersList().then((membersList) => {
-      this.setState({
-        membersList,
-        inputsStatus: { ...modalTemplate },
-        dataToSend: { ...modalTemplate },
+      this.setState(() => {
+        return {
+          membersList,
+          inputsStatus: modalTemplate,
+          dataToSend: modalTemplate,
+        };
       });
     });
 
