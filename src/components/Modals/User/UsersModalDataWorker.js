@@ -9,6 +9,8 @@ import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { userModalTypes } from '../Common/ModalInputsTemplate';
 import { connect } from 'react-redux';
+import { register, setUserRole } from '../../../firebase/auth';
+import faker from 'faker';
 
 class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -57,11 +59,18 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   setUserDataToState = (data) => {
-    const { modalTemplate } = this.props;
+    const { modalTemplate, modalType } = this.props;
     this.setState({
       inputsStatus: { ...modalTemplate },
       dataToSend: { ...modalTemplate },
     });
+
+    if (modalType === 'register') {
+      this.setState({
+        userId: faker.fake('{{random.number}}'),
+      });
+    }
+
     for (const value in data) {
       if (this.state.hasOwnProperty(value)) {
         this.setState({
@@ -160,13 +169,18 @@ class UsersModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, userId, dataToSend } = this.state;
-    const { closeModalAndReload } = this.props;
+    const { closeModalAndReload, modalType } = this.props;
 
     this.setState({
       isSubmit: true,
     });
 
     if (isFormValid) {
+      if (modalType === 'register') {
+        const { firstName, lastName, userId, email } = this.state;
+        register(email, '12345678');
+        setUserRole(firstName, lastName, userId, email);
+      }
       setNewMemberData(dataToSend, userId)
         .then(() => {
           closeModalAndReload();
@@ -179,7 +193,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
-
+    console.log(this.state);
     return (
       <ModalContent
         createInputList={this.createInputList()}

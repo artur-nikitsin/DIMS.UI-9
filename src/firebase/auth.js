@@ -61,3 +61,11 @@ export function getRole(email) {
       return userData;
     });
 }
+
+export function setUserRole(firstName, lastName, userId, email) {
+  db.collection('Roles')
+    .doc(userId)
+    .set({ userId, email, role: 'user', firstName, lastName })
+    .then(() => ({ message: 'User created successfully' }))
+    .catch(({ message }) => ({ message, messageType: 'warning' }));
+}
