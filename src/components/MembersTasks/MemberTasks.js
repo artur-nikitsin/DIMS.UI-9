@@ -167,7 +167,17 @@ class MemberTasks extends React.PureComponent {
         </div>
       );
     }
-    return <NoDataMessage backLink={<NavLink to='/users'> Return to members manage grid</NavLink>} />;
+    if (role === 'user') {
+      return <NoDataMessage text='You have no tasks yet, please contact your mentor' />;
+    }
+    return (
+      <NoDataMessage
+        text='Nothing to show =('
+        linkTo='/users'
+        linkText='Return to members
+      manage grid'
+      />
+    );
   };
 
   render() {
