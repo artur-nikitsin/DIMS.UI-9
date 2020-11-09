@@ -11,6 +11,7 @@ import UserModal from '../Modals/User/UserModal';
 import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membersReducer';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import getDirectionName from '../helpers/getDirectionName/getDirectionName';
+import getAge from '../helpers/getAge/getAge';
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -120,11 +121,11 @@ class MembersPage extends React.PureComponent {
             {getLocaleDate(member.startDate)}
           </td>
           <td key={`${member.userId}j`} className='collapsed'>
-            {getLocaleDate(member.birthDate)}
+            {getAge(member.birthDate)}
           </td>
           <td className='minRow'>
             <ul className='tableInfo'>
-              <li>{`Direction: ${member.directionId}`}</li>
+              <li>{`Direction: ${getDirectionName(directions, member.directionId)}`}</li>
               <hr />
               <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>
               <hr />
