@@ -8,6 +8,7 @@ import getSubString from '../helpers/getSubString/getSubString';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
+import ReturnLink from '../common/ReturnLink/ReturnLink';
 
 class MemberProgress extends React.PureComponent {
   constructor(props) {
@@ -76,7 +77,7 @@ class MemberProgress extends React.PureComponent {
     if (userTrackList.length) {
       return (
         <div className='progressTableContainer'>
-          <NavLink to='/users'>Return to members manage grid</NavLink>
+          <ReturnLink to='/users' text='Return to members manage grid' />
           <Table striped className={`${theme} progressTable`}>
             {tableHeaders}
             <tbody>{userTrackList}</tbody>
@@ -84,7 +85,7 @@ class MemberProgress extends React.PureComponent {
         </div>
       );
     }
-    return <NoDataMessage />;
+    return <NoDataMessage linkTo='/users' linkText='Return to members manage grid' />;
   };
 
   render() {

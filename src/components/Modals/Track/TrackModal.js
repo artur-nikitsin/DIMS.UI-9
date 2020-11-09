@@ -43,7 +43,7 @@ const TrackModal = (props) => {
             <Preloader />
           ) : (
             <>
-              <ModalHeader> {taskName}</ModalHeader>
+              <ModalHeader>{`Task: ${taskName}`}</ModalHeader>
               <TrackModalDataWorker
                 modalTemplate={trackModalTemplate}
                 trackData={trackData}

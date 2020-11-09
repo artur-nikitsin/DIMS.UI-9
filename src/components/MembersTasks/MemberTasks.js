@@ -14,6 +14,7 @@ import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import NavButton from '../common/Buttons/NavButton/NavButton';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
+import ReturnLink from '../common/ReturnLink/ReturnLink';
 
 class MemberTasks extends React.PureComponent {
   constructor(props) {
@@ -148,7 +149,7 @@ class MemberTasks extends React.PureComponent {
           {role === 'user' ? (
             <p className={`userGreeting ${theme}`}>{`Hi, dear ${signedUserName}! This is your current tasks:`}</p>
           ) : (
-            <NavLink to='/users'> Return to members manage grid</NavLink>
+            <ReturnLink to='/users' text='Return to members manage grid' />
           )}
 
           <TaskModal

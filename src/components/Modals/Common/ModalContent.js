@@ -11,11 +11,11 @@ function ModalContent({ handleSubmit, createInputList, closeModal, modalType }) 
         {createInputList}
         <div className='modalButtons'>
           {modalType === 'view' || (
-            <Button color='success' size='lg'>
+            <Button color='success' size='lg' className='submitButton'>
               Submit
             </Button>
           )}
-          <Button outline color='secondary' size='lg' onClick={closeModal}>
+          <Button outline color='secondary' size='lg' onClick={closeModal} className='closeButton'>
             Return
           </Button>
         </div>

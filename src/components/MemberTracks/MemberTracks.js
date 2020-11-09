@@ -13,8 +13,7 @@ import TrackModal from '../Modals/Track/TrackModal';
 import { deleteTask } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
-import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
-import isAdminOrMentor from '../common/Conditions/isAdminOrMentor';
+import ReturnLink from '../common/ReturnLink/ReturnLink';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -121,14 +120,13 @@ class MemberTracks extends React.PureComponent {
   };
 
   createMemberTrackTable = () => {
-    const { userName, taskName, userId } = this.props;
-    const { userTrackList, modalIsOpen, activeTrackId, modalType } = this.state;
+    const { userName, userId } = this.props;
+    const { userTrackList, modalIsOpen, activeTrackId, modalType, taskName } = this.state;
     const { userTaskId } = this.props.match.params;
     const { theme } = this.context;
     return (
       <div className='memberTracksTableContainer'>
-        <NavLink to={`/users/${userId}/tasks`}>Return to task list</NavLink>
-
+        <ReturnLink to={`/users/${userId}/tasks`} text='Return to task list' />
         <p className={`userGreeting ${theme}`}>{`Hi, dear ${userName}! This is your task tracks:`}</p>
 
         <TrackModal

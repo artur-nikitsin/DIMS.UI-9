@@ -30,9 +30,14 @@
 
   .modalButtons {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     height: 6rem;
     width: 50%;
+
+    .submitButton,
+    .closeButton {
+      margin: 0.5rem;
+    }
   }
 }

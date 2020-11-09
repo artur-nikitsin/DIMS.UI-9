@@ -1,10 +1,8 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './noDataMessage.scss';
-import { NavLink } from 'react-router-dom';
+import ReturnLink from '../../ReturnLink/ReturnLink';
 
 const NoDataMessage = ({ text, linkTo, linkText }) => {
   return (
@@ -12,14 +10,7 @@ const NoDataMessage = ({ text, linkTo, linkText }) => {
       <p>
         <strong>{text}</strong>
       </p>
-      <p>
-        {linkTo && (
-          <NavLink to={linkTo}>
-            <FontAwesomeIcon size='sm' icon={faArrowLeft} className='linkIcon' />
-            {linkText}
-          </NavLink>
-        )}
-      </p>
+      <p>{linkTo && <ReturnLink to={linkTo} text={linkText} />}</p>
     </Alert>
   );
 };
