@@ -94,7 +94,7 @@ class Tasks extends React.PureComponent {
     const { tasks } = this.props;
     const table = tasks.map((task, i) => {
       return (
-        <tr key={`${task.taskId}z`}>
+        <tr key={`${task.taskId}z`} className='tableLine'>
           <td key={`${task.taskId}a`}>{i + 1}</td>
           <td key={`${task.taskId}b`}>
             <Button color='link' onClick={this.openModal(task.taskId, 'view')}>
@@ -115,7 +115,7 @@ class Tasks extends React.PureComponent {
               <hr />
             </ul>
           </td>
-          <td key={`${task.taskId}h`}>
+          <td key={`${task.taskId}h`} className='crud-buttons'>
             <EditDeleteButtons
               handleEdit={this.openModal(task.taskId, 'edit')}
               handleDelete={this.handleDelete(task.taskId)}

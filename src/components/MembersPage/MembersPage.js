@@ -109,7 +109,7 @@ class MembersPage extends React.PureComponent {
     const { members, directions } = this.props;
     const table = members.map((member, i) => {
       return (
-        <tr key={`${member.userId}n`}>
+        <tr key={`${member.userId}n`} className='tableLine'>
           <td key={`${member.userId}a`}>{i + 1}</td>
           <td key={`${member.userId}b`}>
             <Button color='link' onClick={this.openModal(member.userId, 'view')}>
@@ -137,7 +137,7 @@ class MembersPage extends React.PureComponent {
               <li>{`Age: ${getAge(member.birthDate)}`}</li>
             </ul>
           </td>
-          <td key={`${member.userId}h`} className='memberButtons'>
+          <td key={`${member.userId}h`} className='memberButtons crud-buttons'>
             <Buttons
               toProgress={`/users/${member.userId}/progress`}
               toTasks={`/users/${member.userId}/tasks`}

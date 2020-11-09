@@ -3,6 +3,14 @@
   border-collapse: collapse;
   border: 1px solid black;
   background: #ffffff;
+
+  .crud-buttons {
+    max-width: 8rem;
+  }
+  .tableLine:hover {
+    background: rgba(157, 157, 158, 0.4);
+    transition: background 300ms linear;
+  }
 }
 
 @mixin cell {
