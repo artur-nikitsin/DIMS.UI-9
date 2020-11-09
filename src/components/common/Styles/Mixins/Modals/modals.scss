@@ -24,4 +24,14 @@
   width: 50rem;
   height: auto;
   background: black;
+  .modal-content {
+    background: #24292e;
+    color: #fff;
+    .inputItem {
+      color: #008f02;
+      .textInputContainer {
+        color: #008f02;
+      }
+    }
+  }
 }

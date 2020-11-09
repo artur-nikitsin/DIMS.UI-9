@@ -1,11 +1,10 @@
-.radioInput {
+.radioInputWrapper {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
 
-  .radioButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-end;
+  .radioInput:checked + label {
+    color: #0b4db7;
   }
 }

@@ -1,16 +1,13 @@
-@import "src/components/common/Styles/Mixins/Modals/modals";
+@import 'src/components/common/Styles/Mixins/Modals/modals';
 
 .trackModal {
   @include modal;
 }
 
-
-.modalBody{
-  @include modalBody
+.dark.trackModal {
+  @include darkModal;
 }
 
-.dark.trackModal{
-  .modal-content{
-    background:  rgb(209, 209, 209);
-  }
+.modalBody {
+  @include modalBody;
 }

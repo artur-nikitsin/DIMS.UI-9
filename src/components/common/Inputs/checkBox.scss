@@ -1,3 +1,7 @@
 .checkBoxLabel {
   margin-left: 0.5rem;
 }
+
+.checkBox:checked + label {
+  color: #0b4db7;
+}

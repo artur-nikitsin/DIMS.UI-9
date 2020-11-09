@@ -8,6 +8,7 @@ class CheckBox extends React.PureComponent {
     return (
       <div className='radioButton'>
         <input
+          className='checkBox'
           type='checkbox'
           disabled={modalType === 'view'}
           name={inputName}

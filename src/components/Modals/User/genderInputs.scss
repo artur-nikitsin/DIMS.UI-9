@@ -1,4 +1,4 @@
-.sexInputs {
+@mixin genderInputs {
   align-self: center;
   display: flex;
   flex-direction: row;
@@ -15,4 +15,13 @@
     font-size: 0.8rem;
     color: red;
   }
+}
+
+.genderInputs {
+  @include genderInputs;
+}
+
+.dark .genderInputs {
+  @include genderInputs;
+  color: #008f02;
 }

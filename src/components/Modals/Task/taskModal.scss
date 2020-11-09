@@ -1,15 +1,13 @@
-@import "src/components/common/Styles/Mixins/Modals/modals";
+@import 'src/components/common/Styles/Mixins/Modals/modals';
 
 .taskModal {
- @include modal;
+  @include modal;
 }
 
-.modalBody{
-  @include modalBody
+.dark.taskModal {
+  @include darkModal;
 }
 
-.dark.taskModal{
-  .modal-content{
-    background:  rgb(209, 209, 209);
-  }
+.modalBody {
+  @include modalBody;
 }

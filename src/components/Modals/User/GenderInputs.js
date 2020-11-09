@@ -4,7 +4,7 @@ import './genderInputs.scss';
 
 function GenderInputs({ name, value, handleRadioInput, isSubmit, handleValidInput, modalType }) {
   return (
-    <li key={name} className='sexInputs'>
+    <li key={name} className='genderInputs'>
       <div className='radioInputs'>
         <span>Sex:</span>
 

@@ -7,8 +7,9 @@ class RadioInput extends React.PureComponent {
   render() {
     const { inputName, value, handleRadioInput, modalType, checked } = this.props;
     return (
-      <div className='radioButton'>
+      <div className='radioInputWrapper'>
         <Input
+          className='radioInput'
           disabled={modalType === 'view'}
           type='radio'
           name={inputName}
