@@ -9,6 +9,7 @@ import TaskModal from '../Modals/Task/TaskModal';
 import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
+import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 
 class Tasks extends React.PureComponent {
   componentDidMount() {
@@ -57,6 +58,7 @@ class Tasks extends React.PureComponent {
 
     const { modalIsOpen, activeTaskId, modalType } = this.props;
     const { theme } = this.context;
+
     return (
       <>
         <TaskModal
@@ -76,10 +78,14 @@ class Tasks extends React.PureComponent {
         >
           Create
         </Button>
-        <Table striped className={`${theme} tasksTable`}>
-          {tableHeaders}
-          <tbody>{this.tasksTable()}</tbody>
-        </Table>
+        {this.tasksTable().length ? (
+          <Table striped className={`${theme} tasksTable`}>
+            {tableHeaders}
+            <tbody>{this.tasksTable()}</tbody>
+          </Table>
+        ) : (
+          <NoDataMessage text='Nothing to show. You can create first task' />
+        )}
       </>
     );
   };

@@ -26,6 +26,9 @@ const DropDownInput = ({ handleDropInput, value, modalType, dataTemplate, label 
       onChange={handleDropInput}
       value={value}
     >
+      <option key='default' value=''>
+        --choose--
+      </option>
       {createList(dataTemplate)}
     </AvField>
   );

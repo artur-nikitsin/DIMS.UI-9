@@ -16,7 +16,6 @@ import MembersPage from './components/MembersPage/MembersPage';
 import TaskConnected from './components/Tasks/TasksConnected';
 import MemberProgress from './components/MemberProgress/MemberProgress';
 import MemberTasks from './components/MembersTasks/MemberTasks';
-import store from './redux/store';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -93,7 +92,6 @@ class App extends React.PureComponent {
 
   render() {
     const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
-
     return (
       <RoleContext.Provider value={this.state}>
         <ThemeContext.Provider value={this.state}>
@@ -110,7 +108,7 @@ class App extends React.PureComponent {
 
                 {fromLoginForm && <Redirect to='/users' />}
                 {!userData && <Redirect to='/login' />}
-                {signedUserId && fromLoginForm && <Redirect from='/' to={`/users/${signedUserId}/tasks`} />}
+                {role === 'user' && fromLoginForm && <Redirect from='/' to={`/users/${signedUserId}/tasks`} />}
 
                 <Route
                   exact

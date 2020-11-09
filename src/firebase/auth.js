@@ -62,10 +62,11 @@ export function getRole(email) {
     });
 }
 
-export function setUserRole(firstName, lastName, userId, email) {
+export function setUserRole({ firstName, lastName, userId, email, role }) {
+  role = role || 'user';
   db.collection('Roles')
     .doc(userId)
-    .set({ userId, email, role: 'user', firstName, lastName })
+    .set({ userId, email, role, firstName, lastName })
     .then(() => ({ message: 'User created successfully' }))
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }

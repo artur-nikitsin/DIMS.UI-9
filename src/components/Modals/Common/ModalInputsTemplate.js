@@ -35,7 +35,7 @@ export const taskModalTemplate = {
   startDate: null,
   deadlineDate: null,
   description: null,
-  executors: null,
+  executors: true,
 };
 export const taskModalTypes = {
   name: 'text',

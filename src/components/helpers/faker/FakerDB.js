@@ -1,49 +1,43 @@
 import faker from 'faker';
 import db from '../../../firebase/db';
-import { registerNewUser } from '../../../firebase/auth';
+import { register, setUserRole } from '../../../firebase/auth';
+import { setTask, setTaskState } from '../../../firebase/apiSet';
+import { setNewMemberData } from '../../../firebase/apiSet';
 
 function FakerDB(number) {
-  const roles = db.collection('Roles');
-  const adminId = '12345';
-  const mentorId = '54321';
-
-  roles.doc(adminId).set({
+  const admin = {
     firstName: 'Artur',
     lastName: 'Nikitsin',
     email: 'artur.nikitsin@gmail.com',
     role: 'admin',
-  });
+    userId: '12345',
+  };
 
-  roles.doc(mentorId).set({
+  const mentor = {
     firstName: 'Jack',
     lastName: 'Daniels',
     email: 'jd@gmail.com',
     role: 'mentor',
-  });
+    userId: '54321',
+  };
 
-  registerNewUser('artur.nikitsin@gmail.com', '12345678').then((result) => {
+  setUserRole(admin);
+  setUserRole(mentor);
+  register('artur.nikitsin@gmail.com', '12345678').then((result) => {
     console.log(result);
   });
-  registerNewUser('jd@gmail.com', '12345678').then((result) => {
+  register('jd@gmail.com', '12345678').then((result) => {
     console.log(result);
   });
 
-  db.collection('Users')
-    .get()
-    .then((users) => {
-      if (users.docs.length <= number) {
-        createData(number);
-      }
-    });
-
-  const createData = (number) => {
+  const createData = async (number) => {
     for (let i = 0; i <= number; i++) {
       // create Users
       const userId = faker.fake('{{random.number}}');
       const members = db.collection('Users');
       const member = db.collection('Users').doc(userId);
 
-      member
+      await member
         .get()
         .then((doc) => {
           if (doc.exists) {
@@ -52,33 +46,30 @@ function FakerDB(number) {
             const firstName = faker.fake('{{name.firstName}}');
             const lastName = faker.fake('{{name.lastName}}');
             const email = faker.fake('{{internet.email}}');
-
-            members.doc(userId).set({
-              userId,
-              directionId: i,
+            const userData = {
+              directionId: '001',
               firstName,
               email,
               lastName,
               sex: 'male',
               education: 'hight',
-              birthDate: faker.fake('{{date.past}}'),
+              birthDate: faker.date.between('1990-01-01', '2001-12-31').toString(),
               university: faker.fake('{{company.companyName}}'),
               mathScore: faker.fake('{{random.number}}'),
               address: faker.fake('{{address.streetAddress}}'),
               mobilePhone: faker.fake('{{phone.phoneNumber}}'),
               skype: faker.fake('{{internet.userName}}'),
               startDate: faker.fake('{{date.past}}'),
-            });
-
-            roles.doc(userId).set({
+            };
+            setNewMemberData(userData, userId);
+            setUserRole({
               firstName,
               lastName,
               email,
               role: 'user',
               userId,
             });
-
-            registerNewUser(email, '12345678').then((result) => {
+            register(email, '12345678').then((result) => {
               console.log(result);
             });
           }
@@ -93,19 +84,19 @@ function FakerDB(number) {
         const tasks = db.collection('Tasks');
         const task = db.collection('Tasks').doc(taskId);
 
-        task
+        await task
           .get()
           .then((doc) => {
             if (doc.exists) {
               console.log('Document data:', doc.data());
             } else {
-              tasks.doc(taskId).set({
-                taskId,
+              const task = {
                 name: faker.fake('{{name.title}}'),
                 description: faker.fake('{{lorem.paragraph}}'),
-                startDate: faker.fake('{{date.future}}'),
+                startDate: faker.fake('{{date.recent}}'),
                 deadlineDate: faker.fake('{{date.future}}'),
-              });
+              };
+              setTask(task, taskId);
             }
           })
           .catch(function(error) {
@@ -117,7 +108,7 @@ function FakerDB(number) {
         const userTasks = db.collection('UserTasks');
         const userTask = db.collection('UserTasks').doc(userTaskId);
 
-        userTask
+        await userTask
           .get()
           .then((doc) => {
             if (doc.exists) {
@@ -144,7 +135,7 @@ function FakerDB(number) {
           const taskTracks = db.collection('TaskTracks');
           const taskTrack = db.collection('TaskTracks').doc(taskTrackId);
 
-          taskTrack
+          await taskTrack
             .get()
             .then((doc) => {
               if (doc.exists) {
@@ -165,6 +156,7 @@ function FakerDB(number) {
       }
     }
   };
+  createData(number);
 }
 
 export default FakerDB;

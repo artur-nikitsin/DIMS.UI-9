@@ -12,6 +12,7 @@ import { closeModal, getAllMembers, openModal } from '../../redux/reducers/membe
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import getDirectionName from '../helpers/getDirectionName/getDirectionName';
 import getAge from '../helpers/getAge/getAge';
+import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -70,7 +71,7 @@ class MembersPage extends React.PureComponent {
     const { role, theme, modalIsOpen, activeUserId, modalType } = this.props;
 
     return (
-      <div>
+      <>
         <UserModal
           className={`${theme} userModal`}
           buttonLabel='UserModal'
@@ -92,11 +93,15 @@ class MembersPage extends React.PureComponent {
           </Button>
         )}
 
-        <Table striped className={`${theme} membersTable`}>
-          {tableHeaders}
-          <tbody>{this.membersTable()}</tbody>
-        </Table>
-      </div>
+        {this.membersTable().length ? (
+          <Table striped className={`${theme} membersTable`}>
+            {tableHeaders}
+            <tbody>{this.membersTable()}</tbody>
+          </Table>
+        ) : (
+          <NoDataMessage text='Nothing to show. You can register first user' />
+        )}
+      </>
     );
   };
 
@@ -129,7 +134,7 @@ class MembersPage extends React.PureComponent {
               <hr />
               <li>{`Start date: ${getLocaleDate(member.startDate)}`}</li>
               <hr />
-              <li>{`Age: ${getLocaleDate(member.birthDate)}`}</li>
+              <li>{`Age: ${getAge(member.birthDate)}`}</li>
             </ul>
           </td>
           <td key={`${member.userId}h`} className='memberButtons'>

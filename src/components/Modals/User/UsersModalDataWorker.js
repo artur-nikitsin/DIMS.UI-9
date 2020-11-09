@@ -179,7 +179,7 @@ class UsersModalDataWorker extends React.PureComponent {
       if (modalType === 'register') {
         const { firstName, lastName, userId, email } = this.state;
         register(email, '12345678');
-        setUserRole(firstName, lastName, userId, email);
+        setUserRole({ firstName, lastName, userId, email });
       }
       setNewMemberData(dataToSend, userId)
         .then(() => {
