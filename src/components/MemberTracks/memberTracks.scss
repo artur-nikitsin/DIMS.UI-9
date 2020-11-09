@@ -1,15 +1,9 @@
 @import '../common/Styles/Mixins/Tables/commonTableStyles';
 @import '../common/Styles/Mixins/Buttons/Buttons';
+@import 'src/components/common/Styles/Mixins/Pages/pages';
 
 .memberTracksTableContainer {
-  min-height: 80vh;
-  width: 80vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
+  @include pagesMainStyles;
 
   .light.tracksTable {
     @include commonTableStyles;
