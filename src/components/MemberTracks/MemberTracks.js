@@ -110,7 +110,6 @@ class MemberTracks extends React.PureComponent {
       modalIsOpen: false,
       activeTrackId: null,
       userTaskId: null,
-      modalType: null,
     });
   };
 

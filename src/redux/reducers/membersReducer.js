@@ -53,7 +53,6 @@ export const openModal = (activeUserId, modalType) => (dispatch) => {
 export const closeModal = () => (dispatch) => {
   dispatch(setActiveUserId(null));
   dispatch(setModal(false));
-  dispatch(setModalType(null));
 };
 
 const membersReducer = (state = initialState, action) => {

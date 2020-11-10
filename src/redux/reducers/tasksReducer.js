@@ -42,7 +42,6 @@ export const openTaskModal = (activeTaskId, modalType) => (dispatch) => {
 export const closeTaskModal = () => (dispatch) => {
   dispatch(setActiveTaskId(null));
   dispatch(setTaskModal(false));
-  dispatch(setTaskModalType(null));
 };
 
 const tasksReducer = (state = initialState, action) => {
