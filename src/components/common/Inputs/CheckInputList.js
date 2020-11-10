@@ -4,7 +4,7 @@ import './checkInputList.scss';
 import { AvGroup } from 'availity-reactstrap-validation';
 import CheckBox from './CheckBox';
 
-const CheckInputList = ({ handleRadioInput, values, modalType, dataTemplate }) => {
+const CheckInputList = ({ title, handleRadioInput, values, modalType, dataTemplate }) => {
   const createList = (data) => {
     return data.map((user) => {
       const { fullName, userId } = user;
@@ -24,6 +24,7 @@ const CheckInputList = ({ handleRadioInput, values, modalType, dataTemplate }) =
 
   return (
     <AvGroup check>
+      <p className='checkBoxListTitle'>{title}</p>
       <ul className='radioInputList'>{createList(dataTemplate)}</ul>
     </AvGroup>
   );

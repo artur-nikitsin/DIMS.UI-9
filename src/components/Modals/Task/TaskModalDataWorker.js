@@ -11,6 +11,7 @@ import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
 import { taskModalTypes } from '../Common/ModalInputsTemplate';
+import TextArea from '../../common/Inputs/TextArea/TextArea';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -107,10 +108,24 @@ class TaskModalDataWorker extends React.Component {
         return (
           <li key={input} className='inputItem'>
             <CheckInputList
+              title='Executors:'
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
               handleRadioInput={this.handleRadioInput}
+            />
+          </li>
+        );
+      }
+      if (input === 'description') {
+        return (
+          <li key={input} className='inputItem'>
+            <TextArea
+              inputName={input}
+              value={thisState[input]}
+              handleValidInput={this.handleValidInput}
+              handleChange={this.handleChange}
+              modalType={modalType}
             />
           </li>
         );

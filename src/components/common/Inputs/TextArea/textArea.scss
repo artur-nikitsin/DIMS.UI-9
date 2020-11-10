@@ -1,0 +1,22 @@
+.textAreaLabel {
+  width: 15rem;
+  height: auto;
+}
+
+@mixin textArea {
+  width: 15rem;
+  min-height: 6rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+}
+
+.textArea {
+  @include textArea;
+  border: 1px solid #ced4da;
+}
+
+.dark .textArea {
+  @include textArea;
+  background: #6c757d;
+  color: #000000;
+}
