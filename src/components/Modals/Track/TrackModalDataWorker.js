@@ -6,6 +6,7 @@ import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { trackModalTypes } from '../Common/ModalInputsTemplate';
+import TextArea from '../../common/Inputs/TextArea/TextArea';
 
 class TrackModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -61,6 +62,19 @@ class TrackModalDataWorker extends React.PureComponent {
     const dataKeys = Object.keys(modalTemplate);
 
     const inputList = dataKeys.map((input) => {
+      if (input === 'trackNote') {
+        return (
+          <li key={input} className='inputItem'>
+            <TextArea
+              inputName={input}
+              value={thisState[input]}
+              handleValidInput={this.handleValidInput}
+              handleChange={this.handleChange}
+              modalType={modalType}
+            />
+          </li>
+        );
+      }
       return (
         <li key={input} className='inputItem'>
           <TextInput

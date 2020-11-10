@@ -18,3 +18,13 @@
   background-color: black;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/assets/img/Matrix.Png');
 }
+
+//fix reactstrap link button outline
+.btn.btn-link,
+.btn.btn-link:hover,
+.btn.btn-link:focus,
+.btn.btn-link:active {
+  outline: none;
+  box-shadow: none;
+  -webkit-appearance: none;
+}
