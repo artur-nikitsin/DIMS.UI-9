@@ -10,7 +10,7 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
-import { taskModalTypes, taskModalValidation } from '../Common/ModalInputsTemplate';
+import { taskModalTypes } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
 import { connect } from 'react-redux';
 import { setSuccessCreateTask, setSuccessUpdateTask } from '../../../redux/reducers/notificationReducer';
@@ -50,19 +50,7 @@ class TaskModalDataWorker extends React.Component {
         });
       });
     }
-
-    this.setTaskDataToState(taskData).then(() => {
-      this.createInputList();
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { taskData } = this.props;
-    const { taskData: prevTaskData } = prevProps;
-    if (prevTaskData !== taskData) {
-      const { taskData } = this.props;
-      this.setTaskDataToState(taskData);
-    }
+    this.setTaskDataToState(taskData);
   }
 
   setTaskDataToState = async (data) => {

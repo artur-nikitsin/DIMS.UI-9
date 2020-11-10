@@ -49,15 +49,6 @@ class UsersModalDataWorker extends React.PureComponent {
     this.setUserDataToState(userData);
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { userData } = this.props;
-    const { userData: prevUserData } = prevProps;
-    if (prevUserData !== userData) {
-      const { userData } = this.props;
-      this.setUserDataToState(userData);
-    }
-  }
-
   setUserDataToState = (data) => {
     const { modalTemplate, modalType } = this.props;
     this.setState({
