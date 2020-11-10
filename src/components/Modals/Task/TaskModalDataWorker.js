@@ -10,8 +10,10 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
-import { taskModalTypes } from '../Common/ModalInputsTemplate';
+import { taskModalTypes, taskModalValidation } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
+import { connect } from 'react-redux';
+import { setSuccessCreateTask, setSuccessUpdateTask } from '../../../redux/reducers/notificationReducer';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -187,7 +189,7 @@ class TaskModalDataWorker extends React.Component {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend, executors, unAssignUsers, dbSnapshot } = this.state;
-    const { closeModalAndReload } = this.props;
+    const { closeModalAndReload, setSuccessCreateTask, setSuccessUpdateTask, modalType } = this.props;
     const { deadlineDate, description, name, startDate } = dataToSend;
     this.setState({
       isSubmit: true,
@@ -198,6 +200,14 @@ class TaskModalDataWorker extends React.Component {
           unAssignTask(unAssignUsers, taskId);
           assignTaskToUsers(executors, dbSnapshot, taskId);
           closeModalAndReload();
+        })
+        .then(() => {
+          if (modalType === 'create') {
+            setSuccessCreateTask();
+          }
+          if (modalType === 'edit') {
+            setSuccessUpdateTask();
+          }
         })
         .catch((error) => {
           return ErrorWritingDocument(error);
@@ -218,6 +228,13 @@ class TaskModalDataWorker extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { setSuccessCreateTask } = state.notifications;
+  return {
+    setSuccessCreateTask,
+  };
+};
+
 TaskModalDataWorker.propTypes = {
   modalTemplate: PropTypes.shape({
     name: PropTypes.string,
@@ -236,4 +253,8 @@ TaskModalDataWorker.propTypes = {
   closeModal: PropTypes.func.isRequired,
   closeModalAndReload: PropTypes.func,
 };
-export default TaskModalDataWorker;
+
+export default connect(mapStateToProps, {
+  setSuccessCreateTask,
+  setSuccessUpdateTask,
+})(TaskModalDataWorker);

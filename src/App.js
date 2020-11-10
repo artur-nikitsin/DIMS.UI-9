@@ -16,6 +16,7 @@ import MembersPage from './components/MembersPage/MembersPage';
 import TaskConnected from './components/Tasks/TasksConnected';
 import MemberProgress from './components/MemberProgress/MemberProgress';
 import MemberTasks from './components/MembersTasks/MemberTasks';
+import Notification from './components/common/Messages/Notification/Notification';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -138,6 +139,7 @@ class App extends React.PureComponent {
                   <LoginForm handleLogin={this.handleLogin} />
                 </Route>
 
+                <Notification />
                 <Footer />
               </div>
             </>

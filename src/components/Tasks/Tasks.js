@@ -17,8 +17,10 @@ class Tasks extends React.PureComponent {
   }
 
   handleDelete = (taskId) => () => {
+    const { setSuccessDeleteTask } = this.props;
     deleteTask(taskId).then(() => {
       this.reloadTasksPage();
+      setSuccessDeleteTask();
     });
   };
 

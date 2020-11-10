@@ -3,7 +3,6 @@ import thunkMiddleWare from 'redux-thunk';
 import errorReducer from './reducers/errorReducer';
 import membersReducer from './reducers/membersReducer';
 import tasksReducer from './reducers/tasksReducer';
-
 import notificationReducer from './reducers/notificationReducer';
 
 const reducers = combineReducers({
