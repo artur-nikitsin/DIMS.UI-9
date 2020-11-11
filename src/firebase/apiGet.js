@@ -268,7 +268,7 @@ export function getTaskTrackData(userTaskId, name) {
 }
 
 export function getExecutors(taskId) {
-  const executors = {};
+  let executors = {};
   return db
     .collection('UserTasks')
     .where('taskId', '==', taskId)
@@ -276,7 +276,7 @@ export function getExecutors(taskId) {
     .then((userTasks) => {
       userTasks.forEach((user) => {
         const { userId } = user.data();
-        executors[userId] = { prevAssign: true, assign: true };
+        executors = { ...executors, [userId]: { prevAssign: true, assign: true } };
       });
       return executors;
     })
