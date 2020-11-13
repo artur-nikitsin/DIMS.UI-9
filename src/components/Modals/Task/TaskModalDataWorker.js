@@ -10,10 +10,6 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
-import { taskModalTypes } from '../Common/ModalInputsTemplate';
-import TextArea from '../../common/Inputs/TextArea/TextArea';
-import { connect } from 'react-redux';
-import { setSuccessCreateTask, setSuccessUpdateTask } from '../../../redux/reducers/notificationReducer';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -23,8 +19,7 @@ class TaskModalDataWorker extends React.Component {
       isSubmit: false,
       inputsStatus: null,
       dataToSend: null,
-      executors: [],
-      unAssignUsers: [],
+      executors: {},
       membersList: null,
       dbSnapshot: [],
 
@@ -50,17 +45,32 @@ class TaskModalDataWorker extends React.Component {
         });
       });
     }
-    this.setTaskDataToState(taskData);
+
+    this.setTaskDataToState(taskData).then(() => {
+      this.createInputList();
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { taskData } = this.props;
+    const { taskData: prevTaskData } = prevProps;
+    if (prevTaskData !== taskData) {
+      const { taskData } = this.props;
+      this.setTaskDataToState(taskData);
+    }
   }
 
   setTaskDataToState = async (data) => {
     const { modalTemplate, modalType } = this.props;
 
     await getMembersList().then((membersList) => {
-      this.setState({
-        membersList,
-        inputsStatus: { ...modalTemplate },
-        dataToSend: { ...modalTemplate },
+      this.setState((prevState) => {
+        return {
+          ...prevState,
+          membersList,
+          inputsStatus: modalTemplate,
+          dataToSend: modalTemplate,
+        };
       });
     });
 
@@ -69,7 +79,6 @@ class TaskModalDataWorker extends React.Component {
         this.setState({
           executors: users,
         });
-        this.handleValidInput('executors', true, users);
       });
     }
 
@@ -97,8 +106,7 @@ class TaskModalDataWorker extends React.Component {
       if (input === 'executors' && membersList) {
         return (
           <li key={input} className='inputItem'>
-            <CheckInputList
-              title='Executors:'
+            <RadioInputList
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
@@ -144,20 +152,18 @@ class TaskModalDataWorker extends React.Component {
     });
   };
 
-  handleRadioInput = (value) => () => {
+  handleRadioInput = (userId) => () => {
     this.setState((prevState) => {
-      let { executors, unAssignUsers } = prevState;
-
-      if (executors.includes(value)) {
-        executors = executors.filter((index) => index !== value);
-        unAssignUsers.push(value);
+      const { executors } = prevState;
+      let newAssign = {};
+      if (executors[userId]) {
+        newAssign = { ...executors[userId] };
+        newAssign.assign = !executors[userId].assign;
       } else {
-        executors.push(value);
-        unAssignUsers = unAssignUsers.filter((index) => index !== value);
+        newAssign = { prevAssign: false, assign: true };
       }
       return {
-        executors,
-        unAssignUsers,
+        executors: { ...prevState.executors, [userId]: newAssign },
       };
     });
     const { executors } = this.state;
@@ -177,25 +183,34 @@ class TaskModalDataWorker extends React.Component {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskId, dataToSend, executors, unAssignUsers, dbSnapshot } = this.state;
-    const { closeModalAndReload, setSuccessCreateTask, setSuccessUpdateTask, modalType } = this.props;
+    const { closeModalAndReload } = this.props;
     const { deadlineDate, description, name, startDate } = dataToSend;
     this.setState({
       isSubmit: true,
     });
     if (isFormValid) {
+      const executorsId = Object.keys(executors);
+      const newExecutors = executorsId.map((userId) => {
+        const { prevAssign, assign } = executors[userId];
+        if (!prevAssign && assign) {
+          return userId;
+        }
+        return null;
+      });
+
+      const unAssignExecutors = executorsId.map((userId) => {
+        const { prevAssign, assign } = executors[userId];
+        if (prevAssign && !assign) {
+          return userId;
+        }
+        return null;
+      });
+
       setTask({ deadlineDate, description, name, startDate }, taskId)
         .then(() => {
-          unAssignTask(unAssignUsers, taskId);
-          assignTaskToUsers(executors, dbSnapshot, taskId);
+          unAssignTask(unAssignExecutors, taskId);
+          assignTaskToUsers(newExecutors, taskId);
           closeModalAndReload();
-        })
-        .then(() => {
-          if (modalType === 'create') {
-            setSuccessCreateTask();
-          }
-          if (modalType === 'edit') {
-            setSuccessUpdateTask();
-          }
         })
         .catch((error) => {
           return ErrorWritingDocument(error);
@@ -205,6 +220,7 @@ class TaskModalDataWorker extends React.Component {
 
   render() {
     const { closeModal, modalType } = this.props;
+
     return (
       <ModalContent
         createInputList={this.createInputList()}
@@ -215,13 +231,6 @@ class TaskModalDataWorker extends React.Component {
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  const { setSuccessCreateTask } = state.notifications;
-  return {
-    setSuccessCreateTask,
-  };
-};
 
 TaskModalDataWorker.propTypes = {
   modalTemplate: PropTypes.shape({
@@ -241,8 +250,4 @@ TaskModalDataWorker.propTypes = {
   closeModal: PropTypes.func.isRequired,
   closeModalAndReload: PropTypes.func,
 };
-
-export default connect(mapStateToProps, {
-  setSuccessCreateTask,
-  setSuccessUpdateTask,
-})(TaskModalDataWorker);
+export default TaskModalDataWorker;
