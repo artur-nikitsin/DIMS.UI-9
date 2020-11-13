@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { AvField } from 'availity-reactstrap-validation';
 import './dropDownInput.scss';
 
-const DropDownInput = ({ handleDropInput, value, modalType, dataTemplate, label }) => {
+const DropDownInput = ({ handleDropInput, value, modalType, dataTemplate, label, isValidated }) => {
   const createList = (data) => {
     const list = data.map((direction) => {
       const { directionId, name } = direction;
@@ -18,6 +18,7 @@ const DropDownInput = ({ handleDropInput, value, modalType, dataTemplate, label 
 
   return (
     <AvField
+      required={isValidated}
       className='dropDownInput'
       disabled={modalType === 'view'}
       type='select'

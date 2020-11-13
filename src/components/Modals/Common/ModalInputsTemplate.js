@@ -1,17 +1,17 @@
-export const userModalTemplate = {
-  firstName: null,
-  lastName: null,
-  birthDate: null,
-  directionId: null,
-  education: null,
-  startDate: null,
-  email: null,
-  university: null,
-  mathScore: null,
-  address: null,
-  mobilePhone: null,
-  skype: null,
-  sex: null,
+export const userModalDefaultValid = {
+  firstName: true,
+  lastName: true,
+  birthDate: true,
+  directionId: false,
+  education: true,
+  startDate: true,
+  email: true,
+  university: false,
+  mathScore: true,
+  address: true,
+  mobilePhone: true,
+  skype: false,
+  sex: true,
 };
 
 export const userModalTypes = {
@@ -28,6 +28,22 @@ export const userModalTypes = {
   mobilePhone: 'text',
   skype: 'text',
   sex: 'text',
+};
+
+export const userModalConfiguration = {
+  firstName: { type: 'text', isValidated: true },
+  lastName: { type: 'text', isValidated: true },
+  birthDate: { type: 'date', isValidated: true },
+  directionId: { type: 'text', isValidated: false },
+  education: { type: 'text', isValidated: true },
+  startDate: { type: 'date', isValidated: true },
+  email: { type: 'email', isValidated: true },
+  university: { type: 'text', isValidated: true },
+  mathScore: { type: 'text', isValidated: false },
+  address: { type: 'text', isValidated: false },
+  mobilePhone: { type: 'text', isValidated: true },
+  skype: { type: 'text', isValidated: false },
+  sex: { type: 'text', isValidated: false },
 };
 
 export const taskModalTemplate = {

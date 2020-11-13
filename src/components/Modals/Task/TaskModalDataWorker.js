@@ -10,6 +10,8 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
+import { taskModalTypes } from '../Common/ModalInputsTemplate';
+import TextArea from '../../common/Inputs/TextArea/TextArea';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -51,14 +53,14 @@ class TaskModalDataWorker extends React.Component {
     });
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  /*  componentDidUpdate(prevProps, prevState, snapshot) {
     const { taskData } = this.props;
     const { taskData: prevTaskData } = prevProps;
     if (prevTaskData !== taskData) {
       const { taskData } = this.props;
       this.setTaskDataToState(taskData);
     }
-  }
+  }*/
 
   setTaskDataToState = async (data) => {
     const { modalTemplate, modalType } = this.props;
@@ -106,7 +108,7 @@ class TaskModalDataWorker extends React.Component {
       if (input === 'executors' && membersList) {
         return (
           <li key={input} className='inputItem'>
-            <RadioInputList
+            <CheckInputList
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}

@@ -2,24 +2,26 @@ import React from 'react';
 import RadioInput from '../../common/Inputs/RadioInput';
 import './genderInputs.scss';
 
-function GenderInputs({ name, value, handleRadioInput, isSubmit, handleValidInput, modalType }) {
+function GenderInputs({ name, value, handleChange, isSubmit, handleValidInput, modalType }) {
   return (
     <li key={name} className='genderInputs'>
       <div className='radioInputs'>
         <span>Sex:</span>
 
         <RadioInput
-          inputName='male'
-          value={value}
-          handleRadioInput={handleRadioInput}
+          label='male'
+          name={name}
+          value={'male'}
+          handleChange={handleChange}
           handleValidInput={handleValidInput}
           modalType={modalType}
           checked={value === 'male'}
         />
         <RadioInput
-          inputName='female'
-          value={value}
-          handleRadioInput={handleRadioInput}
+          label='female'
+          name={name}
+          value={'female'}
+          handleChange={handleChange}
           handleValidInput={handleValidInput}
           modalType={modalType}
           checked={value === 'female'}

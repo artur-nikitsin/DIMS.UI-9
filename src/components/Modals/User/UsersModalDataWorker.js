@@ -7,10 +7,11 @@ import DropDownInput from '../../common/Inputs/DropDownInput';
 import GenderInputs from './GenderInputs';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
-import { userModalTypes } from '../Common/ModalInputsTemplate';
+import { userModalConfiguration } from '../Common/ModalInputsTemplate';
 import { connect } from 'react-redux';
 import { register, setUserRole } from '../../../firebase/auth';
 import faker from 'faker';
+import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
 
 class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -39,29 +40,29 @@ class UsersModalDataWorker extends React.PureComponent {
     };
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleRadioInput = this.handleRadioInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleValidInput = this.handleValidInput.bind(this);
   }
 
   componentDidMount() {
     const { userData } = this.props;
+    this.setState((prevState) => {
+      return {
+        inputsStatus: getNestedObjectValues(userModalConfiguration, 'isValidated', null),
+        dataToSend: getNestedObjectValues(userModalConfiguration, null, ''),
+      };
+    });
     this.setUserDataToState(userData);
   }
 
-  setUserDataToState = (data) => {
+  setUserDataToState = async (data) => {
     const { modalTemplate, modalType } = this.props;
-    this.setState({
-      inputsStatus: { ...modalTemplate },
-      dataToSend: { ...modalTemplate },
-    });
 
     if (modalType === 'register') {
       this.setState({
         userId: faker.fake('{{random.number}}'),
       });
     }
-
     for (const value in data) {
       if (this.state.hasOwnProperty(value)) {
         this.setState({
@@ -77,19 +78,19 @@ class UsersModalDataWorker extends React.PureComponent {
     }
   };
 
-  createInputList = () => {
-    const { modalTemplate, modalType, directions } = this.props;
+  createInputList() {
+    const { modalType, directions } = this.props;
     const { isSubmit, ...thisState } = this.state;
-    const dataKeys = Object.keys(modalTemplate);
+    const inputKeys = Object.keys(userModalConfiguration);
 
-    const inputList = dataKeys.map((input) => {
+    const inputList = inputKeys.map((input) => {
       if (input === 'sex') {
         return (
           <GenderInputs
             key={input}
             name={input}
             value={thisState[input]}
-            handleRadioInput={this.handleRadioInput}
+            handleChange={this.handleChange}
             handleValidInput={this.handleValidInput}
             isSubmit={isSubmit}
             modalType={modalType}
@@ -100,7 +101,7 @@ class UsersModalDataWorker extends React.PureComponent {
         return (
           <li key={input} className='inputItem'>
             <DropDownInput
-              handleDropInput={this.handleDropInput}
+              handleDropInput={this.handleChange}
               value={thisState[input]}
               modalType={modalType}
               dataTemplate={directions}
@@ -112,7 +113,8 @@ class UsersModalDataWorker extends React.PureComponent {
       return (
         <li key={input} className='inputItem'>
           <TextInput
-            type={userModalTypes[input]}
+            type={userModalConfiguration[input].type}
+            isValidated={userModalConfiguration[input].isValidated}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}
@@ -123,28 +125,19 @@ class UsersModalDataWorker extends React.PureComponent {
         </li>
       );
     });
-
     return <ul className='inputList'>{inputList}</ul>;
-  };
+  }
 
   handleChange = ({ target: { name, value } }) => {
     this.setState({
       [name]: value,
     });
-  };
-
-  handleRadioInput = ({ target: { name, value } }) => {
-    this.setState({
-      sex: name,
-    });
-    this.handleValidInput('sex', true, value);
-  };
-
-  handleDropInput = ({ target: { value } }) => {
-    this.setState({
-      directionId: value,
-    });
-    this.handleValidInput('directionId', true, value);
+    if (name === 'sex') {
+      this.handleValidInput('sex', true, name);
+    }
+    if (name === 'directionId') {
+      this.handleValidInput('directionId', true, name);
+    }
   };
 
   handleValidInput = (input, status, data) => {
@@ -167,11 +160,13 @@ class UsersModalDataWorker extends React.PureComponent {
     });
 
     if (isFormValid) {
+      const { firstName, lastName, email, userId } = this.state;
+
       if (modalType === 'register') {
-        const { firstName, lastName, userId, email } = this.state;
         register(email, '12345678');
         setUserRole({ firstName, lastName, userId, email });
       }
+
       setNewMemberData(dataToSend, userId)
         .then(() => {
           closeModalAndReload();

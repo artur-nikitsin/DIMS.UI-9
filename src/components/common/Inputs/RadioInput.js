@@ -5,19 +5,19 @@ import PropTypes from 'prop-types';
 
 class RadioInput extends React.PureComponent {
   render() {
-    const { inputName, value, handleRadioInput, modalType, checked } = this.props;
+    const { name, value, handleChange, modalType, label, checked } = this.props;
     return (
       <div className='radioInputWrapper'>
         <Input
           className='radioInput'
           disabled={modalType === 'view'}
           type='radio'
-          name={inputName}
+          name={name}
+          value={value}
+          onChange={handleChange}
           checked={checked}
-          value={value || ''}
-          onChange={handleRadioInput}
         />
-        <label htmlFor={inputName}>{inputName}</label>
+        <label htmlFor={name}>{label}</label>
       </div>
     );
   }

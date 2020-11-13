@@ -14,7 +14,7 @@ class TextInput extends React.PureComponent {
       name: null,
       value: null,
       status: 'invalid',
-      message: 'Please enter data!',
+      message: 'Please enter this data!',
     };
     this.validator = this.validator.bind(this);
   }
@@ -27,6 +27,11 @@ class TextInput extends React.PureComponent {
   }
 
   validator = (value) => {
+    const { isValidated } = this.props;
+
+    if (!isValidated) {
+      return true;
+    }
     if (value) {
       const { inputName } = this.props;
       const { isValid } = validatorsManager(inputName, value);
@@ -51,23 +56,23 @@ class TextInput extends React.PureComponent {
       } else {
         this.setState({
           status: 'invalid',
-          message: 'Please enter data!',
+          message: 'Please enter this data!',
         });
       }
     }
   }
 
   render() {
-    const { inputName, handleChange, value, type, modalType } = this.props;
+    const { inputName, handleChange, value, type, modalType, isValidated } = this.props;
     const { message } = this.state;
     const { theme } = this.context;
     return (
       <AvGroup className='textInputContainer'>
-        <Label for={inputName}>{inputNamesStore[inputName]}</Label>
+        <Label for={inputName}>{inputNamesStore[inputName] + (isValidated ? '*' : '')}</Label>
         <AvInput
           disabled={modalType === 'view'}
           className={`${theme} textInput`}
-          required
+          required={isValidated}
           type={type}
           name={inputName}
           value={value || ''}
