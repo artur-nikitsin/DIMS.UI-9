@@ -95,6 +95,7 @@ class TaskModalDataWorker extends React.Component {
         return (
           <li key={input} className='inputItem'>
             <CheckBoxList
+              title='Executors:'
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
