@@ -1,7 +1,7 @@
 import React from 'react';
 import './memberTasks.scss';
 import { Table, Button } from 'reactstrap';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getUserTaskList } from '../../firebase/apiGet';
 import Preloader from '../common/Preloader/Preloader';

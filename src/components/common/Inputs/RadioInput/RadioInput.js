@@ -27,8 +27,6 @@ RadioInput.propTypes = {
   value: PropTypes.string,
   checked: PropTypes.bool,
   modalType: PropTypes.string,
-  inputName: PropTypes.string.isRequired,
-  handleRadioInput: PropTypes.func.isRequired,
   handleValidInput: PropTypes.func.isRequired,
 };
 

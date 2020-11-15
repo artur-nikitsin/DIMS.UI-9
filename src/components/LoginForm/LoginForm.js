@@ -2,7 +2,7 @@ import React from 'react';
 import './loginForm.scss';
 import { AvForm } from 'availity-reactstrap-validation';
 import { Button, Alert } from 'reactstrap';
-import TextInput from '../common/Inputs/TextInput';
+import TextInput from '../common/Inputs/TextInput/TextInput';
 import { loginTemplate as inputsStatus } from './FormTemplate';
 import formValidator from '../helpers/FormValidator/formValidator';
 import { login } from '../../firebase/auth';

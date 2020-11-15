@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setNewMemberData } from '../../../firebase/apiSet';
-import TextInput from '../../common/Inputs/TextInput';
-import DropDownInput from '../../common/Inputs/DropDownInput';
+import TextInput from '../../common/Inputs/TextInput/TextInput';
+import DropDownInput from '../../common/Inputs/DropDownInput/DropDownInput';
 import GenderInputs from './GenderInputs';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
@@ -56,7 +56,7 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   setUserDataToState = async (data) => {
-    const { modalTemplate, modalType } = this.props;
+    const { modalType } = this.props;
 
     if (modalType === 'register') {
       this.setState({
@@ -70,12 +70,6 @@ class UsersModalDataWorker extends React.PureComponent {
         });
       }
       this.handleValidInput(value, true, data[value]);
-      /*if (value === 'sex') {
-        this.handleValidInput('sex', true, data[value]);
-      }
-      if (value === 'directionId') {
-        this.handleValidInput('directionId', true, data[value]);
-      }*/
     }
   };
 
@@ -153,7 +147,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
   handleSubmit(event) {
     event.persist();
-    const { isFormValid, userId, dataToSend } = this.state;
+    const { isFormValid, dataToSend } = this.state;
     const { closeModalAndReload, modalType } = this.props;
 
     this.setState({

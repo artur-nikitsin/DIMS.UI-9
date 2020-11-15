@@ -1,5 +1,5 @@
 import React from 'react';
-import RadioInput from '../../common/Inputs/RadioInput';
+import RadioInput from '../../common/Inputs/RadioInput/RadioInput';
 import './genderInputs.scss';
 
 function GenderInputs({ name, value, handleChange, isSubmit, handleValidInput, modalType }) {

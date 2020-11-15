@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setTrack } from '../../../firebase/apiSet';
-import TextInput from '../../common/Inputs/TextInput';
+import TextInput from '../../common/Inputs/TextInput/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
 import { trackModalConfiguration } from '../Common/ModalInputsTemplate';
@@ -65,7 +65,7 @@ class TrackModalDataWorker extends React.PureComponent {
   };
 
   createInputList = () => {
-    const { modalTemplate, modalType } = this.props;
+    const { modalType } = this.props;
     const { isSubmit, ...thisState } = this.state;
     const dataKeys = Object.keys(trackModalConfiguration);
 
@@ -141,7 +141,6 @@ class TrackModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
-    console.log(this.state);
     return (
       <ModalContent
         createInputList={this.createInputList()}

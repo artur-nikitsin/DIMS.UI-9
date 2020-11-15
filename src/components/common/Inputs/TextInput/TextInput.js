@@ -1,11 +1,11 @@
 import React from 'react';
-import validatorsManager from '../../helpers/validators/validatorsManager';
-import inputNamesStore from './inputNamesStore';
+import validatorsManager from '../../../helpers/validators/validatorsManager';
+import inputNamesStore from '../inputNamesStore';
 import './textInput.scss';
 import { AvFeedback, AvGroup, AvInput } from 'availity-reactstrap-validation';
 import { Label } from 'reactstrap';
 import PropTypes from 'prop-types';
-import { ThemeContext } from '../../../contexts/ThemeContext';
+import { ThemeContext } from '../../../../contexts/ThemeContext';
 
 class TextInput extends React.PureComponent {
   constructor(props) {

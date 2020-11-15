@@ -26,13 +26,3 @@ export const trackModalConfiguration = {
   trackDate: { type: 'text', isDefaultValid: false },
   trackNote: { type: 'text', isDefaultValid: false },
 };
-
-export const trackModalTemplate = {
-  trackDate: null,
-  trackNote: null,
-};
-
-export const trackModalTypes = {
-  trackDate: 'date',
-  trackNote: 'text',
-};

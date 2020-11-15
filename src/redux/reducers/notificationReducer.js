@@ -1,6 +1,6 @@
 import { notificationTypes } from '../../components/common/Messages/Notification/notificationTypes';
 
-const { success, error } = notificationTypes;
+const { success } = notificationTypes;
 
 const SET_NOTIFICATION_TYPE = 'SET_NOTIFICATION_TYPE';
 const SET_NOTIFICATION_MESSAGE = 'SET_NOTIFICATION_MESSAGE';

@@ -4,10 +4,10 @@ import faker from 'faker';
 import formValidator from '../../helpers/FormValidator/formValidator';
 import { setTask } from '../../../firebase/apiSet';
 import { getExecutors } from '../../../firebase/apiGet';
-import TextInput from '../../common/Inputs/TextInput';
+import TextInput from '../../common/Inputs/TextInput/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
-import CheckInputList from '../../common/Inputs/CheckInputList';
+import CheckBoxList from '../../common/Inputs/CheckBoxList/CheckBoxList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
 import { taskModalConfiguration } from '../Common/ModalInputsTemplate';
@@ -50,7 +50,7 @@ class TaskModalDataWorker extends React.Component {
   }
 
   setTaskDataToState = async (data) => {
-    const { modalTemplate, modalType } = this.props;
+    const { modalType } = this.props;
 
     await getMembersList().then((membersList) => {
       this.setState((prevState) => {
@@ -86,7 +86,7 @@ class TaskModalDataWorker extends React.Component {
   };
 
   createInputList = () => {
-    const { modalTemplate, modalType } = this.props;
+    const { modalType } = this.props;
     const { isSubmit, membersList, executors, ...thisState } = this.state;
     const dataKeys = Object.keys(taskModalConfiguration);
 
@@ -94,7 +94,7 @@ class TaskModalDataWorker extends React.Component {
       if (input === 'executors' && membersList) {
         return (
           <li key={input} className='inputItem'>
-            <CheckInputList
+            <CheckBoxList
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
@@ -172,7 +172,7 @@ class TaskModalDataWorker extends React.Component {
 
   handleSubmit(event) {
     event.persist();
-    const { isFormValid, taskId, dataToSend, executors, unAssignUsers, dbSnapshot } = this.state;
+    const { isFormValid, taskId, dataToSend, executors } = this.state;
     const { closeModalAndReload } = this.props;
     const { deadlineDate, description, name, startDate } = dataToSend;
     this.setState({
