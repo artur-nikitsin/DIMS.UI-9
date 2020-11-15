@@ -48,7 +48,7 @@ class UsersModalDataWorker extends React.PureComponent {
     const { userData } = this.props;
     this.setState((prevState) => {
       return {
-        inputsStatus: getNestedObjectValues(userModalConfiguration, 'isValidated', null),
+        inputsStatus: getNestedObjectValues(userModalConfiguration, 'isDefaultValid', null),
         dataToSend: getNestedObjectValues(userModalConfiguration, null, ''),
       };
     });
@@ -69,12 +69,13 @@ class UsersModalDataWorker extends React.PureComponent {
           [value]: data[value],
         });
       }
-      if (value === 'sex') {
+      this.handleValidInput(value, true, data[value]);
+      /*if (value === 'sex') {
         this.handleValidInput('sex', true, data[value]);
       }
       if (value === 'directionId') {
         this.handleValidInput('directionId', true, data[value]);
-      }
+      }*/
     }
   };
 
@@ -114,7 +115,7 @@ class UsersModalDataWorker extends React.PureComponent {
         <li key={input} className='inputItem'>
           <TextInput
             type={userModalConfiguration[input].type}
-            isValidated={userModalConfiguration[input].isValidated}
+            isDefaultValid={userModalConfiguration[input].isDefaultValid}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}

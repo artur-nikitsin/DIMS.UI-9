@@ -10,8 +10,9 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import CheckInputList from '../../common/Inputs/CheckInputList';
 import getMembersList from '../../helpers/getMembersList/getMembersList';
 import { unAssignTask, assignTaskToUsers } from '../../../firebase/assign';
-import { taskModalTypes } from '../Common/ModalInputsTemplate';
+import { taskModalConfiguration } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
+import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
 
 class TaskModalDataWorker extends React.Component {
   constructor(props) {
@@ -23,7 +24,6 @@ class TaskModalDataWorker extends React.Component {
       dataToSend: null,
       executors: {},
       membersList: null,
-      dbSnapshot: [],
 
       name: null,
       startDate: null,
@@ -40,27 +40,14 @@ class TaskModalDataWorker extends React.Component {
 
   componentDidMount() {
     const { taskData } = this.props;
-    if (taskData) {
-      getExecutors(taskData.taskId).then((users) => {
-        this.setState({
-          dbSnapshot: users,
-        });
-      });
-    }
-
-    this.setTaskDataToState(taskData).then(() => {
-      this.createInputList();
+    this.setState((prevState) => {
+      return {
+        inputsStatus: getNestedObjectValues(taskModalConfiguration, 'isDefaultValid', null),
+        dataToSend: getNestedObjectValues(taskModalConfiguration, null, ''),
+      };
     });
+    this.setTaskDataToState(taskData);
   }
-
-  /*  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { taskData } = this.props;
-    const { taskData: prevTaskData } = prevProps;
-    if (prevTaskData !== taskData) {
-      const { taskData } = this.props;
-      this.setTaskDataToState(taskData);
-    }
-  }*/
 
   setTaskDataToState = async (data) => {
     const { modalTemplate, modalType } = this.props;
@@ -70,8 +57,6 @@ class TaskModalDataWorker extends React.Component {
         return {
           ...prevState,
           membersList,
-          inputsStatus: modalTemplate,
-          dataToSend: modalTemplate,
         };
       });
     });
@@ -95,6 +80,7 @@ class TaskModalDataWorker extends React.Component {
         this.setState({
           [value]: data[value],
         });
+        this.handleValidInput(value, true, data[value]);
       }
     }
   };
@@ -102,7 +88,7 @@ class TaskModalDataWorker extends React.Component {
   createInputList = () => {
     const { modalTemplate, modalType } = this.props;
     const { isSubmit, membersList, executors, ...thisState } = this.state;
-    const dataKeys = Object.keys(modalTemplate);
+    const dataKeys = Object.keys(taskModalConfiguration);
 
     const inputList = dataKeys.map((input) => {
       if (input === 'executors' && membersList) {
@@ -122,6 +108,7 @@ class TaskModalDataWorker extends React.Component {
           <li key={input} className='inputItem'>
             <TextArea
               inputName={input}
+              isDefaultValid={taskModalConfiguration[input].isDefaultValid}
               value={thisState[input]}
               handleValidInput={this.handleValidInput}
               handleChange={this.handleChange}
@@ -133,7 +120,8 @@ class TaskModalDataWorker extends React.Component {
       return (
         <li key={input} className='inputItem'>
           <TextInput
-            type={taskModalTypes[input]}
+            type={taskModalConfiguration[input].type}
+            isDefaultValid={taskModalConfiguration[input].isDefaultValid}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}
@@ -222,7 +210,6 @@ class TaskModalDataWorker extends React.Component {
 
   render() {
     const { closeModal, modalType } = this.props;
-
     return (
       <ModalContent
         createInputList={this.createInputList()}

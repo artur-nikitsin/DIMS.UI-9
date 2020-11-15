@@ -3,7 +3,6 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import './trackModal.scss';
 import PropTypes from 'prop-types';
 import { getTrack } from '../../../firebase/apiGet';
-import { trackModalTemplate } from '../Common/ModalInputsTemplate';
 import TrackModalDataWorker from './TrackModalDataWorker';
 import Preloader from '../../common/Preloader/Preloader';
 
@@ -45,7 +44,6 @@ const TrackModal = (props) => {
             <>
               <ModalHeader>{`Task: ${taskName}`}</ModalHeader>
               <TrackModalDataWorker
-                modalTemplate={trackModalTemplate}
                 trackData={trackData}
                 userTaskId={userTaskId}
                 modalType={modalType}

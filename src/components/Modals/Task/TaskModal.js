@@ -4,7 +4,6 @@ import './taskModal.scss';
 import PropTypes from 'prop-types';
 import { getTask } from '../../../firebase/apiGet';
 import TaskModalDataWorker from './TaskModalDataWorker';
-import { taskModalTemplate } from '../Common/ModalInputsTemplate';
 import Preloader from '../../common/Preloader/Preloader';
 
 const TaskModal = (props) => {
@@ -38,7 +37,6 @@ const TaskModal = (props) => {
             <Preloader />
           ) : (
             <TaskModalDataWorker
-              modalTemplate={taskModalTemplate}
               taskData={taskData}
               modalType={modalType}
               closeModal={closeModal}

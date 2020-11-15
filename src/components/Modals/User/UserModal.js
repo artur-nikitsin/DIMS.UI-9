@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalBody } from 'reactstrap';
 import UsersModalDataWorker from './UsersModalDataWorker';
-import { userModalDefaultValid } from '../Common/ModalInputsTemplate';
 import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
 import Preloader from '../../common/Preloader/Preloader';
@@ -38,7 +37,6 @@ const UserModal = (props) => {
             <Preloader />
           ) : (
             <UsersModalDataWorker
-              modalTemplate={userModalDefaultValid}
               userData={userData}
               modalType={modalType}
               closeModal={closeModal}

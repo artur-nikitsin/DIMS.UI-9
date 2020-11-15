@@ -27,9 +27,9 @@ class TextInput extends React.PureComponent {
   }
 
   validator = (value) => {
-    const { isValidated } = this.props;
+    const { isDefaultValid } = this.props;
 
-    if (!isValidated) {
+    if (isDefaultValid) {
       return true;
     }
     if (value) {
@@ -77,7 +77,7 @@ class TextInput extends React.PureComponent {
           name={inputName}
           value={value || ''}
           onChange={handleChange}
-          validate={{ myValidation: this.validator.bind(this) }}
+          validate={{ myValidation: this.validator }}
         />
         <AvFeedback>{message}</AvFeedback>
       </AvGroup>

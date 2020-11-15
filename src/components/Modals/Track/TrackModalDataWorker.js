@@ -5,8 +5,9 @@ import { setTrack } from '../../../firebase/apiSet';
 import TextInput from '../../common/Inputs/TextInput';
 import ModalContent from '../Common/ModalContent';
 import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocument';
-import { trackModalTypes } from '../Common/ModalInputsTemplate';
+import { trackModalConfiguration } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
+import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
 
 class TrackModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -29,6 +30,12 @@ class TrackModalDataWorker extends React.PureComponent {
 
   componentDidMount() {
     const { trackData } = this.props;
+    this.setState((prevState) => {
+      return {
+        inputsStatus: getNestedObjectValues(trackModalConfiguration, 'isDefaultValid', null),
+        dataToSend: getNestedObjectValues(trackModalConfiguration, null, ''),
+      };
+    });
     this.setTaskDataToState(trackData);
   }
 
@@ -52,6 +59,7 @@ class TrackModalDataWorker extends React.PureComponent {
         this.setState({
           [value]: data[value],
         });
+        this.handleValidInput(value, true, data[value]);
       }
     }
   };
@@ -59,7 +67,7 @@ class TrackModalDataWorker extends React.PureComponent {
   createInputList = () => {
     const { modalTemplate, modalType } = this.props;
     const { isSubmit, ...thisState } = this.state;
-    const dataKeys = Object.keys(modalTemplate);
+    const dataKeys = Object.keys(trackModalConfiguration);
 
     const inputList = dataKeys.map((input) => {
       if (input === 'trackNote') {
@@ -78,7 +86,8 @@ class TrackModalDataWorker extends React.PureComponent {
       return (
         <li key={input} className='inputItem'>
           <TextInput
-            type={trackModalTypes[input]}
+            type={trackModalConfiguration[input].type}
+            isDefaultValid={trackModalConfiguration[input].isDefaultValid}
             inputName={input}
             value={thisState[input]}
             handleChange={this.handleChange}
@@ -132,6 +141,7 @@ class TrackModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
+    console.log(this.state);
     return (
       <ModalContent
         createInputList={this.createInputList()}
