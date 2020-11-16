@@ -26,6 +26,7 @@ const Header = ({ isLogin, handleLogout, theme, role, onSwitchTheme }) => {
               <NavItem className='navButtons'>
                 <NavButton label='Members' to='/users' className={`${theme} navButton`} color={getThemeColor(theme)} />
                 <NavButton label='Tasks' to='/tasks' className={`${theme} navButton`} color={getThemeColor(theme)} />
+                <NavButton label='About' to='/about' className={`${theme} navButton`} color={getThemeColor(theme)} />
               </NavItem>
             )}
             {isLogin && (

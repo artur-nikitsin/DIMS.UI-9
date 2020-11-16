@@ -96,6 +96,7 @@ class UsersModalDataWorker extends React.PureComponent {
         return (
           <li key={input} className='inputItem'>
             <DropDownInput
+              name={input}
               handleDropInput={this.handleChange}
               value={thisState[input]}
               modalType={modalType}
@@ -124,14 +125,15 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   handleChange = ({ target: { name, value } }) => {
+    console.log('name:', name, 'value:', value);
     this.setState({
       [name]: value,
     });
     if (name === 'sex') {
-      this.handleValidInput('sex', true, name);
+      this.handleValidInput('sex', true, value);
     }
     if (name === 'directionId') {
-      this.handleValidInput('directionId', true, name);
+      this.handleValidInput('directionId', true, value);
     }
   };
 
@@ -174,6 +176,7 @@ class UsersModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
+    console.log(this.state);
     return (
       <ModalContent
         createInputList={this.createInputList()}
