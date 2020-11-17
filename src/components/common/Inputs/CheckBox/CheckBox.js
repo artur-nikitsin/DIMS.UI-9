@@ -4,19 +4,20 @@ import PropTypes from 'prop-types';
 
 class CheckBox extends React.PureComponent {
   render() {
-    const { inputName, value = '', handleRadioInput, modalType, checked } = this.props;
+    const { inputName, inputId, value = '', handleRadioInput, modalType, checked } = this.props;
     return (
-      <div className='radioButton'>
+      <div className='checkBoxContainer'>
         <input
           className='checkBox'
           type='checkbox'
           disabled={modalType === 'view'}
           name={inputName}
+          id={inputId}
           checked={checked}
           value={value}
           onChange={handleRadioInput(value)}
         />
-        <label className='checkBoxLabel' htmlFor={inputName}>
+        <label className='checkBoxLabel' htmlFor={inputId}>
           {inputName}
         </label>
       </div>

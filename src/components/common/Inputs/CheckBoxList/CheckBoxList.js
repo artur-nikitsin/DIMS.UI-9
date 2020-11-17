@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './checkBoxList.scss';
-import { AvGroup } from 'availity-reactstrap-validation';
+import { AvGroup, AvInput } from 'availity-reactstrap-validation';
 import CheckBox from '../CheckBox/CheckBox';
 
-const CheckBoxList = ({ title, handleRadioInput, values, modalType, dataTemplate }) => {
+const CheckBoxList = ({ title, handleRadioInput, values, modalType, dataTemplate, isDefaultValid }) => {
   const createList = (data) => {
     return data.map((user) => {
       const { fullName, userId } = user;
@@ -12,7 +12,9 @@ const CheckBoxList = ({ title, handleRadioInput, values, modalType, dataTemplate
       return (
         <li key={userId}>
           <CheckBox
+            required={isDefaultValid}
             inputName={fullName}
+            inputId={userId}
             value={userId}
             checked={!!values[userId] && !!values[userId].assign}
             modalType={modalType}
@@ -24,10 +26,10 @@ const CheckBoxList = ({ title, handleRadioInput, values, modalType, dataTemplate
   };
 
   return (
-    <AvGroup check>
+    <>
       <p className='checkBoxListTitle'>{title}</p>
-      <ul className='radioInputList'>{createList(dataTemplate)}</ul>
-    </AvGroup>
+      <ul className='checkBoxList'>{createList(dataTemplate)}</ul>
+    </>
   );
 };
 

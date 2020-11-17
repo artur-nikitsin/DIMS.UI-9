@@ -1,5 +1,9 @@
 .checkBoxLabel {
   margin-left: 0.5rem;
+  &:hover {
+    color: #28a745;
+    cursor: pointer;
+  }
 }
 
 .checkBox:checked + label {

@@ -11,13 +11,14 @@
   .inputList {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     flex-wrap: wrap;
     height: auto;
     max-width: 45rem;
-    align-items: flex-start;
+    align-items: center;
     list-style-type: none;
     margin-top: 1rem;
+    padding: 0;
 
     .inputItem {
       display: flex;

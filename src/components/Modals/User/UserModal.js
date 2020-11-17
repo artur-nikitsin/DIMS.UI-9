@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import UsersModalDataWorker from './UsersModalDataWorker';
 import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
 import Preloader from '../../common/Preloader/Preloader';
+import { ThemeContext } from '../../../contexts/ThemeContext';
+import errorReducer from '../../../redux/reducers/errorReducer';
 
 const UserModal = (props) => {
   const { className, isOpen, closeModal, userId, modalType, closeModalAndReload } = props;
 
   const [userData, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const theme = useContext(ThemeContext);
 
   const newUser = () => {
     setData(null);
@@ -20,10 +23,12 @@ const UserModal = (props) => {
   useEffect(() => {
     if (userId) {
       setLoading(true);
-      getMember(userId).then((result) => {
-        setData(result);
-        setLoading(false);
-      });
+      getMember(userId)
+        .then((result) => {
+          setData(result);
+          setLoading(false);
+        })
+        .catch();
     } else {
       newUser();
     }
@@ -31,7 +36,7 @@ const UserModal = (props) => {
 
   return (
     <div>
-      <Modal isOpen={isOpen} toggle={closeModal} className={className}>
+      <Modal isOpen={isOpen} toggle={closeModal} className={`${theme} ${className}`}>
         <ModalHeader toggle={closeModal}>{`User ${modalType} `}</ModalHeader>
         <ModalBody>
           {loading ? (
@@ -61,7 +66,7 @@ UserModal.propTypes = {
 
 UserModal.defaultProps = {
   userId: '',
-  modalType: 'view',
+  modalType: '',
 };
 
 export default UserModal;

@@ -16,10 +16,10 @@ export const userModalConfiguration = {
 
 export const taskModalConfiguration = {
   name: { type: 'text', isDefaultValid: false },
-  startDate: { type: 'text', isDefaultValid: false },
-  deadlineDate: { type: 'text', isDefaultValid: false },
+  startDate: { type: 'date', isDefaultValid: false },
+  deadlineDate: { type: 'date', isDefaultValid: false },
   description: { type: 'text', isDefaultValid: false },
-  executors: { type: 'text', isDefaultValid: true },
+  executors: { type: 'checkbox', isDefaultValid: true },
 };
 
 export const trackModalConfiguration = {

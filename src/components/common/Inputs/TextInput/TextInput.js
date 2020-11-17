@@ -28,7 +28,6 @@ class TextInput extends React.PureComponent {
 
   validator = (value) => {
     const { isDefaultValid } = this.props;
-
     if (isDefaultValid) {
       return true;
     }
@@ -63,16 +62,16 @@ class TextInput extends React.PureComponent {
   }
 
   render() {
-    const { inputName, handleChange, value, type, modalType, isValidated } = this.props;
+    const { inputName, handleChange, value, type, modalType, isDefaultValid } = this.props;
     const { message } = this.state;
     const { theme } = this.context;
     return (
       <AvGroup className='textInputContainer'>
-        <Label for={inputName}>{inputNamesStore[inputName] + (isValidated ? '*' : '')}</Label>
+        <Label for={inputName}>{inputNamesStore[inputName] + (isDefaultValid ? '' : '*')}</Label>
         <AvInput
           disabled={modalType === 'view'}
           className={`${theme} textInput`}
-          required={isValidated}
+          required={!isDefaultValid}
           type={type}
           name={inputName}
           value={value || ''}

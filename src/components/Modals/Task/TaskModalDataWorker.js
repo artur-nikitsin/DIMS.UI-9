@@ -14,7 +14,7 @@ import { taskModalConfiguration } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
 import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
 
-class TaskModalDataWorker extends React.Component {
+class TaskModalDataWorker extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -96,6 +96,7 @@ class TaskModalDataWorker extends React.Component {
           <li key={input} className='inputItem'>
             <CheckBoxList
               title='Executors:'
+              isDefaultValid={taskModalConfiguration[input].isDefaultValid}
               dataTemplate={membersList}
               values={executors}
               modalType={modalType}
