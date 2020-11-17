@@ -6,7 +6,6 @@ import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
 import Preloader from '../../common/Preloader/Preloader';
 import { ThemeContext } from '../../../contexts/ThemeContext';
-import errorReducer from '../../../redux/reducers/errorReducer';
 
 const UserModal = (props) => {
   const { className, isOpen, closeModal, userId, modalType, closeModalAndReload } = props;
