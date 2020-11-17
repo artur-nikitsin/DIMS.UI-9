@@ -1,0 +1,30 @@
+@import '../common/Styles/Mixins/Tables/commonTableStyles';
+@import 'src/components/common/Styles/Mixins/Pages/pages';
+
+.permissionsTableContainer {
+  @include pagesMainStyles;
+
+  .greenPermission {
+    color: green;
+  }
+
+  .redPermission {
+    color: red;
+  }
+
+  .light.permissionsTable {
+    @include commonTableStyles;
+
+    .permissionName {
+      text-align: left;
+    }
+  }
+
+  .dark.permissionsTable {
+    @include darkTable;
+
+    .permissionName {
+      text-align: left;
+    }
+  }
+}

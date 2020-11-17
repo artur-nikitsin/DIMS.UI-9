@@ -22,13 +22,16 @@
   }
 
   .navButtons {
-    width: 28rem;
+    max-width: 28rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
     margin: 1rem;
+    .navButton {
+      margin: 0.5rem;
+    }
   }
 
   .buttonsContainer {
