@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, ModalBody } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import './taskModal.scss';
 import PropTypes from 'prop-types';
 import { getTask } from '../../../firebase/apiGet';
@@ -32,6 +32,7 @@ const TaskModal = (props) => {
   return (
     <div>
       <Modal isOpen={isOpen} toggle={closeModal} className={className}>
+        <ModalHeader toggle={closeModal}>{`Task ${modalType} `}</ModalHeader>
         <ModalBody>
           {loading ? (
             <Preloader />

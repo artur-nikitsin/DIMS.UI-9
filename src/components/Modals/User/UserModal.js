@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalBody } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import UsersModalDataWorker from './UsersModalDataWorker';
 import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
@@ -32,6 +32,7 @@ const UserModal = (props) => {
   return (
     <div>
       <Modal isOpen={isOpen} toggle={closeModal} className={className}>
+        <ModalHeader toggle={closeModal}>{`User ${modalType} `}</ModalHeader>
         <ModalBody>
           {loading ? (
             <Preloader />
