@@ -79,3 +79,16 @@ export const deleteDocumentById = (collection, docId) => {
       });
   }
 };
+
+export const deleteTrack = (trackId) => {
+  return db
+    .collection('TaskTracks')
+    .doc(trackId)
+    .delete()
+    .then(() => {
+      console.log('Data successfully deleted');
+    })
+    .catch((error) => {
+      console.error(`Error receiving data: ${error}`);
+    });
+};

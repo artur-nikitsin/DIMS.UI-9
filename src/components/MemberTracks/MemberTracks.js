@@ -9,7 +9,7 @@ import getSubString from '../helpers/getSubString/getSubString';
 import getLocalDate from '../helpers/getLocaleDate/getLocalDate';
 import TableTrackHeaders from './TableHeaders';
 import TrackModal from '../Modals/Track/TrackModal';
-import { deleteTask } from '../../firebase/apiDelete';
+import { deleteTrack } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import ReturnLink from '../common/ReturnLink/ReturnLink';
@@ -36,7 +36,7 @@ class MemberTracks extends React.PureComponent {
   }
 
   handleDelete = (trackId) => () => {
-    deleteTask(trackId).then(() => {
+    deleteTrack(trackId).then(() => {
       this.reloadTrackPage();
     });
   };

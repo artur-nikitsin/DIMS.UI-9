@@ -125,7 +125,6 @@ class UsersModalDataWorker extends React.PureComponent {
   }
 
   handleChange = ({ target: { name, value } }) => {
-    console.log('name:', name, 'value:', value);
     this.setState({
       [name]: value,
     });
