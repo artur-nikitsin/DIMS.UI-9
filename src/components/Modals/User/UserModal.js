@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useReducer } from 'react';
+import React, { useEffect, useContext, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 import UsersModalDataWorker from './UsersModalDataWorker';
@@ -6,18 +6,22 @@ import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
 import Preloader from '../../common/Preloader/Preloader';
 import { ThemeContext } from '../../../contexts/ThemeContext';
-import errorReducer from '../../../redux/reducers/errorReducer';
-import { initialState } from '../../../redux/reducers/errorReducer';
-import { setReceiveDataError } from '../../../redux/reducers/errorReducer';
-import store from '../../../redux/store';
+import { reducer, initialState, initState } from './userModalReducer';
 
 const UserModal = (props) => {
   const { className, isOpen, closeModal, userId, modalType, closeModalAndReload } = props;
 
-  const [userData, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
   const theme = useContext(ThemeContext);
-  const [state, dispatch] = useReducer(errorReducer, initialState);
+
+  const [state, dispatch] = useReducer(reducer, initialState, initState);
+
+  const setLoading = (loading) => {
+    dispatch({ type: 'loading', loading: loading });
+  };
+
+  const setData = (data) => {
+    dispatch({ type: 'data', data: data });
+  };
 
   const newUser = () => {
     setData(null);
@@ -29,14 +33,10 @@ const UserModal = (props) => {
       setLoading(true);
       getMember(userId)
         .then((result) => {
-          throw new Error();
           setData(result);
           setLoading(false);
         })
-        .catch((error) => {
-          console.log(error);
-          store.dispatch(setReceiveDataError(error));
-        });
+        .catch((error) => {});
     } else {
       newUser();
     }
@@ -47,11 +47,11 @@ const UserModal = (props) => {
       <Modal isOpen={isOpen} toggle={closeModal} className={`${theme} ${className}`}>
         <ModalHeader toggle={closeModal}>{`User ${modalType} `}</ModalHeader>
         <ModalBody>
-          {loading ? (
+          {state.loading ? (
             <Preloader />
           ) : (
             <UsersModalDataWorker
-              userData={userData}
+              userData={state.data}
               modalType={modalType}
               closeModal={closeModal}
               closeModalAndReload={closeModalAndReload}
