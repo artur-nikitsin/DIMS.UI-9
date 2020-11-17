@@ -176,7 +176,6 @@ class UsersModalDataWorker extends React.PureComponent {
 
   render() {
     const { closeModal, modalType } = this.props;
-    console.log(this.state);
     return (
       <ModalContent
         createInputList={this.createInputList()}
