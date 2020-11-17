@@ -1,4 +1,4 @@
-const initialState = {
+export const initialState = {
   receiveDataError: null,
   sendDataError: null,
   authError: null,

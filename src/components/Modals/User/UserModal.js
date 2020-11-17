@@ -6,6 +6,10 @@ import './UserModal.scss';
 import { getMember } from '../../../firebase/apiGet';
 import Preloader from '../../common/Preloader/Preloader';
 import { ThemeContext } from '../../../contexts/ThemeContext';
+import errorReducer from '../../../redux/reducers/errorReducer';
+import { initialState } from '../../../redux/reducers/errorReducer';
+import { setReceiveDataError } from '../../../redux/reducers/errorReducer';
+import store from '../../../redux/store';
 
 const UserModal = (props) => {
   const { className, isOpen, closeModal, userId, modalType, closeModalAndReload } = props;
@@ -13,6 +17,7 @@ const UserModal = (props) => {
   const [userData, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const theme = useContext(ThemeContext);
+  const [state, dispatch] = useReducer(errorReducer, initialState);
 
   const newUser = () => {
     setData(null);
@@ -24,10 +29,14 @@ const UserModal = (props) => {
       setLoading(true);
       getMember(userId)
         .then((result) => {
+          throw new Error();
           setData(result);
           setLoading(false);
         })
-        .catch();
+        .catch((error) => {
+          console.log(error);
+          store.dispatch(setReceiveDataError(error));
+        });
     } else {
       newUser();
     }
