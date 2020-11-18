@@ -8,6 +8,7 @@ export const reducer = (state, action) => {
       return state;
   }
 };
+
 export const initialState = { loading: false, data: null };
 
 export const initState = (initialCount) => {

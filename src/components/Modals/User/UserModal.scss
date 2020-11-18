@@ -1,10 +1,11 @@
 @import 'src/components/common/Styles/Mixins/Modals/modals';
 
-.userModal {
+.light.userModal {
   @include modal;
 }
 
 .dark.userModal {
+  @include modal;
   @include darkModal;
 }
 

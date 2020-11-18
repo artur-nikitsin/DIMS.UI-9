@@ -70,3 +70,34 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
     .then(() => ({ message: 'User created successfully' }))
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
+
+export function sendEmail() {
+  var auth = firebase.auth();
+  var emailAddress = 'art.nikitsin@gmail.com';
+
+  auth
+    .sendPasswordResetEmail(emailAddress)
+    .then(function() {
+      // Email sent.
+    })
+    .catch(function(error) {
+      // An error happened.
+    });
+}
+
+export function updateProfile() {
+  var user = firebase.auth().currentUser;
+  if (user) {
+    console.log('update');
+    user
+      .updateProfile({
+        displayName: 'Arik',
+      })
+      .then(function() {
+        // Update successful.
+      })
+      .catch(function(error) {
+        // An error happened.
+      });
+  }
+}

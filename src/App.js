@@ -7,7 +7,7 @@ import LoginForm from './components/LoginForm/LoginForm';
 import { RoleContext } from './contexts/RoleContext';
 import { ThemeContext } from './contexts/ThemeContext';
 import { DOCUMENT_TITLE } from './components/constants/titles';
-import { logout } from './firebase/auth';
+import { logout, sendEmail, updateProfile } from './firebase/auth';
 import getUserFromSessionStorage from './components/helpers/sessionStorage/getUserFromSessionStorage';
 import setUserToSessionStorage from './components/helpers/sessionStorage/setUserToSessionStorage';
 import deleteUserFromLocalStorage from './components/helpers/sessionStorage/deleteUserFromLocalStorage';
@@ -94,6 +94,8 @@ class App extends React.PureComponent {
 
   render() {
     const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
+    updateProfile();
+    sendEmail();
     return (
       <RoleContext.Provider value={this.state}>
         <ThemeContext.Provider value={this.state}>

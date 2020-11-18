@@ -21,9 +21,8 @@
 
 @mixin darkModal {
   @include centerFlex;
-  width: 50rem;
-  height: auto;
-  background: black;
+  @include modal;
+  sbackground: black;
   .modal-content {
     background: #24292e;
     color: #fff;
