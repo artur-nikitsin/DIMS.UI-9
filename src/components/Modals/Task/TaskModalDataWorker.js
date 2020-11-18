@@ -93,7 +93,7 @@ class TaskModalDataWorker extends React.PureComponent {
     const inputList = dataKeys.map((input) => {
       if (input === 'executors' && membersList) {
         return (
-          <li key={input} className='inputItem'>
+          <li key={input} className='checkBoxListContainer'>
             <CheckBoxList
               title='Executors:'
               isDefaultValid={taskModalConfiguration[input].isDefaultValid}
@@ -107,7 +107,7 @@ class TaskModalDataWorker extends React.PureComponent {
       }
       if (input === 'description') {
         return (
-          <li key={input} className='inputItem'>
+          <li key={input} className='descriptionContainer'>
             <TextArea
               inputName={input}
               isDefaultValid={taskModalConfiguration[input].isDefaultValid}

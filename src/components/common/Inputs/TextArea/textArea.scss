@@ -1,10 +1,11 @@
 .textAreaLabel {
-  width: 18rem;
+  width: 100%;
   height: auto;
 }
 
 @mixin textArea {
-  width: 18rem;
+  min-width: 18rem;
+  width: 100%;
   min-height: 6rem;
   margin-top: 0.5rem;
   border-radius: 4px;

@@ -17,7 +17,9 @@ class RadioInput extends React.PureComponent {
           onChange={handleChange}
           checked={checked}
         />
-        <label htmlFor={name}>{label}</label>
+        <label className='radioInputLabel' htmlFor={name}>
+          {label}
+        </label>
       </div>
     );
   }

@@ -29,14 +29,12 @@ const initialState = {
 
 export const getAllMembers = () => (dispatch) => {
   dispatch(setLoading(true));
-
   getMembers()
     .then((result) => {
       dispatch(setMembers(result));
-      dispatch(setLoading(false));
-
       getDirections().then((result) => {
         dispatch(setDirections(result));
+        dispatch(setLoading(false));
       });
     })
     .catch((error) => {

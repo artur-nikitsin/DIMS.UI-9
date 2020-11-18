@@ -7,4 +7,9 @@
   .radioInput:checked + label {
     color: #0b4db7;
   }
+
+  .radioInputLabel:hover {
+    color: #28a745;
+    cursor: pointer;
+  }
 }

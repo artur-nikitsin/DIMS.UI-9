@@ -1,6 +1,9 @@
 .checkBoxList {
   list-style-type: none;
-}
-.checkBoxListTitle {
-  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  border: 1px solid #d0d6db;
+  padding: 0;
 }

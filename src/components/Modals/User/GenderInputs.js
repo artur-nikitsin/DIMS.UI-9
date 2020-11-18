@@ -6,7 +6,7 @@ function GenderInputs({ name, value, handleChange, isSubmit, handleValidInput, m
   return (
     <li key={name} className='genderInputs'>
       <div className='radioInputs'>
-        <span>Sex:</span>
+        <span className='genderInputsLabel'>Sex:</span>
 
         <RadioInput
           label='male'
