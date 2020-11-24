@@ -1,10 +1,31 @@
 import firebase from 'firebase/firebase';
 import db from './db';
 
-export function register(email, password) {
+export function register(email, password, firstName, userId) {
   return firebase
     .auth()
     .createUserWithEmailAndPassword(email, password)
+    .then((user) => {
+      sentWelcomeEmail(user.user, user.user.email, firstName, userId);
+    })
+    .catch((error) => {
+      console.error(`${error.message} ${error.code}`);
+    });
+}
+
+export function sentWelcomeEmail(user, email, userName, userId) {
+  user
+    .updateProfile({
+      displayName: userName,
+      uid: userId,
+    })
+    .then((user) => {
+      const currentUser = firebase.auth();
+      currentUser.sendPasswordResetEmail(email).then(function() {});
+    })
+    .then(() => {
+      console.log('Welcome email successfully sent');
+    })
     .catch((error) => {
       console.error(`${error.message} ${error.code}`);
     });
@@ -14,7 +35,7 @@ export async function login(email, password) {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
-    .then(() => {
+    .then((user) => {
       return getRole(email);
     })
     .catch((error) => {
@@ -71,33 +92,14 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
-export function sendEmail() {
-  var auth = firebase.auth();
-  var emailAddress = 'art.nikitsin@gmail.com';
-
-  auth
-    .sendPasswordResetEmail(emailAddress)
-    .then(function() {
-      // Email sent.
+export function deleteAuthData(uid) {
+  /* admin
+    .auth()
+    .deleteUser(uid)
+    .then(() => {
+      console.log('Successfully deleted user');
     })
-    .catch(function(error) {
-      // An error happened.
-    });
-}
-
-export function updateProfile() {
-  var user = firebase.auth().currentUser;
-  if (user) {
-    console.log('update');
-    user
-      .updateProfile({
-        displayName: 'Arik',
-      })
-      .then(function() {
-        // Update successful.
-      })
-      .catch(function(error) {
-        // An error happened.
-      });
-  }
+    .catch((error) => {
+      console.log('Error deleting user:', error);
+    });*/
 }
