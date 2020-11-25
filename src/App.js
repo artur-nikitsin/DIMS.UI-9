@@ -18,6 +18,7 @@ import MemberProgress from './components/MemberProgress/MemberProgress';
 import MemberTasks from './components/MembersTasks/MemberTasks';
 import Notification from './components/common/Messages/Notification/Notification';
 import AboutPage from './components/AboutPage/AboutPage';
+import FakerDB from './components/helpers/faker/FakerDB';
 
 class App extends React.PureComponent {
   constructor(props) {

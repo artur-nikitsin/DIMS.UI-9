@@ -1,6 +1,11 @@
 import firebase from 'firebase/firebase';
 import db from './db';
 
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
+const twitterProvider = new firebase.auth.TwitterAuthProvider();
+const githubProvider = new firebase.auth.GithubAuthProvider();
+
 export function register(email, password, firstName, userId) {
   return firebase
     .auth()
@@ -31,11 +36,15 @@ export function sentWelcomeEmail(user, email, userName, userId) {
     });
 }
 
-export async function login(email, password) {
+export async function login(email, password, connectAnotherProvider) {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
+      if (connectAnotherProvider) {
+        linkAnotherProvider(user.user);
+      }
+
       return getRole(email);
     })
     .catch((error) => {
@@ -43,6 +52,15 @@ export async function login(email, password) {
       const message = returnLoginMessage(code);
       return { message, messageType: 'warning' };
     });
+}
+
+export async function linkAnotherProvider(currentUser) {
+  currentUser
+    .linkWithPopup(githubProvider)
+    .then(function(result) {
+      console.log(result);
+    })
+    .catch(function(error) {});
 }
 
 function returnLoginMessage(code) {
@@ -92,30 +110,21 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
-//////////////////////////////////
-export const loginWithGoogle = async () => {
-  try {
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(googleProvider);
-  } catch (e) {
-    this.showError('Something wrong! Cannot log in DIMS!');
-  }
-};
-
-export const loginWithFacebook = async () => {
-  try {
-    const facebookProvider = new firebase.auth.FacebookAuthProvider();
-    await firebase.auth().signInWithPopup(facebookProvider);
-  } catch (e) {
-    this.showError('Something wrong! Cannot log in DIMS!');
-  }
-};
-
-export const loginWithGitHub = async () => {
-  try {
-    const githubProvider = new firebase.auth.GithubAuthProvider();
-    await firebase.auth().signInWithPopup(githubProvider);
-  } catch (e) {
-    this.showError('Something wrong! Cannot log in DIMS!');
-  }
+export const loginWithGitHub = () => {
+  return firebase
+    .auth()
+    .signInWithPopup(githubProvider)
+    .then((result) => {
+      const { email } = result.user;
+      return getRole(email);
+    })
+    .catch((result) => {
+      if (result.code === 'auth/account-exists-with-different-credential') {
+        console.log('еще не связанные аккаунты');
+        return { dimsLoginFirst: true, email: result.email };
+      }
+      if (result.code === 'auth/user-cancelled' || result.code === 'auth/popup-closed-by-user') {
+        console.log('вы закрыли окно авторизации');
+      }
+    });
 };

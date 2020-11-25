@@ -3,6 +3,9 @@ import db from './db';
 export function deleteUser(userId) {
   return deleteDocumentById('Users', userId)
     .then(() => {
+      deleteDocumentById('Roles', userId);
+    })
+    .then(() => {
       return db
         .collection('UserTasks')
         .where('userId', '==', userId)

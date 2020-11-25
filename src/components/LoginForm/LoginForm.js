@@ -5,7 +5,7 @@ import { Button, Alert } from 'reactstrap';
 import TextInput from '../common/Inputs/TextInput/TextInput';
 import { loginTemplate as inputsStatus } from './FormTemplate';
 import formValidator from '../helpers/FormValidator/formValidator';
-import { login, loginWithFacebook, loginWithGoogle } from '../../firebase/auth';
+import { login } from '../../firebase/auth';
 import Preloader from '../common/Preloader/Preloader';
 import { RoleContext } from '../../contexts/RoleContext';
 
@@ -21,11 +21,14 @@ class LoginForm extends React.PureComponent {
       loading: false,
       isSubmit: false,
       isFailLogin: false,
+      isConnectLogin: false,
       isFormValid: false,
       message: null,
+      connectAnotherProvider: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.loginWithGitHub = this.loginWithGitHub.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -35,29 +38,59 @@ class LoginForm extends React.PureComponent {
   }
 
   handleSubmit() {
-    const { isFormValid, email, password } = this.state;
+    const { isFormValid, email, password, connectAnotherProvider } = this.state;
     if (isFormValid) {
-      this.setState({
-        isSubmit: true,
-        loading: true,
+      this.setAuthLoading();
+      login(email, password, connectAnotherProvider).then((response) => {
+        this.setAuthResponse(response);
       });
+    }
+  }
 
-      const { handleLogin } = this.context;
-      login(email, password).then((response) => {
-        const { role } = response;
-        if (role) {
+  loginWithGitHub() {
+    this.setAuthLoading();
+    loginWithGitHub().then((response) => {
+      if (response.dimsLoginFirst) {
+        if (response.email) {
+          this.handleValidInput('email', true);
           this.setState({
-            loading: false,
-          });
-          handleLogin(response);
-        } else {
-          const { message } = response;
-          this.setState({
-            loading: false,
-            isFailLogin: true,
-            message,
+            email: response.email,
           });
         }
+        this.setState({
+          email: response.email,
+          loading: false,
+          isConnectLogin: true,
+          message: 'To connect another auth provider please first enter auth data for your DIMS account',
+          connectAnotherProvider: true,
+        });
+      } else {
+        this.setAuthResponse(response);
+      }
+    });
+  }
+
+  setAuthLoading() {
+    this.setState({
+      isSubmit: true,
+      loading: true,
+    });
+  }
+
+  setAuthResponse(response) {
+    const { handleLogin } = this.context;
+    const { role } = response;
+    if (role) {
+      this.setState({
+        loading: false,
+      });
+      handleLogin(response);
+    } else {
+      const { message } = response;
+      this.setState({
+        loading: false,
+        isFailLogin: true,
+        message,
       });
     }
   }
@@ -72,7 +105,7 @@ class LoginForm extends React.PureComponent {
   };
 
   render() {
-    const { email, password, isSubmit, loading, isFailLogin, message } = this.state;
+    const { email, password, isSubmit, loading, isFailLogin, isConnectLogin, message } = this.state;
 
     return loading ? (
       <Preloader />
@@ -81,6 +114,7 @@ class LoginForm extends React.PureComponent {
         <p className='loginTitle'>Login</p>
         <div className='loginFormBody'>
           {isFailLogin && <Alert color='danger'>{message}</Alert>}
+          {isConnectLogin && <Alert color='primary'>{message}</Alert>}
           <AvForm className='userForm' onSubmit={this.handleSubmit}>
             <ul className='loginFormInputList'>
               <li>
@@ -108,15 +142,13 @@ class LoginForm extends React.PureComponent {
                   Login
                 </Button>
               </li>
-
-              <div className='d-flex justify-content-space-around align-items-center'></div>
             </ul>
           </AvForm>
 
           {/*//////////////////////////*/}
-          <button onClick={loginWithGoogle}>google</button>
-          <button onClick={loginWithFacebook}>facebook</button>
-          <button onClick={loginWithGitHub}>github</button>
+          <button onClick={this.loginWithGitHub}>google</button>
+          <button onClick={this.loginWithGitHub}>facebook</button>
+          <button onClick={this.loginWithGitHub}>github</button>
           {/*//////////////////////////////*/}
         </div>
       </div>
