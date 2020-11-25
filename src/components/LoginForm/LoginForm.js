@@ -5,9 +5,11 @@ import { Button, Alert } from 'reactstrap';
 import TextInput from '../common/Inputs/TextInput/TextInput';
 import { loginTemplate as inputsStatus } from './FormTemplate';
 import formValidator from '../helpers/FormValidator/formValidator';
-import { login } from '../../firebase/auth';
+import { login, loginWithFacebook, loginWithGoogle } from '../../firebase/auth';
 import Preloader from '../common/Preloader/Preloader';
 import { RoleContext } from '../../contexts/RoleContext';
+
+import { loginWithGitHub } from '../../firebase/auth';
 
 class LoginForm extends React.PureComponent {
   constructor(props) {
@@ -106,8 +108,16 @@ class LoginForm extends React.PureComponent {
                   Login
                 </Button>
               </li>
+
+              <div className='d-flex justify-content-space-around align-items-center'></div>
             </ul>
           </AvForm>
+
+          {/*//////////////////////////*/}
+          <button onClick={loginWithGoogle}>google</button>
+          <button onClick={loginWithFacebook}>facebook</button>
+          <button onClick={loginWithGitHub}>github</button>
+          {/*//////////////////////////////*/}
         </div>
       </div>
     );

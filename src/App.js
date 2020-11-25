@@ -95,10 +95,6 @@ class App extends React.PureComponent {
   render() {
     const { theme, isLogin, fromLoginForm, role, signedUserId, signedUserName, userData } = this.state;
 
-    /* updateProfile();
-    sendEmail();*/
-    /*register("archet.nikitsin@gmail.com", "12345678")*/
-
     return (
       <RoleContext.Provider value={this.state}>
         <ThemeContext.Provider value={this.state}>

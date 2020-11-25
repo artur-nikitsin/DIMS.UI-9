@@ -92,14 +92,30 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
-export function deleteAuthData(uid) {
-  /* admin
-    .auth()
-    .deleteUser(uid)
-    .then(() => {
-      console.log('Successfully deleted user');
-    })
-    .catch((error) => {
-      console.log('Error deleting user:', error);
-    });*/
-}
+//////////////////////////////////
+export const loginWithGoogle = async () => {
+  try {
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(googleProvider);
+  } catch (e) {
+    this.showError('Something wrong! Cannot log in DIMS!');
+  }
+};
+
+export const loginWithFacebook = async () => {
+  try {
+    const facebookProvider = new firebase.auth.FacebookAuthProvider();
+    await firebase.auth().signInWithPopup(facebookProvider);
+  } catch (e) {
+    this.showError('Something wrong! Cannot log in DIMS!');
+  }
+};
+
+export const loginWithGitHub = async () => {
+  try {
+    const githubProvider = new firebase.auth.GithubAuthProvider();
+    await firebase.auth().signInWithPopup(githubProvider);
+  } catch (e) {
+    this.showError('Something wrong! Cannot log in DIMS!');
+  }
+};
