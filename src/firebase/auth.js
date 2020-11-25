@@ -6,6 +6,13 @@ const facebookProvider = new firebase.auth.FacebookAuthProvider();
 const twitterProvider = new firebase.auth.TwitterAuthProvider();
 const githubProvider = new firebase.auth.GithubAuthProvider();
 
+const providers = {
+  google: googleProvider,
+  facebook: facebookProvider,
+  twitter: twitterProvider,
+  github: githubProvider,
+};
+
 export function register(email, password, firstName, userId) {
   return firebase
     .auth()
@@ -36,13 +43,13 @@ export function sentWelcomeEmail(user, email, userName, userId) {
     });
 }
 
-export async function login(email, password, connectAnotherProvider) {
+export async function login(email, password, connectAnotherProvider, provider) {
   return firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then((user) => {
       if (connectAnotherProvider) {
-        linkAnotherProvider(user.user);
+        linkAnotherProvider(user.user, providers[provider]);
       }
 
       return getRole(email);
@@ -54,9 +61,9 @@ export async function login(email, password, connectAnotherProvider) {
     });
 }
 
-export async function linkAnotherProvider(currentUser) {
+export async function linkAnotherProvider(currentUser, provider) {
   currentUser
-    .linkWithPopup(githubProvider)
+    .linkWithPopup(provider)
     .then(function(result) {
       console.log(result);
     })
@@ -110,16 +117,20 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
     .catch(({ message }) => ({ message, messageType: 'warning' }));
 }
 
-export const loginWithGitHub = () => {
+export const loginWithProvider = (provider) => {
+  console.log(provider);
   return firebase
     .auth()
-    .signInWithPopup(githubProvider)
+    .signInWithPopup(providers[provider])
     .then((result) => {
+      console.log(result);
+      linkAnotherProvider(result.user, providers[provider]);
       const { email } = result.user;
       return getRole(email);
     })
     .catch((result) => {
       if (result.code === 'auth/account-exists-with-different-credential') {
+        console.log(result);
         console.log('еще не связанные аккаунты');
         return { dimsLoginFirst: true, email: result.email };
       }

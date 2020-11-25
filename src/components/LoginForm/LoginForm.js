@@ -9,7 +9,7 @@ import { login } from '../../firebase/auth';
 import Preloader from '../common/Preloader/Preloader';
 import { RoleContext } from '../../contexts/RoleContext';
 
-import { loginWithGitHub } from '../../firebase/auth';
+import { loginWithProvider } from '../../firebase/auth';
 
 class LoginForm extends React.PureComponent {
   constructor(props) {
@@ -25,10 +25,10 @@ class LoginForm extends React.PureComponent {
       isFormValid: false,
       message: null,
       connectAnotherProvider: false,
+      provider: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.loginWithGitHub = this.loginWithGitHub.bind(this);
   }
 
   handleChange({ target: { name, value } }) {
@@ -38,18 +38,18 @@ class LoginForm extends React.PureComponent {
   }
 
   handleSubmit() {
-    const { isFormValid, email, password, connectAnotherProvider } = this.state;
+    const { isFormValid, email, password, connectAnotherProvider, provider } = this.state;
     if (isFormValid) {
       this.setAuthLoading();
-      login(email, password, connectAnotherProvider).then((response) => {
+      login(email, password, connectAnotherProvider, provider).then((response) => {
         this.setAuthResponse(response);
       });
     }
   }
 
-  loginWithGitHub() {
+  loginWithProvider = (provider) => () => {
     this.setAuthLoading();
-    loginWithGitHub().then((response) => {
+    loginWithProvider(provider).then((response) => {
       if (response.dimsLoginFirst) {
         if (response.email) {
           this.handleValidInput('email', true);
@@ -63,12 +63,13 @@ class LoginForm extends React.PureComponent {
           isConnectLogin: true,
           message: 'To connect another auth provider please first enter auth data for your DIMS account',
           connectAnotherProvider: true,
+          provider,
         });
       } else {
         this.setAuthResponse(response);
       }
     });
-  }
+  };
 
   setAuthLoading() {
     this.setState({
@@ -146,9 +147,10 @@ class LoginForm extends React.PureComponent {
           </AvForm>
 
           {/*//////////////////////////*/}
-          <button onClick={this.loginWithGitHub}>google</button>
-          <button onClick={this.loginWithGitHub}>facebook</button>
-          <button onClick={this.loginWithGitHub}>github</button>
+          <button onClick={this.loginWithProvider('google')}>google</button>
+          <button onClick={this.loginWithProvider('twitter')}>twitter</button>
+          <button onClick={this.loginWithProvider('facebook')}>facebook</button>
+          <button onClick={this.loginWithProvider('github')}>github</button>
           {/*//////////////////////////////*/}
         </div>
       </div>
