@@ -19,6 +19,7 @@ import MemberTasks from './components/MembersTasks/MemberTasks';
 import Notification from './components/common/Messages/Notification/Notification';
 import AboutPage from './components/AboutPage/AboutPage';
 import FakerDB from './components/helpers/faker/FakerDB';
+import facebookSDK from './facebookSDK/facebookSDK';
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -38,6 +39,7 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
+    facebookSDK();
     if (getUserFromSessionStorage()) {
       const { firstName, lastName, role, userId } = getUserFromSessionStorage();
       this.setState({

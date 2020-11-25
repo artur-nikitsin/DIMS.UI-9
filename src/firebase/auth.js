@@ -118,12 +118,10 @@ export function setUserRole({ firstName, lastName, userId, email, role }) {
 }
 
 export const loginWithProvider = (provider) => {
-  console.log(provider);
   return firebase
     .auth()
     .signInWithPopup(providers[provider])
     .then((result) => {
-      console.log(result);
       linkAnotherProvider(result.user, providers[provider]);
       const { email } = result.user;
       return getRole(email);

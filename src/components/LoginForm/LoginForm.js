@@ -82,9 +82,6 @@ class LoginForm extends React.PureComponent {
     const { handleLogin } = this.context;
     const { role } = response;
     if (role) {
-      this.setState({
-        loading: false,
-      });
       handleLogin(response);
     } else {
       const { message } = response;
