@@ -8,8 +8,10 @@ import formValidator from '../helpers/FormValidator/formValidator';
 import { login } from '../../firebase/auth';
 import Preloader from '../common/Preloader/Preloader';
 import { RoleContext } from '../../contexts/RoleContext';
+import { faGithub, faFacebook } from '@fortawesome/free-brands-svg-icons';
 
 import { loginWithProvider } from '../../firebase/auth';
+import LinkIcon from '../common/LinkIcon/LinkIcon';
 
 class LoginForm extends React.PureComponent {
   constructor(props) {
@@ -47,7 +49,8 @@ class LoginForm extends React.PureComponent {
     }
   }
 
-  loginWithProvider = (provider) => () => {
+  loginWithProvider = (provider) => (e) => {
+    e.preventDefault();
     this.setAuthLoading();
     loginWithProvider(provider).then((response) => {
       if (response.dimsLoginFirst) {
@@ -143,12 +146,10 @@ class LoginForm extends React.PureComponent {
             </ul>
           </AvForm>
 
-          {/*//////////////////////////*/}
-          <button onClick={this.loginWithProvider('google')}>google</button>
-          <button onClick={this.loginWithProvider('twitter')}>twitter</button>
-          <button onClick={this.loginWithProvider('facebook')}>facebook</button>
-          <button onClick={this.loginWithProvider('github')}>github</button>
-          {/*//////////////////////////////*/}
+          <div className='providersLinks'>
+            <LinkIcon className='linkIcon' icon={faGithub} handleClick={this.loginWithProvider('github')} />
+            <LinkIcon className='linkIcon' icon={faFacebook} handleClick={this.loginWithProvider('facebook')} />
+          </div>
         </div>
       </div>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './checkBoxList.scss';
-import { AvGroup, AvInput } from 'availity-reactstrap-validation';
 import CheckBox from '../CheckBox/CheckBox';
 
 const CheckBoxList = ({ title, handleRadioInput, values, modalType, dataTemplate, isDefaultValid }) => {

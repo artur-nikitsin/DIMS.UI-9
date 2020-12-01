@@ -40,5 +40,20 @@
       margin-top: 2rem;
       width: 8rem;
     }
+    .providersLinks {
+      display: inline;
+
+      .linkIcon {
+        color: #000;
+        margin-right: 1rem;
+        margin-left: 1rem;
+
+        &:hover {
+          color: green;
+          cursor: pointer;
+          transition: color 200ms linear;
+        }
+      }
+    }
   }
 }
