@@ -3,6 +3,7 @@ import lastNameValidator from './lastNameValidator';
 import emailValidator from './emailValidator';
 import lengthValidator from './lengthValidator';
 import mobilePhoneValidator from './mobilePhoneValidator';
+import ageValidator from './ageValidator';
 
 function validatorsManager(type, data) {
   switch (type) {
@@ -14,6 +15,8 @@ function validatorsManager(type, data) {
       return lastNameValidator(data);
     case 'mobilePhone':
       return mobilePhoneValidator(data);
+    case 'birthDate':
+      return ageValidator(data);
     default:
       return lengthValidator(data);
   }
