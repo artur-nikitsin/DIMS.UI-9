@@ -128,12 +128,11 @@ export const loginWithProvider = (provider) => {
     })
     .catch((result) => {
       if (result.code === 'auth/account-exists-with-different-credential') {
-        console.log(result);
-        console.log('еще не связанные аккаунты');
+        console.log('not yet linked accounts');
         return { dimsLoginFirst: true, email: result.email };
       }
       if (result.code === 'auth/user-cancelled' || result.code === 'auth/popup-closed-by-user') {
-        console.log('вы закрыли окно авторизации');
+        console.log('you closed the login window');
       }
     });
 };
