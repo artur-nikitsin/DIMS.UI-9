@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { register, setUserRole } from '../../../firebase/auth';
 import faker from 'faker';
 import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
+import { setSuccessCreateUser, setSuccessUpdateUser } from '../../../redux/reducers/notificationReducer';
 
 class UsersModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -149,7 +150,7 @@ class UsersModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, dataToSend } = this.state;
-    const { closeModalAndReload, modalType } = this.props;
+    const { closeModalAndReload, modalType, setSuccessCreateUser, setSuccessUpdateUser } = this.props;
 
     this.setState({
       isSubmit: true,
@@ -166,6 +167,12 @@ class UsersModalDataWorker extends React.PureComponent {
       setNewMemberData(dataToSend, userId)
         .then(() => {
           closeModalAndReload();
+        })
+        .then(() => {
+          if (modalType === 'register') {
+            setSuccessCreateUser();
+          }
+          setSuccessUpdateUser();
         })
         .catch((error) => {
           return ErrorWritingDocument(error);
@@ -230,4 +237,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {})(UsersModalDataWorker);
+export default connect(mapStateToProps, { setSuccessCreateUser, setSuccessUpdateUser })(UsersModalDataWorker);

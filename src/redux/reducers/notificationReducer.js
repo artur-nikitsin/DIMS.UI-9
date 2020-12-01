@@ -28,28 +28,52 @@ export const setSuccessCreateUser = () => (dispatch) => {
   dispatch(setNotificationMessage('User successfully registered'));
 };
 
-export const setSuccessCreateTrack = () => (dispatch) => {
+export const setSuccessUpdateUser = () => (dispatch) => {
   dispatch(setNotificationType(success.type));
   dispatch(setNotificationIsOpen(true));
-  dispatch(setNotificationMessage('Track successfully created'));
+  dispatch(setNotificationMessage('User successfully updated'));
 };
 
-export const setSuccessUpdateTask = () => (dispatch) => {
+export const setSuccessDeleteUser = () => (dispatch) => {
   dispatch(setNotificationType(success.type));
   dispatch(setNotificationIsOpen(true));
-  dispatch(setNotificationMessage('Track successfully updated'));
-};
-
-export const setSuccessDeleteTask = () => (dispatch) => {
-  dispatch(setNotificationType(success.type));
-  dispatch(setNotificationIsOpen(true));
-  dispatch(setNotificationMessage('Track successfully deleted'));
+  dispatch(setNotificationMessage('User successfully deleted'));
 };
 
 export const setSuccessCreateTask = () => (dispatch) => {
   dispatch(setNotificationType(success.type));
   dispatch(setNotificationIsOpen(true));
   dispatch(setNotificationMessage('Task successfully created'));
+};
+
+export const setSuccessUpdateTask = () => (dispatch) => {
+  dispatch(setNotificationType(success.type));
+  dispatch(setNotificationIsOpen(true));
+  dispatch(setNotificationMessage('Task successfully updated'));
+};
+
+export const setSuccessDeleteTask = () => (dispatch) => {
+  dispatch(setNotificationType(success.type));
+  dispatch(setNotificationIsOpen(true));
+  dispatch(setNotificationMessage('Task successfully deleted'));
+};
+
+export const setSuccessCreateTrack = () => (dispatch) => {
+  dispatch(setNotificationType(success.type));
+  dispatch(setNotificationIsOpen(true));
+  dispatch(setNotificationMessage('Track successfully created'));
+};
+
+export const setSuccessUpdateTrack = () => (dispatch) => {
+  dispatch(setNotificationType(success.type));
+  dispatch(setNotificationIsOpen(true));
+  dispatch(setNotificationMessage('Track successfully updated'));
+};
+
+export const setSuccessDeleteTrack = () => (dispatch) => {
+  dispatch(setNotificationType(success.type));
+  dispatch(setNotificationIsOpen(true));
+  dispatch(setNotificationMessage('Track successfully deleted'));
 };
 
 const notificationReducer = (state = initialState, action) => {

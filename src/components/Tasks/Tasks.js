@@ -10,6 +10,7 @@ import getLocaleDate from '../helpers/getLocaleDate/getLocalDate';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
+import { setSuccessDeleteTrack } from '../../redux/reducers/notificationReducer';
 
 class Tasks extends React.PureComponent {
   componentDidMount() {
@@ -18,10 +19,13 @@ class Tasks extends React.PureComponent {
 
   handleDelete = (taskId) => () => {
     const { setSuccessDeleteTask } = this.props;
-    deleteTask(taskId).then(() => {
-      this.reloadTasksPage();
-      setSuccessDeleteTask();
-    });
+    deleteTask(taskId)
+      .then(() => {
+        this.reloadTasksPage();
+      })
+      .then(() => {
+        setSuccessDeleteTask();
+      });
   };
 
   reloadTasksPage = () => {

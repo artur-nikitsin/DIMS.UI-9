@@ -13,6 +13,7 @@ import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import getDirectionName from '../helpers/getDirectionName/getDirectionName';
 import getAge from '../helpers/getAge/getAge';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
+import { setSuccessDeleteUser } from '../../redux/reducers/notificationReducer';
 
 class MembersPage extends React.PureComponent {
   constructor(props) {
@@ -27,9 +28,14 @@ class MembersPage extends React.PureComponent {
   }
 
   handleDelete = (userId) => () => {
-    deleteUser(userId).then(() => {
-      this.reloadMembersPage();
-    });
+    const { setSuccessDeleteUser } = this.props;
+    deleteUser(userId)
+      .then(() => {
+        this.reloadMembersPage();
+      })
+      .then(() => {
+        setSuccessDeleteUser();
+      });
   };
 
   reloadMembersPage = () => {
@@ -201,4 +207,5 @@ export default connect(mapStateToProps, {
   getAllMembers,
   openModal,
   closeModal,
+  setSuccessDeleteUser,
 })(MembersPage);

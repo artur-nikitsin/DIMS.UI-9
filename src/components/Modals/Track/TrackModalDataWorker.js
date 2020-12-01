@@ -8,6 +8,12 @@ import ErrorWritingDocument from '../../common/Messages/Errors/ErrorWritingDocum
 import { trackModalConfiguration } from '../Common/ModalInputsTemplate';
 import TextArea from '../../common/Inputs/TextArea/TextArea';
 import getNestedObjectValues from '../../helpers/getNestedObjectValues/getNestedObjectValues';
+import { connect } from 'react-redux';
+import {
+  setSuccessCreateTask,
+  setSuccessCreateTrack,
+  setSuccessUpdateTrack,
+} from '../../../redux/reducers/notificationReducer';
 
 class TrackModalDataWorker extends React.PureComponent {
   constructor(props) {
@@ -121,7 +127,7 @@ class TrackModalDataWorker extends React.PureComponent {
   handleSubmit(event) {
     event.persist();
     const { isFormValid, taskTrackId, dataToSend } = this.state;
-    const { closeModalAndReload } = this.props;
+    const { modalType, closeModalAndReload, setSuccessCreateTrack, setSuccessUpdateTrack } = this.props;
 
     this.setState({
       isSubmit: true,
@@ -132,6 +138,12 @@ class TrackModalDataWorker extends React.PureComponent {
       setTrack({ ...dataToSend, userTaskId }, taskTrackId)
         .then(() => {
           closeModalAndReload();
+        })
+        .then(() => {
+          if (modalType === 'create') {
+            setSuccessCreateTrack();
+          }
+          setSuccessUpdateTrack();
         })
         .catch((error) => {
           return ErrorWritingDocument(error);
@@ -152,6 +164,19 @@ class TrackModalDataWorker extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { members, directions, loading, activeUserId, activeUserName, modalIsOpen, modalType } = state.members;
+  return {
+    members,
+    directions,
+    loading,
+    activeUserId,
+    activeUserName,
+    modalIsOpen,
+    modalType,
+  };
+};
+
 TrackModalDataWorker.propTypes = {
   modalTemplate: PropTypes.shape({
     trackDate: PropTypes.string,
@@ -169,4 +194,7 @@ TrackModalDataWorker.propTypes = {
   closeModalAndReload: PropTypes.func.isRequired,
 };
 
-export default TrackModalDataWorker;
+export default connect(mapStateToProps, {
+  setSuccessCreateTrack,
+  setSuccessUpdateTrack,
+})(TrackModalDataWorker);

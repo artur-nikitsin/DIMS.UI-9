@@ -14,6 +14,8 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import ReturnLink from '../common/ReturnLink/ReturnLink';
 import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
+import { connect } from 'react-redux';
+import { setSuccessDeleteTrack, setSuccessDeleteUser } from '../../redux/reducers/notificationReducer';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -37,9 +39,14 @@ class MemberTracks extends React.PureComponent {
   }
 
   handleDelete = (trackId) => () => {
-    deleteTrack(trackId).then(() => {
-      this.reloadTrackPage();
-    });
+    const { setSuccessDeleteTrack } = this.props;
+    deleteTrack(trackId)
+      .then(() => {
+        this.reloadTrackPage();
+      })
+      .then(() => {
+        setSuccessDeleteTrack();
+      });
   };
 
   getTaskName = async (userTaskId) => {
@@ -167,6 +174,13 @@ class MemberTracks extends React.PureComponent {
   }
 }
 
+const mapStateToProps = (state) => {
+  const { activeUserId } = state.members;
+  return {
+    activeUserId,
+  };
+};
+
 MemberTracks.propTypes = {
   userName: PropTypes.string,
   taskName: PropTypes.string,
@@ -182,4 +196,7 @@ MemberTracks.defaultProps = {
 };
 
 MemberTracks.contextType = ThemeContext;
-export default MemberTracks;
+
+export default connect(mapStateToProps, {
+  setSuccessDeleteTrack,
+})(MemberTracks);
