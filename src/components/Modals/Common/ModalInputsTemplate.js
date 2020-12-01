@@ -23,6 +23,6 @@ export const taskModalConfiguration = {
 };
 
 export const trackModalConfiguration = {
-  trackDate: { type: 'text', isDefaultValid: false },
+  trackDate: { type: 'date', isDefaultValid: false },
   trackNote: { type: 'text', isDefaultValid: false },
 };

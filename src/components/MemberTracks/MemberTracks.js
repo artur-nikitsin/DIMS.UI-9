@@ -13,6 +13,7 @@ import { deleteTrack } from '../../firebase/apiDelete';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import getThemeColor from '../helpers/getThemeColor/getThemeColor';
 import ReturnLink from '../common/ReturnLink/ReturnLink';
+import NoDataMessage from '../common/Messages/NoDataMessage/NoDataMessage';
 
 class MemberTracks extends React.PureComponent {
   constructor(props) {
@@ -147,10 +148,15 @@ class MemberTracks extends React.PureComponent {
         >
           Add
         </Button>
-        <Table striped className={`${theme} tracksTable`}>
-          <TableTrackHeaders />
-          <tbody>{userTrackList}</tbody>
-        </Table>
+
+        {userTrackList.length ? (
+          <Table striped className={`${theme} tracksTable`}>
+            <TableTrackHeaders />
+            <tbody>{userTrackList}</tbody>
+          </Table>
+        ) : (
+          <NoDataMessage text='Nothing to show yet =(' />
+        )}
       </div>
     );
   };

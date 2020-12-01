@@ -72,7 +72,7 @@ class TrackModalDataWorker extends React.PureComponent {
     const inputList = dataKeys.map((input) => {
       if (input === 'trackNote') {
         return (
-          <li key={input} className='inputItem'>
+          <li key={input} className='descriptionContainer'>
             <TextArea
               inputName={input}
               value={thisState[input]}
